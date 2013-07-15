@@ -9,10 +9,6 @@ application:
       "Fragen und Anregungen": http://feedback.jubla.ch
       Hilfe: http://jubla.ch/datenbank
 
-census:
-  default_finish_month: 10
-  default_finish_day: 31
-
 email:
   # Sender for all emails sent by the application
   sender: <%= "jubla.db <noreply@#{ENV['RAILS_HOST_NAME'].presence || 'localhost'}>" %>
@@ -20,3 +16,9 @@ email:
   # If mass emails are sent, this recipient is used in the to field,
   # while the actual recipients go in the bcc field.
   mass_recipient: <%= "jubla.db <noreply@#{ENV['RAILS_HOST_NAME'].presence || 'localhost'}>" %>
+
+root_email: jubla@puzzle.ch
+
+census:
+  default_finish_month: 10
+  default_finish_day: 31
