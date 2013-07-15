@@ -11,3 +11,4 @@ Gemfile.lock
 
 .sass-cache
 spec/coverage
+.project

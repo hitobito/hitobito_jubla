@@ -5,7 +5,7 @@ describe CensusMailer do
 
   before do
     SeedFu.quiet = true
-    SeedFu.seed [JublaJubla::Wagon.root.join('db', 'seeds')]
+    SeedFu.seed [HitobitoJubla::Wagon.root.join('db', 'seeds')]
   end
 
   let(:person) { people(:top_leader) }

@@ -1,12 +1,12 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your wagon's version:
-require "jubla_jubla/version"
+require "hitobito_jubla/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "jubla_jubla"
-  s.version     = JublaJubla::VERSION
+  s.name        = "hitobito_jubla"
+  s.version     = HitobitoJubla::VERSION
   s.authors     = ["Pascal Zumkehr"]
   s.email       = ["zumkehr@puzzle.ch"]
   s.summary     = "Jubla organization specific features"

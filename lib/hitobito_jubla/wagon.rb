@@ -1,4 +1,4 @@
-module JublaJubla
+module HitobitoJubla
   class Wagon < Rails::Engine
     include Wagons::Wagon
 

@@ -7,7 +7,7 @@ rescue LoadError
 end
 
 ENGINE_PATH = File.expand_path('..', __FILE__)
-ENV['APP_ROOT'] ||= File.expand_path(__FILE__).split("vendor#{File::SEPARATOR}wagons").first
+require File.expand_path('../app_root', __FILE__)
 
 load 'wagons/wagon_tasks.rake'
 
@@ -15,4 +15,6 @@ load 'rspec/rails/tasks/rspec.rake'
 
 require 'ci/reporter/rake/rspec' unless Rails.env == 'production'
 
-JublaJubla::Wagon.load_tasks
+HitobitoJubla::Wagon.load_tasks
+
+task 'test:prepare' => 'db:test:prepare'

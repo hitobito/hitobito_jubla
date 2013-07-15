@@ -1,4 +1,4 @@
-ENV['APP_ROOT'] ||= File.expand_path(__FILE__).split("vendor#{File::SEPARATOR}wagons").first
+require File.expand_path('../app_root', __FILE__)
 
 source "http://rubygems.org"
 

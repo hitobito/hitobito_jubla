@@ -1,8 +1,8 @@
 # Configure Rails Environment
-ENV['APP_ROOT'] ||= File.expand_path(__FILE__).split("vendor#{File::SEPARATOR}wagons").first
+require File.expand_path('../../app_root', __FILE__)
 ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../../Gemfile', __FILE__)
 ENV["RAILS_ENV"] = "test"
-require File.expand_path('../../../../../config/environment', __FILE__)
+require File.expand_path('config/environment', ENV['APP_ROOT'])
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
