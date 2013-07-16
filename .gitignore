@@ -8,3 +8,6 @@ zeus.json
 
 # ignore Gemfile.lock for wagons
 Gemfile.lock
+
+.sass-cache
+spec/coverage
