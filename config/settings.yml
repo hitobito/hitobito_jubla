@@ -19,6 +19,46 @@ email:
 
 root_email: jubla@puzzle.ch
 
+phone_number:
+  predefined_labels:
+    - Privat
+    - Mobil
+    - Arbeit
+    - Vater
+    - Mutter
+    - Fax
+    - Andere
+
+social_account:
+  predefined_labels:
+    - E-Mail
+    - Facebook
+    - MSN
+    - Skype
+    - Twitter
+    - Webseite
+    - Andere
+
+pdf:
+  labels:
+    font_name: <%= HitobitoJubla::Wagon.root.join('app', 'assets', 'fonts', 'century-gothic.ttf') %>
+
+# Preset for addresses
+address:
+  ignored_countries:
+    - ch
+    - schweiz
+
+# Presets for CSV export
+csv:
+  # optimized for M$ Excel
+  separator: ;
+  encoding: ISO-8859-1//IGNORE
+
+role:
+  # If a role last less than this number of days, it is not archived
+  minimum_days_to_archive: 7
+
 census:
   default_finish_month: 10
   default_finish_day: 31
