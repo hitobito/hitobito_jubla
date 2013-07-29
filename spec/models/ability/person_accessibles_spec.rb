@@ -39,12 +39,12 @@ describe PersonAccessibles do
           end
 
           it "may get people in his group" do
-            other = Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board))
+            other = Fabricate(Group::FederalBoard::Member.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get affiliate people in his group" do
-            other = Fabricate(Group::FederalBoard::External.name.to_sym, group: groups(:federal_board))
+            other = Fabricate(Group::FederalBoard::External.name.to_sym, group: group)
             should include(other.person)
           end
         end
@@ -53,12 +53,12 @@ describe PersonAccessibles do
           let(:group) { groups(:be_board) }
 
           it "may get visible people" do
-            other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::StateBoard::External.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -80,12 +80,12 @@ describe PersonAccessibles do
           end
 
           it "may get people in his group" do
-            other = Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::Member.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get affiliate people in his group" do
-            other = Fabricate(Group::StateBoard::External.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
             should include(other.person)
           end
         end
@@ -94,12 +94,12 @@ describe PersonAccessibles do
           let(:group) { groups(:be_agency) }
 
           it "may get people" do
-            other = Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency))
+            other = Fabricate(Group::StateAgency::Leader.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get affiliate people" do
-            other = Fabricate(Group::StateAgency::External.name.to_sym, group: groups(:be_agency))
+            other = Fabricate(Group::StateAgency::External.name.to_sym, group: group)
             should include(other.person)
           end
         end
@@ -108,12 +108,12 @@ describe PersonAccessibles do
           let(:group) { groups(:bern) }
 
           it "may get visible people" do
-            other = Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::Flock::External.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -122,7 +122,7 @@ describe PersonAccessibles do
           let(:group) { groups(:asterix) }
 
           it "may not get children" do
-            other = Fabricate(Group::ChildGroup::Child.name.to_sym, group: groups(:asterix))
+            other = Fabricate(Group::ChildGroup::Child.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -144,12 +144,12 @@ describe PersonAccessibles do
           end
 
           it "may get people in his group" do
-            other = Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::Member.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get affiliate people in his group" do
-            other = Fabricate(Group::StateBoard::External.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
             should include(other.person)
           end
         end
@@ -158,12 +158,12 @@ describe PersonAccessibles do
           let(:group) { groups(:be_agency) }
 
           it "may not get people" do
-            other = Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency))
+            other = Fabricate(Group::StateAgency::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::StateAgency::External.name.to_sym, group: groups(:be_agency))
+            other = Fabricate(Group::StateAgency::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -172,7 +172,7 @@ describe PersonAccessibles do
           let(:group) { groups(:bern) }
 
           it "may not get visible people" do
-            other = Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -194,12 +194,12 @@ describe PersonAccessibles do
           end
 
           it "may get people in his group" do
-            other = Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::Member.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get affiliate people in his group" do
-            other = Fabricate(Group::StateBoard::External.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
             should include(other.person)
           end
         end
@@ -208,17 +208,17 @@ describe PersonAccessibles do
           let(:group) { groups(:be_state_camp) }
 
           it "may get people with contact data" do
-            other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may not get people without contact data" do
-            other = Fabricate(Group::StateWorkGroup::Member.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::Member.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -227,17 +227,17 @@ describe PersonAccessibles do
           let(:group) { groups(:bern) }
 
           it "may get people with contact data" do
-            other = Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may not get people without contact data" do
-            other = Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::Guide.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::Flock::External.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -260,17 +260,17 @@ describe PersonAccessibles do
           end
 
           it "may get people in his group" do
-            other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get external people in his group" do
-            other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
             should include(other.person)
           end
 
           it "may get alumni in his group" do
-            other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: group)
             should include(other.person)
           end
         end
@@ -279,12 +279,12 @@ describe PersonAccessibles do
           let(:group) { groups(:be_board) }
 
           it "may not get people with contact data" do
-            other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::StateBoard::External.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -293,12 +293,12 @@ describe PersonAccessibles do
           let(:group) { groups(:bern) }
 
           it "may not get people with contact data" do
-            other = Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get affiliate people" do
-            other = Fabricate(Group::Flock::External.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::External.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -327,17 +327,17 @@ describe PersonAccessibles do
           end
 
           it "may not get people in his group" do
-            other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get external people in his group" do
-            other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
             should_not include(other.person)
           end
 
           it "may not get alumni in his group" do
-            other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: groups(:be_state_camp))
+            other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -346,7 +346,7 @@ describe PersonAccessibles do
           let(:group) { groups(:be_board) }
 
           it "may not get people with contact data" do
-            other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: groups(:be_board))
+            other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
         end
@@ -355,7 +355,7 @@ describe PersonAccessibles do
           let(:group) { groups(:bern) }
 
           it "may not get people with contact data" do
-            other = Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern))
+            other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
             should_not include(other.person)
           end
         end

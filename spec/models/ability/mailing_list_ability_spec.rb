@@ -4,6 +4,7 @@ describe MailingListAbility do
 
   let(:user) { role.person }
   let(:group) { role.group }
+  let(:list) { Fabricate(:mailing_list, group: group) }
 
   subject { Ability.new(user.reload) }
 
@@ -12,73 +13,79 @@ describe MailingListAbility do
 
     context "in own group" do
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: group))
+        should be_able_to(:show, list)
       end
 
       it "may update mailing lists" do
-        should be_able_to(:update, Fabricate(:mailing_list, group: group))
+        should be_able_to(:update, list)
       end
 
       it "may index subscriptions" do
-        should be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: group))
+        should be_able_to(:index_subscriptions, list)
       end
 
       it "may create subscriptions" do
-        should be_able_to(:create, Fabricate(:mailing_list, group: group).subscriptions.new)
+        should be_able_to(:create, list.subscriptions.new)
       end
     end
 
     context "in group in same layer" do
+      let(:group) { groups(:be_board) }
+
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: group))
+        should be_able_to(:show, list)
       end
 
       it "may update mailing lists" do
-        should be_able_to(:update, Fabricate(:mailing_list, group: groups(:be_board)))
+        should be_able_to(:update, list)
       end
 
       it "may index subscriptions" do
-        should be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: groups(:be_board)))
+        should be_able_to(:index_subscriptions, list)
       end
 
       it "may create subscriptions" do
-        should be_able_to(:create, Fabricate(:mailing_list, group: groups(:be_board)).subscriptions.new)
+        should be_able_to(:create, list.subscriptions.new)
       end
     end
 
     context "in group in lower layer" do
+      let(:group) { groups(:bern) }
+
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: groups(:bern)))
+        should be_able_to(:show, list)
       end
 
       it "may not update mailing lists" do
-        should_not be_able_to(:update, Fabricate(:mailing_list, group: groups(:bern)))
+        should_not be_able_to(:update, list)
       end
 
       it "may not index subscriptions" do
-        should_not be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: groups(:bern)))
+        should_not be_able_to(:index_subscriptions, list)
       end
 
       it "may not create subscriptions" do
-        should_not be_able_to(:create, Fabricate(:mailing_list, group: groups(:bern)).subscriptions.new)
+        should_not be_able_to(:create, list.subscriptions.new)
       end
     end
 
     context "in group in upper layer" do
+      let(:group) { groups(:ch) }
+
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: groups(:ch)))
+        should be_able_to(:show, list)
       end
 
       it "may not update mailing lists" do
-        should_not be_able_to(:update, Fabricate(:mailing_list, group: groups(:ch)))
+        should_not be_able_to(:update, list)
       end
 
       it "may not index subscriptions" do
-        should_not be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: groups(:ch)))
+        should_not be_able_to(:index_subscriptions, list)
       end
 
       it "may not create subscriptions" do
-        should_not be_able_to(:create, Fabricate(:mailing_list, group: groups(:ch)).subscriptions.new)
+        should_not be_able_to(:create, list.subscriptions.new)
       end
     end
   end
@@ -88,73 +95,79 @@ describe MailingListAbility do
 
     context "in own group" do
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: group))
+        should be_able_to(:show, list)
       end
 
       it "may update mailing lists" do
-        should be_able_to(:update, Fabricate(:mailing_list, group: group))
+        should be_able_to(:update, list)
       end
 
       it "may index subscriptions" do
-        should be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: group))
+        should be_able_to(:index_subscriptions, list)
       end
 
       it "may create subscriptions" do
-        should be_able_to(:create, Fabricate(:mailing_list, group: group).subscriptions.new)
+        should be_able_to(:create, list.subscriptions.new)
       end
     end
 
     context "in group in same layer" do
+      let(:group) { groups(:be_board) }
+
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: groups(:be_board)))
+        should be_able_to(:show, list)
       end
 
       it "may not update mailing lists" do
-        should_not be_able_to(:update, Fabricate(:mailing_list, group: groups(:be_board)))
+        should_not be_able_to(:update, list)
       end
 
       it "may not index subscriptions" do
-        should_not be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: groups(:be_board)))
+        should_not be_able_to(:index_subscriptions, list)
       end
 
       it "may not create subscriptions" do
-        should_not be_able_to(:create, Fabricate(:mailing_list, group: groups(:be_board)).subscriptions.new)
+        should_not be_able_to(:create, list.subscriptions.new)
       end
     end
 
     context "in group in lower layer" do
+      let(:group) { groups(:bern) }
+
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: groups(:bern)))
+        should be_able_to(:show, list)
       end
 
       it "may not update mailing lists" do
-        should_not be_able_to(:update, Fabricate(:mailing_list, group: groups(:bern)))
+        should_not be_able_to(:update, list)
       end
 
       it "may not index subscriptions" do
-        should_not be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: groups(:bern)))
+        should_not be_able_to(:index_subscriptions, list)
       end
 
       it "may not create subscriptions" do
-        should_not be_able_to(:create, Fabricate(:mailing_list, group: groups(:bern)).subscriptions.new)
+        should_not be_able_to(:create, list.subscriptions.new)
       end
     end
 
     context "in group in upper layer" do
+      let(:group) { groups(:ch) }
+
       it "may show mailing lists" do
-        should be_able_to(:show, Fabricate(:mailing_list, group: groups(:ch)))
+        should be_able_to(:show, list)
       end
 
       it "may not update mailing lists" do
-        should_not be_able_to(:update, Fabricate(:mailing_list, group: groups(:ch)))
+        should_not be_able_to(:update, list)
       end
 
       it "may not index subscriptions" do
-        should_not be_able_to(:index_subscriptions, Fabricate(:mailing_list, group: groups(:ch)))
+        should_not be_able_to(:index_subscriptions, list)
       end
 
       it "may not create subscriptions" do
-        should_not be_able_to(:create, Fabricate(:mailing_list, group: groups(:ch)).subscriptions.new)
+        should_not be_able_to(:create, list.subscriptions.new)
       end
     end
 
@@ -165,7 +178,7 @@ describe MailingListAbility do
       before { list; group.destroy }
 
       it "may not create mailing list" do
-        should_not be_able_to(:create, Fabricate(:mailing_list, group: groups(:ch)))
+        should_not be_able_to(:create, list)
       end
 
       it "may not update mailing list" do
