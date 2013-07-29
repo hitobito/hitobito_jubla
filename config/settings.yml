@@ -39,10 +39,6 @@ social_account:
     - Webseite
     - Andere
 
-pdf:
-  labels:
-    font_name: <%= HitobitoJubla::Wagon.root.join('app', 'assets', 'fonts', 'century-gothic.ttf') %>
-
 # Preset for addresses
 address:
   ignored_countries:
