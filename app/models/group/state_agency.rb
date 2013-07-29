@@ -1,8 +1,8 @@
 # Arbeitsstelle AST
 class Group::StateAgency < Group
-  
+
   class Leader < Jubla::Role::Leader
-    self.permissions = [:layer_full, :contact_data, :qualify]
+    self.permissions = [:layer_full, :contact_data]
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin
@@ -18,5 +18,5 @@ class Group::StateAgency < Group
   end
 
   roles Leader, GroupAdmin, Alumnus, External, DispatchAddress
-  
+
 end

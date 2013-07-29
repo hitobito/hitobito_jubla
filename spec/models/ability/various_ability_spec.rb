@@ -33,7 +33,6 @@ describe VariousAbility do
       end
     end
 
-
     describe "StateAgency Member" do
       let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
 
@@ -61,6 +60,28 @@ describe VariousAbility do
         it "can create and destroy" do
           should be_able_to(:create, qualification)
           should be_able_to(:destroy, qualification)
+        end
+      end
+    end
+
+    describe "Flock Leader" do
+      let(:role) { Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern)) }
+
+      context "on StateAgency Member" do
+        let(:person) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)).person }
+
+        it "cannot create and destroy" do
+          should_not be_able_to(:create, qualification)
+          should_not be_able_to(:destroy, qualification)
+        end
+      end
+
+      context "on Camp Leader" do
+        let(:person) { Fabricate(Group::Flock::CampLeader.name.to_sym, group: groups(:bern)).person }
+
+        it "cannot create and destroy" do
+          should_not be_able_to(:create, qualification)
+          should_not be_able_to(:destroy, qualification)
         end
       end
     end
