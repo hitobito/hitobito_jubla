@@ -5,7 +5,6 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-
 Census.seed(:year, 
   {year: 2011,
    start_at: Date.new(2011,8,1),

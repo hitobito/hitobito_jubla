@@ -5,7 +5,6 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-
 @encrypted_password = BCrypt::Password.create("jub42la", cost: 1)
 
 def amount(role_type)
