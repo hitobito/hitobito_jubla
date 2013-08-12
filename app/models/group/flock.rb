@@ -42,7 +42,7 @@ class Group::Flock < Group
            where('roles.type NOT IN (?)', Role.affiliate_types.collect(&:sti_name))
   end
 
-  def to_s
+  def to_s(format = :default)
     if attributes.include?('kind')
       [kind, super].compact.join(" ")
     else
