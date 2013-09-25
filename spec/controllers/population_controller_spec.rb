@@ -23,7 +23,6 @@ describe PopulationController do
   before { sign_in(leader) }
 
   describe "GET index" do
-
     before { get :index, id: flock.id }
 
     describe "groups" do
@@ -47,4 +46,14 @@ describe PopulationController do
     end
   end
 
+  describe "GET index does not include deleted groups" do
+    before do
+      groups(:asterix).destroy
+      get :index, id: flock.id
+    end
+
+    subject { assigns(:groups) }
+
+    it { should_not include groups(:asterix) }
+  end
 end

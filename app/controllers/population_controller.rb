@@ -35,7 +35,7 @@ class PopulationController < ApplicationController
   end
 
   def load_groups
-    flock.self_and_descendants.order_by_type(flock)
+    flock.self_and_descendants.without_deleted.order_by_type(flock)
   end
 
   def load_people_by_group
