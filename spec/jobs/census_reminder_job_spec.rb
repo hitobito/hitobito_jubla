@@ -20,7 +20,7 @@ describe CensusReminderJob do
     all << Fabricate(Group::Flock::Leader.name.to_sym, group: flock, person: Fabricate(:person, email: 'test2@example.com')).person
 
     # empty email
-    all << Fabricate(Group::Flock::Leader.name.to_sym, group: flock, person: Fabricate(:person, email: '')).person
+    all << Fabricate(Group::Flock::Leader.name.to_sym, group: flock, person: Fabricate(:person, email: ' ')).person
     all
   end
 
@@ -29,15 +29,15 @@ describe CensusReminderJob do
 
   describe "#recipients" do
 
-    it "contains all flock leaders" do
+    it "contains all flock leaders with emails" do
       leaders
 
       # different roles
-      Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)).person.email
-      Fabricate(Group::ChildGroup::Leader.name.to_sym, group: groups(:asterix)).person.email
+      Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency))
+      Fabricate(Group::ChildGroup::Leader.name.to_sym, group: groups(:asterix))
       Fabricate(Group::Flock::Guide.name.to_sym, group: flock)
 
-      subject.recipients.should =~ leaders
+      subject.recipients.should =~ leaders[0..1]
     end
   end
 
@@ -48,6 +48,11 @@ describe CensusReminderJob do
     end
 
     it "does not send email if flock has no leaders" do
+      expect { subject.perform }.not_to change { ActionMailer::Base.deliveries.size }
+    end
+
+    it "does not send email if leader has no email" do
+      Fabricate(Group::Flock::Leader.name.to_sym, group: flock, person: Fabricate(:person, email: '  ')).person
       expect { subject.perform }.not_to change { ActionMailer::Base.deliveries.size }
     end
 

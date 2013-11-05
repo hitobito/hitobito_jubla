@@ -18,13 +18,14 @@ class CensusReminderJob < BaseJob
   end
 
   def perform
-    r = recipients
+    r = recipients.to_a
     CensusMailer.reminder(sender, census, r, flock, state_agency).deliver if r.present?
   end
 
   def recipients
     flock.people.only_public_data.
                  where(roles: {type: Group::Flock::Leader.sti_name}).
+                 where("email IS NOT NULL OR email <> ''").
                  uniq
   end
 
