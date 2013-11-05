@@ -35,6 +35,8 @@ class CensusReminderJob < BaseJob
 
   def state_agency
     state = flock.state
-    state.children.where(type: state.contact_group_type.sti_name).first
+    state.children.where(type: state.contact_group_type.sti_name).
+                   without_deleted.
+                   first
   end
 end

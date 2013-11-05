@@ -37,13 +37,13 @@ Fabricator(:camp, from: :event, class_name: :'Event::Camp') do
 end
 
 Fabricator(:jubla_course, from: :course) do
-  application_contact do |attrs| 
+  application_contact do |attrs|
 
     contact_groups = []
     groups = attrs[:groups]
     groups.each do |g|
       if type = g.class.contact_group_type
-        state_agencies = g.children.where(type: type.sti_name).all
+        state_agencies = g.children.without_deleted.where(type: type.sti_name)
         contact_groups.concat(state_agencies)
       end
     end
