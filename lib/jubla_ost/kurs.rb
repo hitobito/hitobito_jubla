@@ -62,7 +62,7 @@ module JublaOst
       end
 
       def migrate_urls(current, legacy)
-        urls = {urlhomepage: 'Homepage', urlfotos: 'Fotos', urlgb: 'Gästebuch'}
+        urls = { urlhomepage: 'Homepage', urlfotos: 'Fotos', urlgb: 'Gästebuch' }
         values = {}
         urls.each do |attr, label|
           val = legacy.send(attr).presence
@@ -79,7 +79,7 @@ module JublaOst
 
       def migrate_dates(current, legacy)
         create_date(current,
-                    combine(" ", 'Vorweekend', legacy.vwort),
+                    combine(' ', 'Vorweekend', legacy.vwort),
                     legacy.vwstart,
                     legacy.vwende)
 

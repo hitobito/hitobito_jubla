@@ -44,7 +44,7 @@ class Group::Flock < Group
 
   def to_s(format = :default)
     if attributes.include?('kind')
-      [kind, super].compact.join(" ")
+      [kind, super].compact.join(' ')
     else
       # if kind is not selected from the database, we end up here
       super

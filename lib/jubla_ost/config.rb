@@ -13,7 +13,7 @@ module JublaOst
       end
 
       def kanton_id(shortname)
-        config['kanton'][shortname.downcase] || raise("No canton '#{shortname}' found")
+        config['kanton'][shortname.downcase] || fail("No canton '#{shortname}' found")
       end
 
       def qualification_kind_id(shortname)

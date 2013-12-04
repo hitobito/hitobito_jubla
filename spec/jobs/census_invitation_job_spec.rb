@@ -11,8 +11,8 @@ describe CensusInvitationJob do
 
   subject { CensusInvitationJob.new(Census.current) }
 
-  describe "#recipients" do
-    it "contains all leaders in the system" do
+  describe '#recipients' do
+    it 'contains all leaders in the system' do
       double_role = Fabricate(:person)
       all = [people(:flock_leader_bern).email, people(:flock_leader).email]
       all << Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)).person.email
@@ -31,8 +31,8 @@ describe CensusInvitationJob do
     end
   end
 
-  describe "#perform" do
-    it "sends email if flock has leaders" do
+  describe '#perform' do
+    it 'sends email if flock has leaders' do
       expect { subject.perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
   end

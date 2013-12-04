@@ -22,7 +22,7 @@ class PopulationController < ApplicationController
 
   def load_people(groups)
     Person.joins(:roles).
-           where(roles: {group_id: groups.collect(&:id), deleted_at: nil}).
+           where(roles: { group_id: groups.collect(&:id), deleted_at: nil }).
            members.
            preload_groups.
            uniq.

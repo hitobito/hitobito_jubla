@@ -27,9 +27,9 @@ describe CensusReminderJob do
   subject { CensusReminderJob.new(people(:top_leader), Census.current, flock) }
 
 
-  describe "#recipients" do
+  describe '#recipients' do
 
-    it "contains all flock leaders with emails" do
+    it 'contains all flock leaders with emails' do
       leaders
 
       # different roles
@@ -41,28 +41,28 @@ describe CensusReminderJob do
     end
   end
 
-  describe "#perform" do
-    it "sends email if flock has leaders" do
+  describe '#perform' do
+    it 'sends email if flock has leaders' do
       leaders
       expect { subject.perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
 
-    it "does not send email if flock has no leaders" do
+    it 'does not send email if flock has no leaders' do
       expect { subject.perform }.not_to change { ActionMailer::Base.deliveries.size }
     end
 
-    it "does not send email if leader has no email" do
+    it 'does not send email if leader has no email' do
       Fabricate(Group::Flock::Leader.name.to_sym, group: flock, person: Fabricate(:person, email: '  ')).person
       expect { subject.perform }.not_to change { ActionMailer::Base.deliveries.size }
     end
 
-    it "finds ast address" do
+    it 'finds ast address' do
       leaders
       subject.perform
       last_email.body.should =~ /AST<br\/>3000 Bern/
     end
 
-    it "sends only to leaders with email" do
+    it 'sends only to leaders with email' do
       leaders
       subject.perform
       last_email.to.should == [leaders.first.email, leaders.second.email]

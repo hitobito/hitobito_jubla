@@ -9,7 +9,7 @@ class Group::StateWorkGroup < Group::WorkGroup
 
   class Leader < Group::WorkGroup::Leader
   end
-  
+
   class Member < Group::WorkGroup::Member
   end
 
@@ -26,5 +26,5 @@ class Group::StateWorkGroup < Group::WorkGroup
   end
 
   roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
-  
+
 end

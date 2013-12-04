@@ -28,12 +28,12 @@ describe MemberCounter do
     old.destroy # soft delete role, create alumnus
   end
 
-  it "flock has affiliate and deleted people as well" do
+  it 'flock has affiliate and deleted people as well' do
     flock.people.count.should == 5
-    Person.joins(:roles).where(roles: {group_id: flock.id}).count.should == 6
+    Person.joins(:roles).where(roles: { group_id: flock.id }).count.should == 6
   end
 
-  context "instance" do
+  context 'instance' do
 
     subject { MemberCounter.new(2011, flock) }
 
@@ -43,7 +43,7 @@ describe MemberCounter do
 
     its(:members) { should have(8).items }
 
-    it "creates member counts" do
+    it 'creates member counts' do
       expect { subject.count! }.to change { MemberCount.count }.by(5)
 
       should be_exists
@@ -56,35 +56,35 @@ describe MemberCounter do
 
   end
 
-  context ".create_count_for" do
-    it "creates count with current census" do
+  context '.create_count_for' do
+    it 'creates count with current census' do
       censuses(:two_o_12).destroy
       expect { MemberCounter.create_counts_for(flock) }.to change { MemberCount.where(year: 2011).count }.by(5)
     end
 
-    it "does not create counts with existing ones" do
+    it 'does not create counts with existing ones' do
       expect { MemberCounter.create_counts_for(flock) }.not_to change { MemberCount.count }
     end
 
-    it "does not create counts without census" do
+    it 'does not create counts without census' do
       Census.destroy_all
       expect { MemberCounter.create_counts_for(flock) }.not_to change { MemberCount.count }
     end
   end
 
-  context ".current_counts?" do
+  context '.current_counts?' do
     subject { MemberCounter.current_counts?(flock) }
 
-    context "with counts" do
+    context 'with counts' do
       it { should be_true }
     end
 
-    context "without counts" do
+    context 'without counts' do
       before { MemberCount.update_all(year: 2011) }
       it { should be_false }
     end
 
-    context "with census" do
+    context 'with census' do
       before { Census.destroy_all }
       it { should be_false }
     end

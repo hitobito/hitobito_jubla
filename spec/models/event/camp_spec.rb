@@ -10,7 +10,7 @@ require_relative '../../support/fabrication.rb'
 
 describe Event::Camp do
 
-  describe ".role_types" do
+  describe '.role_types' do
     subject { Event::Camp.role_types }
 
     it { should include(Event::Role::Leader) }
@@ -22,17 +22,17 @@ describe Event::Camp do
     it { should include(Event::Camp::Role::Coach) }
   end
 
-  context ".kind_class" do
+  context '.kind_class' do
     subject { Event::Camp.kind_class }
 
-    it "is loaded correctly" do
+    it 'is loaded correctly' do
       should == Event::Camp::Kind
       subject.name == 'Event::Camp::Kind'
     end
 
   end
 
-  context "#coach" do
+  context '#coach' do
     let(:person)  { Fabricate(:person) }
     let(:person1) { Fabricate(:person) }
 
@@ -49,7 +49,7 @@ describe Event::Camp do
       subject.coach.should eq person
     end
 
-    it "should update the coach if another person is assigned" do
+    it 'should update the coach if another person is assigned' do
       event.coach_id = person1.id
       event.save.should be_true
       event.coach.should eq person1
@@ -60,7 +60,7 @@ describe Event::Camp do
       event.coach.should be nil
     end
 
-    it "removes existing coach if id is set blank" do
+    it 'removes existing coach if id is set blank' do
       subject.coach_id = person.id
       subject.save!
 
@@ -68,7 +68,7 @@ describe Event::Camp do
       expect { subject.save! }.to change { Event::Role.count }.by(-1)
     end
 
-    it "removes existing and creates new coach on reassignment" do
+    it 'removes existing and creates new coach on reassignment' do
       subject.coach_id = person.id
       subject.save!
 

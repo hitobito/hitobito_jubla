@@ -56,12 +56,12 @@ module HitobitoJubla
       FilterNavigation::People.send :include, Jubla::FilterNavigation::People
     end
 
-    initializer "jubla.add_settings" do |app|
+    initializer 'jubla.add_settings' do |app|
       Settings.add_source!(File.join(paths['config'].existent, 'settings.yml'))
       Settings.reload!
     end
 
-    initializer "jubla.add_inflections" do |app|
+    initializer 'jubla.add_inflections' do |app|
       ActiveSupport::Inflector.inflections do |inflect|
         inflect.irregular 'census', 'censuses'
       end

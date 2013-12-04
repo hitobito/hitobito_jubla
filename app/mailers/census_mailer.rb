@@ -53,10 +53,10 @@ class CensusMailer < ActionMailer::Base
     return '' if group.nil?
 
     address = [group.to_s]
-    address << group.address.to_s.gsub("\n", "<br/>").presence
-    address << [group.zip_code, group.town].compact.join(" ").presence
-    address << group.phone_numbers.where(public: true).collect(&:to_s).join("<br/>").presence
+    address << group.address.to_s.gsub("\n", '<br/>').presence
+    address << [group.zip_code, group.town].compact.join(' ').presence
+    address << group.phone_numbers.where(public: true).collect(&:to_s).join('<br/>').presence
     address << group.email
-    address.compact.join("<br/>")
+    address.compact.join('<br/>')
   end
 end

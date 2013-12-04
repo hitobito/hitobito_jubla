@@ -12,7 +12,7 @@ describe GroupsController do
 
   before { sign_in(leader) }
 
-  it "#edit - loads advisors and coaches" do
+  it '#edit - loads advisors and coaches' do
     get :edit, id: flock.id
     assigns(:coaches).should eq flock.available_coaches.only_public_data.order_by_name
     assigns(:advisors).should eq flock.available_advisors.only_public_data.order_by_name

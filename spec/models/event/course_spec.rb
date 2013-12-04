@@ -11,7 +11,7 @@ require_relative '../../support/fabrication.rb'
 describe Event::Course do
 
   subject do
-    event = Fabricate(:jubla_course, groups: [groups(:be)] )
+    event = Fabricate(:jubla_course, groups: [groups(:be)])
     Fabricate(Event::Role::Leader.name.to_sym, participation: Fabricate(:event_participation, event: event))
     Fabricate(Event::Role::AssistantLeader.name.to_sym, participation: Fabricate(:event_participation, event: event))
     Fabricate(Event::Course::Role::Participant.name.to_sym, participation: Fabricate(:event_participation, event: event))
@@ -19,7 +19,7 @@ describe Event::Course do
     event.reload
   end
 
-  describe ".role_types" do
+  describe '.role_types' do
     subject { Event::Course.role_types }
 
     it { should include(Event::Course::Role::Participant) }
@@ -27,46 +27,46 @@ describe Event::Course do
     it { should_not include(Event::Role::Participant) }
   end
 
-  context "#application_possible?" do
+  context '#application_possible?' do
     before { subject.state = 'application_open' }
 
-    context "without opening date" do
+    context 'without opening date' do
       it { should be_application_possible }
     end
 
-    context "with opening date in the past" do
+    context 'with opening date in the past' do
       before { subject.application_opening_at = Date.today - 1 }
       it { should be_application_possible }
 
-      context "in other state" do
+      context 'in other state' do
         before { subject.state = 'application_closed' }
         it { should_not be_application_possible }
       end
     end
 
-    context "with ng date today" do
-      before { subject.application_opening_at = Date.today}
+    context 'with ng date today' do
+      before { subject.application_opening_at = Date.today }
       it { should be_application_possible }
     end
 
-    context "with opening date in the future" do
-      before { subject.application_opening_at = Date.today + 1}
+    context 'with opening date in the future' do
+      before { subject.application_opening_at = Date.today + 1 }
       it { should_not be_application_possible }
     end
 
-    context "with closing date in the past" do
-      before { subject.application_closing_at = Date.today - 1}
+    context 'with closing date in the past' do
+      before { subject.application_closing_at = Date.today - 1 }
       it { should be_application_possible } # yep, we do not care about the closing date
     end
 
-    context "in other state" do
+    context 'in other state' do
       before { subject.state = 'created' }
       it { should_not be_application_possible }
     end
 
   end
 
-  context "#advisor" do
+  context '#advisor' do
     let(:person)  { Fabricate(:person) }
     let(:person1) { Fabricate(:person) }
 
@@ -83,7 +83,7 @@ describe Event::Course do
       subject.advisor.should eq person
     end
 
-    it "should update the advisor if another person is assigned" do
+    it 'should update the advisor if another person is assigned' do
       event.advisor_id = person1.id
       event.save.should be_true
       event.advisor.should eq person1
@@ -94,7 +94,7 @@ describe Event::Course do
       event.advisor.should be nil
     end
 
-    it "removes existing advisor if id is set blank" do
+    it 'removes existing advisor if id is set blank' do
       subject.advisor_id = person.id
       subject.save!
 
@@ -102,7 +102,7 @@ describe Event::Course do
       expect { subject.save! }.to change { Event::Role.count }.by(-1)
     end
 
-    it "removes existing advisor participation if id is set blank" do
+    it 'removes existing advisor participation if id is set blank' do
       subject.advisor_id = person.id
       subject.save!
 
@@ -110,7 +110,7 @@ describe Event::Course do
       expect { subject.save! }.to change { Event::Participation.count }.by(-1)
     end
 
-    it "removes existing and creates new advisor on reassignment" do
+    it 'removes existing and creates new advisor on reassignment' do
       subject.advisor_id = person.id
       subject.save!
 
@@ -123,33 +123,33 @@ describe Event::Course do
 
   end
 
-  context "application contact" do
+  context 'application contact' do
 
-    it "has two possible contact groups" do
+    it 'has two possible contact groups' do
       event = Fabricate(:jubla_course, groups: [groups(:be), groups(:no)])
       event.possible_contact_groups.count.should eq 2
       event.valid?.should be true
     end
 
-    it "has one possible contact groups if the other is deleted" do
+    it 'has one possible contact groups if the other is deleted' do
       groups(:no_agency).destroy
       event = Fabricate(:jubla_course, groups: [groups(:be), groups(:no)])
       event.possible_contact_groups.count.should eq 1
       event.valid?.should be true
     end
 
-    it "has two possible contact groups" do
+    it 'has two possible contact groups' do
       event = Fabricate(:jubla_course, groups: [groups(:no)])
       event.possible_contact_groups.count.should eq 1
     end
 
-    it "validation fails if no contact group is assigned" do
+    it 'validation fails if no contact group is assigned' do
       event = Fabricate(:jubla_course, groups: [groups(:no)])
       event.application_contact_id = nil
       event.valid?.should be false
     end
 
-    it "validation fails if an invalid contact group is assigned" do
+    it 'validation fails if an invalid contact group is assigned' do
       event = Fabricate(:jubla_course, groups: [groups(:no)])
       event.application_contact_id = groups(:be).id
       event.valid?.should be false

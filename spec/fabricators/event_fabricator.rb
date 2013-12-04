@@ -33,7 +33,7 @@
 #
 
 Fabricator(:camp, from: :event, class_name: :'Event::Camp') do
-  groups { [Group.all_types.detect {|t| t.event_types.include?(Event::Camp) }.first] }
+  groups { [Group.all_types.detect { |t| t.event_types.include?(Event::Camp) }.first] }
 end
 
 Fabricator(:jubla_course, from: :course) do

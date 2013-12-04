@@ -22,12 +22,12 @@ module Export
       end
 
       def new_row(course)
-        JublaRow.new(course,self)
+        JublaRow.new(course, self)
       end
       private
 
       def translated_prefix(prefix)
-        prefix == :advisor ?  "LKB" : super
+        prefix == :advisor ?  'LKB' : super
       end
     end
 

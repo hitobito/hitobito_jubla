@@ -10,7 +10,7 @@ class Group::StateProfessionalGroup < Group::ProfessionalGroup
 
   class Leader < Group::ProfessionalGroup::Leader
   end
-  
+
   class Member < Group::ProfessionalGroup::Member
   end
 
@@ -27,5 +27,5 @@ class Group::StateProfessionalGroup < Group::ProfessionalGroup
   end
 
   roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
-  
+
 end

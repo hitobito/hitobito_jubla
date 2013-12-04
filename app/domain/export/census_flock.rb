@@ -14,15 +14,15 @@ module Export
     class << self
       def headers
         { name: human(:name),
-          contact_first_name: "Kontakt Vorname",
-          contact_last_name: "Kontakt Nachname",
+          contact_first_name: 'Kontakt Vorname',
+          contact_last_name: 'Kontakt Nachname',
           address: human(:address),
           zip_code: human(:zip_code),
           town: human(:town) ,
           jubla_insurance: human(:jubla_insurance),
           jubla_full_coverage: human(:jubla_full_coverage),
-          leader_count: "Leitende",
-          child_count: "Kinder" }
+          leader_count: 'Leitende',
+          child_count: 'Kinder' }
       end
 
       def labels

@@ -24,7 +24,7 @@ module PopulationHelper
       gender_label(person.gender)
     end
   end
-  
+
   def tab_population_label(group)
     label = 'Bestand'
     label << " <span style=\"color: red;\">!</span>" if check_approveable?(group)

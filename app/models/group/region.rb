@@ -7,13 +7,13 @@
 
 # Ebene Region
 class Group::Region < Group
-  
+
   self.layer = true
   self.default_children = [Group::RegionalBoard]
-  
+
   class Coach < Jubla::Role::Coach
   end
-  
+
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
@@ -27,12 +27,12 @@ class Group::Region < Group
   end
 
   roles Coach, GroupAdmin, Alumnus, External, DispatchAddress
-  
+
   children Group::RegionalBoard,
            Group::RegionalProfessionalGroup,
            Group::RegionalWorkGroup,
            Group::Flock
-           
-  attr_accessible *(accessible_attributes.to_a + [:jubla_insurance, :jubla_full_coverage]), :as => :superior
+
+  attr_accessible *(accessible_attributes.to_a + [:jubla_insurance, :jubla_full_coverage]), as: :superior
 
 end

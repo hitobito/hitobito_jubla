@@ -13,7 +13,7 @@ class MemberCount < ActiveRecord::Base
   belongs_to :state, class_name: 'Group::State'
 
   validates :born_in, uniqueness: { scope: [:flock_id, :year] }
-  validates :leader_f, :leader_m, :child_f, :child_m, numericality: {greater_than_or_equal_to: 0, allow_nil: true}
+  validates :leader_f, :leader_m, :child_f, :child_m, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
 
   def total
@@ -72,13 +72,13 @@ class MemberCount < ActiveRecord::Base
     end
 
     def totals(year)
-      select("state_id, " +
-             "flock_id, " +
-             "born_in, " +
-             "SUM(leader_f) AS leader_f, " +
-             "SUM(leader_m) AS leader_m, " +
-             "SUM(child_f) AS child_f, " +
-             "SUM(child_m) AS child_m").
+      select('state_id, ' +
+             'flock_id, ' +
+             'born_in, ' +
+             'SUM(leader_f) AS leader_f, ' +
+             'SUM(leader_m) AS leader_m, ' +
+             'SUM(child_f) AS child_f, ' +
+             'SUM(child_m) AS child_m').
       where(year: year)
     end
 

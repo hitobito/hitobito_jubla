@@ -11,4 +11,3 @@ require 'hitobito_jubla/wagon'
 
 module HitobitoJubla
 end
-

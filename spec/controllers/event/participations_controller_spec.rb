@@ -8,9 +8,9 @@
 require 'spec_helper'
 
 describe Event::ParticipationsController do
-  
+
   let(:group) { groups(:ch) }
-  
+
   let(:course) do
     course = Fabricate(:jubla_course, groups: [group], priorization: true)
     course.questions << Fabricate(:event_question, event: course)
@@ -18,42 +18,42 @@ describe Event::ParticipationsController do
     course.dates << Fabricate(:event_date, event: course)
     course
   end
-  
-  let(:other_course) do 
+
+  let(:other_course) do
     other = Fabricate(:jubla_course, groups: [group], kind: course.kind)
     other.dates << Fabricate(:event_date, event: other, start_at: course.dates.first.start_at)
     other
   end
-  
+
   let(:participation) do
     p = Fabricate(:event_participation, event: course, application: Fabricate(:jubla_event_application, priority_2: Fabricate(:jubla_course, kind: course.kind)))
     p.answers.create!(question_id: course.questions[0].id, answer: 'juhu')
     p.answers.create!(question_id: course.questions[1].id, answer: 'blabla')
     p
   end
-  
-  
-  let(:user) { people(:top_leader) }
-  
-  before { sign_in(user); other_course }
-  
 
-  context "GET index" do
-    before { @leader, @advisor, @participant = *create(Event::Role::Leader, 
-                                                       Event::Course::Role::Advisor, 
-                                                       course.participant_type) }
-    
-    it "lists participant and leader group by default without advisor" do
+
+  let(:user) { people(:top_leader) }
+
+  before { sign_in(user); other_course }
+
+
+  context 'GET index' do
+    before do @leader, @advisor, @participant = *create(Event::Role::Leader,
+                                                        Event::Course::Role::Advisor,
+                                                        course.participant_type) end
+
+    it 'lists participant and leader group by default without advisor' do
       get :index, group_id: group.id, event_id: course.id
       assigns(:participations).should eq [@leader, @participant]
     end
 
-    it "lists only leader_group without advisor" do
+    it 'lists only leader_group without advisor' do
       get :index, group_id: group.id, event_id: course.id, filter: :teamers
       assigns(:participations).should eq [@leader]
     end
 
-    it "lists only participant_group" do
+    it 'lists only participant_group' do
       get :index, group_id: group.id, event_id: course.id, filter: :participants
       assigns(:participations).should eq [@participant]
     end

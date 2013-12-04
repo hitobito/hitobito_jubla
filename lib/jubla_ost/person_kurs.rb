@@ -31,7 +31,7 @@ module JublaOst
             puts "KMID=#{person_kurs.KMID} PEID=#{person_kurs.PEID} KUID=#{person_kurs.KUID}: #{participation.inspect} ist nicht gültig: #{participation.errors.full_messages.join(", ")}"
 
             unless participation.errors[:person_id].present?
-              raise ActiveRecord::RecordInvalid, participation
+              fail ActiveRecord::RecordInvalid, participation
             end
           end
         else

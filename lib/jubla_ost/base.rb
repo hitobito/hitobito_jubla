@@ -13,7 +13,7 @@ module JublaOst
 
     class << self
       def migrate
-        #ActiveRecord::Base.transaction do
+        # ActiveRecord::Base.transaction do
           begin
             sanitize_source
 
@@ -34,7 +34,7 @@ module JublaOst
             puts e.backtrace.join("\n")
             raise e
           end
-        #end
+        # end
       end
 
       def cache
@@ -76,8 +76,8 @@ module JublaOst
       end
 
       def sanitize_kurse
-        Kurs.find(459).update_column(:anmeldestart, Date.new(2012,12,01))
-        Kurs.find(468).update_column(:start, Date.new(2012,04,20))
+        Kurs.find(459).update_column(:anmeldestart, Date.new(2012, 12, 01))
+        Kurs.find(468).update_column(:start, Date.new(2012, 04, 20))
       end
 
       def sanitize_emails
@@ -92,9 +92,9 @@ module JublaOst
       end
 
       def remove_duplicate_emails
-        ids = Person.joins("p1 INNER JOIN tPersonen p2 ON p1.email = p2.email AND p1.peid <> p2.peid")
+        ids = Person.joins('p1 INNER JOIN tPersonen p2 ON p1.email = p2.email AND p1.peid <> p2.peid')
                     .where("p1.email IS NOT NULL AND p1.email <> ''")
-                    .pluck("p1.PEID")
+                    .pluck('p1.PEID')
         Person.where(PEID: ids).update_all(Email: nil) if ids.present?
         puts "#{ids.size} duplicate emails removed"
       end

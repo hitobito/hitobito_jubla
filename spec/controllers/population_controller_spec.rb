@@ -22,31 +22,31 @@ describe PopulationController do
 
   before { sign_in(leader) }
 
-  describe "GET index" do
+  describe 'GET index' do
     before { get :index, id: flock.id }
 
-    describe "groups" do
+    describe 'groups' do
       subject { assigns(:groups) }
 
       it { should == [flock, groups(:asterix), groups(:obelix), groups(:fussball)] }
     end
 
-    describe "people by group" do
+    describe 'people by group' do
       subject { assigns(:people_by_group) }
 
-      it { subject[flock].collect(&:to_s).should =~ [leader,people(:flock_leader_bern), guide].collect(&:to_s)}
+      it { subject[flock].collect(&:to_s).should =~ [leader, people(:flock_leader_bern), guide].collect(&:to_s) }
       it { subject[groups(:asterix)].collect(&:to_s).should =~ [group_leader, child, people(:child)].collect(&:to_s) }
       it { subject[groups(:obelix)].should == [] }
     end
 
-    describe "complete" do
+    describe 'complete' do
       subject { assigns(:people_data_complete) }
 
       it { should be_false }
     end
   end
 
-  describe "GET index does not include deleted groups" do
+  describe 'GET index does not include deleted groups' do
     before do
       groups(:asterix).destroy
       get :index, id: flock.id

@@ -10,7 +10,7 @@ class Group::FederalProfessionalGroup < Group::ProfessionalGroup
 
   class Leader < Group::ProfessionalGroup::Leader
   end
-  
+
   class Member < Group::ProfessionalGroup::Member
   end
 
@@ -25,7 +25,7 @@ class Group::FederalProfessionalGroup < Group::ProfessionalGroup
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
-  
+
   roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
-  
+
 end

@@ -17,9 +17,9 @@ module JublaOst
     # Alle anderen Typen werden via SCREID der Region/Kanton zugeordnet. Startet der Name mit AG/FG, wird
     # eine Arbeitsgruppe/Fachgruppe erstellt, sonst eine einfache Gruppe.
 
-    KINDS = {'br' => 'Blauring',
-             'jw' => 'Jungwacht',
-             'jubla' => 'Jubla'}
+    KINDS = { 'br' => 'Blauring',
+              'jw' => 'Jungwacht',
+              'jubla' => 'Jubla' }
 
     IGNORED = [71, 223, 244]
 
@@ -27,7 +27,7 @@ module JublaOst
 
       def migrate_state(current, legacy)
         delete_default_groups(current, Group::StateBoard)
-        migrate_groups(current, legacy, JublaOst::Schartyp::Kalei) {|g| Group::StateBoard }
+        migrate_groups(current, legacy, JublaOst::Schartyp::Kalei) { |g| Group::StateBoard }
         migrate_groups(current, legacy, JublaOst::Schartyp::Schar, *other_types) do |g|
           group_class(g.Schar, Group::StateProfessionalGroup, Group::StateWorkGroup)
         end
@@ -36,7 +36,7 @@ module JublaOst
       def migrate_region(current, legacy)
         delete_default_groups(current, Group::RegionalBoard)
         migrate_releis(current, legacy)
-        migrate_groups(current, legacy, JublaOst::Schartyp::Schar) {|g| Group::Flock }
+        migrate_groups(current, legacy, JublaOst::Schartyp::Schar) { |g| Group::Flock }
         migrate_groups(current, legacy, *other_types) do |g|
           group_class(g.Schar, Group::RegionalProfessionalGroup, Group::RegionalWorkGroup)
         end

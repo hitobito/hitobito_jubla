@@ -54,7 +54,7 @@ class MemberCounter
   def members
     Person.joins(:roles).
            includes(:roles).
-           where(roles: {group_id: flock.self_and_descendants, deleted_at: nil}).
+           where(roles: { group_id: flock.self_and_descendants, deleted_at: nil }).
            members.
            uniq
   end
@@ -62,7 +62,7 @@ class MemberCounter
   private
 
   def members_by_year
-    members.group_by {|p| p.birthday.try(:year) }
+    members.group_by { |p| p.birthday.try(:year) }
   end
 
   def new_member_count(born_in)
@@ -81,7 +81,7 @@ class MemberCounter
   end
 
   def count_field(person)
-    if person.roles.any? {|r| r.kind_of?(Group::ChildGroup::Child) }
+    if person.roles.any? { |r| r.kind_of?(Group::ChildGroup::Child) }
       if person.male?
          :child_m
       else
@@ -98,7 +98,7 @@ class MemberCounter
 
   def increment(count, field)
     val = count.send(field)
-    count.send("#{field}=", val ? val+1 : 1)
+    count.send("#{field}=", val ? val + 1 : 1)
   end
 
 end

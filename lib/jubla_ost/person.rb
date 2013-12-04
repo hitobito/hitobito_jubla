@@ -22,7 +22,7 @@ module JublaOst
             PersonFunktion.migrate_person_roles(person, legacy)
             PersonKurs.migrate_person_kurse(person, legacy)
           end
-          print "\r #{i+=1} people processed "
+          print "\r #{i += 1} people processed "
         end
       end
 
@@ -53,7 +53,7 @@ module JublaOst
         assign_attributes(person, legacy)
         unless person.save
           puts "#{person.inspect} ist nicht gültig: #{person.errors.full_messages.join(", ")}"
-          raise ActiveRecord::RecordInvalid, person
+          fail ActiveRecord::RecordInvalid, person
         end
         cache[legacy.PEID] = person.id
         person
@@ -113,7 +113,7 @@ module JublaOst
             name = account.strip
             label = 'Webseite'
           else
-            label, name = account.split(":", 2)
+            label, name = account.split(':', 2)
             if name.nil?
               name = label.strip
               if email?(name)
@@ -160,7 +160,7 @@ module JublaOst
     end
 
     def no_names?
-      self.Vorname.blank? && self.Name.blank? && self.vulgo.blank?
+      Vorname.blank? && Name.blank? && vulgo.blank?
     end
   end
 end

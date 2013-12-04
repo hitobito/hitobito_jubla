@@ -13,7 +13,7 @@ module Event::CampHelper
       '(Niemand)'
     end
   end
-  
+
   def format_event_coach_id(event)
     if event.coach_id
       assoc_link(event.coach)
