@@ -59,6 +59,7 @@ module JublaOst
         person
       end
 
+      # rubocop:disable MethodLength
       def assign_attributes(current, legacy)
         if legacy.no_names?
           current.company_name = legacy.Zusatz
@@ -115,27 +116,36 @@ module JublaOst
           else
             label, name = account.split(':', 2)
             if name.nil?
-              name = label.strip
-              if email?(name)
-                label = 'E-Mail'
-              elsif url?(name)
-                label = 'Webseite'
-              else
-                label = 'Andere'
-              end
+              label = detect_link_label(label)
             else
-              label.strip!
-              label = 'E-Mail' if %w(Mail Mail? GMX).include?(label)
-              label = 'Webseite' if %w(WEB WWW).include?(label)
-              label = 'Skype' if label == 'Skype 1'
-              label = 'Facebook' if label == 'fb'
-              label = 'MSN' if label = 'Msn.'
+              label = detect_social_label(label)
               name.strip!
             end
           end
           # avoid entries with label and without name, e.g. "Skype: "
           current.social_accounts.build(name: name, label: label) if name.present?
         end
+      end
+
+      def detect_link_label(label)
+        name = label.strip
+        if email?(name)
+          'E-Mail'
+        elsif url?(name)
+          'Webseite'
+        else
+          'Andere'
+        end
+      end
+
+      def detect_social_label(label)
+        label.strip!
+        label = 'E-Mail' if %w(Mail Mail? GMX).include?(label)
+        label = 'Webseite' if %w(WEB WWW).include?(label)
+        label = 'Skype' if label == 'Skype 1'
+        label = 'Facebook' if label == 'fb'
+        label = 'MSN' if label == 'Msn.'
+        label
       end
 
       def migrate_qualification(person, legacy)

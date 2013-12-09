@@ -98,8 +98,10 @@ module JublaOst
       def migrate_questions(current, legacy)
         cache = questions[legacy.KUID] ||= {}
 
-        cache[:abo] = build_question(current, 'Ich habe folgendes ÖV Abo', 'GA, Halbtax / unter 16, keine Vergünstigung')
-        cache[:vegi] = build_question(current, 'Ich bin Vegetarier', 'ja, nein')
+        cache[:abo] = build_question(current,
+                                     'Ich habe folgendes ÖV Abo', 'GA, Halbtax / unter 16, keine Vergünstigung')
+        cache[:vegi] = build_question(current,
+                                      'Ich bin Vegetarier', 'ja, nein')
       end
 
       def build_question(current, question, choices)

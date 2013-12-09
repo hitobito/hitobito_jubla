@@ -28,7 +28,8 @@ module JublaOst
           participation.person = current
           assign_attributes(participation, person_kurs)
           unless participation.save
-            puts "KMID=#{person_kurs.KMID} PEID=#{person_kurs.PEID} KUID=#{person_kurs.KUID}: #{participation.inspect} ist nicht gültig: #{participation.errors.full_messages.join(", ")}"
+            puts "KMID=#{person_kurs.KMID} PEID=#{person_kurs.PEID} KUID=#{person_kurs.KUID}: " +
+                 "#{participation.inspect} ist nicht gültig: #{participation.errors.full_messages.join(", ")}"
 
             unless participation.errors[:person_id].present?
               fail ActiveRecord::RecordInvalid, participation
