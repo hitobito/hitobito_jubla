@@ -13,6 +13,6 @@ Gem::Specification.new do |s|
   s.description = "Jubla organization specific features"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile"]
-  s.test_files = Dir["spec/**/*"]
+  #s.test_files = Dir["spec/**/*"]
 
 end

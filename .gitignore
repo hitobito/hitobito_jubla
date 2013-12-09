@@ -10,5 +10,10 @@ zeus.json
 Gemfile.lock
 
 .sass-cache
-spec/coverage
 .project
+
+# reports
+spec/reports
+spec/coverage
+brakeman-output.tabs
+rubocop-results.xml
