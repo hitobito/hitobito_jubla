@@ -9,19 +9,8 @@ require 'spec_helper'
 
 describe Group do
 
-  describe 'fixtures' do
-    it 'is a valid nested set' do
-      Group.should be_valid
-    end
+  include_examples 'group types'
 
-    it 'has all layer_group_ids set correctly' do
-      Group.all.each do |group|
-        msg = "#{group.to_s}: expected <#{group.layer_group.id}> (#{group.layer_group.to_s}), "
-        msg << "got <#{group.layer_group_id}> (#{Group.find(group.layer_group_id).to_s})"
-        group.layer_group_id.should(eq(group.layer_group.id), msg)
-      end
-    end
-  end
 
   describe Group::Federation do
     subject { Group::Federation }
@@ -120,36 +109,4 @@ describe Group do
     end
   end
 
-
-  def self.each_child(group)
-    @processed ||= []
-    @processed << group
-    group.possible_children.each do |child|
-      yield child unless @processed.include?(child)
-    end
-  end
-
-  each_child(Group::Federation) do |group|
-    context group do
-
-      it 'default_children must be part of possible_children' do
-        group.possible_children.should include(*group.default_children)
-      end
-
-      unless group.layer?
-        it 'only layer groups may contain layer children' do
-          group.possible_children.select(&:layer).should be_empty
-        end
-      end
-
-      group.role_types.each do |role|
-        context role do
-          it 'must have valid permissions' do
-            # although it looks like, this example is about role.permissions and not about Role::Permissions
-            Role::Permissions.should include(*role.permissions)
-          end
-        end
-      end
-    end
-  end
 end
