@@ -12,6 +12,7 @@ class Census < ActiveRecord::Base
   after_initialize :set_defaults
 
   validates :start_at, presence: true
+  validates :start_at, :finish_at, timeliness: { type: :date, allow_blank: true }
 
   class << self
     # The last census defined (may be the current one)
