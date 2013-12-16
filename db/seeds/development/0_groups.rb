@@ -5,25 +5,21 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-Faker::Config.locale = I18n.locale
+
+require Rails.root.join('db', 'seeds', 'support', 'group_seeder')
+
+srand(42)
+
+seeder = GroupSeeder.new
 
 ch = Group.roots.first
-srand(42)
-def contacts
-  { short_name: ('A'..'Z').to_a.sample(2).join,
-    address: Faker::Address.street_address,
-    zip_code: Faker::Address.zip,
-    town: Faker::Address.city,
-    country: 'Svizzera',
-    email: Faker::Internet.safe_email
-  }
-end
 unless ch.address.present?
-  ch.update_attributes(contacts)
+  ch.update_attributes(seeder.group_attributes)
   ch.default_children.each do |child_class|
-    child_class.first.update_attributes(contacts)
+    child_class.first.update_attributes(seeder.group_attributes)
   end
 end
+
 
 Group::FederalWorkGroup.seed(:name, :parent_id,
   {name: 'AG Bundeslager',
@@ -87,23 +83,9 @@ states = Group::State.seed(:name, :parent_id,
 )
 
 states.each do |s|
-  SocialAccount.seed(:contactable_id, :contactable_type, :name,
-    { contactable_id:   s.id,
-      contactable_type: 'Group',
-      name:             'info@group.ch',
-      label:            'E-Mail',
-      public:           true }
-  )
-
-  PhoneNumber.seed(:contactable_id, :contactable_type, :number,
-    { contactable_id:   s.id,
-      contactable_type: 'Group',
-      number:           Faker::PhoneNumber.phone_number,
-      label:            Settings.phone_number.predefined_labels.first,
-      public:           true }
-  )
+  seeder.seed_social_accounts(s)
   ast = s.children.where(type: 'Group::StateAgency').first
-  ast.update_attributes(contacts)
+  ast.update_attributes(seeder.group_attributes)
 end
 
 Group::StateProfessionalGroup.seed(:name, :parent_id,
@@ -121,19 +103,19 @@ Group::StateWorkGroup.seed(:name, :parent_id,
 
 regions = Group::Region.seed(:name, :parent_id,
   {name: 'Region Stadt',
-   parent_id: states[0].id }.merge(contacts),
+   parent_id: states[0].id }.merge(seeder.group_attributes),
 
   {name: 'Region Oberland',
-   parent_id: states[0].id }.merge(contacts),
+   parent_id: states[0].id }.merge(seeder.group_attributes),
 
   {name: 'Region Jura',
-   parent_id: states[0].id }.merge(contacts),
+   parent_id: states[0].id }.merge(seeder.group_attributes),
 
   {name: 'Region Stadt',
-   parent_id: states[1].id }.merge(contacts),
+   parent_id: states[1].id }.merge(seeder.group_attributes),
 
   {name: 'Region Oberland',
-   parent_id: states[1].id }.merge(contacts),
+   parent_id: states[1].id }.merge(seeder.group_attributes),
 )
 
 flocks = Group::Flock.seed(:name, :parent_id,
@@ -179,21 +161,7 @@ flocks = Group::Flock.seed(:name, :parent_id,
 )
 
 flocks.each do |s|
-  SocialAccount.seed(:contactable_id, :contactable_type, :label,
-    { contactable_id:   s.id,
-      contactable_type: 'Group',
-      name:             'info@flocks.ch',
-      label:            'E-Mail',
-      public:           true }
-  )
-
-  PhoneNumber.seed(:contactable_id, :contactable_type, :label,
-    { contactable_id:   s.id,
-      contactable_type: 'Group',
-      number:           Faker::PhoneNumber.phone_number,
-      label:            Settings.phone_number.predefined_labels.first,
-      public:           true },
-  )
+  seeder.seed_social_accounts(s)
 end
 
 Group::ChildGroup.seed(:name, :parent_id,
