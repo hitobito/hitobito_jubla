@@ -37,7 +37,7 @@ seeder.encrypted_password = BCrypt::Password.create("jub42la", cost: 1)
 
 seeder.seed_all_roles
 
-root = Group.root
+root = Group::FederalBoard.first
 devs.each do |name, email|
   seeder.seed_developer(name, email, root, Group::FederalBoard::Member)
 end
