@@ -3,7 +3,7 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-- entry.used?(:honorary) do
+#honorary{style: element_visible(entry.klass.attr_used?(:honorary))}
   = f.labeled(:honorary, 'Beschäftigung') do
     = f.label(:honorary_true, class: 'radio inline') do
       = f.radio_button(:honorary, true)
@@ -13,5 +13,5 @@
       = f.radio_button(:honorary, false)
       = 'Vollamt'
 
-- entry.used?(:employment_percent) do
+#employment_percent{style: element_visible(entry.klass.attr_used?(:employment_percent))}
   = f.labeled_input_field :employment_percent
