@@ -5,6 +5,14 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
+# Lists grouped Membercounts per Census year.
+#
+# Old census subgroups contain only groups with existing member counts, to keep
+# consistency even when groups have been merged, moved or deleted.
+#
+# Current census subgroups contain descendants of group without deleted subgroups
+# at request time.
+#
 class CensusEvaluation::BaseController < ApplicationController
 
   include YearBasedPaging
@@ -17,6 +25,7 @@ class CensusEvaluation::BaseController < ApplicationController
 
   def index
     current_census
+
     @sub_groups = sub_groups
     @group_counts = counts_by_sub_group
     @total = group.census_total(year)
@@ -27,8 +36,20 @@ class CensusEvaluation::BaseController < ApplicationController
 
   def sub_groups
     if sub_group_type
-      group.descendants.where(type: sub_group_type.sti_name).reorder(:name)
+      scope = locked? ? Group.where(id: ids_of_subgroups_in_census) : group.descendants.without_deleted
+      scope.where(type: sub_group_type.sti_name).reorder(:name)
     end
+  end
+
+  def locked?
+    census = Census.find_by_year(year)
+    if census
+      census.finish_at < Date.today
+    end
+  end
+
+  def ids_of_subgroups_in_census
+    group.census_groups(year).pluck(:"#{sub_group_type.model_name.element}_id")
   end
 
   def counts_by_sub_group
@@ -48,7 +69,6 @@ class CensusEvaluation::BaseController < ApplicationController
   def current_census
     @current_census ||= Census.current
   end
-
 
   def default_year
     @default_year ||= current_census.try(:year) || current_year

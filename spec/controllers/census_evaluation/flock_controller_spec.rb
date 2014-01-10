@@ -9,13 +9,9 @@ require 'spec_helper'
 
 describe CensusEvaluation::FlockController do
 
-  let(:ch)   { groups(:ch) }
-  let(:be)   { groups(:be) }
   let(:bern) { groups(:bern) }
 
-
   before { sign_in(people(:top_leader)) }
-
 
   describe 'GET total' do
 
