@@ -33,7 +33,7 @@ describe CensusEvaluation::StateController do
     end
 
     it 'assigns sub groups' do
-      assigns(:sub_groups).should == [bern, thun]
+      assigns(:sub_groups).should == [bern, groups(:muri), thun]
     end
 
     it 'assigns details' do
@@ -80,8 +80,8 @@ describe CensusEvaluation::StateController do
     let(:group_to_delete)     { bern }
     let(:group_without_count) { muri }
 
-    context 'moving group' do
-      let(:target) { bern }
+    context 'when moving group' do
+      let(:target) { be }
       let(:innerroden)  { groups(:innerroden) }
 
       before do
@@ -89,11 +89,11 @@ describe CensusEvaluation::StateController do
         Group::Mover.new(innerroden).perform(target)
       end
 
-      context 'new parent' do
+      context 'in new parent' do
         include_examples 'sub_groups_examples' do
-          let(:before_deadline) { subgroups + [innerroden] }
-          let(:after_deadline)  { subgroups - [group_without_count] } # count written for old group
-          let(:next_year)    { subgroups + [innerroden] }
+          let(:current_census_groups) { subgroups + [innerroden] }
+          let(:past_census_groups)    { subgroups - [group_without_count] } # count written for old group
+          let(:future_census_groups)  { subgroups + [innerroden] }
         end
       end
 
@@ -102,9 +102,9 @@ describe CensusEvaluation::StateController do
         let(:ausserroden)     { groups(:ausserroden) }
 
         include_examples 'sub_groups_examples' do
-          let(:before_deadline) { [ausserroden] }
-          let(:after_deadline)  { [innerroden] }
-          let(:next_year)    { [ausserroden] }
+          let(:current_census_groups) { [ausserroden] }
+          let(:past_census_groups)    { [innerroden] }
+          let(:future_census_groups)  { [ausserroden] }
         end
       end
     end

@@ -3,7 +3,7 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-= render layout: 'member_counts/table_header', 
+= render layout: 'member_counts/table_header',
          locals: { before_columns: [''], after_columns: ['Total', '']} do
   - @sub_groups.each do |g|
     %tr
@@ -13,5 +13,5 @@
       %td.right= count_field(g, :child_f)
       %td.right= count_field(g, :child_m)
       %td.right= count_field(g, :total)
-      %td= render 'total_actions', group: g
+      %td.right= render 'total_actions', group: g
   = render 'total_row'

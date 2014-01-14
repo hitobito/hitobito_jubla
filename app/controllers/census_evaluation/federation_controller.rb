@@ -14,8 +14,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
 
     respond_to do |format|
       format.html do
-        @show_confirmation_ratios = (year == current_year)
-        @flocks = flock_confirmation_ratios if @show_confirmation_ratios
+        @flocks = flock_confirmation_ratios if current_census_year?
       end
       format.csv do
         authorize!(:create, Census)
