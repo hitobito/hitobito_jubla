@@ -12,8 +12,8 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
   def remind
     authorize!(:remind_census, group)
 
-    flock = sub_groups.find(params[:flock_id])
-    CensusReminderJob.new(current_user, current_census, flock).enqueue!
+    flock = evaluation.sub_groups.find(params[:flock_id])
+    CensusReminderJob.new(current_user, evaluation.current_census, flock).enqueue!
     notice = "Erinnerungsemail an #{flock.to_s} geschickt"
 
     respond_to do |format|

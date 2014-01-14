@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
-require_relative 'subgroups_shared_examples'
 
 describe CensusEvaluation::StateController do
 
@@ -33,7 +32,7 @@ describe CensusEvaluation::StateController do
     end
 
     it 'assigns sub groups' do
-      assigns(:sub_groups).should == [bern, groups(:muri), thun]
+      assigns(:sub_groups).should == [bern, muri, thun]
     end
 
     it 'assigns details' do
@@ -73,40 +72,4 @@ describe CensusEvaluation::StateController do
     end
   end
 
-  it_behaves_like 'sub_groups' do
-    let(:parent)              { be }
-    let(:census)              { censuses(:two_o_12) }
-    let(:subgroups)           { [bern, muri, thun] }
-    let(:group_to_delete)     { bern }
-    let(:group_without_count) { muri }
-
-    context 'when moving group' do
-      let(:target) { be }
-      let(:innerroden)  { groups(:innerroden) }
-
-      before do
-        Fabricate(:member_count, year: census.year, flock: groups(:innerroden), state: groups(:no))
-        Group::Mover.new(innerroden).perform(target)
-      end
-
-      context 'in new parent' do
-        include_examples 'sub_groups_examples' do
-          let(:current_census_groups) { subgroups + [innerroden] }
-          let(:past_census_groups)    { subgroups - [group_without_count] } # count written for old group
-          let(:future_census_groups)  { subgroups + [innerroden] }
-        end
-      end
-
-      context 'old parent' do
-        let(:parent)          { groups(:no) }
-        let(:ausserroden)     { groups(:ausserroden) }
-
-        include_examples 'sub_groups_examples' do
-          let(:current_census_groups) { [ausserroden] }
-          let(:past_census_groups)    { [innerroden] }
-          let(:future_census_groups)  { [ausserroden] }
-        end
-      end
-    end
-  end
 end

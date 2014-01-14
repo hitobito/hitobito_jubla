@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
-require_relative 'subgroups_shared_examples'
 
 describe CensusEvaluation::FederationController do
 
@@ -22,7 +21,7 @@ describe CensusEvaluation::FederationController do
   end
 
 
-  describe 'GET total' do
+  describe 'GET index' do
     before { Date.stub(today: censuses(:two_o_12).finish_at) }
 
     before { get :index, id: ch.id }
@@ -66,12 +65,4 @@ describe CensusEvaluation::FederationController do
     end
   end
 
-
-  it_behaves_like 'sub_groups' do
-    let(:parent)              { ch }
-    let(:census)              { censuses(:two_o_12) }
-    let(:subgroups)           { [be, no, zh] }
-    let(:group_to_delete)     { be }
-    let(:group_without_count) { zh }
-  end
 end

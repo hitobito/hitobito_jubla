@@ -14,7 +14,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
 
     respond_to do |format|
       format.html do
-        @flocks = flock_confirmation_ratios if current_census_year?
+        @flocks = flock_confirmation_ratios if evaluation.current_census_year?
       end
       format.csv do
         authorize!(:create, Census)
@@ -37,7 +37,8 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
   end
 
   def number_of_confirmations(state)
-    MemberCount.where(state_id: state.id, year: year).count(:flock_id, distinct: true)
+    MemberCount.where(state_id: state.id, year: year).
+                count(:flock_id, distinct: true)
   end
 
   def number_of_flocks(state)

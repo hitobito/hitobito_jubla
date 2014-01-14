@@ -31,6 +31,10 @@ class Group::Federation < Group
     MemberCount.details_for_federation(year)
   end
 
+  def member_counts
+    MemberCount.scoped
+  end
+
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
