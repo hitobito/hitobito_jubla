@@ -3,7 +3,7 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
--if @group_counts[group.id].nil? && current_census_year? && can?(:remind_census, @group)
+-if @group_counts[group.id].nil? && @evaluation.current_census_year? && can?(:remind_census, @group)
   = action_button('Erinnern',
                   census_state_remind_group_path(@group, flock_id: group.id),
                   nil,

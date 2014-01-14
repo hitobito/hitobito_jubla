@@ -23,59 +23,26 @@ class CensusEvaluation::BaseController < ApplicationController
 
   decorates :group, :sub_groups
 
-  helper_method :current_census_year?
 
   def index
-    current_census
-
-    @census = Census.where(year: year).first
-    @sub_groups = sub_groups
-    @group_counts = counts_by_sub_group
-    @total = group.census_total(year)
-    @details = group.census_details(year)
+    @sub_groups = evaluation.sub_groups
+    @group_counts = evaluation.counts_by_sub_group
+    @total = evaluation.total
+    @details = evaluation.details
   end
 
   private
 
-  def sub_groups
-    if sub_group_type
-      scope = locked? ? Group.where(id: ids_of_subgroups_in_census) : group.descendants.without_deleted
-      scope.where(type: sub_group_type.sti_name).reorder(:name)
-    end
-  end
-
-  def locked?
-    current_census && year < current_census.year
-  end
-
-  def ids_of_subgroups_in_census
-    group.census_groups(year).pluck(:"#{sub_group_type.model_name.element}_id")
-  end
-
-  def counts_by_sub_group
-    if sub_group_type
-      sub_group_field = :"#{sub_group_type.model_name.element}_id"
-      group.census_groups(year).inject({}) do |hash, count|
-        hash[count.send(sub_group_field)] = count
-        hash
-      end
-    end
+  def evaluation
+    @evaluation ||= CensusEvaluation.new(year, group, sub_group_type)
   end
 
   def group
     @group ||= Group.find(params[:id])
   end
 
-  def current_census
-    @current_census ||= Census.current
-  end
-
-  def current_census_year?
-    current_census && year == current_census.year
-  end
-
   def default_year
-    @default_year ||= current_census.try(:year) || current_year
+    @default_year ||= Census.current.try(:year) || current_year
   end
 
   def current_year

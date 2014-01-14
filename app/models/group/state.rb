@@ -13,6 +13,8 @@ class Group::State < Group
   self.contact_group_type = Group::StateAgency
   self.event_types = [Event, Event::Course]
 
+  has_many :member_counts
+
 
   class Coach < Jubla::Role::Coach
   end
