@@ -3,6 +3,6 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-- if can?(:create, Census)
+- if can?(:create, Census.new)
   = action_button('Neue Bestandesmeldungen einfordern', new_census_path, :bullhorn)
   = action_button('Export CSV Versicherungen', params.merge(format: :csv), :download)
