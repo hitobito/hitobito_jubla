@@ -10,7 +10,7 @@ module Jubla::GroupAbility
 
   included do
     on(Group) do
-      permission(:any).may(:evaluate_census).unless_external
+      permission(:any).may(:evaluate_census).if_member
 
       permission(:layer_full).
         may(:index_event_course_conditions).

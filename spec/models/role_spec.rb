@@ -12,7 +12,8 @@ describe Role do
   describe Group::Flock::Leader do
     subject { Group::Flock::Leader }
 
-    it { should_not be_affiliate }
+    it { should be_member }
+    it { should_not be_external }
     it { should be_visible_from_above }
     it { should_not be_external }
 
@@ -33,7 +34,8 @@ describe Role do
   describe Group::Region::External do
     subject { Group::Region::External }
 
-    it { should be_affiliate }
+    it { should be_external }
+    it { should_not be_member }
     it { should_not be_visible_from_above }
     it { should be_external }
 
@@ -48,7 +50,7 @@ describe Role do
   describe Group::Region::Alumnus do
     subject { Group::Region::Alumnus }
 
-    it { should be_affiliate }
+    it { should be_alumnus }
     it { should be_visible_from_above }
     it { should_not be_external }
 
