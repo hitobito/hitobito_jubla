@@ -66,10 +66,16 @@ module Jubla::Role
 
   end
 
+  def alumnus?
+    self.class.alumnus?
+  end
+
   private
 
   def create_alumnus_role
-    if self.class.member? && old_enough_to_archive? && last_role_for_person_in_group?
+    if (self.class.member? || self.class.alumnus?) &&
+        old_enough_to_archive? &&
+        last_role_for_person_in_group?
       role = alumnus_class.new
       role.person = person
       role.group = group

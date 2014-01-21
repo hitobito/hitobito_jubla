@@ -52,8 +52,6 @@ module HitobitoJubla
       ### helpers
       # add more active_for urls to main navigation
       NavigationHelper::MAIN['Admin'][:active_for] << 'event_camp_kinds'
-
-      FilterNavigation::People.send :include, Jubla::FilterNavigation::People
     end
 
     initializer 'jubla.add_settings' do |app|

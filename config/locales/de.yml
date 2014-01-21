@@ -226,6 +226,11 @@ de:
       role:
         employment_percent: Stellenprozente
         honorary: Ehrenamt
+        class:
+          kind:
+            alumnus:
+              one: Ehemalig
+              other: Ehemalige
 
       census:
         year: Jahr
