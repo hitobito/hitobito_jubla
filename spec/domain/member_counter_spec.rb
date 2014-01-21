@@ -28,7 +28,7 @@ describe MemberCounter do
     old.destroy # soft delete role, create alumnus
   end
 
-  it 'flock has affiliate and deleted people as well' do
+  it 'flock has external and deleted people as well' do
     flock.people.count.should == 5
     Person.joins(:roles).where(roles: { group_id: flock.id }).count.should == 6
   end

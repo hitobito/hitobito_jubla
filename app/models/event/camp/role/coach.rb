@@ -9,8 +9,8 @@ module Event::Camp::Role
   class Coach < ::Event::Role
 
     self.permissions = [:contact_data]
-    self.restricted = true
-    self.affiliate = true
+
+    self.kind = nil
 
   end
 end
