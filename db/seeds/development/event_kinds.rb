@@ -5,47 +5,117 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-quali_kinds = QualificationKind.seed(:label,
- {label: 'Experte',
+quali_kinds = QualificationKind.seed(:id,
+ {id: 1,
   validity: 2},
 
- {label: 'Gruppenleitung',
+ {id: 2,
   validity: 2},
 
- {label: 'Scharleitung',
+ {id: 3,
   validity: 2},
 
- {label: 'SLRG Brevet',
+ {id: 4,
   validity: nil},
 
- {label: 'Lagerleitung',
+ {id: 5,
   validity: 2},
 
- {label: 'Kursleitung',
+ {id: 6,
   validity: 2}
 )
 
-Event::Kind.seed(:short_name,
- {label: 'Scharleiterkurs',
+QualificationKind::Translation.seed(:qualification_kind_id, :locale,
+  {qualification_kind_id: quali_kinds[0].id,
+   locale: 'de',
+   label: 'Experte'},
+
+  {qualification_kind_id: quali_kinds[1].id,
+   locale: 'de',
+   label: 'Gruppenleitung'},
+
+  {qualification_kind_id: quali_kinds[2].id,
+   locale: 'de',
+   label: 'Scharleitung'},
+
+  {qualification_kind_id: quali_kinds[3].id,
+   locale: 'de',
+   label: 'SLRG Brevet'},
+
+  {qualification_kind_id: quali_kinds[4].id,
+   locale: 'de',
+   label: 'Lagerleitung'},
+
+  {qualification_kind_id: quali_kinds[5].id,
+   locale: 'de',
+   label: 'Kursleitung'}
+)
+
+event_kinds = Event::Kind.seed(:id,
+ {id: 1,
+  label: 'Scharleiterkurs',
   short_name: 'SLK',
   qualification_kind_ids: [quali_kinds[2].id]},
 
- {label: 'Gruppenleiterkurs',
+ {id: 2,
+  label: 'Gruppenleiterkurs',
   short_name: 'GLK',
   qualification_kind_ids: [quali_kinds[1].id]},
 
- {label: 'Coachkurs',
+ {id: 3,
+  label: 'Coachkurs',
   short_name: 'CK'},
 
- {label: 'Grundkurs',
+ {id: 4,
+  label: 'Grundkurs',
   short_name: 'GK'},
 
- {label: 'Fortbildungskurs',
+ {id: 5,
+  label: 'Fortbildungskurs',
   short_name: 'FK'},
 
- {label: 'Vereinsadmin',
+ {id: 6,
+  label: 'Vereinsadmin',
   short_name: 'VA'},
 
- {label: 'Einstufungstest',
+ {id: 7,
+  label: 'Einstufungstest',
   short_name: 'ET'}
+)
+
+Event::Kind::Translation.seed(:event_kind_id, :locale,
+  {event_kind_id: event_kinds[0].id,
+   locale: 'de',
+   label: 'Scharleitungskurs',
+   short_name: 'SLK'},
+
+  {event_kind_id: event_kinds[1].id,
+   locale: 'de',
+   label: 'Gruppenleitungskurs',
+   short_name: 'GLK'},
+
+  {event_kind_id: event_kinds[2].id,
+   locale: 'de',
+   label: 'Coachkurs',
+   short_name: 'CK'},
+
+  {event_kind_id: event_kinds[3].id,
+   locale: 'de',
+   label: 'Grundkurs',
+   short_name: 'GK'},
+
+  {event_kind_id: event_kinds[4].id,
+   locale: 'de',
+   label: 'Fortbildungskurs',
+   short_name: 'FK'},
+
+  {event_kind_id: event_kinds[5].id,
+   locale: 'de',
+   label: 'Vereinsadmin',
+   short_name: 'VA'},
+
+  {event_kind_id: event_kinds[6].id,
+   locale: 'de',
+   label: 'Einstufungstest',
+   short_name: 'ET'},
 )

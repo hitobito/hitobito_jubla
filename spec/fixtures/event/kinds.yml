@@ -4,16 +4,11 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 flock:
-  label: 'Scharleiterkurs'
-  short_name: 'SLK'
   qualification_kinds: flock
-  
+
 group:
-  label: 'Gruppenleiterkurs'
-  short_name: 'GLK'
   qualification_kinds: group
- 
+
 coach:
-  label: 'Coachkurs'
-  short_name: 'CK'
+  qualification_kinds: nil
 
