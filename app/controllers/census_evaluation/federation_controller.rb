@@ -42,7 +42,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
   end
 
   def number_of_flocks(state)
-    state.descendants.where(type: Group::Flock.sti_name).count
+    state.descendants.without_deleted.where(type: Group::Flock.sti_name).count
   end
 
 end
