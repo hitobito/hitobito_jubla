@@ -53,34 +53,21 @@ QualificationKind::Translation.seed(:qualification_kind_id, :locale,
 
 event_kinds = Event::Kind.seed(:id,
  {id: 1,
-  label: 'Scharleiterkurs',
-  short_name: 'SLK',
   qualification_kind_ids: [quali_kinds[2].id]},
 
  {id: 2,
-  label: 'Gruppenleiterkurs',
-  short_name: 'GLK',
   qualification_kind_ids: [quali_kinds[1].id]},
 
- {id: 3,
-  label: 'Coachkurs',
-  short_name: 'CK'},
+ {id: 3},
 
- {id: 4,
-  label: 'Grundkurs',
-  short_name: 'GK'},
+ {id: 4},
 
  {id: 5,
-  label: 'Fortbildungskurs',
-  short_name: 'FK'},
+  prolongation_ids: [quali_kinds[1].id, quali_kinds[2].id]},
 
- {id: 6,
-  label: 'Vereinsadmin',
-  short_name: 'VA'},
+ {id: 6},
 
- {id: 7,
-  label: 'Einstufungstest',
-  short_name: 'ET'}
+ {id: 7}
 )
 
 Event::Kind::Translation.seed(:event_kind_id, :locale,
