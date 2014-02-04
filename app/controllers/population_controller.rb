@@ -13,22 +13,13 @@ class PopulationController < ApplicationController
 
 
   def index
+    @member_counter = MemberCounter.new(Time.zone.now.year, flock)
     @groups = load_groups
     @people_by_group = load_people_by_group
     @people_data_complete = people_data_complete?
   end
 
   private
-
-  def load_people(groups)
-    Person.joins(:roles).
-           where(roles: { group_id: groups.collect(&:id), deleted_at: nil }).
-           members.
-           preload_groups.
-           uniq.
-           order_by_role.
-           order_by_name
-  end
 
   def flock
     @group ||= Group::Flock.find(params[:id])
@@ -40,7 +31,7 @@ class PopulationController < ApplicationController
 
   def load_people_by_group
     @groups.each_with_object({}) do |group, hash|
-      hash[group] = PersonDecorator.decorate(load_people([group]))
+      hash[group] = PersonDecorator.decorate(load_people(group))
     end
   end
 
@@ -48,6 +39,14 @@ class PopulationController < ApplicationController
     @people_by_group.values.flatten.all? do |p|
       p.birthday.present? && p.gender.present?
     end
+  end
+
+  def load_people(group)
+    @member_counter.members.
+                    where(roles: { group_id: group }).
+                    preload_groups.
+                    order_by_role.
+                    order_by_name
   end
 
   def authorize

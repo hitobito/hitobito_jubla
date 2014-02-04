@@ -22,6 +22,8 @@ describe MemberCounter do
     Fabricate(Group::ChildGroup::Child.name, group: asterix, person: Fabricate(:person, gender: 'm', birthday: '1999-01-01'))
     Fabricate(Group::ChildGroup::Child.name, group: obelix, person: Fabricate(:person, gender: 'w', birthday: '1999-02-02'))
     # external roles, not counted
+    Fabricate(Group::SimpleGroup::Leader.name, group: groups(:fussball), person: Fabricate(:person, gender: 'm', birthday: '1981-01-01'))
+    Fabricate(Group::Flock::GroupAdmin.name, group: flock, person: Fabricate(:person, gender: 'w', birthday: '1982-01-01'))
     Fabricate(Group::ChildGroup::External.name, group: obelix, person: Fabricate(:person, gender: 'm', birthday: '1971-01-01'))
     Fabricate(Group::Flock::Coach.name, group: flock, person: Fabricate(:person, gender: 'w', birthday: '1972-01-01'))
     old = Fabricate(Group::Flock::Guide.name, group: flock, person: Fabricate(:person, gender: 'w', birthday: '1977-03-01'), created_at: 2.years.ago)
@@ -29,8 +31,8 @@ describe MemberCounter do
   end
 
   it 'flock has external and deleted people as well' do
-    flock.people.count.should == 5
-    Person.joins(:roles).where(roles: { group_id: flock.id }).count.should == 6
+    flock.people.count.should == 6
+    Person.joins(:roles).where(roles: { group_id: flock.id }).count.should == 7
   end
 
   context 'instance' do
