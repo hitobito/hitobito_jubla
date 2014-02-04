@@ -7,6 +7,22 @@
 
 class MemberCounter
 
+  # Ordered mapping of which roles count in which field.
+  # If a role from a field appearing first exists, this
+  # one is counted, even if other roles exist as well.
+  # E.g. Person has roles Group::Biber::Mitleitung and
+  # Group::Pio::Pio => counted as :leiter
+  #
+  # Roles not appearing here are not counted at all.
+  ROLE_MAPPING =
+    { leader: [Group::Flock::Leader,
+               Group::Flock::CampLeader,
+               Group::Flock::President,
+               Group::Flock::Treasurer,
+               Group::Flock::Guide,
+               Group::ChildGroup::Leader],
+      child:  [Group::ChildGroup::Child]}
+
   attr_reader :year, :flock
 
   class << self
@@ -22,6 +38,10 @@ class MemberCounter
 
     def current_counts?(flock, census = Census.current)
       census && new(census.year, flock).exists?
+    end
+
+    def counted_roles
+      ROLE_MAPPING.values.flatten
     end
   end
 
@@ -53,16 +73,16 @@ class MemberCounter
 
   def members
     Person.joins(:roles).
-           includes(:roles).
-           where(roles: { group_id: flock.self_and_descendants, deleted_at: nil }).
-           members.
+           where(roles: { group_id: flock.self_and_descendants,
+                          type: self.class.counted_roles.collect(&:sti_name),
+                          deleted_at: nil }).
            uniq
   end
 
   private
 
   def members_by_year
-    members.group_by { |p| p.birthday.try(:year) }
+    members.includes(:roles).group_by { |p| p.birthday.try(:year) }
   end
 
   def new_member_count(born_in)
@@ -81,22 +101,16 @@ class MemberCounter
   end
 
   def count_field(person)
-    if person.roles.any? { |r| r.kind_of?(Group::ChildGroup::Child) }
-      if person.male?
-         :child_m
-      else
-         :child_f
-      end
-    else
-      if person.male?
-         :leader_m
-      else
-         :leader_f
+    ROLE_MAPPING.each do |field, roles|
+      if (person.roles.collect(&:class) & roles).present?
+        return person.male? ? :"#{field}_m" : :"#{field}_f"
       end
     end
+    nil
   end
 
   def increment(count, field)
+    return unless field
     val = count.send(field)
     count.send("#{field}=", val ? val + 1 : 1)
   end
