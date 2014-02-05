@@ -50,11 +50,13 @@ describe Event::QualificationsController, type: :controller do
       it { should have(2).items }
 
       it 'should have links' do
-        dom.should have_selector("#event_participation_#{participant_1.id} td:first a")
+        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector("a")
+        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector("a")
       end
 
       it 'should have icons' do
-        dom.should have_selector("#event_participation_#{participant_1.id} td:first .icon-minus")
+        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector(".icon-ok.disabled")
+        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector(".icon-remove.disabled")
       end
 
       it 'should not have message' do
@@ -79,7 +81,7 @@ describe Event::QualificationsController, type: :controller do
       end
 
       it 'should have icons' do
-        dom.should have_selector("#event_participation_#{participant_1.id} td:first .icon-minus")
+        dom.should have_selector("#event_participation_#{participant_1.id} td:first .icon-remove")
       end
     end
   end
@@ -88,7 +90,7 @@ describe Event::QualificationsController, type: :controller do
     context 'in open state' do
       before { put :update, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
 
-      subject { Event::Qualifier.for(participant_1).qualifications }
+      subject { obtained_qualifications }
 
       it { should have(1).item }
       it { should render_template('qualification') }
@@ -98,7 +100,7 @@ describe Event::QualificationsController, type: :controller do
       before { event.update_column(:state, 'closed') }
       before { put :update, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
 
-      subject { Event::Qualifier.for(participant_1).qualifications }
+      subject { obtained_qualifications }
 
       it { should have(0).items }
       it { should render_template('qualification') }
@@ -114,7 +116,7 @@ describe Event::QualificationsController, type: :controller do
     context 'in open state' do
       before { delete :destroy, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
 
-      subject { Event::Qualifier.for(participant_1).qualifications }
+      subject { obtained_qualifications }
 
       it { should have(0).item }
       it { should render_template('qualification') }
@@ -124,11 +126,18 @@ describe Event::QualificationsController, type: :controller do
       before { event.update_column(:state, 'closed') }
       before { delete :destroy, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
 
-      subject { Event::Qualifier.for(participant_1).qualifications }
+      subject { obtained_qualifications }
 
       it { should have(1).items }
       it { should render_template('qualification') }
     end
+
+  end
+
+
+  def obtained_qualifications
+    q = Event::Qualifier.for(participant_1)
+    q.send(:obtained, q.send(:qualification_kinds))
   end
 
 end
