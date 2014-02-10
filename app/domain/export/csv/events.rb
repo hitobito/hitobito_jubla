@@ -5,8 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-module Export
-  module Courses
+module Export::Csv
+  module Events
 
     class JublaList < List
       def initialize(courses)
@@ -48,7 +48,7 @@ module Export
 
     # Override the export method used in controller
     def self.export_list(courses)
-      Export::Csv::Generator.new(Export::Courses::JublaList.new(courses)).csv
+      Export::Csv::Generator.new(Export::Events::JublaList.new(courses)).csv
     end
 
   end

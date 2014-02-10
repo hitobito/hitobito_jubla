@@ -6,11 +6,11 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
-describe Export::CensusFlock do
+describe Export::Csv::CensusFlock do
 
-  let(:census_flock) { Export::CensusFlock.new(2012) }
+  let(:census_flock) { Export::Csv::CensusFlock.new(2012) }
   describe '.headers' do
-    subject { Export::CensusFlock }
+    subject { Export::Csv::CensusFlock }
 
     its(:labels) do should eq ['Name', 'Kontakt Vorname', 'Kontakt Nachname', 'Adresse', 'PLZ', 'Ort',
                                'Jubla Versicherung', 'Jubla Vollkasko', 'Leitende', 'Kinder'] end

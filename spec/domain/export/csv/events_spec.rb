@@ -6,17 +6,18 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
-describe Export::Courses do
+
+describe Export::Csv::Events do
 
   let(:person) { Fabricate.build(:person_with_address_and_phone, j_s_number: 123) }
   let(:advisor) { Fabricate(:person_with_address_and_phone, j_s_number: 123) }
   let(:course) { Fabricate.build(:course, contact: person, state: :application_open, advisor_id: advisor.id) }
   let(:contactable_keys) { [:name, :address, :zip_code, :town, :email, :phone_numbers, :j_s_number] }
 
-  context Export::Courses::JublaList do
+  context Export::Csv::Events::JublaList do
 
     context 'used labels' do
-      let(:list) { Export::Courses::JublaList.new(double('courses', map: [])) }
+      let(:list) { Export::Csv::Events::JublaList.new(double('courses', map: [])) }
       subject { list.labels }
 
       its(:keys) { should include(*[:advisor_name, :advisor_address, :advisor_zip_code, :advisor_town, :advisor_email, :advisor_phone_numbers]) }
@@ -24,9 +25,9 @@ describe Export::Courses do
     end
   end
 
-  context Export::Courses::JublaRow do
+  context Export::Csv::Events::JublaRow do
     let(:list) { OpenStruct.new(max_dates: 3, contactable_keys: contactable_keys) }
-    let(:row) { Export::Courses::JublaRow.new(course, list) }
+    let(:row) { Export::Csv::Events::JublaRow.new(course, list) }
 
     subject { OpenStruct.new(row.hash) }
 

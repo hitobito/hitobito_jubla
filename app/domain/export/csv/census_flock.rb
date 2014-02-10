@@ -5,10 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'csv'
-require 'ostruct'
 
-module Export
+module Export::Csv
   class CensusFlock < Struct.new(:year)
 
     class << self
@@ -85,11 +83,7 @@ module Export
     end
 
     def null_member_count
-      OpenStruct.new(leader: nil, child: nil)
-    end
-
-    def options
-      { col_sep: Settings.csv.separator.strip }
+      Struct.new(:leader, :child).new(nil, nil)
     end
 
   end

@@ -26,7 +26,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
   private
 
   def csv
-    Export::Csv::Generator.new(Export::CensusFlock.new(year)).csv
+    Export::Csv::Generator.new(Export::Csv::CensusFlock.new(year)).csv
   end
 
   def flock_confirmation_ratios
