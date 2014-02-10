@@ -7,42 +7,21 @@
 
 
 module Export::Csv
-  class CensusFlock < Struct.new(:year)
+  class CensusFlock < Export::Csv::Base
 
-    class << self
-      def headers
-        { name: human(:name),
-          contact_first_name: 'Kontakt Vorname',
-          contact_last_name: 'Kontakt Nachname',
-          address: human(:address),
-          zip_code: human(:zip_code),
-          town: human(:town) ,
-          jubla_insurance: human(:jubla_insurance),
-          jubla_full_coverage: human(:jubla_full_coverage),
-          leader_count: 'Leitende',
-          child_count: 'Kinder' }
-      end
-
-      def labels
-        headers.values
-      end
-
-      private
-
-      def human(attr)
-        Group::Flock.human_attribute_name(attr)
+    class Row < Export::Csv::Base::Row
+      def fetch(attr)
+        entry.fetch(attr)
       end
     end
 
-    def items
-      @items ||= build_items
-    end
 
-    def to_csv(generator)
-      generator << self.class.labels
-      items.each do |item|
-        generator << item.values
-      end
+    self.model_class = Group::Flock
+    self.row_class = Row
+
+    def initialize(year)
+      @year = year
+      super(build_items)
     end
 
     private
@@ -66,7 +45,7 @@ module Export::Csv
     end
 
     def query_member_counts
-      ::MemberCount.totals(year).group(:flock_id)
+      ::MemberCount.totals(@year).group(:flock_id)
     end
 
     def build_item(flock, member_count)
@@ -80,6 +59,19 @@ module Export::Csv
         jubla_full_coverage: flock.jubla_full_coverage ? 'ja' : 'nein',
         leader_count: member_count.leader,
         child_count: member_count.child }
+    end
+
+    def build_attribute_labels
+      { name: human_attribute(:name),
+        contact_first_name: 'Kontakt Vorname',
+        contact_last_name: 'Kontakt Nachname',
+        address: human_attribute(:address),
+        zip_code: human_attribute(:zip_code),
+        town: human_attribute(:town) ,
+        jubla_insurance: human_attribute(:jubla_insurance),
+        jubla_full_coverage: human_attribute(:jubla_full_coverage),
+        leader_count: 'Leitende',
+        child_count: 'Kinder' }
     end
 
     def null_member_count

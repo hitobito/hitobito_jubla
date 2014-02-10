@@ -18,7 +18,7 @@ describe Export::Csv::Events do
 
     context 'used labels' do
       let(:list) { Export::Csv::Events::JublaList.new(double('courses', map: [])) }
-      subject { list.labels }
+      subject { list.attribute_labels }
 
       its(:keys) { should include(*[:advisor_name, :advisor_address, :advisor_zip_code, :advisor_town, :advisor_email, :advisor_phone_numbers]) }
       its(:values) { should include(*['LKB Name', 'LKB Adresse', 'LKB PLZ', 'LKB Ort', 'LKB E-Mail', 'LKB Telefonnummern']) }
@@ -27,14 +27,12 @@ describe Export::Csv::Events do
 
   context Export::Csv::Events::JublaRow do
     let(:list) { OpenStruct.new(max_dates: 3, contactable_keys: contactable_keys) }
-    let(:row) { Export::Csv::Events::JublaRow.new(course, list) }
+    let(:row) { Export::Csv::Events::JublaRow.new(course) }
 
-    subject { OpenStruct.new(row.hash) }
-
-    its(:state) { should eq 'Offen zur Anmeldung' }
-    its(:contact_j_s_number) { should eq 123 }
-    its(:advisor_name) { should eq advisor.to_s }
-    its(:advisor_j_s_number) { should eq '123' } # varchar in db
+    it { row.fetch(:state).should eq 'Offen zur Anmeldung' }
+    it { row.fetch(:contact_j_s_number).should eq 123 }
+    it { row.fetch(:advisor_name).should eq advisor.to_s }
+    it { row.fetch(:advisor_j_s_number).should eq '123' } # varchar in db
   end
 
 end
