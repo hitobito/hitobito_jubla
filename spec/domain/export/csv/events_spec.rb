@@ -14,10 +14,10 @@ describe Export::Csv::Events do
   let(:course) { Fabricate.build(:course, contact: person, state: :application_open, advisor_id: advisor.id) }
   let(:contactable_keys) { [:name, :address, :zip_code, :town, :email, :phone_numbers, :j_s_number] }
 
-  context Export::Csv::Events::JublaList do
+  context Export::Csv::Events::List do
 
     context 'used labels' do
-      let(:list) { Export::Csv::Events::JublaList.new(double('courses', map: [])) }
+      let(:list) { Export::Csv::Events::List.new(double('courses', map: [])) }
       subject { list.attribute_labels }
 
       its(:keys) { should include(*[:advisor_name, :advisor_address, :advisor_zip_code, :advisor_town, :advisor_email, :advisor_phone_numbers]) }
@@ -25,9 +25,9 @@ describe Export::Csv::Events do
     end
   end
 
-  context Export::Csv::Events::JublaRow do
+  context Export::Csv::Events::Row do
     let(:list) { OpenStruct.new(max_dates: 3, contactable_keys: contactable_keys) }
-    let(:row) { Export::Csv::Events::JublaRow.new(course) }
+    let(:row) { Export::Csv::Events::Row.new(course) }
 
     it { row.fetch(:state).should eq 'Offen zur Anmeldung' }
     it { row.fetch(:contact_j_s_number).should eq 123 }

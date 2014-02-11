@@ -38,6 +38,10 @@ module HitobitoJubla
       # load this class after all abilities have been defined
       Ability.store.register Event::Course::ConditionAbility
 
+      # domain
+      Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
+      Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
+
       ### controllers
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
