@@ -27,8 +27,7 @@ describe PopulationController do
 
     describe 'groups' do
       subject { assigns(:groups) }
-
-      it { should == [flock, groups(:asterix), groups(:obelix), groups(:fussball)] }
+      it { should == [flock, groups(:asterix), groups(:obelix)] }
     end
 
     describe 'people by group' do
