@@ -21,7 +21,7 @@ describe PopulationController, type: :controller do
 
     it 'does not show any approveable content if there is no current census' do
       get :index, id: be.id
-      dom.all('#content h2').count.should eq 4
+      dom.all('#content h2').count.should eq 3
       dom.should have_no_selector('a', text: 'Bestand bestätigen')
       dom.should have_no_selector('.alert.alert-info.approveable')
       dom.should have_no_selector('.alert.alert-alert.approveable')
