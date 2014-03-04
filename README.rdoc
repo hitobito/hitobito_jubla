@@ -134,4 +134,4 @@ Additional features include member census, camps and course conditions.
     * Extern: []
     * Versandadresse: []
          
-(Output of rake hitobito:permissions)
+(Output of rake app:hitobito:roles)
