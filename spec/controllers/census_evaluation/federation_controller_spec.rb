@@ -46,7 +46,7 @@ describe CensusEvaluation::FederationController do
         be.id => { confirmed: 2, total: 3 },
         no.id => { confirmed: 1, total: 2 },
         zh.id => { confirmed: 0, total: 0 },
-      }.with_indifferent_access
+      }
     end
 
      it 'assigns details' do

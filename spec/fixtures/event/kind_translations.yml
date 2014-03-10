@@ -1,5 +1,5 @@
 flock_de:
-  event_kind_id: <%= ActiveRecord::Fixtures.identify(:flock) %>
+  event_kind_id: <%= ActiveRecord::FixtureSet.identify(:flock) %>
   locale: de
   label: Scharleiterkurs
   short_name: SLK
@@ -7,7 +7,7 @@ flock_de:
   updated_at: <%= Time.zone.now %>
 
 group_de:
-  event_kind_id: <%= ActiveRecord::Fixtures.identify(:group) %>
+  event_kind_id: <%= ActiveRecord::FixtureSet.identify(:group) %>
   locale: de
   label: Gruppenleiterkurs
   short_name: GLK
@@ -15,7 +15,7 @@ group_de:
   updated_at: <%= Time.zone.now %>
 
 coach_de:
-  event_kind_id: <%= ActiveRecord::Fixtures.identify(:coach) %>
+  event_kind_id: <%= ActiveRecord::FixtureSet.identify(:coach) %>
   locale: de
   label: Coachkurs
   short_name: CK

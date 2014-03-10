@@ -24,7 +24,7 @@ describe EventsController do
       it 'creates new event course with dates,advisor' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 dates_attributes: [date],
                                 contact_id: contact.id,
                                 advisor_id: advisor.id,
@@ -46,7 +46,7 @@ describe EventsController do
       it 'creates new event course without contact,advisor' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 contact_id: '',
                                 advisor_id: '',
                                 dates_attributes: [date],
@@ -66,7 +66,7 @@ describe EventsController do
       it 'should set application contact if only one is available' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 dates_attributes: [date],
                                 type: 'Event::Course' },
                       group_id: group.id
@@ -96,7 +96,7 @@ describe EventsController do
       it 'creates new event camp with dates,coach' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 dates_attributes: [date],
                                 contact_id: contact.id,
                                 coach_id: coach.id,

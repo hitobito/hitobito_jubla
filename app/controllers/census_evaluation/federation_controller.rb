@@ -38,7 +38,8 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
 
   def number_of_confirmations(state)
     MemberCount.where(state_id: state.id, year: year).
-                count(:flock_id, distinct: true)
+                distinct.
+                count(:flock_id)
   end
 
   def number_of_flocks(state)
