@@ -1,0 +1,7 @@
+- if event.qualification_possible?
+  %td.issue
+    = p.issue_action(@group)
+  %td.revoke
+    = p.revoke_action(@group)
+- else
+  %td.center= icon(p.qualified? ? :ok : :remove)
