@@ -17,7 +17,7 @@ class Group::RegionalBoard < Group
   end
 
   class President < Member
-    attr_accessible :employment_percent, :honorary
+    self.used_attributes += [:employment_percent, :honorary]
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin

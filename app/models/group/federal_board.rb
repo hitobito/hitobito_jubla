@@ -11,11 +11,11 @@ class Group::FederalBoard < Group
   class Member < Jubla::Role::Member
     self.permissions = [:admin, :layer_full, :contact_data]
 
-    attr_accessible :employment_percent
+    self.used_attributes += [:employment_percent]
   end
 
   class President < Member
-    attr_accessible :honorary
+    self.used_attributes += [:honorary]
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin

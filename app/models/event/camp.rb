@@ -12,7 +12,7 @@ class Event::Camp < Event
   require_dependency 'event/camp/kind'
 
 
-  attr_accessible :number, :coach_id, :kind_id
+  self.used_attributes += [:number, :coach_id, :kind_id]
 
   self.kind_class = Event::Camp::Kind
 

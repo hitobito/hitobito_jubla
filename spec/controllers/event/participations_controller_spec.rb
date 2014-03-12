@@ -60,7 +60,7 @@ describe Event::ParticipationsController do
 
     def create(*roles)
       roles.map do |role_class|
-        role = Fabricate(:event_role, type: role_class.name.to_sym)
+        role = Fabricate(:event_role, type: role_class.sti_name)
         Fabricate(:event_participation, event: course, roles: [role], active: true)
       end
     end

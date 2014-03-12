@@ -21,12 +21,10 @@ module HitobitoJubla
     # extend application classes here
     config.to_prepare do
       ### models
-      Person.send :include, Jubla::Person
       Group.send  :include, Jubla::Group
       Role.send   :include, Jubla::Role
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
-      Event::Kind.send :include, Jubla::Event::Kind
 
       ### abilities
       EventAbility.send :include, Jubla::EventAbility
@@ -43,6 +41,12 @@ module HitobitoJubla
       Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
 
       ### controllers
+      PeopleController.permitted_attrs += [
+        :name_mother, :name_father, :nationality, :profession, :bank_account,
+        :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number ]
+      Event::Camp::KindsController # load before Event::KindsController
+      Event::KindsController.permitted_attrs += [:j_s_label]
+
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController

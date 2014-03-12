@@ -6,7 +6,10 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class Event::Course::ConditionsController < SimpleCrudController
+
   self.nesting = Group
+
+  self.permitted_attrs = [:content, :label]
 
   helper_method :group
 

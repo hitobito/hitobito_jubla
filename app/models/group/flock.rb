@@ -17,10 +17,10 @@ class Group::Flock < Group
 
   AVAILABLE_KINDS = %w(Jungwacht Blauring Jubla)
 
-  attr_accessible :bank_account, :parish, :kind, :unsexed, :clairongarde, :founding_year
-  attr_accessible *(accessible_attributes.to_a +
-                    [:jubla_insurance, :jubla_full_coverage, :coach_id, :advisor_id]),
-                  as: :superior
+
+  self.used_attributes += [:bank_account, :parish, :kind, :unsexed, :clairongarde, :founding_year,
+                           :jubla_insurance, :jubla_full_coverage, :coach_id, :advisor_id]
+  self.superior_attributes += [:jubla_insurance, :jubla_full_coverage, :coach_id, :advisor_id]
 
 
   has_many :member_counts
@@ -85,7 +85,7 @@ class Group::Flock < Group
   class President < ::Role
     self.permissions = [:layer_read, :contact_data]
 
-    attr_accessible :employment_percent, :honorary
+    self.used_attributes += [:employment_percent, :honorary]
   end
 
   # Leiter

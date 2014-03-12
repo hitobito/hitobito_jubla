@@ -13,6 +13,9 @@ class Group::State < Group
   self.contact_group_type = Group::StateAgency
   self.event_types = [Event, Event::Course]
 
+  self.used_attributes += [:jubla_insurance, :jubla_full_coverage]
+  self.superior_attributes += [:jubla_insurance, :jubla_full_coverage]
+
   has_many :member_counts
 
 
@@ -41,8 +44,6 @@ class Group::State < Group
            Group::Region,
            Group::Flock
 
-
-  attr_accessible *(accessible_attributes.to_a + [:jubla_insurance, :jubla_full_coverage]), as: :superior
 
   def census_total(year)
     MemberCount.total_by_states(year).where(state_id: id).first
