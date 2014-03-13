@@ -23,7 +23,7 @@ shared_examples 'sub_groups' do
     context 'for future census' do
       before do
         Census.create!(year: 2100,
-                       start_at: Date.new(2100,1,1))
+                       start_at: Date.new(2100, 1, 1))
         get :index, id: parent.id, year: 2100
       end
 

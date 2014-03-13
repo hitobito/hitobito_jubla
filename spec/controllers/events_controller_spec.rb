@@ -12,7 +12,7 @@ describe EventsController do
   context 'event_course' do
 
     let(:group) { groups(:ch) }
-    let(:date)  {{ label: 'foo', start_at_date: Date.today, finish_at_date: Date.today }}
+    let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
 
     before { sign_in(people(:top_leader)) }
 
@@ -89,7 +89,7 @@ describe EventsController do
     context 'create with coach' do
 
       let(:group) { groups(:innerroden) }
-      let(:date)  {{ label: 'foo', start_at_date: Date.today, finish_at_date: Date.today }}
+      let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
       let(:contact) { Person.first }
       let(:coach) { Person.last }
 
@@ -119,7 +119,7 @@ describe EventsController do
     context '#new with default coach' do
 
       let(:flock) { groups(:innerroden) }
-      let(:date)  {{ label: 'foo', start_at_date: Date.today, finish_at_date: Date.today }}
+      let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
       let(:coach) { people(:top_leader) }
 
       it '#new event camp it should set default coach' do

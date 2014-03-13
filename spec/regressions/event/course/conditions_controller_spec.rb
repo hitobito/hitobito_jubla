@@ -14,7 +14,7 @@ describe Event::Course::ConditionsController, type: :controller do
 
   let(:group) { groups(:ch) }
   let(:test_entry) { group.course_conditions.create!(label: 'foo', content: 'bar') }
-  let(:test_entry_attrs) { { label: 'some label', content: 'some more content' }}
+  let(:test_entry_attrs) { { label: 'some label', content: 'some more content' } }
   let(:scope_params) {  { group_id: group.id } }
 
   before do
