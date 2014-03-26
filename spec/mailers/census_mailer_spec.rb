@@ -20,7 +20,12 @@ describe CensusMailer do
   subject { mail }
 
   describe '#invitation' do
-    let(:mail) { CensusMailer.invitation(census, ['test@example.com', 'test2@example.com']) }
+    let(:recipients) do
+      [Fabricate.build(:person, email: 'test@example.com', first_name: 'firsty'),
+       Fabricate.build(:person, email: 'test2@example.com', first_name: 'lasty'),
+       Fabricate.build(:person, email: ' ', first_name: 'blanky')]
+    end
+    let(:mail) { CensusMailer.invitation(census, recipients) }
 
     its(:subject) { should == 'Bestandesmeldung ausfüllen' }
     its(:to)      { should == ['noreply@localhost'] }

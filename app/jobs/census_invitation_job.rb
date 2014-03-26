@@ -25,9 +25,7 @@ class CensusInvitationJob < BaseJob
   def recipients
     Person.joins(:roles).
            where(roles: { type: RECIPIENT_ROLES.collect(&:sti_name), deleted_at: nil }).
-           uniq.
-           pluck(:email).
-           compact
+           uniq
   end
 
   def census

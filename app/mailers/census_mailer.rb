@@ -21,7 +21,7 @@ class CensusMailer < ActionMailer::Base
       'census-url'      => "<a href=\"#{census_url(flock)}\">#{census_url(flock)}</a>"
     }
 
-    mail to: recipients.collect(&:email),
+    mail to: Person.mailing_emails_for(recipients),
          from: sender,
          subject: content.subject do |format|
       format.html { render text: content.body_with_values(values) }
@@ -33,7 +33,7 @@ class CensusMailer < ActionMailer::Base
     values = { 'due-date' => due_date(census) }
 
     mail to: Settings.email.mass_recipient,
-         bcc: recipients,
+         bcc: Person.mailing_emails_for(recipients),
          subject: content.subject do |format|
       format.html { render text: content.body_with_values(values) }
     end
