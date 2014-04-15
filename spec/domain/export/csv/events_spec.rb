@@ -21,7 +21,7 @@ describe Export::Csv::Events do
       subject { list.attribute_labels }
 
       its(:keys) { should include(*[:advisor_name, :advisor_address, :advisor_zip_code, :advisor_town, :advisor_email, :advisor_phone_numbers]) }
-      its(:values) { should include(*['LKB Name', 'LKB Adresse', 'LKB PLZ', 'LKB Ort', 'LKB E-Mail', 'LKB Telefonnummern']) }
+      its(:values) { should include(*['LKB Name', 'LKB Adresse', 'LKB PLZ', 'LKB Ort', 'LKB Haupt-E-Mail', 'LKB Telefonnummern']) }
     end
   end
 
