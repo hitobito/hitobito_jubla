@@ -277,3 +277,7 @@ de:
 
       event/kind:
         j_s_label: J+S Bezeichnung
+
+  groups:
+    tabs:
+      statistics: Statistik

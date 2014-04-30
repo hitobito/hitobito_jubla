@@ -60,6 +60,7 @@ module HitobitoJubla
       ### helpers
       # add more active_for urls to main navigation
       NavigationHelper::MAIN[:admin][:active_for] << 'event_camp_kinds'
+      Sheet::Group.send :include, Jubla::Sheet::Group
     end
 
     initializer 'jubla.add_settings' do |app|
