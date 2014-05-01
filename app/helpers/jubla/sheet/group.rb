@@ -16,7 +16,7 @@ module Jubla::Sheet::Group
                        group.kind_of?(Group::Flock) && view.can?(:approve_population, group)
                      end),
 
-      Sheet::Tab.new('group.tabs.statistics',
+      Sheet::Tab.new('Statistik',
                      :census_evaluation_path,
                      alt: [:censuses_tab_path, :group_member_counts_path],
                      if: ->(view, group) do
