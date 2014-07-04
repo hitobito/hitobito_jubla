@@ -12,9 +12,8 @@ describe Role do
   describe Group::Flock::Leader do
     subject { Group::Flock::Leader }
 
-    it { should_not be_affiliate }
+    it { should be_member }
     it { should be_visible_from_above }
-    it { should_not be_external }
 
     its(:permissions) { should ==  [:layer_full, :contact_data, :approve_applications] }
 
@@ -33,9 +32,9 @@ describe Role do
   describe Group::Region::External do
     subject { Group::Region::External }
 
-    it { should be_affiliate }
+    its(:kind) { should == :external }
+    it { should_not be_member }
     it { should_not be_visible_from_above }
-    it { should be_external }
 
     its(:permissions) { should ==  [] }
 
@@ -48,9 +47,9 @@ describe Role do
   describe Group::Region::Alumnus do
     subject { Group::Region::Alumnus }
 
-    it { should be_affiliate }
+    it { should be_alumnus }
+    it { should_not be_member }
     it { should be_visible_from_above }
-    it { should_not be_external }
 
     its(:permissions) { should ==  [:group_read] }
 

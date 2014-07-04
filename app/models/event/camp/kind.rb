@@ -24,8 +24,6 @@ class Event::Camp
     acts_as_paranoid
     extend Paranoia::RegularScope
 
-    attr_accessible :label
-
     has_many :events
 
     ### INSTANCE METHODS

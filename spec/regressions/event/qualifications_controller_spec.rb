@@ -12,7 +12,7 @@ describe Event::QualificationsController, type: :controller do
   render_views
 
   let(:event) do
-    event = Fabricate(:jubla_course, kind: Event::Kind.find_by_short_name('SLK'))
+    event = Fabricate(:jubla_course, kind: Event::Kind.where(short_name: 'SLK').first)
     event.dates.create!(start_at: 10.days.ago, finish_at: 5.days.ago)
     event
   end
@@ -50,13 +50,13 @@ describe Event::QualificationsController, type: :controller do
       it { should have(2).items }
 
       it 'should have links' do
-        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector("a")
-        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector("a")
+        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector('a')
+        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector('a')
       end
 
       it 'should have icons' do
-        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector(".icon-ok.disabled")
-        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector(".icon-remove.disabled")
+        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector('.icon-ok.disabled')
+        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector('.icon-remove.disabled')
       end
 
       it 'should not have message' do

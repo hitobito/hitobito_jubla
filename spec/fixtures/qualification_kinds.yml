@@ -4,14 +4,11 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 expert:
-  label: 'Experte'
   validity: 2
-  
+
 group:
-  label: 'Gruppenleitung'
   validity: 2
-  
+
 flock:
-  label: 'Scharleitung'
   validity: 2
 

@@ -12,7 +12,7 @@ describe EventsController do
   context 'event_course' do
 
     let(:group) { groups(:ch) }
-    let(:date)  {{ label: 'foo', start_at_date: Date.today, finish_at_date: Date.today }}
+    let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
 
     before { sign_in(people(:top_leader)) }
 
@@ -24,7 +24,7 @@ describe EventsController do
       it 'creates new event course with dates,advisor' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 dates_attributes: [date],
                                 contact_id: contact.id,
                                 advisor_id: advisor.id,
@@ -46,7 +46,7 @@ describe EventsController do
       it 'creates new event course without contact,advisor' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 contact_id: '',
                                 advisor_id: '',
                                 dates_attributes: [date],
@@ -66,7 +66,7 @@ describe EventsController do
       it 'should set application contact if only one is available' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 dates_attributes: [date],
                                 type: 'Event::Course' },
                       group_id: group.id
@@ -89,14 +89,14 @@ describe EventsController do
     context 'create with coach' do
 
       let(:group) { groups(:innerroden) }
-      let(:date)  {{ label: 'foo', start_at_date: Date.today, finish_at_date: Date.today }}
+      let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
       let(:contact) { Person.first }
       let(:coach) { Person.last }
 
       it 'creates new event camp with dates,coach' do
         post :create, event: {  group_ids: [group.id],
                                 name: 'foo',
-                                kind_id: Event::Kind.find_by_short_name('SLK').id,
+                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                                 dates_attributes: [date],
                                 contact_id: contact.id,
                                 coach_id: coach.id,
@@ -119,7 +119,7 @@ describe EventsController do
     context '#new with default coach' do
 
       let(:flock) { groups(:innerroden) }
-      let(:date)  {{ label: 'foo', start_at_date: Date.today, finish_at_date: Date.today }}
+      let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
       let(:coach) { people(:top_leader) }
 
       it '#new event camp it should set default coach' do

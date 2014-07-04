@@ -1,0 +1,215 @@
+// _navigation.scss
+
+#page-navigation {
+  .nav {
+    font-family: $headingFontFamily;
+
+    li {
+
+      &.active a {
+        @include single-text-shadow(white, 0, 1px, 0);
+        color: $grayDark;
+        background-color: white;
+      }
+
+      a {
+        @include single-text-shadow(white, 0, 1px, 0);
+        color: $grayDark;
+
+        &:hover {
+          @include single-text-shadow($blueDark, 0, -1px, 0);
+          background-color: $blue;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.nav-sub {
+  & > .active > a:hover {
+    border-color: $blue;
+  }
+}
+
+.nav-pills > .active > a {
+  border-color: $grayLight;
+}
+.nav-pills > .active > a:hover,
+.nav-pills > .active > a:focus {
+  border-color: $grayLight;
+}
+
+
+// _typography.scss
+
+#{headings(all)} {
+  font-family: $headingFontFamily;
+  margin-top: 0;
+}
+
+h2 {
+  font-weight: normal;
+}
+
+.table-hover tbody tr:hover > td,
+.table-hover tbody tr:hover > th {
+  background-color: lighten($gray, 36%);
+}
+
+legend {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+
+// _layout.scss
+
+#page-header {
+  @include clearfix;
+  margin: 10px 0 0;
+  padding: 0;
+  background: none;
+
+  @include responsive(mediaTablet) {
+    margin: 10px 20px 0;
+  }
+
+  .options > ul > li > a { // header links on the right side
+    color: $blue;
+    &:hover {
+     color: $blueDark;
+    }
+  }
+}
+
+.brand {
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: none;
+  text-indent: 0;
+
+
+  // Retina version
+  @media
+    only screen and (-webkit-min-device-pixel-ratio : 2),
+    only screen and (min-device-pixel-ratio : 2) {
+      background: none;
+  }
+}
+
+#page {
+  padding: 0 0 30px 0;
+  margin: 20px 0 20px;
+  background: none;
+
+  @include responsive(mediaTablet) {
+    padding: 0 0 30px 0;
+    margin: 20px 20px;
+  }
+}
+
+.sheet.parent {
+  padding-bottom: 1px;
+  background: lighten($grayLighter, 1%);
+  @include single-box-shadow($grayDarker, 0, 2px, 8px);
+  .sheet {
+    margin: 0 -10px -30px 10px;
+    &.parent {
+      background: lighten($grayLighter, 3%);
+    }
+  }
+}
+
+#content {
+  @include single-box-shadow($grayDarker, 0, 2px, 8px);
+}
+
+#page-footer {
+  padding-top: $vSpace*2;
+
+  & > .container-fluid {
+    @include single-box-shadow($grayDarker, 0, 2px, 8px, 0, true);
+    background: $grayDark;
+  }
+}
+
+
+// _form.scss
+
+
+.btn {
+  @include buttonBackground($btnBackground, $btnBackgroundHighlight, $green, 0 1px 1px rgba(255,255,255,.75));
+  color: $green;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: darken($green, 10%);
+    @include single-text-shadow(none);
+    background-position: 0 -15px;
+    border: 1px solid $btnBorder;
+    *border: 0; // Remove the border to prevent IE7's black border on input:focus
+    border-bottom-color: darken($btnBorder, 10%);
+
+    // transition is only when going to hover/focus, otherwise the background
+    // behind the gradient (there for IE<=9 fallback) gets mismatched
+    @include transition(background-position .1s linear);
+
+    .icon,
+    [class^="icon-"],
+    [class*=" icon-"] {
+      background-image: image-url("glyphicons-halflings-green.png");
+    }
+
+    .caret {
+      border-top-color: $green;
+    }
+  }
+
+  .icon,
+  [class^="icon-"],
+  [class*=" icon-"] {
+    background-image: image-url("glyphicons-halflings-green-hover.png");
+  }
+
+  .caret {
+    border-top-color: $green;
+  }
+}
+
+.btn-primary {
+  @include buttonBackground($btnPrimaryBackground, $btnPrimaryBackgroundHighlight);
+}
+
+.btn-group.open .btn.dropdown-toggle {
+  background: $btnBackgroundHighlight;
+  color: darken($green, 10%);
+  border-color: $btnBackgroundHighlight;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  color: $grayDark;
+}
+
+.well {
+  border: 1px solid #e3e3e3;
+  background: whitesmoke;
+}

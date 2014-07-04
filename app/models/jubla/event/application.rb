@@ -8,7 +8,6 @@
 module Jubla::Event::Application
   extend ActiveSupport::Concern
 
-
   included do
     alias_method_chain :contact, :group_type
   end

@@ -7,8 +7,6 @@
 
 class MemberCount < ActiveRecord::Base
 
-  attr_accessible :leader_f, :leader_m, :child_f, :child_m
-
   belongs_to :flock, class_name: 'Group::Flock'
   belongs_to :state, class_name: 'Group::State'
 
@@ -73,7 +71,7 @@ class MemberCount < ActiveRecord::Base
     end
 
     def totals(year)
-      select('state_id, ' +
+      select('state_id, ' \
              'flock_id, ' +
              'born_in, ' +
              'SUM(leader_f) AS leader_f, ' +

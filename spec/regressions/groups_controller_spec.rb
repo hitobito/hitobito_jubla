@@ -24,7 +24,6 @@ describe GroupsController, type: :controller  do
   let(:dom) { Capybara::Node::Simple.new(response.body) }
 
   let(:default_attrs) { { name: 'dummy' } }
-  let(:mass_assignment_error) { ActiveModel::MassAssignmentSecurity::Error }
 
   describe_action :get, :edit, id: true do
     expected = [
@@ -100,11 +99,12 @@ describe GroupsController, type: :controller  do
         before { sign_in(send(user)) }
         it "#{super_attr_update ? "can" : "cannot"} update with #{extra_attrs}" do
           attrs = default_attrs.merge(extra_attrs)
+          put :update, id: send(group).id, group: attrs
           if super_attr_update
-            put :update, id: send(group).id, group: attrs
             assigns(:group).name.should eq 'dummy'
+            assigns(:group).jubla_insurance.should be_true if extra_attrs.present?
           else
-            expect { put :update, id: send(group).id, group: attrs }.to raise_error(mass_assignment_error)
+            assigns(:group).jubla_insurance.should be_false if extra_attrs.present?
           end
         end
       end
@@ -138,7 +138,8 @@ describe GroupsController, type: :controller  do
                 expect { post :create, group: attrs }.to raise_error(CanCan::AccessDenied)
               end.not_to change(Group, :count)
             else
-              expect { post :create, group: attrs }.to raise_error(mass_assignment_error)
+              post :create, group: attrs
+              assigns(:group).jubla_insurance.should be_false
             end
           end
         end

@@ -5,49 +5,30 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'csv'
-require 'ostruct'
 
-module Export
-  class CensusFlock < Struct.new(:year)
+module Export::Csv
+  class CensusFlock < Export::Csv::Base
 
-    class << self
-      def headers
-        { name: human(:name),
-          contact_first_name: 'Kontakt Vorname',
-          contact_last_name: 'Kontakt Nachname',
-          address: human(:address),
-          zip_code: human(:zip_code),
-          town: human(:town) ,
-          jubla_insurance: human(:jubla_insurance),
-          jubla_full_coverage: human(:jubla_full_coverage),
-          leader_count: 'Leitende',
-          child_count: 'Kinder' }
-      end
-
-      def labels
-        headers.values
-      end
-
-      private
-
-      def human(attr)
-        Group::Flock.human_attribute_name(attr)
+    class Row < Export::Csv::Base::Row
+      def fetch(attr)
+        entry.fetch(attr)
       end
     end
 
-    def items
-      @items ||= build_items
-    end
 
-    def to_csv(generator)
-      generator << self.class.labels
-      items.each do |item|
-        generator << item.values
-      end
+    self.model_class = Group::Flock
+    self.row_class = Row
+
+    def initialize(year)
+      @year = year
+      super(build_items)
     end
 
     private
+
+    def values(entry)
+      entry.values
+    end
 
     def build_items
       member_counts = build_member_counts
@@ -68,7 +49,7 @@ module Export
     end
 
     def query_member_counts
-      ::MemberCount.totals(year).group(:flock_id)
+      ::MemberCount.totals(@year).group(:flock_id)
     end
 
     def build_item(flock, member_count)
@@ -78,18 +59,27 @@ module Export
         address: flock.address,
         zip_code: flock.zip_code,
         town: flock.town,
-        jubla_insurance: flock.jubla_insurance ? 'ja' : 'nein',
-        jubla_full_coverage: flock.jubla_full_coverage ? 'ja' : 'nein',
+        jubla_insurance: normalize(flock.jubla_insurance),
+        jubla_full_coverage: normalize(flock.jubla_full_coverage),
         leader_count: member_count.leader,
         child_count: member_count.child }
     end
 
-    def null_member_count
-      OpenStruct.new(leader: nil, child: nil)
+    def build_attribute_labels
+      { name: human_attribute(:name),
+        contact_first_name: 'Kontakt Vorname',
+        contact_last_name: 'Kontakt Nachname',
+        address: human_attribute(:address),
+        zip_code: human_attribute(:zip_code),
+        town: human_attribute(:town) ,
+        jubla_insurance: human_attribute(:jubla_insurance),
+        jubla_full_coverage: human_attribute(:jubla_full_coverage),
+        leader_count: 'Leitende',
+        child_count: 'Kinder' }
     end
 
-    def options
-      { col_sep: Settings.csv.separator.strip }
+    def null_member_count
+      Struct.new(:leader, :child).new(nil, nil)
     end
 
   end

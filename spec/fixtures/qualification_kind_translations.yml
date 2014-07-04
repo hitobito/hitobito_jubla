@@ -1,0 +1,20 @@
+expert_de:
+  qualification_kind_id: <%= ActiveRecord::FixtureSet.identify(:expert) %>
+  locale: de
+  label: Experte
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>
+
+group_de:
+  qualification_kind_id: <%= ActiveRecord::FixtureSet.identify(:group) %>
+  locale: de
+  label: Gruppenleitung
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>
+
+flock_de:
+  qualification_kind_id: <%= ActiveRecord::FixtureSet.identify(:flock) %>
+  locale: de
+  label: Scharleitung
+  created_at: <%= Time.zone.now %>
+  updated_at: <%= Time.zone.now %>

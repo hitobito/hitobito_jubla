@@ -9,20 +9,14 @@ module Jubla::Role
   extend ActiveSupport::Concern
 
   included do
-    class_attribute :alumnus
-    self.alumnus = false
-
-    Alumnus.alumnus = true
+    Role::Kinds << :alumnus
 
     after_destroy :create_alumnus_role
   end
 
-
   module ClassMethods
-
-    # An role external to a group, i.e. affiliate but not restricted
-    def external?
-      affiliate && !restricted && !alumnus
+    def alumnus?
+      kind == :alumnus
     end
   end
 
@@ -41,13 +35,13 @@ module Jubla::Role
   class External < ::Role
     self.permissions = []
     self.visible_from_above = false
-    self.affiliate = true
+    self.kind = :external
   end
 
   # Ehemalige
   class Alumnus < ::Role
     self.permissions = [:group_read]
-    self.affiliate = true
+    self.kind = :alumnus
   end
 
   # Common superclass for all J+S Coach roles
@@ -72,10 +66,16 @@ module Jubla::Role
 
   end
 
+  def alumnus?
+    self.class.alumnus?
+  end
+
   private
 
   def create_alumnus_role
-    if !self.class.external? && old_enough_to_archive? && last_role_for_person_in_group?
+    if (self.class.member? || self.class.alumnus?) &&
+        old_enough_to_archive? &&
+        last_role_for_person_in_group?
       role = alumnus_class.new
       role.person = person
       role.group = group

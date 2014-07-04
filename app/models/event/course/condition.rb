@@ -7,8 +7,6 @@
 
 class Event::Course::Condition < ActiveRecord::Base
 
-  attr_accessible :content, :label
-
   belongs_to :group
 
   validate :assert_group_can_have_courses

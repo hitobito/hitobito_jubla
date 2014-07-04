@@ -17,7 +17,7 @@ class Group::StateBoard < Group
   end
 
   class President < Member
-    attr_accessible :employment_percent, :honorary
+    self.used_attributes += [:employment_percent, :honorary]
   end
 
   # Stellenbegleitung

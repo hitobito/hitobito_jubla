@@ -32,7 +32,7 @@ class Group::Federation < Group
   end
 
   def member_counts
-    MemberCount.scoped
+    MemberCount.all
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin

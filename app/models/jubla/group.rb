@@ -11,7 +11,7 @@ module Jubla::Group
   included do
     class_attribute :contact_group_type
 
-    attr_accessible :bank_account
+    self.used_attributes += [:bank_account]
 
     has_many :course_conditions, class_name: '::Event::Course::Condition', dependent: :destroy
 

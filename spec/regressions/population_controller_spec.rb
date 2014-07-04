@@ -33,7 +33,7 @@ describe PopulationController, type: :controller do
       dom.all('#content h2').count.should eq 1
       dom.should have_selector('a', text: 'Bestand bestätigen')
       dom.should have_content('Bitte ergänze')
-      dom.find('a', text: 'Bestand').should have_selector('span', text: '!')
+      dom.all('a', text: 'Bestand').first.should have_selector('span', text: '!')
     end
   end
 end

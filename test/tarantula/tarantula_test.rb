@@ -8,7 +8,7 @@
 require 'test_helper'
 require 'relevance/tarantula'
 
-class TarantulaTest < ActionController::IntegrationTest
+class TarantulaTest < ActionDispatch::IntegrationTest
   # Load enough test data to ensure that there's a link to every page in your
   # application. Doing so allows Tarantula to follow those links and crawl
   # every page.  For many applications, you can load a decent data set by
@@ -37,7 +37,12 @@ class TarantulaTest < ActionController::IntegrationTest
 
     t = tarantula_crawler(self)
     # t.handlers << Relevance::Tarantula::TidyHandler.new
-    t.skip_uri_patterns << /year=201[04-9]/
+
+    # some links use example.com as a domain, allow them
+    t.skip_uri_patterns.delete(/^http/)
+    t.skip_uri_patterns << /^http(?!:\/\/www\.example\.com)/
+    # only 2012 - 2014
+    t.skip_uri_patterns << /year=201[0-15-9]/
     t.skip_uri_patterns << /year=200[0-9]/
     t.skip_uri_patterns << /year=202[0-9]/
     t.skip_uri_patterns << /users\/sign_out/
@@ -74,7 +79,7 @@ class TarantulaTest < ActionController::IntegrationTest
     # delete qualification is not allowed after role was removed from person
     t.allow_500_for /groups\/\d+\/people\/\d+\/qualifications\/\d+$/
 
-    t.crawl_timeout = 10.minutes
+    t.crawl_timeout = 20.minutes
     t.crawl
   end
 end

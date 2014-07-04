@@ -18,7 +18,11 @@ class MemberCountsController < ApplicationController
   def update
     authorize!(:update_member_counts, flock)
 
-    counts = member_counts.update(params[:member_count].keys, params[:member_count].values)
+    counts = member_counts.update(
+              params[:member_count].keys,
+              params[:member_count].values.collect do |attrs|
+                ActionController::Parameters.new(attrs).permit(:leader_f, :leader_m, :child_f, :child_m)
+              end)
     with_errors = counts.select { |c| c.errors.present? }
     if with_errors.blank?
       flash[:notice] = "Die Mitgliederzahlen für #{year} wurden erfolgreich gespeichert"

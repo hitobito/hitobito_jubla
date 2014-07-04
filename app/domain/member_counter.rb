@@ -21,7 +21,7 @@ class MemberCounter
                Group::Flock::Treasurer,
                Group::Flock::Guide,
                Group::ChildGroup::Leader],
-      child:  [Group::ChildGroup::Child]}
+      child:  [Group::ChildGroup::Child] }
 
   attr_reader :year, :flock
 

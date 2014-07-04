@@ -226,6 +226,11 @@ de:
       role:
         employment_percent: Stellenprozente
         honorary: Ehrenamt
+        class:
+          kind:
+            alumnus:
+              one: Ehemalig
+              other: Ehemalige
 
       census:
         year: Jahr
@@ -272,3 +277,7 @@ de:
 
       event/kind:
         j_s_label: J+S Bezeichnung
+
+  groups:
+    tabs:
+      statistics: Statistik

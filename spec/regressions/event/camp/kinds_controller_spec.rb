@@ -18,7 +18,7 @@ describe Event::Camp::KindsController, type: :controller do
   end
 
   let(:test_entry) { event_camp_kinds(:house_kids) }
-  let(:test_entry_attrs) { { label: 'The ultimate summer camp' }}
+  let(:test_entry_attrs) { { label: 'The ultimate summer camp' } }
 
   before { sign_in(people(:top_leader)) }
 

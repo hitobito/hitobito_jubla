@@ -1,8 +1,12 @@
+inherit_from: ../hitobito/.rubocop.yml
+
 AllCops:
   RunRailsCops: true
-  Excludes:
-    - db/**
-    - config/**
-    - script/**
-    - spec/**
-    - test/**
+  Exclude:
+    - Rakefile
+    - db/**/*
+    - config/**/*
+    - bin/**/*
+    - tmp/**/*
+    - spec/**/*
+    - test/**/*

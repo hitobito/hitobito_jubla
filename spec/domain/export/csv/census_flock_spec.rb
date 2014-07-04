@@ -6,11 +6,11 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
-describe Export::CensusFlock do
+describe Export::Csv::CensusFlock do
 
-  let(:census_flock) { Export::CensusFlock.new(2012) }
+  let(:census_flock) { Export::Csv::CensusFlock.new(2012) }
   describe '.headers' do
-    subject { Export::CensusFlock }
+    subject { census_flock }
 
     its(:labels) do should eq ['Name', 'Kontakt Vorname', 'Kontakt Nachname', 'Adresse', 'PLZ', 'Ort',
                                'Jubla Versicherung', 'Jubla Vollkasko', 'Leitende', 'Kinder'] end
@@ -18,20 +18,18 @@ describe Export::CensusFlock do
 
   describe 'census flock' do
 
-    subject { census_flock }
-
-    it { should have(5).items }
+    it { census_flock.list.should have(5).items }
 
     it 'orders by groups.lft and name' do
-      subject.items[0][:name].should eq 'Ausserroden'
-      subject.items[1][:name].should eq 'Bern'
+      census_flock.list[0][:name].should eq 'Ausserroden'
+      census_flock.list[1][:name].should eq 'Bern'
     end
   end
 
   describe 'mapped items' do
     let(:flock) { groups(:bern) }
 
-    subject { census_flock.items[1] }
+    subject { census_flock.list[1] }
 
     describe 'keys and values' do
 
@@ -39,7 +37,7 @@ describe Export::CensusFlock do
                                :jubla_insurance, :jubla_full_coverage, :leader_count, :child_count]  end
       its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, 'nein', 'nein', 5, 7] }
 
-      its(:values) { should have(census_flock.class.labels.size).items }
+      its(:values) { should have(census_flock.labels.size).items }
     end
 
     describe 'address, zip code and town' do

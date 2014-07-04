@@ -5,6 +5,7 @@ require "hitobito_jubla/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
+  # rubocop:disable SingleSpaceBeforeFirstArg
   s.name        = "hitobito_jubla"
   s.version     = HitobitoJubla::VERSION
   s.authors     = ["Pascal Zumkehr"]
@@ -12,7 +13,9 @@ Gem::Specification.new do |s|
   s.summary     = "Jubla organization specific features"
   s.description = "Jubla organization specific features"
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["Rakefile"]
-  #s.test_files = Dir["spec/**/*"]
+  s.files       = Dir["{app,config,db,lib}/**/*"] + ["Rakefile"]
 
+  # Do not specify test files due to too long file names
+  # s.test_files  = Dir["{test,spec}/**/*"]
+  # rubocop:enable SingleSpaceBeforeFirstArg
 end
