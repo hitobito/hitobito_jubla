@@ -56,7 +56,7 @@ class Group::Flock < Group
     ancestors.where(type: Group::State.sti_name).first
   end
 
-  def census_groups(year)
+  def census_groups(_year)
     []
   end
 
