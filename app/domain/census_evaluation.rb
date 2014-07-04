@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 class CensusEvaluation
 
   attr_reader :year, :group, :sub_group_type
