@@ -12,7 +12,7 @@ class Event::Camp::KindsController < SimpleCrudController
   private
 
   def list_entries
-    super.order(:deleted_at, :label)
+    super.list
   end
 
   class << self

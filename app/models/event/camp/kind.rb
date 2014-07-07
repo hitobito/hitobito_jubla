@@ -26,6 +26,10 @@ class Event::Camp
 
     has_many :events
 
+    def self.list
+      order(:deleted_at, :label)
+    end
+
     ### INSTANCE METHODS
     def to_s
       label
