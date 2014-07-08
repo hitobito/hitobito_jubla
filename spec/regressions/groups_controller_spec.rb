@@ -25,6 +25,31 @@ describe GroupsController, type: :controller  do
 
   let(:default_attrs) { { name: 'dummy' } }
 
+  describe_action :get, :show, id: true do
+    before { sign_in(bulei) }
+
+    context :json, perform_request: false do
+      it 'contains all jubla flock attrs' do
+        flock.update_attributes(founding_year: 1950, bank_account: '123-456')
+        get :show, id: flock.id, format: :json
+        json = JSON.parse(response.body)
+        group = json['groups'].first
+        group['founding_year'].should eq(1950)
+        group['bank_account'].should eq('123-456')
+        group.should have_key('unsexed')
+      end
+
+      it 'contains all jubla state attrs' do
+        get :show, id: state.id, format: :json
+        json = JSON.parse(response.body)
+        group = json['groups'].first
+        group.should have_key('bank_account')
+        group.should_not have_key('parish')
+        group.should_not have_key('unsexed')
+      end
+    end
+  end
+
   describe_action :get, :edit, id: true do
     expected = [
       [:leader, :flock, false],
