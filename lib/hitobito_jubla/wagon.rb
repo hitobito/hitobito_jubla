@@ -16,6 +16,7 @@ module HitobitoJubla
     config.autoload_paths += %W( #{config.root}/app/abilities
                                  #{config.root}/app/domain
                                  #{config.root}/app/jobs
+                                 #{config.root}/app/serializers
                                )
 
     # extend application classes here
@@ -35,6 +36,9 @@ module HitobitoJubla
 
       # load this class after all abilities have been defined
       Ability.store.register Event::Course::ConditionAbility
+
+      PersonSerializer.send :include, Jubla::PersonSerializer
+      GroupSerializer.send  :include, Jubla::GroupSerializer
 
       # domain
       Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
