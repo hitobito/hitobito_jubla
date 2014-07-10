@@ -43,6 +43,8 @@ module HitobitoJubla
       # domain
       Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
       Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
+      Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
+      Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
 
       ### controllers
       PeopleController.permitted_attrs += [

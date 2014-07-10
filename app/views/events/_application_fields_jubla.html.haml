@@ -6,3 +6,9 @@
 - entry.used?(:application_contact_id) do
   - if entry.multiple_contact_groups?
     = f.labeled_input_field(:application_contact_id, include_blank: "Bitte auswählen")
+
+
+= f.labeled_boolean_field(:signature, caption: t('.caption_signature'))
+= f.labeled_boolean_field(:signature_confirmation, caption: t('.caption_signature_confirmation'))
+= f.labeled_input_field(:signature_confirmation_text, value: entry.signature_confirmation_text ||  t('.signature_confirmation_text_default'))
+= f.labeled_input_field(:remarks, rows: 6, value: entry.remarks || t('.remarks_default_text'))

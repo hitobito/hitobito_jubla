@@ -7,3 +7,5 @@
   - if entry.application_contact.present?
     %dl.dl-horizontal
       = labeled('Anmeldung an', entry.application_contact.decorate.complete_contact)
+
+= render_attrs(entry, :signature, :signature_confirmation)
