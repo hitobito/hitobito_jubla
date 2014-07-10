@@ -63,3 +63,6 @@ role:
 census:
   default_finish_month: 10
   default_finish_day: 31
+
+people:
+  default_sort: role
