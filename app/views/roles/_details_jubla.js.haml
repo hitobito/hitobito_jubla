@@ -6,7 +6,7 @@
 - [:honorary, :employment_percent].each do |attr|
   - if @type.attr_used?(attr)
     $('##{attr}').show();
-    $('[name="role[#{attr}]"').prop('disabled', false);
+    $('[name="role[#{attr}]"]').prop('disabled', false);
   - else
     $('##{attr}').hide();
-    $('[name="role[#{attr}]"').prop('disabled', true);
+    $('[name="role[#{attr}]"]').prop('disabled', true);
