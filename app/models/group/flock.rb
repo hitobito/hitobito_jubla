@@ -113,6 +113,7 @@ class Group::Flock < Group
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin
+    self.permissions = [:layer_full]
   end
 
   class Alumnus < Jubla::Role::Alumnus
