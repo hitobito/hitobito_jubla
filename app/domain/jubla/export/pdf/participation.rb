@@ -36,7 +36,7 @@ module Jubla::Export::Pdf
 
     class Header < Export::Pdf::Participation::Header
       def image_path
-        Wagons.find('jubla').root.join('app/assets/images/logo_jubla.png')
+        HitobitoJubla::Wagon.root.join('app/assets/images/logo_jubla.png')
       end
     end
 
@@ -44,11 +44,25 @@ module Jubla::Export::Pdf
 
       def render_heading
         super
+        render_remarks if event.remarks?
         render_signature if event.signature?
         render_signature_confirmation if signature_confirmation?
       end
 
       private
+
+      def render_remarks
+        y = cursor
+
+        with_settings(line_width: 0.9, fill_color: 'cccccc') do
+          fill_and_stroke_rectangle [0, y], bounds.width, 70
+        end
+
+        pdf.bounding_box([0 + 5, y - 5], width: bounds.width, height: 65) do
+          shrinking_text_box event.remarks
+        end
+        move_down_line
+      end
 
       def render_signature_confirmation
         render_signature(event.signature_confirmation_text)
@@ -69,12 +83,16 @@ module Jubla::Export::Pdf
         [Event::Date.model_name.human,
          Event::Date.human_attribute_name(:location)].join(' / ')
       end
+
+      def label_with_dots(content)
+        text content
+        move_down_line
+        text '.' * 55
+      end
     end
 
 
     class Runner < Export::Pdf::Participation::Runner
-      Export::Pdf::Participation::Runner.stroke_bounds = true
-
       def sections
         [Header,
          PersonAndEvent,
