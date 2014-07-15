@@ -54,7 +54,7 @@ class TarantulaTest < ActionDispatch::IntegrationTest
     t.allow_404_for /groups$/
     t.allow_404_for /groups\/\d+\/roles$/
     t.allow_404_for /groups\/\d+\/roles\/\d+$/
-    t.allow_404_for /groups\/\d+\/people$/
+    t.allow_404_for /groups\/\d+\/people\/\d+$/
     t.allow_404_for /groups\/\d+\/merge$/
     t.allow_404_for /groups\/\d+\/move$/
     t.allow_404_for /groups\/\d+\/events$/
