@@ -109,7 +109,8 @@ describe Event::QualificationsController, type: :controller do
 
   describe 'DELETE destroy' do
     before do
-      participant_1.person.qualifications.create!(qualification_kind_id: event.kind.qualification_kind_ids.first,
+      id = event.kind.event_kind_qualification_kinds.first.qualification_kind_id
+      participant_1.person.qualifications.create!(qualification_kind_id: id,
                                                   start_at: event.qualification_date)
     end
 

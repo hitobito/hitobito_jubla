@@ -52,18 +52,15 @@ QualificationKind::Translation.seed(:qualification_kind_id, :locale,
 )
 
 event_kinds = Event::Kind.seed(:id,
- {id: 1,
-  qualification_kind_ids: [quali_kinds[2].id]},
+ {id: 1},
 
- {id: 2,
-  qualification_kind_ids: [quali_kinds[1].id]},
+ {id: 2},
 
  {id: 3},
 
  {id: 4},
 
- {id: 5,
-  prolongation_ids: [quali_kinds[1].id, quali_kinds[2].id]},
+ {id: 5},
 
  {id: 6},
 
@@ -105,4 +102,30 @@ Event::Kind::Translation.seed(:event_kind_id, :locale,
    locale: 'de',
    label: 'Einstufungstest',
    short_name: 'ET'},
+)
+
+Event::KindQualificationKind.seed(:id,
+  {id: 1,
+   event_kind_id: event_kinds[0].id,
+   qualification_kind_id: quali_kinds[2].id,
+   category: :qualification,
+   role: :participant},
+
+  {id: 2,
+   event_kind_id: event_kinds[1].id,
+   qualification_kind_id: quali_kinds[1].id,
+   category: :qualification,
+   role: :participant},
+
+  {id: 3,
+   event_kind_id: event_kinds[4].id,
+   qualification_kind_id: quali_kinds[1].id,
+   category: :prolongation,
+   role: :participant},
+
+  {id: 4,
+   event_kind_id: event_kinds[4].id,
+   qualification_kind_id: quali_kinds[2].id,
+   category: :prolongation,
+   role: :participant}
 )

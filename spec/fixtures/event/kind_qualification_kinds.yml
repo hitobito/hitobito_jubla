@@ -3,8 +3,14 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-flock: {}
+flock:
+  event_kind: flock
+  qualification_kind: flock
+  category: 'qualification'
+  role: 'participant'
 
-group: {}
-
-coach: {}
+group:
+  event_kind: group
+  qualification_kind: group
+  category: 'qualification'
+  role: 'participant'
