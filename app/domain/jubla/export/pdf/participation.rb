@@ -93,6 +93,23 @@ module Jubla::Export::Pdf
 
 
     class Runner < Export::Pdf::Participation::Runner
+
+      private
+
+      def customize(pdf)
+        pdf.font_families.update('Century Gothic' => {
+          normal: font_path.join('century-gothic.ttf'),
+          bold: font_path.join('century-gothic-b.ttf')
+        })
+
+        pdf.font 'Century Gothic'
+        pdf.font_size 9
+      end
+
+      def font_path
+        HitobitoJublaCi::Wagon.root.join('app/assets/fonts')
+      end
+
       def sections
         [Header,
          PersonAndEvent,
