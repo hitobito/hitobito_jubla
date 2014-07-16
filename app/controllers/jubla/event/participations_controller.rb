@@ -5,16 +5,15 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-module Jubla::Event::ParticipationDecorator
+module Jubla::Event::ParticipationsController
   extend ActiveSupport::Concern
 
   included do
-    alias_method_chain :person_location_information, :origins
+    alias_method_chain :load_entries, :origins
   end
 
-  def person_location_information_with_origins
-    origins = [person.originating_state, person.originating_flock].compact
-    origins.empty? ? person_location_information_without_origins : origins.join(', ')
+  def load_entries_with_origins
+    load_entries_without_origins.
+      includes(person: [:originating_flock, :originating_state])
   end
-
 end

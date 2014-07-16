@@ -11,3 +11,8 @@ de:
         signature_confirmation: Zweitunterschrift erforderlich
         signature_confirmation_text: Zweitunterschrift Von
         remarks: Anmeldebemerkungen
+      person:
+        originating_state: Kanton
+        originating_flock: Schar
+        originating_state_id: Kanton
+        originating_flock_id: Schar

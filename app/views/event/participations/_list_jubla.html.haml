@@ -1,0 +1,3 @@
+- if can?(:index_participations_details, @event)
+  - table.col(Person.human_attribute_name(:originating_state)) { |p| p.model.person.originating_state.to_s }
+  - table.col(Person.human_attribute_name(:originating_flock)) { |p| p.model.person.originating_flock.to_s }

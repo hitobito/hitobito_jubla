@@ -71,7 +71,6 @@ describe Role do
     end
   end
 
-
   context '#destroy' do
     let(:role) { Fabricate(role_class.name.to_s, group: groups(:bern), created_at: created_at) }
     let(:role_class) { Group::Flock::Leader }

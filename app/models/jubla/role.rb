@@ -12,6 +12,9 @@ module Jubla::Role
     Role::Kinds << :alumnus
 
     after_destroy :create_alumnus_role
+
+    after_save :set_person_origins
+    after_destroy :set_person_origins
   end
 
   module ClassMethods
@@ -71,6 +74,10 @@ module Jubla::Role
   end
 
   private
+
+  def set_person_origins
+    person.update_columns(GroupOriginator.new(person).to_h)
+  end
 
   def create_alumnus_role
     if (self.class.member? || self.class.alumnus?) &&

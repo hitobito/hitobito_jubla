@@ -24,6 +24,7 @@ module HitobitoJubla
       ### models
       Group.send  :include, Jubla::Group
       Role.send   :include, Jubla::Role
+      Person.send :include, Jubla::Person
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
 
@@ -55,6 +56,8 @@ module HitobitoJubla
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
+      Event::ApplicationMarketController.send :include, Jubla::Event::ApplicationMarketController
+      Event::ParticipationsController.send :include, Jubla::Event::ParticipationsController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
 
