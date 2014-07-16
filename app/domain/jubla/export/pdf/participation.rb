@@ -25,7 +25,7 @@ module Jubla::Export::Pdf
 
       def render_condition
         with_count(Event::Course::Condition.model_name.human) do
-          text event.condition.content
+          text event.condition.content, :inline_format => true
         end
       end
 
@@ -36,7 +36,7 @@ module Jubla::Export::Pdf
 
     class Header < Export::Pdf::Participation::Header
       def image_path
-        HitobitoJubla::Wagon.root.join('app/assets/images/logo_jubla.png')
+        HitobitoJubla::Wagon.root.join('app/assets/images/logo_jubla_plain.png')
       end
     end
 
@@ -58,7 +58,7 @@ module Jubla::Export::Pdf
           fill_and_stroke_rectangle [0, y], bounds.width, 70
         end
 
-        pdf.bounding_box([0 + 5, y - 5], width: bounds.width, height: 65) do
+        pdf.bounding_box([0 + 5, y - 5], width: bounds.width - 10, height: 65) do
           shrinking_text_box event.remarks
         end
         move_down_line
