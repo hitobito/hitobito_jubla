@@ -36,7 +36,7 @@ module Jubla::Export::Pdf
 
     class Header < Export::Pdf::Participation::Header
       def image_path
-        HitobitoJubla::Wagon.root.join('app/assets/images/logo_jubla_plain.png')
+        ::HitobitoJubla::Wagon.root.join('app/assets/images/logo_jubla_plain.png')
       end
     end
 
@@ -107,7 +107,7 @@ module Jubla::Export::Pdf
       end
 
       def font_path
-        HitobitoJublaCi::Wagon.root.join('app/assets/fonts')
+        ::HitobitoJublaCi::Wagon.root.join('app/assets/fonts')
       end
 
       def sections
