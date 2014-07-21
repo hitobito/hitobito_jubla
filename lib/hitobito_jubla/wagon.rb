@@ -49,7 +49,7 @@ module HitobitoJubla
 
       ### controllers
       PeopleController.permitted_attrs += [
-        :name_mother, :name_father, :nationality, :profession, :bank_account,
+        :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
       Event::Camp::KindsController # load before Event::KindsController
       Event::KindsController.permitted_attrs += [:j_s_label]
