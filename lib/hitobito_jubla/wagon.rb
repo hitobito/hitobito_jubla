@@ -47,6 +47,8 @@ module HitobitoJubla
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
 
+      Event::ParticipationFilter.send :include, Jubla::Event::ParticipationFilter
+
       ### controllers
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
@@ -57,7 +59,6 @@ module HitobitoJubla
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
       Event::ApplicationMarketController.send :include, Jubla::Event::ApplicationMarketController
-      Event::ParticipationsController.send :include, Jubla::Event::ParticipationsController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
 

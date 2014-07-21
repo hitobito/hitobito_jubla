@@ -1,3 +1,4 @@
+
 # encoding: utf-8
 
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
@@ -5,7 +6,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-module Jubla::Event::ParticipationsController
+module Jubla::Event::ParticipationFilter
   extend ActiveSupport::Concern
 
   included do
