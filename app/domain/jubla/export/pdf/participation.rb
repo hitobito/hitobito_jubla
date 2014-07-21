@@ -7,15 +7,28 @@
 
 module Jubla::Export::Pdf
   module Participation
+
+    # jubla_ci wagon is not present when running tarantula
+    JUBLA_CI = Wagons.find('jubla_ci')
+
     class PersonAndEvent < Export::Pdf::Participation::PersonAndEvent
 
-      private
+      class Person < Export::Pdf::Participation::PersonAndEvent::Person
+        def originating_groups
+          [person.originating_flock, person.originating_state]
+        end
+      end
+
+      self.person_section = Person
 
       def person_attributes
         super + [:j_s_number]
       end
+
     end
+
     class EventDetails < Export::Pdf::Participation::EventDetails
+
       def render
         super
         render_condition if condition?
@@ -32,12 +45,18 @@ module Jubla::Export::Pdf
       def condition?
         course? && event.condition.present?
       end
+
     end
 
     class Header < Export::Pdf::Participation::Header
-      def image_path
-        ::HitobitoJubla::Wagon.root.join('app/assets/images/logo_jubla_plain.png')
+
+      def render_image
+        if JUBLA_CI
+          image_path = JUBLA_CI.root.join('app/assets/images/logo_jubla_plain.png')
+          image image_path, at: [bounds.width - 60, cursor + 30], width: 60
+        end
       end
+
     end
 
     class Confirmation <  Export::Pdf::Participation::Confirmation
@@ -97,17 +116,17 @@ module Jubla::Export::Pdf
       private
 
       def customize(pdf)
-        pdf.font_families.update('Century Gothic' => {
-          normal: font_path.join('century-gothic.ttf'),
-          bold: font_path.join('century-gothic-b.ttf')
-        })
+        if JUBLA_CI
+          font_path = JUBLA_CI.root.join('app/assets/fonts')
 
-        pdf.font 'Century Gothic'
+          pdf.font_families.update('Century Gothic' => {
+            normal: font_path.join('century-gothic.ttf'),
+            bold: font_path.join('century-gothic-b.ttf')
+          })
+
+          pdf.font 'Century Gothic'
+        end
         pdf.font_size 9
-      end
-
-      def font_path
-        ::HitobitoJublaCi::Wagon.root.join('app/assets/fonts')
       end
 
       def sections
