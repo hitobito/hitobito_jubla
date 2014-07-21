@@ -18,8 +18,8 @@ describe Person do
   end
 
   it 'has origin flock and state for newly created roles' do
-    person.reload.originating_flock.should eq groups(:innerroden)
-    person.reload.originating_state.should eq groups(:no)
+    person.reload.originating_flock.should be_present
+    person.reload.originating_state.should be_present
   end
 
   it 'has updated origins when destroying roles' do
