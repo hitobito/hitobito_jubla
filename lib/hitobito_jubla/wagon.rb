@@ -54,13 +54,14 @@ module HitobitoJubla
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
       Event::Camp::KindsController # load before Event::KindsController
-      Event::KindsController.permitted_attrs += [:j_s_label]
+      Event::KindsController.permitted_attrs += [:j_s_label, :bsv_id]
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
       Event::ApplicationMarketController.send :include, Jubla::Event::ApplicationMarketController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
+      Event::ListsController.send :include, Jubla::Event::ListsController
 
       ### decorators
       Event::ParticipationDecorator.send :include, Jubla::Event::ParticipationDecorator

@@ -5,11 +5,18 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class AddRemarksAndSignatureToEvent < ActiveRecord::Migration
-  def change
-    add_column(:events, :signature, :boolean)
-    add_column(:events, :signature_confirmation, :boolean)
-    add_column(:events, :signature_confirmation_text, :string)
-    add_column(:events, :remarks, :text)
+require 'spec_helper'
+
+describe Event::ListsController do
+
+  before { sign_in(people(:top_leader)) }
+
+  context 'BSV export' do
+    render_views
+
+    it 'POST#create' do
+      get :courses, year: 2012, kind: 'bsv', format: :csv
+      response.body.should be_present
+    end
   end
 end

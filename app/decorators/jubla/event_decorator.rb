@@ -12,4 +12,24 @@ module Jubla::EventDecorator
     possible_contact_groups.count > 1 ? true : false
   end
 
+  def labeled_bsv_attr(key)
+    h.labeled(bsv_info.label(key), bsv_field(key))
+  end
+
+  private
+
+  def bsv_field(key)
+    value = bsv_info.send(key).to_s
+    value += " #{warning(key)}" if bsv_info.warnings[key]
+    value.html_safe
+  end
+
+  def warning(key)
+    content_tag(:i, '', class: 'icon icon-warning-sign', title: bsv_info.error(key))
+  end
+
+  def bsv_info
+    @bsv_info ||= Event::Course::BsvInfo.new(model)
+  end
+
 end

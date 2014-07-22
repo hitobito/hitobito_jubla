@@ -10,76 +10,49 @@ require 'spec_helper'
 describe EventsController do
 
   context 'event_course' do
-
     let(:group) { groups(:ch) }
     let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
+    let(:event) { assigns(:event) }
+
+    let(:event_attrs) { { group_ids: [group.id], name: 'foo',
+                          kind_id: Event::Kind.where(short_name: 'SLK').first.id,
+                          dates_attributes: [date], type: 'Event::Course' } }
+
 
     before { sign_in(people(:top_leader)) }
 
-    context 'create with advisor' do
-
-      let(:contact) { Person.first }
-      let(:advisor) { Person.last }
-
-      it 'creates new event course with dates,advisor' do
-        post :create, event: {  group_ids: [group.id],
-                                name: 'foo',
-                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
-                                dates_attributes: [date],
-                                contact_id: contact.id,
-                                advisor_id: advisor.id,
-                                type: 'Event::Course' },
-                      group_id: group.id
-
-
-        event = assigns(:event)
-
-        should redirect_to(group_event_path(group, event))
-
-        event.should be_persisted
-        event.dates.should have(1).item
-        event.dates.first.should be_persisted
-        event.contact.should eq contact
-        event.advisor.should eq advisor
-      end
-
-      it 'creates new event course without contact,advisor' do
-        post :create, event: {  group_ids: [group.id],
-                                name: 'foo',
-                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
-                                contact_id: '',
-                                advisor_id: '',
-                                dates_attributes: [date],
-                                type: 'Event::Course' },
-                      group_id: group.id
-
-        event = assigns(:event)
-
-        should redirect_to(group_event_path(group, event))
-        event.should be_persisted
-      end
-
+    it 'creates new event course with dates, advisor' do
+      post :create, event: event_attrs.merge(contact_id: Person.first, advisor_id: Person.last), group_id: group.id
+      event.dates.should have(1).item
+      event.dates.first.should be_persisted
+      event.contact.should eq Person.first
+      event.advisor.should eq Person.last
     end
 
-    context 'application contact' do
+    it 'creates new event course without contact, advisor' do
+      post :create, event: event_attrs.merge(contact_id: '', advisor_id: ''), group_id: group.id
 
-      it 'should set application contact if only one is available' do
-        post :create, event: {  group_ids: [group.id],
-                                name: 'foo',
-                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
-                                dates_attributes: [date],
-                                type: 'Event::Course' },
-                      group_id: group.id
-
-        event = assigns(:event)
-
-        event.application_contact.should eq event.possible_contact_groups.first
-        event.should be_persisted
-
-      end
-
+      event.contact.should_not be_present
+      event.advisor.should_not be_present
+      event.should be_persisted
     end
 
+    it 'should set application contact if only one is available' do
+      post :create, event: event_attrs, group_id: group.id
+
+      event.application_contact.should eq event.possible_contact_groups.first
+    end
+
+    it 'should set training days' do
+      post :create, event: event_attrs.merge(training_days: 5), group_id: group.id
+
+      event.training_days.should eq 5
+    end
+
+    after do
+      event.should be_persisted
+      should redirect_to(group_event_path(group, event))
+    end
   end
 
   context 'event_camp' do

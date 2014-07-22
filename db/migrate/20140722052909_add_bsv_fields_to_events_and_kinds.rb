@@ -5,11 +5,9 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class AddRemarksAndSignatureToEvent < ActiveRecord::Migration
+class AddBsvFieldsToEventsAndKinds < ActiveRecord::Migration
   def change
-    add_column(:events, :signature, :boolean)
-    add_column(:events, :signature_confirmation, :boolean)
-    add_column(:events, :signature_confirmation_text, :string)
-    add_column(:events, :remarks, :text)
+    add_column(:event_kinds, :bsv_id, :string)
+    add_column(:events, :training_days, :integer)
   end
 end

@@ -17,6 +17,12 @@ de:
         requirements_for_event_camp: Voraussetzungen für das Lager
 
 
+  event:
+    lists:
+      courses:
+        csv_export_button: Kursdatenliste
+        bsv_export_button: BSV Export
+      
   events:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
