@@ -46,6 +46,12 @@ module Jubla::Export::Pdf
         course? && event.condition.present?
       end
 
+      def requirements?
+        [event.application_conditions,
+         event_kind.try(:minimum_age), # Event::Camp::Kind has no minimum age
+         event_kind.qualification_kinds('precondition', 'participant')].any?(&:present?)
+      end
+
     end
 
     class Header < Export::Pdf::Participation::Header
