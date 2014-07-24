@@ -112,7 +112,7 @@ class Event::Course::BsvInfo
 
   def compute_warnings
     {
-      participants: (@participants_people.count - participants.to_i) > 0,
+      participants: @participants_people.map(&:birthday).any?(&:blank?),
       cantons: (@participants_people.count - cantons) > 0
     }
   end

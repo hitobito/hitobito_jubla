@@ -33,6 +33,7 @@ module HitobitoJubla
       Event::ParticipationAbility.send :include, Jubla::Event::ParticipationAbility
       Event::RoleAbility.send :include, Jubla::Event::RoleAbility
       GroupAbility.send :include, Jubla::GroupAbility
+      PersonAbility.send :include, Jubla::PersonAbility
       VariousAbility.send :include, Jubla::VariousAbility
 
       # load this class after all abilities have been defined

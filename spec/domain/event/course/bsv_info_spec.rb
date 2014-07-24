@@ -99,6 +99,7 @@ describe Event::Course::BsvInfo do
     end
 
     context 'warnings on participants' do
+      before { create(course.participant_type).person.update_attributes!(birthday: 35.years.ago, canton: 'BE') }
 
       it 'are not set if pariticpants have complete data' do
         people(:flock_leader_bern).update_attributes(birthday: Date.parse('1992-10-03'), canton: 'BE')
