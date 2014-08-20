@@ -18,30 +18,34 @@ $grayLight:             #D1D3D9 !default;
 $grayLighter:           #F1F2F5 !default;
 $white:                 #fff !default;
 
-// Accent colors
+// Colors
 // ----------------------------
 $blue:                  #014CBC !default;
 $blueDark:              #013888 !default; //#00173C
 $green:                 #026829 !default;
-$red:                   #A1090F !default;
+
 $purple:                $blue;
 $purpleDark:            darken($blue, 20%);
 
+$red:                   #A1090F !default;
+
+$textColor:             $grayDarker !default;
 $borderColor:           darken(#F1F2F5, 5%) !default;
 
-// Scaffolding
-// -------------------------
-$bodyBackground:        darken($grayLighter, 1.5%) !default; // $grayLighter ;
-$pageBackground:        $bodyBackground;
+$pageBackground:        darken($grayLighter, 1.5%) !default;
 $contentBackground:     $white;
-$textColor:             $grayDarker !default;
-$focusColor:            rgba(82,168,236,.6);
+$footerBackground:      $blue;
+$bodyBackground:        $pageBackground;
 
-// Links
-// -------------------------
+$focusColor:            rgba(82,168,236,.6);
 $shadowColor:           $grayLight;
 $linkColor:             $blue !default;
 $linkColorHover:        $blueDark !default;
+
+$footerColor:           $white;
+$footerColorHover:      $white;
+
+$tableColorHover:       lighten($purple, 50%);
 
 // Typography
 // -------------------------
@@ -50,10 +54,13 @@ $headingFontFamily:     "Century Gothic", $sansFontFamily;
 $baseFontFamily:        $sansFontFamily !default;
 $headingsFontWeight:    normal !default;    // instead of browser default, bold
 
+// Decoration
+// -------------------------
+$borderRadius:           0px;
+
 // Rhythm
 // -------------------------
 $vSpace:                24px;
-$borderRadius:           0px;
 
 
 // FLUID GRID
