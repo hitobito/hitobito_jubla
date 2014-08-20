@@ -4,6 +4,7 @@ AllCops:
   RunRailsCops: true
   Exclude:
     - Rakefile
+    - Guardfile
     - db/**/*
     - config/**/*
     - bin/**/*

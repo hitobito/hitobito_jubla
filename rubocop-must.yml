@@ -7,5 +7,7 @@ AllCops:
     - db/**/*
     - config/**/*
     - bin/**/*
+    - lib/jubla_ost/**/*
     - spec/**/*
     - test/**/*
+    - Guardfile
