@@ -7,16 +7,16 @@ de:
   event:
     lists:
       courses:
-        explanation: Hier werden Kurse deiner Region, deines Kantons und der Bundesebene, angezeigt. Andere Kurse findest du beim organisierenden Organ.
+        explanation: Angezeigt werden hier Kurse deines Kantons und der Bundesebene. Weitere Kurse findest du beim entsprechenden Kanton.
         csv_export_button: Kursdatenliste
         bsv_export_button: BSV Export
       events:
-        explanation: Hier werden Anlässe deiner Schar, deiner Region, deines Kantons und der Bundesebene, sowie von Gruppen, bei denen du Mitglied bist, angezeigt. Andere Anlässe findest du bei der organisierenden Gruppe.
+        explanation: Angezeigt werden hier Anlässe deiner Schar, deiner Regions- und Kantonsleitung, der Bundesebene, sowie von Gruppen bei welchen du Mitglied bist.
     participations:
       print:
         signature: Unterschrift
         requirements_for_event_camp: Voraussetzungen für das Lager
-      
+
   events:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
