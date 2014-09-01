@@ -40,7 +40,7 @@ class Event::Camp
       if events.exists?
         super
       else
-        destroy!
+        really_destroy!
       end
     end
   end

@@ -39,19 +39,19 @@ describe GroupOriginator do
 
     it 'most recent updated_at wins' do
       create([Group::Flock::Leader, groups(:innerroden), updated_at: 5.days.ago],
-            [Group::Flock::Leader, groups(:bern)])
+             [Group::Flock::Leader, groups(:bern)])
       assert_originating_groups flock: groups(:bern), state: groups(:be)
     end
 
     it 'flock takes precendence over childgroup' do
       create([Group::Flock::Leader, groups(:innerroden), updated_at: 5.days.ago],
-            [Group::ChildGroup::Child, groups(:asterix)])
+             [Group::ChildGroup::Child, groups(:asterix)])
       assert_originating_groups flock: groups(:innerroden), state: groups(:no)
     end
 
     it 'active childgroup overrides deleted flock' do
       create([Group::Flock::Leader, groups(:innerroden), deleted_at: 5.days.ago],
-            [Group::ChildGroup::Child, groups(:asterix)])
+             [Group::ChildGroup::Child, groups(:asterix)])
       assert_originating_groups flock: groups(:bern), state: groups(:be)
     end
 

@@ -66,7 +66,7 @@ module JublaOst
 
       def delete_default_groups(parent, type)
         parent.children.where(type: type.sti_name).each do |group|
-          group.destroy! unless group.people.exists?
+          group.really_destroy! unless group.people.exists?
         end
       end
 

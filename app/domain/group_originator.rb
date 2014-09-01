@@ -18,11 +18,10 @@ class GroupOriginator
                                            [Group::StateAgency::Leader]
 
 
-  attr_reader :person, :roles, :flock, :state
+  attr_reader :person, :flock, :state
 
   def initialize(person)
     @person = person
-    @roles = person.roles.order(:updated_at)
 
     @flock = find_with_deleted { |roles| find_flock(roles) || find_flock_via_childgroups(roles) }
     @state = find_with_deleted { |roles| find_state(roles) }
@@ -39,6 +38,10 @@ class GroupOriginator
   end
 
   private
+
+  def roles
+    person.roles.order(:updated_at)
+  end
 
   def find_with_deleted
     yield(roles) || yield(roles.with_deleted)

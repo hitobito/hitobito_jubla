@@ -23,7 +23,7 @@ describe Person do
   end
 
   it 'has updated origins when destroying roles' do
-    @innerroden.destroy!
+    @innerroden.really_destroy!
 
     person.reload.originating_flock.should eq groups(:bern)
     person.reload.originating_state.should eq groups(:be)
