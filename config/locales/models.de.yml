@@ -46,7 +46,7 @@ de:
           zg: Zug
           zh: Zürich
 
-        originating_state: Kanton
+        originating_state: Jublakanton
         originating_flock: Schar
-        originating_state_id: Kanton
+        originating_state_id: Jublakanton
         originating_flock_id: Schar
