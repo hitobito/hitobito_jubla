@@ -23,8 +23,8 @@ describe Event::Course::BsvInfo do
     end
 
     it 'exports semicolon separted list' do
-      lines[1].should eq ";;;01.03.2012;;;0;1;0;;8;1;1;0;0"
-      lines[2].should eq ";;;01.03.2012;;;0;1;0;;8;1;1;0;0"
+      lines[1].should eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
+      lines[2].should eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
     end
   end
 
@@ -53,7 +53,7 @@ describe Event::Course::BsvInfo do
     end
 
     it 'calculates total from summed date durations' do
-      info.total_days.should eq 8
+      info.total_days.should eq 9
     end
 
     it 'sets location from date with longest duration' do
