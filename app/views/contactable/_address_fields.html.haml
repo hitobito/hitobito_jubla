@@ -7,5 +7,6 @@
 = f.labeled(:zip_code, t('contactable.fields.zip_town'), nil, class: 'controls-row') do
   = f.integer_field(:zip_code, class: 'span2', maxlenght: 10)
   = f.string_field(:town, class: 'span4')
-= f.labeled_input_field(:canton)
+
+= f.labeled_input_field(:canton) if entry.is_a?(Person)
 = f.labeled_input_field(:country)

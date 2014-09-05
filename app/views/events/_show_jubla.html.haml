@@ -8,16 +8,3 @@
     = section 'Kursbestimmungen' do
       = entry.condition.content.html_safe
 
-- entry.used?(:training_days) do
-  - if can?(:update, entry)
-    = section 'BSV-Angaben' do
-      %dl.dl-horizontal
-        = labeled_attr(entry, :training_days)
-        = entry.labeled_bsv_attr(:total_days)
-        = entry.labeled_bsv_attr(:participants)
-        = entry.labeled_bsv_attr(:participants_total)
-        = entry.labeled_bsv_attr(:cantons)
-        = entry.labeled_bsv_attr(:leaders)
-        = entry.labeled_bsv_attr(:leaders_total)
-        = entry.labeled_bsv_attr(:cooks)
-        = entry.labeled_bsv_attr(:speakers)

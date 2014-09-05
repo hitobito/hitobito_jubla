@@ -43,7 +43,6 @@ class Event::Course::BsvInfo
 
     @leaders = participations_for(Event::Role::Leader, Event::Role::AssistantLeader).count
     @leaders_total = participations_for(*(course.role_types - [course.participant_type])).count
-
     @cooks = participations_for(Event::Role::Cook).count
     @speakers = participations_for(Event::Role::Speaker).count
 
@@ -74,13 +73,13 @@ class Event::Course::BsvInfo
   end
 
   def label(key)
-    { total_days: 'Kurstage Insgesamt',
-      participants: 'Teilnehmende 17-30',
+    { total_days: 'Kurstage',
+      participants: 'Teilnehmende (17-30)',
       leaders: 'Kursleitende',
-      cantons: 'Kantone der Teilnehmer',
-      participants_total: 'Teilnehmende insgesamt',
-      leaders_total: 'Kursleitende insgesamt',
-      cooks: 'Küche',
+      cantons: 'Wohnkantone der TN',
+      participants_total: 'Teilnehmende Total',
+      leaders_total: 'Leitungsteam Total',
+      cooks: 'Küchenteam',
       speakers: 'Referenten' }.fetch(key)
   end
 
