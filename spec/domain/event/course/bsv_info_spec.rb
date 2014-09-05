@@ -12,10 +12,19 @@ describe Event::Course::BsvInfo do
   let(:info) { Event::Course::BsvInfo.new(course.reload) }
 
   context 'export' do
-    subject { Event::Course::BsvInfo::List.export([course, course]) }
+    let(:lines) { Event::Course::BsvInfo::List.export([course, course]).split("\n") }
+    let(:headers) {  lines.first.encode('UTF-8').split(';') }
+
+    it 'exports headers' do
+      headers.should eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Dauer",
+                         "Teilnehmerzahl", "Anz. Leitende", "Anz. Wohnkantone", "Anz. Sprachen", "Anz. Kurstage",
+                         "Anz. Teilnehmende total", "Anz. Kurshelfende total", "Anz. Küche", "Anz. Referenten"]
+
+    end
 
     it 'exports semicolon separted list' do
-      should eq ";;;01.03.2012;;;0;1;0;;8;1;1;0;0\n;;;01.03.2012;;;0;1;0;;8;1;1;0;0\n"
+      lines[1].should eq ";;;01.03.2012;;;0;1;0;;8;1;1;0;0"
+      lines[2].should eq ";;;01.03.2012;;;0;1;0;;8;1;1;0;0"
     end
   end
 

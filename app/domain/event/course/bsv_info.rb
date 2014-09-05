@@ -15,6 +15,7 @@ class Event::Course::BsvInfo
 
   class List < Export::Csv::Base
     def to_csv(generator)
+      generator << headers
       list.each do |entry|
         generator << values(entry)
       end
@@ -30,6 +31,12 @@ class Event::Course::BsvInfo
        info.cantons, nil,
        info.total_days, info.participants_total,
        info.leaders_total, info.cooks, info.speakers]
+    end
+
+    def headers
+      ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Dauer",
+       "Teilnehmerzahl", "Anz. Leitende", "Anz. Wohnkantone", "Anz. Sprachen", "Anz. Kurstage",
+       "Anz. Teilnehmende total", "Anz. Kurshelfende total", "Anz. Küche", "Anz. Referenten"]
     end
   end
 
