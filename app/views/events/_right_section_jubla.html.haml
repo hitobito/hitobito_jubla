@@ -1,0 +1,20 @@
+-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+-#  hitobito_jubla and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_jubla.
+
+- entry.used?(:training_days) do
+  - if can?(:update, entry)
+    = section 'BSV-Angaben' do
+      %dl.dl-horizontal
+        = labeled_attr(entry, :training_days)
+        = entry.labeled_bsv_attr(:participants)
+        = entry.labeled_bsv_attr(:leaders)
+        = entry.labeled_bsv_attr(:cantons)
+
+      %dl.dl-horizontal
+        = entry.labeled_bsv_attr(:total_days)
+        = entry.labeled_bsv_attr(:participants_total)
+        = entry.labeled_bsv_attr(:leaders_total)
+        = entry.labeled_bsv_attr(:cooks)
+        = entry.labeled_bsv_attr(:speakers)
