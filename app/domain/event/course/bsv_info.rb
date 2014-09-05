@@ -49,7 +49,7 @@ class Event::Course::BsvInfo
     @participants_people = participations_for(course.participant_type).map(&:person)
 
     @leaders = participations_for(Event::Role::Leader, Event::Role::AssistantLeader).count
-    @leaders_total = participations_for(*(course.role_types - [course.participant_type])).count
+    @leaders_total = participations_for(*(course.role_types - [course.participant_type, Event::Course::Role::Advisor])).count
     @cooks = participations_for(Event::Role::Cook).count
     @speakers = participations_for(Event::Role::Speaker).count
 

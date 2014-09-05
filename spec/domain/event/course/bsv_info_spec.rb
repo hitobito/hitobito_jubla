@@ -78,16 +78,38 @@ describe Event::Course::BsvInfo do
       end
     end
 
-    it 'counts roles, not people for leader fields' do
-      create(Event::Course::Role::Advisor,
-             Event::Role::Cook,
-             Event::Role::Speaker)
+    context 'role info' do
+      it 'has default roles from fixtures' do
+        info.leaders.should eq 1
+        info.leaders_total.should eq 1
+        info.participants_total.should eq 1
 
-      info.leaders.should eq 1
-      info.leaders_total.should eq 2
+        info.cooks.should eq 0
+        info.speakers.should eq 0
+      end
 
-      info.cooks.should eq 1
-      info.speakers.should eq 1
+      it 'counts participations with mulitple roles only once' do
+        create(Event::Role::Leader, Event::Role::Leader, Event::Role::AssistantLeader)
+
+        info.leaders.should eq 2
+        info.leaders_total.should eq 2
+      end
+
+      it 'does not count Advisor role' do
+        create(Event::Course::Role::Advisor)
+
+        info.leaders.should eq 1
+        info.leaders_total.should eq 1
+      end
+
+      it 'counts roles not people for cooks and speakers' do
+        create(Event::Role::Leader, Event::Role::Cook, Event::Role::Speaker)
+
+        info.leaders.should eq 2
+        info.leaders_total.should eq 2
+        info.cooks.should eq 1
+        info.speakers.should eq 1
+      end
     end
 
     it 'sets cantons based on number of valid cantons of participants' do
