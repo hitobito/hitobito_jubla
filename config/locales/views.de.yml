@@ -15,7 +15,9 @@ de:
     participations:
       print:
         signature: Unterschrift
+        signature_confirmation: Vorname, Name, Unterschrift
         requirements_for_event_camp: Voraussetzungen für das Lager
+        read_and_agreed_for_event_camp: Ich erfülle die Voraussetzungen für das Lager, habe die Lagerbeschreibung gelesen und bin damit einverstanden.
 
   events:
     form:
@@ -27,7 +29,6 @@ de:
       remarks_default_text: "Wichtig: Zur Bestätigung deiner Online-Anmeldung schickst du dieses Formular (Seite 1)
         mit den erforderlichen Unterschriften und Beilagen an die Anmeldeadresse. Die weiteren Seiten enthalten
         wichtige Informationen zum Kurs inkl. Kursbestimmungen für dich.
+        
 
-        Beilagen:
-
-          - Nothelferausweis"
+        Beilagen: Nothelferausweis"

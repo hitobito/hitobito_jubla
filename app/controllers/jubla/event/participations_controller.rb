@@ -14,8 +14,17 @@ module Jubla::Event::ParticipationsController
   # the groups table name for the first included association (flocks)
   # and aliases the table name for the second association (states)
   included do
-    self.sort_mappings_with_indifferent_access.merge!(originating_state: null_safe_sort('originating_states_people.name'))
-    self.sort_mappings_with_indifferent_access.merge!(originating_flock: null_safe_sort('groups.name'))
+    sort_mappings_with_indifferent_access.
+      merge!(originating_state: null_safe_sort('originating_states_people.name'),
+             originating_flock: null_safe_sort('groups.name'))
+
+    alias_method_chain :append_mailing_instructions?, :signature
+  end
+
+
+  # only render instructions if signature flag is set
+  def append_mailing_instructions_with_signature?
+    append_mailing_instructions_without_signature? && event.signature?
   end
 
 end

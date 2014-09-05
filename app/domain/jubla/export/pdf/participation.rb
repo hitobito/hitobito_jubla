@@ -14,16 +14,19 @@ module Jubla::Export::Pdf
     class PersonAndEvent < Export::Pdf::Participation::PersonAndEvent
 
       class Person < Export::Pdf::Participation::PersonAndEvent::Person
-        def originating_groups
-          [person.originating_flock, person.originating_state]
+
+        def render
+          super
+          labeled_attr(:originating_flock)
+          labeled_attr(:originating_state)
+        end
+
+        def person_attributes
+          super + [:j_s_number]
         end
       end
 
       self.person_section = Person
-
-      def person_attributes
-        super + [:j_s_number]
-      end
 
     end
 
@@ -73,10 +76,10 @@ module Jubla::Export::Pdf
     class Confirmation <  Export::Pdf::Participation::Confirmation
 
       def render_heading
-        super
         render_remarks if event.remarks?
         render_signature if event.signature?
         render_signature_confirmation if signature_confirmation?
+        super
       end
 
       private
@@ -95,13 +98,13 @@ module Jubla::Export::Pdf
       end
 
       def render_signature_confirmation
-        render_signature(event.signature_confirmation_text)
+        render_signature(event.signature_confirmation_text, '.signature_confirmation')
       end
 
-      def render_signature(header = Event::Role::Participant.model_name.human)
+      def render_signature(header = Event::Role::Participant.model_name.human, key = '.signature')
         y = cursor
-        render_boxed(-> { text header; label_with_dots(date_and_location) },
-                     -> { move_down_line; label_with_dots(t('.signature')) })
+        render_boxed(-> { text header; label_with_dots(location_and_date) },
+                     -> { move_down_line; label_with_dots(t(key)) })
         move_down_line
       end
 
@@ -109,9 +112,9 @@ module Jubla::Export::Pdf
         event.signature_confirmation? && event.signature_confirmation_text?
       end
 
-      def date_and_location
-        [Event::Date.model_name.human,
-         Event::Date.human_attribute_name(:location)].join(' / ')
+      def location_and_date
+        [Event::Date.human_attribute_name(:location),
+         Event::Date.model_name.human].join(' / ')
       end
 
       def label_with_dots(content)
