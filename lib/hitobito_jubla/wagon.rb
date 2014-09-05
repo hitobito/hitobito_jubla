@@ -64,7 +64,6 @@ module HitobitoJubla
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
       Event::ListsController.send :include, Jubla::Event::ListsController
-      Event::ParticipationsController.send :include, Jubla::Event::ParticipationsController
 
       ### decorators
       Event::ParticipationDecorator.send :include, Jubla::Event::ParticipationDecorator
