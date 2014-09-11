@@ -16,6 +16,10 @@ module Jubla::EventDecorator
     h.labeled(bsv_info.label(key), bsv_field(key))
   end
 
+  def remarks_with_default(default)
+    (model.is_a?(Event::Course) && remarks.blank?) ? default : remarks
+  end
+
   private
 
   def bsv_field(key)

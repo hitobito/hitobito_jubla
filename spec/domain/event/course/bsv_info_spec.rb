@@ -12,10 +12,19 @@ describe Event::Course::BsvInfo do
   let(:info) { Event::Course::BsvInfo.new(course.reload) }
 
   context 'export' do
-    subject { Event::Course::BsvInfo::List.export([course, course]) }
+    let(:lines) { Event::Course::BsvInfo::List.export([course, course]).split("\n") }
+    let(:headers) {  lines.first.encode('UTF-8').split(';') }
+
+    it 'exports headers' do
+      headers.should eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Dauer",
+                         "Teilnehmerzahl", "Anz. Leitende", "Anz. Wohnkantone", "Anz. Sprachen", "Anz. Kurstage",
+                         "Anz. Teilnehmende total", "Anz. Kurshelfende total", "Anz. Küche", "Anz. Referenten"]
+
+    end
 
     it 'exports semicolon separted list' do
-      should eq ";;;01.03.2012;;;0;1;0;;8;1;1;0;0\n;;;01.03.2012;;;0;1;0;;8;1;1;0;0\n"
+      lines[1].should eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
+      lines[2].should eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
     end
   end
 
@@ -44,7 +53,7 @@ describe Event::Course::BsvInfo do
     end
 
     it 'calculates total from summed date durations' do
-      info.total_days.should eq 8
+      info.total_days.should eq 9
     end
 
     it 'sets location from date with longest duration' do
@@ -69,16 +78,38 @@ describe Event::Course::BsvInfo do
       end
     end
 
-    it 'counts roles, not people for leader fields' do
-      create(Event::Course::Role::Advisor,
-             Event::Role::Cook,
-             Event::Role::Speaker)
+    context 'role info' do
+      it 'has default roles from fixtures' do
+        info.leaders.should eq 1
+        info.leaders_total.should eq 1
+        info.participants_total.should eq 1
 
-      info.leaders.should eq 1
-      info.leaders_total.should eq 2
+        info.cooks.should eq 0
+        info.speakers.should eq 0
+      end
 
-      info.cooks.should eq 1
-      info.speakers.should eq 1
+      it 'counts participations with mulitple roles only once' do
+        create(Event::Role::Leader, Event::Role::Leader, Event::Role::AssistantLeader)
+
+        info.leaders.should eq 2
+        info.leaders_total.should eq 2
+      end
+
+      it 'does not count Advisor role' do
+        create(Event::Course::Role::Advisor)
+
+        info.leaders.should eq 1
+        info.leaders_total.should eq 1
+      end
+
+      it 'counts roles not people for cooks and speakers' do
+        create(Event::Role::Leader, Event::Role::Cook, Event::Role::Speaker)
+
+        info.leaders.should eq 2
+        info.leaders_total.should eq 2
+        info.cooks.should eq 1
+        info.speakers.should eq 1
+      end
     end
 
     it 'sets cantons based on number of valid cantons of participants' do
