@@ -8,5 +8,6 @@
 class AddCantonToPerson < ActiveRecord::Migration
   def change
     add_column(:people, :canton, :string)
+    Person.reset_column_information
   end
 end
