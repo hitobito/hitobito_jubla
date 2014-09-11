@@ -24,6 +24,11 @@ module Jubla::Export::Pdf
         def person_attributes
           super + [:j_s_number]
         end
+
+        def address_details
+          zip_code, town = super
+          [zip_code, [town, person.canton].reject(&:blank?).join(', ')]
+        end
       end
 
       self.person_section = Person
