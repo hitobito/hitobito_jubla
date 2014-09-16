@@ -113,15 +113,15 @@ describe Event::Course::BsvInfo do
     end
 
     it 'sets cantons based on number of valid cantons of participants' do
-      create(course.participant_type).person.update_attribute(:canton, 'ag')
-      create(course.participant_type).person.update_attribute(:canton, 'Bern')
+      create(course.participant_types.first).person.update_attribute(:canton, 'ag')
+      create(course.participant_types.first).person.update_attribute(:canton, 'Bern')
       people(:flock_leader_bern).update_attribute(:canton, 'BE')
 
       info.cantons.should eq 2
     end
 
     it 'sets participants and participants_total only once' do
-      participant = create(course.participant_type)
+      participant = create(course.participant_types.first)
       participant.update_attribute(:person, Fabricate(:person, birthday: 20.years.ago))
 
       info.participants.should eq 1
@@ -130,7 +130,7 @@ describe Event::Course::BsvInfo do
     end
 
     context 'warnings on participants' do
-      before { create(course.participant_type).person.update_attributes!(birthday: 35.years.ago, canton: 'BE') }
+      before { create(course.participant_types.first).person.update_attributes!(birthday: 35.years.ago, canton: 'BE') }
 
       it 'are not set if pariticpants have complete data' do
         people(:flock_leader_bern).update_attributes(birthday: Date.parse('1992-10-03'), canton: 'BE')
