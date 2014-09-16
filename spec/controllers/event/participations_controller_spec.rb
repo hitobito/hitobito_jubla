@@ -41,7 +41,7 @@ describe Event::ParticipationsController do
   context 'GET index' do
     before do @leader, @advisor, @participant = *create(Event::Role::Leader,
                                                         Event::Course::Role::Advisor,
-                                                        course.participant_type) end
+                                                        course.participant_types.first) end
 
     it 'lists participant and leader group by default without advisor' do
       get :index, group_id: group.id, event_id: course.id

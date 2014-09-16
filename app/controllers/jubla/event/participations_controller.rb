@@ -24,7 +24,7 @@ module Jubla::Event::ParticipationsController
 
   # only render instructions if signature flag is set
   def append_mailing_instructions_with_signature?
-    append_mailing_instructions_without_signature? && event.signature?
+    user_course_application? && event.signature?
   end
 
 end

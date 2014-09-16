@@ -46,10 +46,10 @@ class Event::Course::BsvInfo
     @date = dates.first.start_at.to_date if dates.present?
 
     @participations = course.participations.includes(:person, :roles)
-    @participants_people = participations_for(course.participant_type).map(&:person)
+    @participants_people = participations_for(*course.participant_types).map(&:person)
 
     @leaders = participations_for(Event::Role::Leader, Event::Role::AssistantLeader).count
-    @leaders_total = participations_for(*(course.role_types - [course.participant_type, Event::Course::Role::Advisor])).count
+    @leaders_total = participations_for(*(course.role_types - course.participant_types - [Event::Course::Role::Advisor])).count
     @cooks = participations_for(Event::Role::Cook).count
     @speakers = participations_for(Event::Role::Speaker).count
 
