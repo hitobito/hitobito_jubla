@@ -11,7 +11,6 @@ module Jubla::Export::Pdf
     # jubla_ci wagon is not present when running tarantula
     JUBLA_CI = Wagons.find('jubla_ci')
 
-
     class Header < Export::Pdf::Participation::Header
 
       def render_image
@@ -49,11 +48,14 @@ module Jubla::Export::Pdf
 
     class Confirmation <  Export::Pdf::Participation::Confirmation
 
-      def render_heading
-        render_signature if event.signature?
-        render_signature_confirmation if signature_confirmation?
-        super
-        render_remarks if event.remarks?
+      def render
+        first_page_section do
+          render_read_and_agreed
+          render_signature if event.signature?
+          render_signature_confirmation if signature_confirmation?
+          render_contact_address if contact
+          render_remarks if event.remarks?
+        end
       end
 
       private
