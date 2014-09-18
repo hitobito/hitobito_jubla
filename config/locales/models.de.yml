@@ -17,7 +17,7 @@ de:
         bsv_id: Kurs-ID-FiVer
 
       person:
-        canton: Kanton (Abk.)
+        canton: Wohnkanton
         cantons:
           ag: Aargau
           ai: Appenzell Innerrhoden
