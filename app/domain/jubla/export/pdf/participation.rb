@@ -11,6 +11,18 @@ module Jubla::Export::Pdf
     # jubla_ci wagon is not present when running tarantula
     JUBLA_CI = Wagons.find('jubla_ci')
 
+
+    class Header < Export::Pdf::Participation::Header
+
+      def render_image
+        if JUBLA_CI
+          image_path = JUBLA_CI.root.join('app/assets/images/logo_jubla_plain.png')
+          image image_path, at: [bounds.width - 60, cursor + 30], width: 60
+        end
+      end
+
+    end
+
     class PersonAndEvent < Export::Pdf::Participation::PersonAndEvent
 
       class Person < Export::Pdf::Participation::PersonAndEvent::Person
@@ -35,56 +47,13 @@ module Jubla::Export::Pdf
 
     end
 
-    class EventDetails < Export::Pdf::Participation::EventDetails
-
-      def render
-        super
-        render_condition if condition?
-      end
-
-      private
-
-      def render_condition
-        with_count(Event::Course::Condition.model_name.human) do
-          text event.condition.content, :inline_format => true
-        end
-      end
-
-      def condition?
-        course? && event.condition.present?
-      end
-
-      def requirements?
-        requirements = [event.application_conditions]
-
-        if course?
-          requirements += [event_kind.minimum_age,
-                           event_kind.qualification_kinds('precondition', 'participant')]
-        end
-
-        requirements.any?(&:present?)
-      end
-
-    end
-
-    class Header < Export::Pdf::Participation::Header
-
-      def render_image
-        if JUBLA_CI
-          image_path = JUBLA_CI.root.join('app/assets/images/logo_jubla_plain.png')
-          image image_path, at: [bounds.width - 60, cursor + 30], width: 60
-        end
-      end
-
-    end
-
     class Confirmation <  Export::Pdf::Participation::Confirmation
 
       def render_heading
-        render_remarks if event.remarks?
         render_signature if event.signature?
         render_signature_confirmation if signature_confirmation?
         super
+        render_remarks if event.remarks?
       end
 
       private
@@ -127,6 +96,38 @@ module Jubla::Export::Pdf
         move_down_line
         text '.' * 55
       end
+    end
+
+    class EventDetails < Export::Pdf::Participation::EventDetails
+
+      def render
+        super
+        render_condition if condition?
+      end
+
+      private
+
+      def render_condition
+        with_count(Event::Course::Condition.model_name.human) do
+          text event.condition.content, :inline_format => true
+        end
+      end
+
+      def condition?
+        course? && event.condition.present?
+      end
+
+      def requirements?
+        requirements = [event.application_conditions]
+
+        if course?
+          requirements += [event_kind.minimum_age,
+                           event_kind.qualification_kinds('precondition', 'participant')]
+        end
+
+        requirements.any?(&:present?)
+      end
+
     end
 
 
