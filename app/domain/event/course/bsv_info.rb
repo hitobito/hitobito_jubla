@@ -9,34 +9,34 @@ require 'csv'
 
 class Event::Course::BsvInfo
   attr_reader :course, :leaders, :leaders_total, :participants, :participants_total, :cooks, :speakers,
-    :cantons, :warnings
+    :cantons, :warnings, :vereinbarung_id_fiver, :languages
 
   delegate :number, :training_days, :dates, to: :course
 
+  FIELDS = { vereinbarung_id_fiver: 'Vereinbarung-ID-FiVer',
+             kurs_id_fiver: 'Kurs-ID-FiVer',
+             number: 'Kursnummer',
+             date: 'Datum',
+             location: 'Kursort',
+             training_days: 'Ausbildungstage',
+             participants: 'Teilnehmende (17-30)',
+             leaders: 'Kursleitende',
+             cantons: 'Wohnkantone der TN',
+             languages: 'Sprachen',
+             total_days: 'Kurstage',
+             participants_total: 'Teilnehmende Total',
+             leaders_total: 'Leitungsteam Total',
+             cooks: 'Küchenteam',
+             speakers: 'Referenten' }
+
   class List < Export::Csv::Base
     def to_csv(generator)
-      generator << headers
+      generator << FIELDS.values
+
       list.each do |entry|
-        generator << values(entry)
+        info = Event::Course::BsvInfo.new(entry)
+        generator << FIELDS.keys.map { |key| info.send(key) }
       end
-    end
-
-    # we have to two nil fields, ver_id_fiver and languages
-    def values(entry)
-      info = Event::Course::BsvInfo.new(entry)
-
-      [nil, info.kurs_id_fiver,
-       info.number, info.date, info.location, info.training_days,
-       info.participants, info.leaders,
-       info.cantons, nil,
-       info.total_days, info.participants_total,
-       info.leaders_total, info.cooks, info.speakers]
-    end
-
-    def headers
-      ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Dauer",
-       "Teilnehmerzahl", "Anz. Leitende", "Anz. Wohnkantone", "Anz. Sprachen", "Anz. Kurstage",
-       "Anz. Teilnehmende total", "Anz. Kurshelfende total", "Anz. Küche", "Anz. Referenten"]
     end
   end
 
@@ -77,17 +77,6 @@ class Event::Course::BsvInfo
 
   def total_days
     dates.map(&:duration).map(&:days).reduce(&:+)
-  end
-
-  def label(key)
-    { total_days: 'Kurstage',
-      participants: 'Teilnehmende (17-30)',
-      leaders: 'Kursleitende',
-      cantons: 'Wohnkantone der TN',
-      participants_total: 'Teilnehmende Total',
-      leaders_total: 'Leitungsteam Total',
-      cooks: 'Küchenteam',
-      speakers: 'Referenten' }.fetch(key)
   end
 
   def error(key)

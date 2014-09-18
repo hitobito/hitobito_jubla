@@ -16,10 +16,9 @@ describe Event::Course::BsvInfo do
     let(:headers) {  lines.first.encode('UTF-8').split(';') }
 
     it 'exports headers' do
-      headers.should eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Dauer",
-                         "Teilnehmerzahl", "Anz. Leitende", "Anz. Wohnkantone", "Anz. Sprachen", "Anz. Kurstage",
-                         "Anz. Teilnehmende total", "Anz. Kurshelfende total", "Anz. Küche", "Anz. Referenten"]
-
+      headers.should eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Ausbildungstage",
+                         "Teilnehmende (17-30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
+                         "Teilnehmende Total", "Leitungsteam Total", "Küchenteam", "Referenten"]
     end
 
     it 'exports semicolon separted list' do
