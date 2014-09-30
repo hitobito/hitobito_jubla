@@ -143,7 +143,9 @@ module Jubla::Export::Pdf
 
           pdf.font_families.update('Century Gothic' => {
             normal: font_path.join('century-gothic.ttf'),
-            bold: font_path.join('century-gothic-b.ttf')
+            bold: font_path.join('century-gothic-b.ttf'),
+            italic: font_path.join('century-gothic-i.ttf'),
+            bold_italic: font_path.join('century-gothic-b.ttf')
           })
 
           pdf.font 'Century Gothic'
