@@ -9,7 +9,7 @@
 class Group::StateAgency < Group
 
   class Leader < Jubla::Role::Leader
-    self.permissions = [:layer_full, :contact_data]
+    self.permissions = [:layer_and_below_full, :contact_data]
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin

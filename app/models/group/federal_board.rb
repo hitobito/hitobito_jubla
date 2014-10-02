@@ -9,7 +9,7 @@
 class Group::FederalBoard < Group
 
   class Member < Jubla::Role::Member
-    self.permissions = [:admin, :layer_full, :contact_data]
+    self.permissions = [:admin, :layer_and_below_full, :contact_data]
 
     self.used_attributes += [:employment_percent]
   end

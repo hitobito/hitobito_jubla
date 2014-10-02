@@ -21,7 +21,7 @@ describe EventAbility do
   end
 
   context 'index_participations_details on event in group ' do
-    it 'FederalBoard::Member is allowed because of :layer_full' do
+    it 'FederalBoard::Member is allowed because of :layer_and_below_full' do
       ability(people(:top_leader)).should be_able_to(:index_participations_details, event)
     end
 

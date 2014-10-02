@@ -9,7 +9,7 @@
 class Group::StateBoard < Group
 
   class Leader < Jubla::Role::Leader
-    self.permissions = [:group_full, :layer_read, :contact_data]
+    self.permissions = [:group_full, :layer_and_below_read, :contact_data]
   end
 
   class Member < Jubla::Role::Member
@@ -22,7 +22,7 @@ class Group::StateBoard < Group
 
   # Stellenbegleitung
   class Supervisor < ::Role
-    self.permissions = [:layer_read]
+    self.permissions = [:layer_and_below_read]
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin

@@ -12,7 +12,7 @@ module Jubla::PersonAbility
     STATES = %w(application_open application_closed assignment_closed completed)
 
     on(Person) do
-      permission(:layer_full).may(:update).
+      permission(:layer_and_below_full).may(:update).
         non_restricted_in_same_layer_or_visible_below_or_accessible_participations
     end
   end
@@ -22,7 +22,9 @@ module Jubla::PersonAbility
   end
 
   def accessible_participations
-    events_with_valid_states.any? { |event| (user_context.layers_full & event.group_ids).present?  }
+    events_with_valid_states.any? do |event|
+      (user_context.layers_and_below_full & event.group_ids).present?
+    end
   end
 
   private

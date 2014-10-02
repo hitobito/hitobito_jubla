@@ -13,7 +13,7 @@ describe PersonAbility do
   let(:ability) { Ability.new(role.person.reload) }
 
 
-  describe :layer_full do
+  describe :layer_and_below_full do
     let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
 
     it 'may modify any public role in lower layers' do
@@ -77,7 +77,7 @@ describe PersonAbility do
   end
 
 
-  describe 'layer_full in flock' do
+  describe 'layer_and_below_full in flock' do
     let(:role) { Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern)) }
 
     it 'may create other users' do
@@ -156,7 +156,7 @@ describe PersonAbility do
   end
 
 
-  describe :layer_read do
+  describe :layer_and_below_read do
     # member with additional group_admin role
     let(:group_role) { Fabricate(Group::StateBoard::GroupAdmin.name.to_sym, group: groups(:be_board)) }
     let(:role)       { Fabricate(Group::StateBoard::Supervisor.name.to_sym, group: groups(:be_board), person: group_role.person) }

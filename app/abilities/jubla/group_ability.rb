@@ -12,15 +12,15 @@ module Jubla::GroupAbility
     on(Group) do
       permission(:any).may(:evaluate_census).if_member
 
-      permission(:layer_full).
+      permission(:layer_and_below_full).
         may(:index_event_course_conditions).
         in_same_layer_or_below
 
-      permission(:layer_full).
+      permission(:layer_and_below_full).
         may(:remind_census, :approve_population, :create_member_counts).
         in_same_layer_or_below
 
-      permission(:layer_full).
+      permission(:layer_and_below_full).
         may(:update_member_counts).
         in_same_layer_or_below_if_ast_or_bulei
     end

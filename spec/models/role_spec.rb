@@ -15,7 +15,7 @@ describe Role do
     it { should be_member }
     it { should be_visible_from_above }
 
-    its(:permissions) { should ==  [:layer_full, :contact_data, :approve_applications] }
+    its(:permissions) { should ==  [:layer_and_below_full, :contact_data, :approve_applications] }
 
     it 'may be created for flock' do
       role = Fabricate.build(subject.name.to_sym, group: groups(:bern))

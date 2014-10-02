@@ -19,7 +19,7 @@ describe EventAbility do
 
   subject { Ability.new(user.reload) }
 
-  context :layer_full do
+  context :layer_and_below_full do
     let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
 
     context Event do

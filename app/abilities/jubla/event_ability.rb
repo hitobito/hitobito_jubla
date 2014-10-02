@@ -17,7 +17,7 @@ module Jubla::EventAbility
 
       permission(:any).may(:index_participations_details).for_leaded_events
       permission(:group_full).may(:index_participations_details).in_same_group
-      permission(:layer_full).may(:index_participations_details).in_same_layer_or_below
+      permission(:layer_and_below_full).may(:index_participations_details).in_same_layer_or_below
     end
   end
 
