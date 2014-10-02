@@ -34,7 +34,7 @@ describe PersonAccessibles do
       describe :layer_and_below_full do
         let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
 
-        it 'has layer full permission' do
+        it 'has layer and below full permission' do
           role.permissions.should include(:layer_and_below_full)
         end
 
@@ -75,7 +75,7 @@ describe PersonAccessibles do
       describe :layer_and_below_read do
         let(:role) { Fabricate(Group::StateBoard::Supervisor.name.to_sym, group: groups(:be_board)) }
 
-        it 'has layer read permission' do
+        it 'has layer and below read permission' do
           role.permissions.should include(:layer_and_below_read)
         end
 

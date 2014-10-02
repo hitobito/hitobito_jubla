@@ -476,7 +476,7 @@ describe PersonAbility do
 
   describe 'people filter' do
 
-    context 'root layer full' do
+    context 'root layer and below full' do
       let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
 
       context 'in group from same layer' do
@@ -500,7 +500,7 @@ describe PersonAbility do
       end
     end
 
-    context 'bottom layer full' do
+    context 'bottom layer and below full' do
       let(:role) { Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern)) }
 
       context 'in group from same layer' do
@@ -524,7 +524,7 @@ describe PersonAbility do
       end
     end
 
-    context 'layer read' do
+    context 'layer and below read' do
       let(:role) { Fabricate(Group::StateBoard::Supervisor.name.to_sym, group: groups(:be_board)) }
 
       context 'in group from same layer' do
@@ -556,7 +556,7 @@ describe PersonAbility do
   describe :show_details do
     let(:other) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)).person.reload }
 
-    context 'layer full' do
+    context 'layer and below full' do
       let(:role) { Fabricate(Group::StateBoard::Leader.name.to_sym, group: groups(:be_board)) }
       it 'can show_details' do
         should be_able_to(:show_details, other)
@@ -584,7 +584,7 @@ describe PersonAbility do
   describe :send_password_instructions do
     let(:other) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)).person.reload }
 
-    context 'layer full' do
+    context 'layer and below full' do
       let(:role) { Fabricate(Group::StateBoard::Leader.name.to_sym, group: groups(:be_board)) }
       it 'can send_password_instructions' do
         should be_able_to(:send_password_instructions, other)

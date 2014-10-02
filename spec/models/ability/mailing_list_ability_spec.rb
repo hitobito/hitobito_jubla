@@ -15,7 +15,7 @@ describe MailingListAbility do
 
   subject { Ability.new(user.reload) }
 
-  context 'layer full' do
+  context 'layer and below full' do
     let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
 
     context 'in own group' do

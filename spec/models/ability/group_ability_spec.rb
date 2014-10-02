@@ -15,7 +15,7 @@ describe GroupAbility do
   let(:ability) { Ability.new(role.person.reload) }
 
 
-  context 'layer full' do
+  context 'layer and below full' do
     let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
 
     context 'without specific group' do
@@ -59,7 +59,7 @@ describe GroupAbility do
     end
   end
 
-  context 'layer full in flock' do
+  context 'layer and below full in flock' do
     let(:role) { Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern)) }
 
     context 'in own group' do
