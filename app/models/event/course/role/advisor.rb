@@ -8,7 +8,7 @@
 module Event::Course::Role
   class Advisor < ::Event::Role
 
-    self.permissions = [:contact_data]
+    self.permissions = [:participations_read]
 
     self.kind = nil
 

@@ -15,10 +15,17 @@ module Jubla::EventAbility
       general(:update, :destroy, :application_market, :qualify).
         at_least_one_group_not_deleted_and_not_closed_or_admin
 
+
+      permission(:any).may(:update).for_managed_events
+
       permission(:any).may(:index_participations_details).for_leaded_events
       permission(:group_full).may(:index_participations_details).in_same_group
       permission(:layer_and_below_full).may(:index_participations_details).in_same_layer_or_below
     end
+  end
+
+  def for_managed_events
+    permission_in_event?(:event_full) && permission_in_event?(:qualify)
   end
 
 end
