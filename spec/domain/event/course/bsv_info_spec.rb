@@ -29,12 +29,12 @@ describe Event::Course::BsvInfo do
 
   it 'info straight form course or kind' do
     course.kind.update_attribute(:bsv_id, 'slk')
-    course.update_attributes!(number: 'slk 123', training_days: 3,
+    course.update_attributes!(number: 'slk 123', training_days: 3.5,
                               application_contact: course.possible_contact_groups.first)
 
     info.kurs_id_fiver.should eq 'slk'
     info.number.should eq 'slk 123'
-    info.training_days.should eq 3
+    info.training_days.should eq 3.5
   end
 
   context 'info from dates' do

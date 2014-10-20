@@ -30,6 +30,8 @@ module Jubla::Event::Course
 
     validate :validate_application_contact
 
+    validates :training_days, modulus:  { multiple: 0.5 }, numericality: { allow_nil: true }
+
     # Define methods to query if a course is in the given state.
     # eg course.canceled?
     possible_states.each do |state|

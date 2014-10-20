@@ -311,3 +311,7 @@ de:
       event/kind:
         j_s_label: J+S Bezeichnung
         bsv_id: Kurs-ID-FiVer
+
+    errors:
+      messages:
+        must_be_multiple_of: muss ein vielfaches von %{multiple} sein.
