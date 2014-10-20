@@ -45,7 +45,9 @@ module HitobitoJubla
       # domain
       Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
       Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
-      Export::Csv::People::ParticipationRow.send :include, Jubla::Export::Csv::People::ParticipationRow
+      Export::Csv::People::PersonRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
+
+      Export::Csv::People::ParticipationRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
 
