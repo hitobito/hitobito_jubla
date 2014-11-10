@@ -45,7 +45,7 @@ class Event::Course::BsvInfo
 
     @date = dates.first.start_at.to_date if dates.present?
 
-    @participations = course.participations.includes(:person, :roles)
+    @participations = course.participations.where(active: true).includes(:person, :roles)
     @participants_people = participations_for(*course.participant_types).map(&:person)
 
     @leaders = participations_for(Event::Role::Leader, Event::Role::AssistantLeader).count

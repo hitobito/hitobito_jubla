@@ -66,7 +66,7 @@ describe Event::Course::BsvInfo do
 
     def create(*role_types)
       roles = role_types.map { |type| Fabricate(:event_role, type: type.name) }
-      Fabricate(:event_participation, event: course, roles: roles)
+      Fabricate(:event_participation, event: course, roles: roles, active: true)
     end
 
     it 'handles null values' do
