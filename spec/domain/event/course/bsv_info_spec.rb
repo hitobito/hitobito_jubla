@@ -111,12 +111,32 @@ describe Event::Course::BsvInfo do
       end
     end
 
-    it 'sets cantons based on number of valid cantons of participants' do
-      create(course.participant_types.first).person.update_attribute(:canton, 'ag')
-      create(course.participant_types.first).person.update_attribute(:canton, 'Bern')
-      people(:flock_leader_bern).update_attribute(:canton, 'BE')
+    context '#cantons' do
+      it 'counts valid canton abbreviations on people' do
+        create(course.participant_types.first).person.update_attribute(:canton, 'ag')
+        create(course.participant_types.first).person.update_attribute(:canton, 'be')
 
-      info.cantons.should eq 2
+        info.cantons.should eq 2
+      end
+
+      it 'counts both upper and lower case canton as valid' do
+        create(course.participant_types.first).person.update_attribute(:canton, 'AG')
+
+        info.cantons.should eq 1
+      end
+
+      it 'counts valid canton only once' do
+        create(course.participant_types.first).person.update_attribute(:canton, 'ag')
+        create(course.participant_types.first).person.update_attribute(:canton, 'ag')
+
+        info.cantons.should eq 1
+      end
+
+      it 'warns about invalid canton values' do
+        people(:flock_leader_bern).update_attributes(canton: 'Bern')
+
+        info.warnings[:cantons].should be_true
+      end
     end
 
     it 'sets participants and participants_total only once' do

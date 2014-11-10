@@ -56,7 +56,7 @@ class Event::Course::BsvInfo
     @participants = participants_aged_17_to_30.count if @date
     @participants_total = @participants_people.count
 
-    @cantons = valid_cantons.count
+    @cantons = valid_cantons.uniq.count
     @warnings = compute_warnings
   end
 
@@ -108,7 +108,7 @@ class Event::Course::BsvInfo
   def compute_warnings
     {
       participants: @participants_people.map(&:birthday).any?(&:blank?),
-      cantons: (@participants_people.count - cantons) > 0
+      cantons: (@participants_people.count - valid_cantons.count) > 0
     }
   end
 end
