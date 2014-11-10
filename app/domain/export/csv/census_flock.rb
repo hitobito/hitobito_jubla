@@ -9,8 +9,8 @@
 module Export::Csv
   class CensusFlock < Export::Csv::Base
 
-    class Row < Export::Csv::Base::Row
-      def fetch(attr)
+    class Row < Export::Csv::Row
+      def value_for(attr)
         entry.fetch(attr)
       end
     end
@@ -25,10 +25,6 @@ module Export::Csv
     end
 
     private
-
-    def values(entry)
-      entry.values
-    end
 
     def build_items
       member_counts = build_member_counts
@@ -59,8 +55,8 @@ module Export::Csv
         address: flock.address,
         zip_code: flock.zip_code,
         town: flock.town,
-        jubla_insurance: normalize(flock.jubla_insurance),
-        jubla_full_coverage: normalize(flock.jubla_full_coverage),
+        jubla_insurance: flock.jubla_insurance,
+        jubla_full_coverage: flock.jubla_full_coverage,
         leader_count: member_count.leader,
         child_count: member_count.child }
     end

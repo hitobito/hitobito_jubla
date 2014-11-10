@@ -21,7 +21,7 @@ module PopulationHelper
     if person.gender.blank?
       BADGE_INVALID
     else
-      gender_label(person.gender)
+      person.gender_label
     end
   end
 

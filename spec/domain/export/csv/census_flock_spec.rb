@@ -35,7 +35,7 @@ describe Export::Csv::CensusFlock do
 
       its(:keys) do should eq [:name, :contact_first_name, :contact_last_name, :address, :zip_code, :town,
                                :jubla_insurance, :jubla_full_coverage, :leader_count, :child_count]  end
-      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, 'nein', 'nein', 5, 7] }
+      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, false, false, 5, 7] }
 
       its(:values) { should have(census_flock.labels.size).items }
     end
@@ -43,13 +43,13 @@ describe Export::Csv::CensusFlock do
     describe 'address, zip code and town' do
       before { flock.update_attributes(address: 'bar', zip_code: 123, town: 'foo') }
 
-      its(:values) { should eq ['Bern', nil, nil, 'bar', 123, 'foo', 'nein', 'nein', 5, 7] }
+      its(:values) { should eq ['Bern', nil, nil, 'bar', 123, 'foo', false, false, 5, 7] }
     end
 
     describe 'contact person' do
       before { flock.update_attribute(:contact_id, people(:top_leader).id) }
 
-      its(:values) { should eq ['Bern', 'Top', 'Leader', nil, nil, nil, 'nein', 'nein', 5, 7] }
+      its(:values) { should eq ['Bern', 'Top', 'Leader', nil, nil, nil, false, false, 5, 7] }
     end
 
     describe 'insurance attributes' do
@@ -58,13 +58,13 @@ describe Export::Csv::CensusFlock do
         flock.update_attribute(:jubla_full_coverage, true)
       end
 
-      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, 'ja', 'ja', 5, 7] }
+      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, true, true, 5, 7] }
     end
 
     describe 'without member count' do
       before { MemberCount.where(flock_id: flock.id).destroy_all }
 
-      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, 'nein', 'nein', nil, nil] }
+      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, false, false, nil, nil] }
     end
   end
 
