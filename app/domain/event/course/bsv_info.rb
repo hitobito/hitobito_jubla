@@ -45,7 +45,7 @@ class Event::Course::BsvInfo
 
     @date = dates.first.start_at.to_date if dates.present?
 
-    @participations = course.participations.includes(:person, :roles)
+    @participations = course.participations.where(active: true).includes(:person, :roles)
     @participants_people = participations_for(*course.participant_types).map(&:person)
 
     @leaders = participations_for(Event::Role::Leader, Event::Role::AssistantLeader).count
@@ -56,7 +56,7 @@ class Event::Course::BsvInfo
     @participants = participants_aged_17_to_30.count if @date
     @participants_total = @participants_people.count
 
-    @cantons = valid_cantons.count
+    @cantons = valid_cantons.uniq.count
     @warnings = compute_warnings
   end
 
@@ -108,7 +108,7 @@ class Event::Course::BsvInfo
   def compute_warnings
     {
       participants: @participants_people.map(&:birthday).any?(&:blank?),
-      cantons: (@participants_people.count - cantons) > 0
+      cantons: (@participants_people.count - valid_cantons.count) > 0
     }
   end
 end
