@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class CensusMailer < ActionMailer::Base
+class CensusMailer < ApplicationMailer
 
   CONTENT_INVITATION = 'census_invitation'
   CONTENT_REMINDER   = 'census_reminder'
@@ -21,9 +21,9 @@ class CensusMailer < ActionMailer::Base
       'census-url'      => "<a href=\"#{census_url(flock)}\">#{census_url(flock)}</a>"
     }
 
-    mail to: Person.mailing_emails_for(recipients),
+    mail(to: Person.mailing_emails_for(recipients),
          from: sender,
-         subject: content.subject do |format|
+         subject: content.subject) do |format|
       format.html { render text: content.body_with_values(values) }
     end
   end
@@ -32,9 +32,9 @@ class CensusMailer < ActionMailer::Base
     content = CustomContent.get(CONTENT_INVITATION)
     values = { 'due-date' => due_date(census) }
 
-    mail to: Settings.email.mass_recipient,
+    mail(to: Settings.email.mass_recipient,
          bcc: Person.mailing_emails_for(recipients),
-         subject: content.subject do |format|
+         subject: content.subject) do |format|
       format.html { render text: content.body_with_values(values) }
     end
   end
