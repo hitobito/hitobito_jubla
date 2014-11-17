@@ -1,3 +1,4 @@
+
 # encoding: utf-8
 
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
@@ -7,38 +8,13 @@
 
 require 'csv'
 
-class Event::Course::BsvInfo
+class Event::Course::BsvInfo::Row
   attr_reader :course, :leaders, :leaders_total, :participants, :participants_total, :cooks, :speakers,
     :cantons, :warnings, :vereinbarung_id_fiver, :languages
 
   delegate :number, :training_days, :dates, to: :course
 
-  FIELDS = { vereinbarung_id_fiver: 'Vereinbarung-ID-FiVer',
-             kurs_id_fiver: 'Kurs-ID-FiVer',
-             number: 'Kursnummer',
-             date: 'Datum',
-             location: 'Kursort',
-             training_days: 'Ausbildungstage',
-             participants: 'Teilnehmende (17-30)',
-             leaders: 'Kursleitende',
-             cantons: 'Wohnkantone der TN',
-             languages: 'Sprachen',
-             total_days: 'Kurstage',
-             participants_total: 'Teilnehmende Total',
-             leaders_total: 'Leitungsteam Total',
-             cooks: 'Küchenteam',
-             speakers: 'Referenten' }
-
-  class List < Export::Csv::Base
-    def to_csv(generator)
-      generator << FIELDS.values
-
-      list.each do |entry|
-        info = Event::Course::BsvInfo.new(entry)
-        generator << FIELDS.keys.map { |key| info.send(key) }
-      end
-    end
-  end
+  CANTONS = I18n.t('activerecord.attributes.person.cantons').keys.map(&:to_s)
 
   def initialize(course)
     @course = course
@@ -49,14 +25,14 @@ class Event::Course::BsvInfo
     @participants_people = participations_for(*course.participant_types).map(&:person)
 
     @leaders = participations_for(Event::Role::Leader, Event::Role::AssistantLeader).count
-    @leaders_total = participations_for(*(course.role_types - course.participant_types - [Event::Course::Role::Advisor])).count
+    @leaders_total = participations_for(*roles_without_participants_and_advisors).count
     @cooks = participations_for(Event::Role::Cook).count
     @speakers = participations_for(Event::Role::Speaker).count
 
     @participants = participants_aged_17_to_30.count if @date
     @participants_total = @participants_people.count
 
-    @cantons = valid_cantons.uniq.count
+    @cantons = valid_cantons_count(participants_aged_17_to_30.map(&:canton))
     @warnings = compute_warnings
   end
 
@@ -94,21 +70,25 @@ class Event::Course::BsvInfo
     end
   end
 
-  def participants_aged_17_to_30
-    range = ((@date - 30.years)..(@date - 17.years))
-    @participants_people.
-      select { |person| person.birthday && range.cover?(person.birthday) }
+  def roles_without_participants_and_advisors
+    course.role_types - course.participant_types - [Event::Course::Role::Advisor]
   end
 
-  def valid_cantons
-    names = I18n.t('activerecord.attributes.person.cantons').keys.map(&:to_s)
-    @participants_people.map(&:canton).select { |canton| names.include?(canton.to_s.downcase) }
+  def participants_aged_17_to_30
+    @participants_aged_17_to_30 ||= @participants_people.
+      select(&:birthday?).
+      select { |person| (17..30).cover?(@date.year - person.birthday.year) }
+  end
+
+  def valid_cantons_count(cantons)
+    cantons.select { |canton| CANTONS.include?(canton.to_s.downcase) }.uniq.count
   end
 
   def compute_warnings
-    {
-      participants: @participants_people.map(&:birthday).any?(&:blank?),
-      cantons: (@participants_people.count - valid_cantons.count) > 0
-    }
+    birthdays = @participants_people.map(&:birthday)
+    cantons = @participants_people.map(&:canton)
+
+    { participants: birthdays.any?(&:blank?),
+      cantons: cantons.any? { |canton| !CANTONS.include?(canton.to_s.downcase) } }
   end
 end
