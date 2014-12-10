@@ -28,8 +28,8 @@ module Jubla::Export::Pdf
 
         def render
           super
-          labeled_attr(:originating_flock)
-          labeled_attr(:originating_state)
+          labeled_attr(person, :originating_flock)
+          labeled_attr(person, :originating_state)
         end
 
         def person_attributes
@@ -74,13 +74,15 @@ module Jubla::Export::Pdf
       end
 
       def render_signature_confirmation
-        render_signature(event.signature_confirmation_text, '.signature_confirmation')
+        render_signature(event.signature_confirmation_text,
+                         'event.participations.print.signature_confirmation')
       end
 
-      def render_signature(header = Event::Role::Participant.model_name.human, key = '.signature')
+      def render_signature(header = Event::Role::Participant.model_name.human,
+                           key = 'event.participations.print.signature')
         y = cursor
         render_boxed(-> { text header; label_with_dots(location_and_date) },
-                     -> { move_down_line; label_with_dots(t(key)) })
+                     -> { move_down_line; label_with_dots(I18n.t(key)) })
         move_down_line
       end
 
@@ -111,7 +113,7 @@ module Jubla::Export::Pdf
 
       def render_condition
         with_count(Event::Course::Condition.model_name.human) do
-          text event.condition.content, :inline_format => true
+          text event.condition.content, inline_format: true
         end
       end
 
