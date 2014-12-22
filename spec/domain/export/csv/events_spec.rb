@@ -17,7 +17,7 @@ describe Export::Csv::Events do
   context Export::Csv::Events::List do
 
     context 'used labels' do
-      let(:list) { Export::Csv::Events::List.new(double('courses', map: [])) }
+      let(:list) { Export::Csv::Events::List.new(double('courses', map: [], first: nil)) }
       subject { list.attribute_labels }
 
       its(:keys) { should include(*[:advisor_name, :advisor_address, :advisor_zip_code, :advisor_town, :advisor_email, :advisor_phone_numbers]) }

@@ -19,7 +19,9 @@ module Jubla::Export::Csv::Events
     private
 
     def build_attribute_labels_with_advisor
-      build_attribute_labels_without_advisor.merge(prefixed_contactable_labels(:advisor))
+      build_attribute_labels_without_advisor.tap do |labels|
+        add_prefixed_contactable_labels(labels, :advisor)
+      end
     end
 
     def contactable_keys_with_j_s_number
