@@ -23,6 +23,20 @@ describe Export::Csv::Events do
       its(:keys) { should include(*[:advisor_name, :advisor_address, :advisor_zip_code, :advisor_town, :advisor_email, :advisor_phone_numbers]) }
       its(:values) { should include(*['LKB Name', 'LKB Adresse', 'LKB PLZ', 'LKB Ort', 'LKB Haupt-E-Mail', 'LKB Telefonnummern']) }
     end
+
+    context 'translatable state' do
+      let(:course) do
+        Fabricate(:jubla_course, groups: [groups(:ch)], location: 'somewhere',
+                  state: 'created')
+      end
+      let(:list)  { Export::Csv::Events::List.new([course]) }
+      let(:csv) { Export::Csv::Generator.new(list).csv.split("\n")  }
+      subject { csv.second.split(';') }
+
+      # This tests the case where Event.possible_states is non-empty,
+      # the case without predefined states is tested in the core.
+      its([5]) { should eq 'Erstellt' }
+    end
   end
 
   context Export::Csv::Events::Row do
