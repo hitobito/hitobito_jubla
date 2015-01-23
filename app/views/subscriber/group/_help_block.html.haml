@@ -1,0 +1,4 @@
+- if @group.sister_groups.exists?
+  = f.help_block(t('subscriber.group.form.subgroups_and_siblings_selectable', type: @group.klass.label))
+- else
+  = f.help_block(t('subscriber.group.form.subgroups_selectable'))
