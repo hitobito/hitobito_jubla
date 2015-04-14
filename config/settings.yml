@@ -46,7 +46,7 @@ social_account:
 
 # Preset for addresses
 address:
-  ignored_countries:
+  switzerland_variations:
     - ch
     - schweiz
 
