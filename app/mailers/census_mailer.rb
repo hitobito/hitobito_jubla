@@ -10,8 +10,6 @@ class CensusMailer < ApplicationMailer
   CONTENT_INVITATION = 'census_invitation'
   CONTENT_REMINDER   = 'census_reminder'
 
-  helper StandardHelper
-
   def reminder(sender, census, recipients, flock, state_agency)
     content = CustomContent.get(CONTENT_REMINDER)
     values = {
