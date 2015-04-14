@@ -24,9 +24,9 @@ describe CensusEvaluation::FederationController, type: :controller do
       before { get :index, id: ch.id }
 
       it 'renders correct templates' do
-        should render_template('index')
-        should render_template('_totals')
-        should render_template('_details')
+        is_expected.to render_template('index')
+        is_expected.to render_template('_totals')
+        is_expected.to render_template('_details')
       end
     end
 
@@ -35,9 +35,9 @@ describe CensusEvaluation::FederationController, type: :controller do
       before { get :index, id: ch.id }
 
       it 'renders correct templates' do
-        should render_template('index')
-        should render_template('_totals')
-        should render_template('_details')
+        is_expected.to render_template('index')
+        is_expected.to render_template('_totals')
+        is_expected.to render_template('_details')
       end
     end
   end
@@ -49,9 +49,9 @@ describe CensusEvaluation::FederationController, type: :controller do
       let(:csv) { CSV.parse(response.body, headers: true, col_sep: ';') }
 
       it 'renders correct templates' do
-        response.should be_success
-        csv.should have(5).items
-        csv.headers.should have(10).items
+        expect(response).to be_success
+        expect(csv).to have(5).items
+        expect(csv.headers).to have(10).items
       end
     end
 

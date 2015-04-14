@@ -45,17 +45,17 @@ describe Event::ParticipationsController do
 
     it 'lists participant and leader group by default without advisor' do
       get :index, group_id: group.id, event_id: course.id
-      assigns(:participations).should eq [@leader, @participant]
+      expect(assigns(:participations)).to eq [@leader, @participant]
     end
 
     it 'lists only leader_group without advisor' do
       get :index, group_id: group.id, event_id: course.id, filter: :teamers
-      assigns(:participations).should eq [@leader]
+      expect(assigns(:participations)).to eq [@leader]
     end
 
     it 'lists only participant_group' do
       get :index, group_id: group.id, event_id: course.id, filter: :participants
-      assigns(:participations).should eq [@participant]
+      expect(assigns(:participations)).to eq [@participant]
     end
 
     def create(*roles)

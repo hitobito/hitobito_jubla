@@ -10,8 +10,8 @@ describe Jubla::Export::Csv::People::OriginatingGroups do
     let(:row) { Export::Csv::People::PersonRow.new(person.reload) }
 
     it 'includes originating flock and state name' do
-      row.originating_flock_id.should eq 'Jungwacht Bern'
-      row.originating_state_id.should eq 'Kanton Bern'
+      expect(row.originating_flock_id).to eq 'Jungwacht Bern'
+      expect(row.originating_state_id).to eq 'Kanton Bern'
     end
   end
 
@@ -20,8 +20,8 @@ describe Jubla::Export::Csv::People::OriginatingGroups do
     let(:participation) { Fabricate(:event_participation, person: person) }
 
     it 'includes originating flock and state name' do
-      row.originating_flock_id.should eq 'Jungwacht Bern'
-      row.originating_state_id.should eq 'Kanton Bern'
+      expect(row.originating_flock_id).to eq 'Jungwacht Bern'
+      expect(row.originating_state_id).to eq 'Kanton Bern'
     end
   end
 

@@ -20,7 +20,7 @@ describe MemberCount do
     subject { MemberCount.total_by_flocks(2012, be).to_a }
 
     it 'counts totals' do
-      should have(2).items
+      is_expected.to have(2).items
 
       bern_count = subject.detect { |c| c.flock_id == bern.id }
       assert_member_counts(bern_count, 2, 3, 4, 3)
@@ -51,7 +51,7 @@ describe MemberCount do
     subject { MemberCount.total_by_states(2012).to_a }
 
     it 'counts totals' do
-      should have(2).items
+      is_expected.to have(2).items
 
       be_count = subject.detect { |c| c.state_id == be.id }
       assert_member_counts(be_count, 3, 5, 5, 6)
@@ -65,7 +65,7 @@ describe MemberCount do
     subject { MemberCount.details_for_flock(2012, bern).to_a }
 
     it 'lists all years' do
-      subject.collect(&:born_in).should == [1985, 1988, 1997]
+      expect(subject.collect(&:born_in)).to eq([1985, 1988, 1997])
 
       assert_member_counts(subject[0], 1, 3, nil, nil)
       assert_member_counts(subject[1], 1, nil, nil, 1)
@@ -77,7 +77,7 @@ describe MemberCount do
     subject { MemberCount.details_for_state(2012, be).to_a }
 
     it 'lists all years' do
-      subject.collect(&:born_in).should == [1984, 1985, 1988, 1997, 1999]
+      expect(subject.collect(&:born_in)).to eq([1984, 1985, 1988, 1997, 1999])
 
       assert_member_counts(subject[0], 1, 1, nil, nil) # 1984
       assert_member_counts(subject[1], 1, 4, nil, nil) # 1985
@@ -91,7 +91,7 @@ describe MemberCount do
     subject { MemberCount.details_for_federation(2012).to_a }
 
     it 'lists all years' do
-      subject.collect(&:born_in).should == [1984, 1985, 1988, 1997, 1999]
+      expect(subject.collect(&:born_in)).to eq([1984, 1985, 1988, 1997, 1999])
 
       assert_member_counts(subject[0], 2, 3, nil, nil) # 1984
       assert_member_counts(subject[1], 1, 4, nil, nil) # 1985
@@ -102,10 +102,10 @@ describe MemberCount do
   end
 
   def assert_member_counts(count, leader_f, leader_m, child_f, child_m)
-    count.leader_f.should == leader_f
-    count.leader_m.should == leader_m
-    count.child_f.should == child_f
-    count.child_m.should == child_m
+    expect(count.leader_f).to eq(leader_f)
+    expect(count.leader_m).to eq(leader_m)
+    expect(count.child_f).to eq(child_f)
+    expect(count.child_m).to eq(child_m)
   end
 
 end

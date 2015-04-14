@@ -47,20 +47,20 @@ describe Event::QualificationsController, type: :controller do
 
       subject { assigns(:participants) }
 
-      it { should have(2).items }
+      it { is_expected.to have(2).items }
 
       it 'should have links' do
-        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector('a')
-        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector('a')
+        expect(dom.find("#event_participation_#{participant_1.id} td.issue")).to have_selector('a')
+        expect(dom.find("#event_participation_#{participant_1.id} td.revoke")).to have_selector('a')
       end
 
       it 'should have icons' do
-        dom.find("#event_participation_#{participant_1.id} td.issue").should have_selector('.icon-ok.disabled')
-        dom.find("#event_participation_#{participant_1.id} td.revoke").should have_selector('.icon-remove.disabled')
+        expect(dom.find("#event_participation_#{participant_1.id} td.issue")).to have_selector('.icon-ok.disabled')
+        expect(dom.find("#event_participation_#{participant_1.id} td.revoke")).to have_selector('.icon-remove.disabled')
       end
 
       it 'should not have message' do
-        dom.should_not have_content('können die Qualifikationen nicht mehr bearbeitet werden')
+        expect(dom).not_to have_content('können die Qualifikationen nicht mehr bearbeitet werden')
       end
     end
 
@@ -70,18 +70,18 @@ describe Event::QualificationsController, type: :controller do
 
       subject { assigns(:participants) }
 
-      it { should have(2).items }
+      it { is_expected.to have(2).items }
 
       it 'should not have links' do
-        dom.should_not have_selector("#event_participation_#{participant_1.id} td:first a")
+        expect(dom).not_to have_selector("#event_participation_#{participant_1.id} td:first a")
       end
 
       it 'should have message' do
-        dom.should have_content('können die Qualifikationen nicht mehr bearbeitet werden')
+        expect(dom).to have_content('können die Qualifikationen nicht mehr bearbeitet werden')
       end
 
       it 'should have icons' do
-        dom.should have_selector("#event_participation_#{participant_1.id} td:first .icon-remove")
+        expect(dom).to have_selector("#event_participation_#{participant_1.id} td:first .icon-remove")
       end
     end
   end
@@ -92,8 +92,8 @@ describe Event::QualificationsController, type: :controller do
 
       subject { obtained_qualifications }
 
-      it { should have(1).item }
-      it { should render_template('qualification') }
+      it { is_expected.to have(1).item }
+      it { is_expected.to render_template('qualification') }
     end
 
     context 'in closed state' do
@@ -102,8 +102,8 @@ describe Event::QualificationsController, type: :controller do
 
       subject { obtained_qualifications }
 
-      it { should have(0).items }
-      it { should render_template('qualification') }
+      it { is_expected.to have(0).items }
+      it { is_expected.to render_template('qualification') }
     end
   end
 
@@ -119,8 +119,8 @@ describe Event::QualificationsController, type: :controller do
 
       subject { obtained_qualifications }
 
-      it { should have(0).item }
-      it { should render_template('qualification') }
+      it { is_expected.to have(0).item }
+      it { is_expected.to render_template('qualification') }
     end
 
     context 'in closed state' do
@@ -129,8 +129,8 @@ describe Event::QualificationsController, type: :controller do
 
       subject { obtained_qualifications }
 
-      it { should have(1).items }
-      it { should render_template('qualification') }
+      it { is_expected.to have(1).items }
+      it { is_expected.to render_template('qualification') }
     end
 
   end

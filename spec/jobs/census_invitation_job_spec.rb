@@ -27,7 +27,7 @@ describe CensusInvitationJob do
       # different role
       Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:bern))
 
-      subject.recipients.should =~ all
+      expect(subject.recipients).to match_array(all)
     end
   end
 

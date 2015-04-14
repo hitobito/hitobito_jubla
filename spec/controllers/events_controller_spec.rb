@@ -23,35 +23,35 @@ describe EventsController do
 
     it 'creates new event course with dates, advisor' do
       post :create, event: event_attrs.merge(contact_id: Person.first, advisor_id: Person.last), group_id: group.id
-      event.dates.should have(1).item
-      event.dates.first.should be_persisted
-      event.contact.should eq Person.first
-      event.advisor.should eq Person.last
+      expect(event.dates).to have(1).item
+      expect(event.dates.first).to be_persisted
+      expect(event.contact).to eq Person.first
+      expect(event.advisor).to eq Person.last
     end
 
     it 'creates new event course without contact, advisor' do
       post :create, event: event_attrs.merge(contact_id: '', advisor_id: ''), group_id: group.id
 
-      event.contact.should_not be_present
-      event.advisor.should_not be_present
-      event.should be_persisted
+      expect(event.contact).not_to be_present
+      expect(event.advisor).not_to be_present
+      expect(event).to be_persisted
     end
 
     it 'should set application contact if only one is available' do
       post :create, event: event_attrs, group_id: group.id
 
-      event.application_contact.should eq event.possible_contact_groups.first
+      expect(event.application_contact).to eq event.possible_contact_groups.first
     end
 
     it 'should set training days' do
       post :create, event: event_attrs.merge(training_days: 5), group_id: group.id
 
-      event.training_days.should eq 5
+      expect(event.training_days).to eq 5
     end
 
     after do
-      event.should be_persisted
-      should redirect_to(group_event_path(group, event))
+      expect(event).to be_persisted
+      is_expected.to redirect_to(group_event_path(group, event))
     end
   end
 
@@ -79,13 +79,13 @@ describe EventsController do
 
         event = assigns(:event)
 
-        should redirect_to(group_event_path(group, event))
+        is_expected.to redirect_to(group_event_path(group, event))
 
-        event.should be_persisted
-        event.dates.should have(1).item
-        event.dates.first.should be_persisted
-        event.contact.should eq contact
-        event.coach.should eq coach
+        expect(event).to be_persisted
+        expect(event.dates).to have(1).item
+        expect(event.dates.first).to be_persisted
+        expect(event.contact).to eq contact
+        expect(event.coach).to eq coach
       end
     end
 
@@ -104,7 +104,7 @@ describe EventsController do
                   group_id: flock.id
 
         event = assigns(:event)
-        event.coach.should eq coach
+        expect(event.coach).to eq coach
       end
 
       it '#new event camp it should NOT set default coach' do
@@ -114,7 +114,7 @@ describe EventsController do
                   group_id: flock.id
 
         event = assigns(:event)
-        event.coach.should be nil
+        expect(event.coach).to be nil
       end
     end
   end
@@ -132,12 +132,12 @@ describe EventsController do
 
       it 'lists events' do
         get :index, group_id: group.id, year: 2012
-        assigns(:events).should eq [event, events(:top_event)]
+        expect(assigns(:events)).to eq [event, events(:top_event)]
       end
 
       it 'lists courses' do
         get :index, group_id: group.id, year: 2012, type: Event::Course.sti_name
-        assigns(:events).should eq [course]
+        expect(assigns(:events)).to eq [course]
       end
     end
 
@@ -148,13 +148,13 @@ describe EventsController do
 
       it 'lists event' do
         get :index, group_id: group.id, year: 2012
-        assigns(:events).should eq [event]
+        expect(assigns(:events)).to eq [event]
       end
 
 
       it 'lists camp' do
         get :index, group_id: group.id, year: 2012, type: Event::Camp.sti_name
-        assigns(:events).should eq [camp]
+        expect(assigns(:events)).to eq [camp]
       end
 
     end

@@ -20,9 +20,9 @@ describe Event::KindsController do
                                   bsv_id: 'some id',
                                   j_s_label: 'some other label' }
 
-      kind.errors.full_messages.should eq []
-      kind.bsv_id.should eq 'some id'
-      kind.j_s_label.should eq 'some other label'
+      expect(kind.errors.full_messages).to eq []
+      expect(kind.bsv_id).to eq 'some id'
+      expect(kind.j_s_label).to eq 'some other label'
     end
 
   end

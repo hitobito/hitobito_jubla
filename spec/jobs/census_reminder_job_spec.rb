@@ -37,7 +37,7 @@ describe CensusReminderJob do
       Fabricate(Group::ChildGroup::Leader.name.to_sym, group: groups(:asterix))
       Fabricate(Group::Flock::Guide.name.to_sym, group: flock)
 
-      subject.recipients.should =~ leaders[0..1]
+      expect(subject.recipients).to match_array(leaders[0..1])
     end
   end
 
@@ -59,13 +59,13 @@ describe CensusReminderJob do
     it 'finds ast address' do
       leaders
       subject.perform
-      last_email.body.should =~ /AST<br\/>3000 Bern/
+      expect(last_email.body).to match(/AST<br\/>3000 Bern/)
     end
 
     it 'sends only to leaders with email' do
       leaders
       subject.perform
-      last_email.to.should == [leaders.first.email, leaders.second.email]
+      expect(last_email.to).to eq([leaders.first.email, leaders.second.email])
     end
   end
 

@@ -27,9 +27,9 @@ describe RolesController do
                            employment_percent: 50 }
 
       role = assigns(:role)
-      role.should be_kind_of(Group::FederalBoard::President)
-      role.employment_percent.should == 50
-      role.honorary.should be_true
+      expect(role).to be_kind_of(Group::FederalBoard::President)
+      expect(role.employment_percent).to eq(50)
+      expect(role.honorary).to be_truthy
     end
   end
 

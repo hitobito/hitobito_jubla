@@ -43,10 +43,10 @@ describe Export::Csv::Events do
     let(:list) { OpenStruct.new(max_dates: 3, contactable_keys: contactable_keys) }
     let(:row) { Export::Csv::Events::Row.new(course) }
 
-    it { row.fetch(:state).should eq 'Offen zur Anmeldung' }
-    it { row.fetch(:contact_j_s_number).should eq 123 }
-    it { row.fetch(:advisor_name).should eq advisor.to_s }
-    it { row.fetch(:advisor_j_s_number).should eq '123' } # varchar in db
+    it { expect(row.fetch(:state)).to eq 'Offen zur Anmeldung' }
+    it { expect(row.fetch(:contact_j_s_number)).to eq 123 }
+    it { expect(row.fetch(:advisor_name)).to eq advisor.to_s }
+    it { expect(row.fetch(:advisor_j_s_number)).to eq '123' } # varchar in db
   end
 
 end

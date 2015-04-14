@@ -21,19 +21,19 @@ describe PopulationController, type: :controller do
 
     it 'does not show any approveable content if there is no current census' do
       get :index, id: be.id
-      dom.all('#content h2').count.should eq 3
-      dom.should have_no_selector('a', text: 'Bestand bestätigen')
-      dom.should have_no_selector('.alert.alert-info.approveable')
-      dom.should have_no_selector('.alert.alert-alert.approveable')
-      dom.find('a', text: 'Bestand').should have_no_selector('span', text: '!')
+      expect(dom.all('#content h2').count).to eq 3
+      expect(dom).to have_no_selector('a', text: 'Bestand bestätigen')
+      expect(dom).to have_no_selector('.alert.alert-info.approveable')
+      expect(dom).to have_no_selector('.alert.alert-alert.approveable')
+      expect(dom.find('a', text: 'Bestand')).to have_no_selector('span', text: '!')
     end
 
     it 'does show all approveable content if there is a current census' do
       get :index, id: ar.id
-      dom.all('#content h2').count.should eq 1
-      dom.should have_selector('a', text: 'Bestand bestätigen')
-      dom.should have_content('Bitte ergänze')
-      dom.all('a', text: 'Bestand').first.should have_selector('span', text: '!')
+      expect(dom.all('#content h2').count).to eq 1
+      expect(dom).to have_selector('a', text: 'Bestand bestätigen')
+      expect(dom).to have_content('Bitte ergänze')
+      expect(dom.all('a', text: 'Bestand').first).to have_selector('span', text: '!')
     end
   end
 end

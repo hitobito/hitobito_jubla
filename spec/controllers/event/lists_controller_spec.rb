@@ -16,7 +16,7 @@ describe Event::ListsController do
 
     it 'POST#create' do
       get :courses, year: 2012, kind: 'bsv', format: :csv
-      response.body.should be_present
+      expect(response.body).to be_present
     end
   end
 end

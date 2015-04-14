@@ -12,20 +12,20 @@ describe Role do
   describe Group::Flock::Leader do
     subject { Group::Flock::Leader }
 
-    it { should be_member }
-    it { should be_visible_from_above }
+    it { is_expected.to be_member }
+    it { is_expected.to be_visible_from_above }
 
     its(:permissions) { should ==  [:layer_and_below_full, :contact_data, :approve_applications] }
 
     it 'may be created for flock' do
       role = Fabricate.build(subject.name.to_sym, group: groups(:bern))
-      role.should be_valid
+      expect(role).to be_valid
     end
 
     it 'may not be created for region' do
       role = Fabricate.build(subject.name.to_sym, group: groups(:city))
-      role.should_not be_valid
-      role.should have(1).error_on(:type)
+      expect(role).not_to be_valid
+      expect(role).to have(1).error_on(:type)
     end
   end
 
@@ -33,29 +33,29 @@ describe Role do
     subject { Group::Region::External }
 
     its(:kind) { should == :external }
-    it { should_not be_member }
-    it { should_not be_visible_from_above }
+    it { is_expected.not_to be_member }
+    it { is_expected.not_to be_visible_from_above }
 
     its(:permissions) { should ==  [] }
 
     it 'may be created for region' do
       role = Fabricate.build(subject.name.to_sym, group: groups(:city))
-      role.should be_valid
+      expect(role).to be_valid
     end
   end
 
   describe Group::Region::Alumnus do
     subject { Group::Region::Alumnus }
 
-    it { should be_alumnus }
-    it { should_not be_member }
-    it { should be_visible_from_above }
+    it { is_expected.to be_alumnus }
+    it { is_expected.not_to be_member }
+    it { is_expected.to be_visible_from_above }
 
     its(:permissions) { should ==  [:group_read] }
 
     it 'may be created for region' do
       role = Fabricate.build(subject.name.to_sym, group: groups(:city))
-      role.should be_valid
+      expect(role).to be_valid
     end
   end
 
@@ -63,11 +63,11 @@ describe Role do
     subject { Role.all_types }
 
     it 'starts with top most role' do
-      subject.first.should == Group::Federation::GroupAdmin
+      expect(subject.first).to eq(Group::Federation::GroupAdmin)
     end
 
     it 'finishes with bottom most role' do
-      subject.last.should == Group::SimpleGroup::DispatchAddress
+      expect(subject.last).to eq(Group::SimpleGroup::DispatchAddress)
     end
   end
 
@@ -79,7 +79,7 @@ describe Role do
     context 'young role' do
       it 'deletes from database' do
         expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-        Role.with_deleted.where(id: role.id).should_not be_exists
+        expect(Role.with_deleted.where(id: role.id)).not_to be_exists
       end
     end
 
@@ -89,7 +89,7 @@ describe Role do
       context 'single role' do
         it 'flags as deleted, creates alumnus role' do
           expect { role.destroy }.to change { Group::Flock::Alumnus.count }.by(1)
-          Role.only_deleted.find(role.id).should be_present
+          expect(Role.only_deleted.find(role.id)).to be_present
         end
       end
 
@@ -98,7 +98,7 @@ describe Role do
 
         it 'flags as deleted, does not create alumnus role' do
           expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-          Role.only_deleted.find(role.id).should be_present
+          expect(Role.only_deleted.find(role.id)).to be_present
         end
       end
 
@@ -107,7 +107,7 @@ describe Role do
 
         it 'flags as deleted, does not create alumnus role' do
           expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-          Role.only_deleted.find(role.id).should be_present
+          expect(Role.only_deleted.find(role.id)).to be_present
         end
       end
 

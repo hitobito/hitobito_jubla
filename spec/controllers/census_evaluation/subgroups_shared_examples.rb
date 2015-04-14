@@ -6,7 +6,7 @@ shared_examples 'sub_groups' do
     context 'for current census' do
       before { get :index, id: parent.id, year: census.year }
 
-      it { should eq current_census_groups.collect(&:name).sort }
+      it { is_expected.to eq current_census_groups.collect(&:name).sort }
     end
 
     context 'for past census' do
@@ -17,7 +17,7 @@ shared_examples 'sub_groups' do
         get :index, id: parent.id, year: census.year
       end
 
-      it { should eq past_census_groups.collect(&:name).sort }
+      it { is_expected.to eq past_census_groups.collect(&:name).sort }
     end
 
     context 'for future census' do
@@ -27,7 +27,7 @@ shared_examples 'sub_groups' do
         get :index, id: parent.id, year: 2100
       end
 
-      it { should eq future_census_groups.collect(&:name).sort }
+      it { is_expected.to eq future_census_groups.collect(&:name).sort }
     end
   end
 
@@ -80,7 +80,7 @@ shared_examples 'sub_groups' do
       end
 
       merger = Group::Merger.new(group_to_delete, group_without_count, 'Dummy')
-      merger.merge!.should be_true
+      expect(merger.merge!).to be_truthy
       @dummy = merger.new_group
     end
 
@@ -101,5 +101,5 @@ end
 # we first delete children, then group and validate return values
 def delete_group_and_children(deleted_at = Time.zone.now)
   group_to_delete.update_column(:deleted_at, deleted_at)
-  group_to_delete.should be_destroyed
+  expect(group_to_delete).to be_destroyed
 end

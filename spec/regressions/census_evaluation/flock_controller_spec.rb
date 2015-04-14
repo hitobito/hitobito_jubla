@@ -21,9 +21,9 @@ describe CensusEvaluation::FlockController, type: :controller do
     before { get :index, id: bern.id }
 
     it 'renders correct templates' do
-      should render_template('index')
-      should_not render_template('_totals')
-      should render_template('_details')
+      is_expected.to render_template('index')
+      is_expected.not_to render_template('_totals')
+      is_expected.to render_template('_details')
     end
   end
 

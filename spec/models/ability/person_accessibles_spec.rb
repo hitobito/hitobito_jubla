@@ -35,24 +35,24 @@ describe PersonAccessibles do
         let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
 
         it 'has layer and below full permission' do
-          role.permissions.should include(:layer_and_below_full)
+          expect(role.permissions).to include(:layer_and_below_full)
         end
 
         context 'own group' do
           let(:group) { role.group }
 
           it 'may get himself' do
-            should include(role.person)
+            is_expected.to include(role.person)
           end
 
           it 'may get people in his group' do
             other = Fabricate(Group::FederalBoard::Member.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people in his group' do
             other = Fabricate(Group::FederalBoard::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
@@ -61,12 +61,12 @@ describe PersonAccessibles do
 
           it 'may get visible people' do
             other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
       end
@@ -76,24 +76,24 @@ describe PersonAccessibles do
         let(:role) { Fabricate(Group::StateBoard::Supervisor.name.to_sym, group: groups(:be_board)) }
 
         it 'has layer and below read permission' do
-          role.permissions.should include(:layer_and_below_read)
+          expect(role.permissions).to include(:layer_and_below_read)
         end
 
         context 'own group' do
           let(:group) { role.group }
 
           it 'may get himself' do
-            should include(role.person)
+            is_expected.to include(role.person)
           end
 
           it 'may get people in his group' do
             other = Fabricate(Group::StateBoard::Member.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people in his group' do
             other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
@@ -102,12 +102,12 @@ describe PersonAccessibles do
 
           it 'may get people' do
             other = Fabricate(Group::StateAgency::Leader.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people' do
             other = Fabricate(Group::StateAgency::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
@@ -116,12 +116,12 @@ describe PersonAccessibles do
 
           it 'may get visible people' do
             other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::Flock::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -130,7 +130,7 @@ describe PersonAccessibles do
 
           it 'may not get children' do
             other = Fabricate(Group::ChildGroup::Child.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -140,24 +140,24 @@ describe PersonAccessibles do
         let(:role) { Fabricate(Group::StateBoard::GroupAdmin.name.to_sym, group: groups(:be_board)) }
 
         it 'has group full permission' do
-          role.permissions.should include(:group_full)
+          expect(role.permissions).to include(:group_full)
         end
 
         context 'own group' do
           let(:group) { role.group }
 
           it 'may get himself' do
-            should include(role.person)
+            is_expected.to include(role.person)
           end
 
           it 'may get people in his group' do
             other = Fabricate(Group::StateBoard::Member.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people in his group' do
             other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
@@ -166,12 +166,12 @@ describe PersonAccessibles do
 
           it 'may not get people' do
             other = Fabricate(Group::StateAgency::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::StateAgency::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -180,7 +180,7 @@ describe PersonAccessibles do
 
           it 'may not get visible people' do
             other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -190,24 +190,24 @@ describe PersonAccessibles do
         let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
 
         it 'has contact data permission' do
-          role.permissions.should include(:contact_data)
+          expect(role.permissions).to include(:contact_data)
         end
 
         context 'own group' do
           let(:group) { role.group }
 
           it 'may get himself' do
-            should include(role.person)
+            is_expected.to include(role.person)
           end
 
           it 'may get people in his group' do
             other = Fabricate(Group::StateBoard::Member.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people in his group' do
             other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
@@ -216,17 +216,17 @@ describe PersonAccessibles do
 
           it 'may get people with contact data' do
             other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may not get people without contact data' do
             other = Fabricate(Group::StateWorkGroup::Member.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -235,17 +235,17 @@ describe PersonAccessibles do
 
           it 'may get people with contact data' do
             other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may not get people without contact data' do
             other = Fabricate(Group::Flock::Guide.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::Flock::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -256,29 +256,29 @@ describe PersonAccessibles do
         let(:role) { Fabricate(Group::StateWorkGroup::Member.name.to_sym, group: groups(:be_state_camp)) }
 
         it 'has only login permission' do
-          role.permissions.should == [:group_read]
+          expect(role.permissions).to eq([:group_read])
         end
 
         context 'own group' do
           let(:group) { role.group }
 
           it 'may get himself' do
-            should include(role.person)
+            is_expected.to include(role.person)
           end
 
           it 'may get people in his group' do
             other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people in his group' do
             other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get alumni in his group' do
             other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
@@ -287,12 +287,12 @@ describe PersonAccessibles do
 
           it 'may not get people with contact data' do
             other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::StateBoard::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -301,12 +301,12 @@ describe PersonAccessibles do
 
           it 'may not get people with contact data' do
             other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get external people' do
             other = Fabricate(Group::Flock::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -317,7 +317,7 @@ describe PersonAccessibles do
         let(:role) { Fabricate(Group::StateWorkGroup::External.name.to_sym, group: groups(:be_state_camp)) }
 
         it 'has no permissions' do
-          role.permissions.should == []
+          expect(role.permissions).to eq([])
         end
 
         context 'own group' do
@@ -325,27 +325,27 @@ describe PersonAccessibles do
 
           if action == :index
             it 'may not get himself' do
-              should_not include(role.person)
+              is_expected.not_to include(role.person)
             end
           else
             it 'may get himself' do
-              should include(role.person)
+              is_expected.to include(role.person)
             end
           end
 
           it 'may not get people in his group' do
             other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get external people in his group' do
             other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
 
           it 'may not get alumni in his group' do
             other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -354,7 +354,7 @@ describe PersonAccessibles do
 
           it 'may not get people with contact data' do
             other = Fabricate(Group::StateBoard::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -363,7 +363,7 @@ describe PersonAccessibles do
 
           it 'may not get people with contact data' do
             other = Fabricate(Group::Flock::Leader.name.to_sym, group: group)
-            should_not include(other.person)
+            is_expected.not_to include(other.person)
           end
         end
 
@@ -377,23 +377,23 @@ describe PersonAccessibles do
 
           it 'may get all people' do
             other = Fabricate(Group::FederalBoard::Member.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
 
           it 'may get external people' do
             other = Fabricate(Group::FederalBoard::External.name.to_sym, group: group)
-            should include(other.person)
+            is_expected.to include(other.person)
           end
         end
 
         if action == :global
           it 'may get herself' do
-            should include(user)
+            is_expected.to include(user)
           end
 
           it 'may get people outside groups' do
             other = Fabricate(:person)
-            should include(other)
+            is_expected.to include(other)
           end
         end
 

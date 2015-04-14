@@ -21,7 +21,7 @@ describe GroupOriginator do
 
   def assert_originating_groups(attrs)
     [:flock, :state].each do |group|
-      originator.send(group).should eq attrs[group]
+      expect(originator.send(group)).to eq attrs[group]
     end
   end
 

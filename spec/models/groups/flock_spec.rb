@@ -45,8 +45,8 @@ describe Group::Flock do
       subject.coach_id = state_coach.person_id
       subject.save!
 
-      Group.find(subject.id).coach_id.should == state_coach.person_id
-      Group.find(subject.id).coach.should == state_coach.person
+      expect(Group.find(subject.id).coach_id).to eq(state_coach.person_id)
+      expect(Group.find(subject.id).coach).to eq(state_coach.person)
     end
 
     it 'removes existing coach if id is set blank' do
@@ -72,8 +72,8 @@ describe Group::Flock do
       new_coach = Fabricate(:person)
       subject.coach_id = new_coach.id
       expect { subject.save! }.not_to change { Role.count }
-      Group.find(subject.id).coach_id.should == new_coach.id
-      subject.roles.where(person_id: state_coach.person_id).should_not be_exists
+      expect(Group.find(subject.id).coach_id).to eq(new_coach.id)
+      expect(subject.roles.where(person_id: state_coach.person_id)).not_to be_exists
     end
   end
 end

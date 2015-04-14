@@ -13,20 +13,20 @@ describe Event::Camp do
   describe '.role_types' do
     subject { Event::Camp.role_types }
 
-    it { should include(Event::Role::Leader) }
-    it { should include(Event::Role::AssistantLeader) }
-    it { should include(Event::Role::Cook) }
-    it { should include(Event::Role::Treasurer) }
-    it { should include(Event::Role::Speaker) }
-    it { should include(Event::Role::Participant) }
-    it { should include(Event::Camp::Role::Coach) }
+    it { is_expected.to include(Event::Role::Leader) }
+    it { is_expected.to include(Event::Role::AssistantLeader) }
+    it { is_expected.to include(Event::Role::Cook) }
+    it { is_expected.to include(Event::Role::Treasurer) }
+    it { is_expected.to include(Event::Role::Speaker) }
+    it { is_expected.to include(Event::Role::Participant) }
+    it { is_expected.to include(Event::Camp::Role::Coach) }
   end
 
   context '.kind_class' do
     subject { Event::Camp.kind_class }
 
     it 'is loaded correctly' do
-      should == Event::Camp::Kind
+      is_expected.to eq(Event::Camp::Kind)
       subject.name == 'Event::Camp::Kind'
     end
 
@@ -46,18 +46,18 @@ describe Event::Camp do
     it "shouldn't change the coach if the same is already set" do
       subject.coach_id = person.id
       expect { subject.save! }.not_to change { Event::Role.count }
-      subject.coach.should eq person
+      expect(subject.coach).to eq person
     end
 
     it 'should update the coach if another person is assigned' do
       event.coach_id = person1.id
-      event.save.should be_true
-      event.coach.should eq person1
+      expect(event.save).to be_truthy
+      expect(event.coach).to eq person1
     end
 
     it "shouldn't try to add coach if id is empty" do
       event = Fabricate(:camp, coach_id: '')
-      event.coach.should be nil
+      expect(event.coach).to be nil
     end
 
     it 'removes existing coach if id is set blank' do
@@ -75,8 +75,8 @@ describe Event::Camp do
       new_coach = Fabricate(:person)
       subject.coach_id = new_coach.id
       expect { subject.save! }.not_to change { Event::Role.count }
-      Event.find(subject.id).coach_id.should == new_coach.id
-      subject.participations.where(person_id: person.id).should_not be_exists
+      expect(Event.find(subject.id).coach_id).to eq(new_coach.id)
+      expect(subject.participations.where(person_id: person.id)).not_to be_exists
     end
 
   end

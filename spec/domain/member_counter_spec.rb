@@ -31,17 +31,17 @@ describe MemberCounter do
   end
 
   it 'flock has external and deleted people as well' do
-    flock.people.count.should == 6
-    Person.joins('INNER JOIN roles ON roles.person_id = people.id').
+    expect(flock.people.count).to eq(6)
+    expect(Person.joins('INNER JOIN roles ON roles.person_id = people.id').
            where(roles: { group_id: flock.id }).
-           count.should == 7
+           count).to eq(7)
   end
 
   context 'instance' do
 
     subject { MemberCounter.new(2011, flock) }
 
-    it { should_not be_exists }
+    it { is_expected.not_to be_exists }
 
     its(:state) { should == groups(:be) }
 
@@ -50,7 +50,7 @@ describe MemberCounter do
     it 'creates member counts' do
       expect { subject.count! }.to change { MemberCount.count }.by(5)
 
-      should be_exists
+      is_expected.to be_exists
 
       assert_member_counts(1985, 1, nil, nil, nil)
       assert_member_counts(1988, 1, nil, nil, nil)
@@ -80,26 +80,26 @@ describe MemberCounter do
     subject { MemberCounter.current_counts?(flock) }
 
     context 'with counts' do
-      it { should be_true }
+      it { is_expected.to be_truthy }
     end
 
     context 'without counts' do
       before { MemberCount.update_all(year: 2011) }
-      it { should be_false }
+      it { is_expected.to be_falsey }
     end
 
     context 'with census' do
       before { Census.destroy_all }
-      it { should be_false }
+      it { is_expected.to be_falsey }
     end
   end
 
   def assert_member_counts(born_in, leader_f, leader_m, child_f, child_m)
     count = MemberCount.where(state_id: groups(:be).id, flock_id: flock.id, year: 2011, born_in: born_in).first
-    count.leader_f.should == leader_f
-    count.leader_m.should == leader_m
-    count.child_f.should == child_f
-    count.child_m.should == child_m
+    expect(count.leader_f).to eq(leader_f)
+    expect(count.leader_m).to eq(leader_m)
+    expect(count.child_f).to eq(child_f)
+    expect(count.child_m).to eq(child_m)
   end
 
 end

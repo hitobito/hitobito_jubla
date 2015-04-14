@@ -22,28 +22,28 @@ describe CensusEvaluation::StateController do
 
     it 'assigns counts' do
       counts = assigns(:group_counts)
-      counts.keys.should =~ [bern.id, thun.id]
-      counts[bern.id].total.should == 12
-      counts[thun.id].total.should == 7
+      expect(counts.keys).to match_array([bern.id, thun.id])
+      expect(counts[bern.id].total).to eq(12)
+      expect(counts[thun.id].total).to eq(7)
     end
 
     it 'assigns total' do
-      assigns(:total).should be_kind_of(MemberCount)
+      expect(assigns(:total)).to be_kind_of(MemberCount)
     end
 
     it 'assigns sub groups' do
-      assigns(:sub_groups).should == [bern, muri, thun]
+      expect(assigns(:sub_groups)).to eq([bern, muri, thun])
     end
 
     it 'assigns details' do
       details = assigns(:details).to_a
-      details.should have(5).items
+      expect(details).to have(5).items
 
-      details[0].born_in.should == 1984
-      details[1].born_in.should == 1985
-      details[2].born_in.should == 1988
-      details[3].born_in.should == 1997
-      details[4].born_in.should == 1999
+      expect(details[0].born_in).to eq(1984)
+      expect(details[1].born_in).to eq(1985)
+      expect(details[2].born_in).to eq(1988)
+      expect(details[3].born_in).to eq(1997)
+      expect(details[4].born_in).to eq(1999)
     end
   end
 
@@ -56,11 +56,11 @@ describe CensusEvaluation::StateController do
       before { post :remind, id: be.id, flock_id: bern.id, format: :js }
 
       it 'renders update_flash' do
-        should render_template('census_evaluation/state/remind')
+        is_expected.to render_template('census_evaluation/state/remind')
       end
 
       it 'sets flash messages' do
-        flash[:notice].should =~ /an Jungwacht Bern geschickt/
+        expect(flash[:notice]).to match(/an Jungwacht Bern geschickt/)
       end
     end
 

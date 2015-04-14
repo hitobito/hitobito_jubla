@@ -18,11 +18,11 @@ describe Export::Csv::CensusFlock do
 
   describe 'census flock' do
 
-    it { census_flock.list.should have(5).items }
+    it { expect(census_flock.list).to have(5).items }
 
     it 'orders by groups.lft and name' do
-      census_flock.list[0][:name].should eq 'Ausserroden'
-      census_flock.list[1][:name].should eq 'Bern'
+      expect(census_flock.list[0][:name]).to eq 'Ausserroden'
+      expect(census_flock.list[1][:name]).to eq 'Bern'
     end
   end
 

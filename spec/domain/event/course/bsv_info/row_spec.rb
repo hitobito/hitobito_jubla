@@ -27,21 +27,21 @@ describe Event::Course::BsvInfo::Row do
       course.dates.destroy_all
 
       %w(date total_days location).each do |attr|
-        info.send(attr.to_sym).should be_blank
+        expect(info.send(attr.to_sym)).to be_blank
       end
     end
 
     it 'sets date to start_at of first date' do
-      info.date.should eq '01.03.2012'
+      expect(info.date).to eq '01.03.2012'
     end
 
     it 'calculates total from summed date durations' do
-      info.total_days.should eq 9
+      expect(info.total_days).to eq 9
     end
 
     it 'sets location from date with longest duration' do
       event_dates(:first_two).update_attribute(:location, 'somewhere')
-      info.location.should eq 'somewhere'
+      expect(info.location).to eq 'somewhere'
     end
   end
 
@@ -50,74 +50,74 @@ describe Event::Course::BsvInfo::Row do
       course.participations.destroy_all
 
       %w(participants participants_total leaders leaders_total cooks speakers).each do |attr|
-        info.send(attr.to_sym).should eq 0
+        expect(info.send(attr.to_sym)).to eq 0
       end
     end
 
     context 'role counts' do
       it 'counts roles from fixtures' do
-        info.leaders.should eq 1
-        info.leaders_total.should eq 1
-        info.participants.should eq 0
-        info.participants_total.should eq 1
+        expect(info.leaders).to eq 1
+        expect(info.leaders_total).to eq 1
+        expect(info.participants).to eq 0
+        expect(info.participants_total).to eq 1
 
-        info.cooks.should eq 0
-        info.speakers.should eq 0
+        expect(info.cooks).to eq 0
+        expect(info.speakers).to eq 0
       end
 
       it 'counts participation with multiple leader roles only once' do
         create_participation(Event::Role::Leader, Event::Role::Leader,
                              Event::Role::AssistantLeader)
 
-        info.leaders_total.should eq 2
+        expect(info.leaders_total).to eq 2
       end
 
       it 'counts roles not people for cooks and speakers' do
         create_participation(Event::Role::Leader, Event::Role::Cook, Event::Role::Speaker)
 
-        info.leaders_total.should eq 2
-        info.cooks.should eq 1
-        info.speakers.should eq 1
+        expect(info.leaders_total).to eq 2
+        expect(info.cooks).to eq 1
+        expect(info.speakers).to eq 1
       end
 
       it 'does not count Advisor role' do
         create_participation(Event::Course::Role::Advisor)
 
-        info.leaders.should eq 1
-        info.leaders_total.should eq 1
+        expect(info.leaders).to eq 1
+        expect(info.leaders_total).to eq 1
       end
     end
 
     context '#participants' do
       it 'does not count participants born 16 years before course year' do
         participant.update_attribute(:birthday, '01.01.1996')
-        info.participants.should eq 0
+        expect(info.participants).to eq 0
       end
 
       it 'counts participant born 17 years before course year' do
         participant.update_attribute(:birthday, '31.12.1995')
-        info.participants.should eq 1
+        expect(info.participants).to eq 1
       end
 
       it 'counts participant born 30 years before course year' do
         participant.update_attribute(:birthday, '01.01.1982')
-        info.participants.should eq 1
+        expect(info.participants).to eq 1
       end
 
       it 'does not count participants born 31 years before course year' do
         participant.update_attribute(:birthday, '31.12.1981')
-        info.participants.should eq 0
+        expect(info.participants).to eq 0
       end
 
       context 'warnings' do
         it 'is set if not birthday is present' do
           participant.update_attribute(:birthday, nil)
-          info.warnings[:participants].should be_true
+          expect(info.warnings[:participants]).to be_truthy
         end
 
         it 'is not set if birthday is present' do
           participant.update_attribute(:birthday, '31.12.1981')
-          info.warnings[:participants].should be_false
+          expect(info.warnings[:participants]).to be_falsey
         end
       end
     end
@@ -128,38 +128,38 @@ describe Event::Course::BsvInfo::Row do
       it 'counts valid canton abbreviations of particpants aged 17 to 30' do
         create_participant_with_person_attrs(canton: 'ag', birthday: birthday)
         create_participant_with_person_attrs(canton: 'be', birthday: birthday)
-        info.cantons.should eq 2
+        expect(info.cantons).to eq 2
       end
 
       it 'counts valid abbreviations only once' do
         2.times { create_participant_with_person_attrs(canton: 'ag', birthday: birthday) }
-        info.cantons.should eq 1
+        expect(info.cantons).to eq 1
       end
 
       it 'ignores case when counting' do
         create_participant_with_person_attrs(canton: 'AG', birthday: birthday)
-        info.cantons.should eq 1
+        expect(info.cantons).to eq 1
       end
 
       it 'ignores cantons on people outside of aged 17 to 30 group' do
         create_participant_with_person_attrs(canton: 'ag', birthday: '31.12.1981')
-        info.cantons.should eq 0
+        expect(info.cantons).to eq 0
       end
 
       context 'warnings' do
         it 'is set if particpants of any age are missing cantons' do
           participant.update_attribute(:canton, nil)
-          info.warnings[:cantons].should be_true
+          expect(info.warnings[:cantons]).to be_truthy
         end
 
         it 'is set if canton value is not a valid abbreviation' do
           participant.update_attribute(:canton, 'Bern')
-          info.warnings[:cantons].should be_true
+          expect(info.warnings[:cantons]).to be_truthy
         end
 
         it 'is not set if canton is present and a valid abbreviation' do
           participant.update_attribute(:canton, 'be')
-          info.warnings[:cantons].should be_false
+          expect(info.warnings[:cantons]).to be_falsey
         end
       end
     end

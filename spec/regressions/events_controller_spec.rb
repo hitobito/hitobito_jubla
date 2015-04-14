@@ -26,7 +26,7 @@ describe EventsController, type: :controller  do
 
       it 'should not be possible to select the contact group if only one option is available' do
         get :new, group_id: be.id, event: { type: 'Event::Course' }
-        dom.should have_no_selector('#event_application_contact_id')
+        expect(dom).to have_no_selector('#event_application_contact_id')
       end
 
       it 'should be possible to select the contact group if multiple state agencies are available' do
@@ -34,7 +34,7 @@ describe EventsController, type: :controller  do
         Fabricate(Group::StateAgency.name.to_sym, parent: be)
 
         get :new, group_id: be.id, event: { type: 'Event::Course' }
-        dom.all('select#event_application_contact_id option').count.should eq 3
+        expect(dom.all('select#event_application_contact_id option').count).to eq 3
       end
     end
 
@@ -42,8 +42,8 @@ describe EventsController, type: :controller  do
       it "should be possible to select one of the assigned group's state agencies as application contact" do
         course = Fabricate(:jubla_course, groups: [be, no])
         get :edit, group_id: be.id, id: course.id
-        dom.should have_selector('select#event_application_contact_id')
-        dom.all('select#event_application_contact_id option').count.should eq 3
+        expect(dom).to have_selector('select#event_application_contact_id')
+        expect(dom.all('select#event_application_contact_id option').count).to eq 3
       end
     end
 
@@ -53,8 +53,8 @@ describe EventsController, type: :controller  do
         course.save!
 
         get :show, group_id: be.id, id: course.id
-        dom.should have_selector('dt', text: 'Anmeldung an')
-        dom.should have_selector('dt', text: 'J+S Bezeichnung')
+        expect(dom).to have_selector('dt', text: 'Anmeldung an')
+        expect(dom).to have_selector('dt', text: 'J+S Bezeichnung')
       end
     end
 

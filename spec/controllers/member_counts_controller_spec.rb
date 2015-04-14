@@ -18,8 +18,8 @@ describe MemberCountsController do
       before { get :edit, group_id: flock.id, year: 2012 }
 
       it 'assigns counts' do
-        assigns(:member_counts).should have(3).items
-        assigns(:group).should == flock
+        expect(assigns(:member_counts)).to have(3).items
+        expect(assigns(:group)).to eq(flock)
       end
     end
 
@@ -39,7 +39,7 @@ describe MemberCountsController do
 
       end
 
-      it { should redirect_to(census_flock_group_path(flock, year: 2012)) }
+      it { is_expected.to redirect_to(census_flock_group_path(flock, year: 2012)) }
 
       it 'should save counts' do
         assert_member_counts(member_counts(:bern_1985).reload, 3, 1, nil, 0)
@@ -62,8 +62,8 @@ describe MemberCountsController do
       censuses(:two_o_12).destroy
       post :create, group_id: flock.id
 
-      should redirect_to(census_flock_group_path(flock, year: 2011))
-      flash[:notice].should be_present
+      is_expected.to redirect_to(census_flock_group_path(flock, year: 2011))
+      expect(flash[:notice]).to be_present
     end
 
     it 'should not change anything if counts exist' do
@@ -81,7 +81,7 @@ describe MemberCountsController do
       expect { post :create, group_id: flock.id }.to change { MemberCount.count }.by(4)
 
       counts = MemberCount.where(flock_id: flock.id, year: 2011).order(:born_in).to_a
-      counts.should have(4).items
+      expect(counts).to have(4).items
 
       assert_member_counts(counts[0], 1, nil, 1, nil)
       assert_member_counts(counts[1], nil, 1, nil, nil)
@@ -96,8 +96,8 @@ describe MemberCountsController do
         sign_in(leader)
         post :create, group_id: flock.id
 
-        should redirect_to(census_flock_group_path(flock, year: 2011))
-        flash[:notice].should be_present
+        is_expected.to redirect_to(census_flock_group_path(flock, year: 2011))
+        expect(flash[:notice]).to be_present
       end
     end
 
@@ -112,10 +112,10 @@ describe MemberCountsController do
 
 
   def assert_member_counts(count, leader_f, leader_m, child_f, child_m)
-    count.leader_f.should == leader_f
-    count.leader_m.should == leader_m
-    count.child_f.should == child_f
-    count.child_m.should == child_m
+    expect(count.leader_f).to eq(leader_f)
+    expect(count.leader_m).to eq(leader_m)
+    expect(count.child_f).to eq(child_f)
+    expect(count.child_m).to eq(child_m)
   end
 
 end

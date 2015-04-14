@@ -6,7 +6,7 @@ shared_examples 'sub_groups' do
   shared_examples 'sub_groups_examples' do
 
     context 'for current census' do
-      it { should eq current_census_groups.collect(&:name).sort }
+      it { is_expected.to eq current_census_groups.collect(&:name).sort }
     end
 
     context 'for past census' do
@@ -16,7 +16,7 @@ shared_examples 'sub_groups' do
                        start_at: census.start_at + 1.year)
       end
 
-      it { should eq past_census_groups.collect(&:name).sort }
+      it { is_expected.to eq past_census_groups.collect(&:name).sort }
     end
 
     context 'for future census' do
@@ -26,7 +26,7 @@ shared_examples 'sub_groups' do
                        start_at: Date.new(2100, 1, 1))
       end
 
-      it { should eq future_census_groups.collect(&:name).sort }
+      it { is_expected.to eq future_census_groups.collect(&:name).sort }
     end
   end
 
@@ -83,7 +83,7 @@ shared_examples 'sub_groups' do
       end
 
       merger = Group::Merger.new(group_to_delete, group_without_count, 'Dummy')
-      merger.merge!.should be_true
+      expect(merger.merge!).to be_truthy
       @dummy = merger.new_group
     end
 
@@ -118,33 +118,33 @@ describe CensusEvaluation do
     end
 
     it 'census is current census' do
-      evaluation.should be_census_current
+      expect(evaluation).to be_census_current
     end
 
     it '#counts_by_sub_group' do
       counts = evaluation.counts_by_sub_group
-      counts.keys.should =~ [be.id, no.id]
-      counts[be.id].total.should == 19
-      counts[no.id].total.should == 9
+      expect(counts.keys).to match_array([be.id, no.id])
+      expect(counts[be.id].total).to eq(19)
+      expect(counts[no.id].total).to eq(9)
     end
 
     it '#total' do
-      evaluation.total.should be_kind_of(MemberCount)
+      expect(evaluation.total).to be_kind_of(MemberCount)
     end
 
     it '#details' do
       details = evaluation.details.to_a
-      details.should have(5).items
+      expect(details).to have(5).items
 
-      details[0].born_in.should == 1984
-      details[1].born_in.should == 1985
-      details[2].born_in.should == 1988
-      details[3].born_in.should == 1997
-      details[4].born_in.should == 1999
+      expect(details[0].born_in).to eq(1984)
+      expect(details[1].born_in).to eq(1985)
+      expect(details[2].born_in).to eq(1988)
+      expect(details[3].born_in).to eq(1997)
+      expect(details[4].born_in).to eq(1999)
     end
 
     it '#sub_groups' do
-      evaluation.sub_groups.should == [be, no, zh]
+      expect(evaluation.sub_groups).to eq([be, no, zh])
     end
 
     it_behaves_like 'sub_groups' do
@@ -163,24 +163,24 @@ describe CensusEvaluation do
 
     it '#counts_by_sub_group' do
       counts = evaluation.counts_by_sub_group
-      counts.keys.should =~ [bern.id, thun.id]
-      counts[bern.id].total.should == 12
-      counts[thun.id].total.should == 7
+      expect(counts.keys).to match_array([bern.id, thun.id])
+      expect(counts[bern.id].total).to eq(12)
+      expect(counts[thun.id].total).to eq(7)
     end
 
     it '#details' do
       details = evaluation.details.to_a
-      details.should have(5).items
+      expect(details).to have(5).items
 
-      details[0].born_in.should == 1984
-      details[1].born_in.should == 1985
-      details[2].born_in.should == 1988
-      details[3].born_in.should == 1997
-      details[4].born_in.should == 1999
+      expect(details[0].born_in).to eq(1984)
+      expect(details[1].born_in).to eq(1985)
+      expect(details[2].born_in).to eq(1988)
+      expect(details[3].born_in).to eq(1997)
+      expect(details[4].born_in).to eq(1999)
     end
 
     it '#sub groups' do
-      evaluation.sub_groups.should == [bern, muri, thun]
+      expect(evaluation.sub_groups).to eq([bern, muri, thun])
     end
 
     it_behaves_like 'sub_groups' do
@@ -195,7 +195,7 @@ describe CensusEvaluation do
 
         context 'before count' do
           before do
-            Group::Mover.new(innerroden).perform(target).should be_true
+            expect(Group::Mover.new(innerroden).perform(target)).to be_truthy
             target.reload
           end
 
@@ -228,7 +228,7 @@ describe CensusEvaluation do
               it 'contains moved group' do
                  Census.create!(year: census.year + 1,
                                 start_at: census.start_at + 1.year)
-                 should eq [innerroden].collect(&:name).sort
+                 is_expected.to eq [innerroden].collect(&:name).sort
               end
             end
           end
@@ -237,7 +237,7 @@ describe CensusEvaluation do
 
         context 'after count' do
           before do
-            Group::Mover.new(innerroden).perform(target).should be_true
+            expect(Group::Mover.new(innerroden).perform(target)).to be_truthy
             target.reload
           end
 
@@ -268,25 +268,25 @@ describe CensusEvaluation do
     let(:sub_group_type) { nil }
 
     it '#counts' do
-      evaluation.counts_by_sub_group.should be_blank
+      expect(evaluation.counts_by_sub_group).to be_blank
     end
 
     it '#total' do
       total = evaluation.total
-      total.should be_kind_of(MemberCount)
-      total.total.should == 12
+      expect(total).to be_kind_of(MemberCount)
+      expect(total.total).to eq(12)
     end
 
     it '#sub groups' do
-      evaluation.sub_groups.should be_blank
+      expect(evaluation.sub_groups).to be_blank
     end
 
     it '#details' do
       details = evaluation.details.to_a
-      details.should have(3).items
-      details[0].born_in.should == 1985
-      details[1].born_in.should == 1988
-      details[2].born_in.should == 1997
+      expect(details).to have(3).items
+      expect(details[0].born_in).to eq(1985)
+      expect(details[1].born_in).to eq(1988)
+      expect(details[2].born_in).to eq(1997)
     end
   end
 end
@@ -301,5 +301,5 @@ end
 # we first delete children, then group and validate return values
 def delete_group_and_children(deleted_at = Time.zone.now)
   group_to_delete.update_column(:deleted_at, deleted_at)
-  group_to_delete.should be_destroyed
+  expect(group_to_delete).to be_destroyed
 end

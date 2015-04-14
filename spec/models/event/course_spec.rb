@@ -22,46 +22,46 @@ describe Event::Course do
   describe '.role_types' do
     subject { Event::Course.role_types }
 
-    it { should include(Event::Course::Role::Participant) }
-    it { should include(Event::Course::Role::Advisor) }
-    it { should_not include(Event::Role::Participant) }
+    it { is_expected.to include(Event::Course::Role::Participant) }
+    it { is_expected.to include(Event::Course::Role::Advisor) }
+    it { is_expected.not_to include(Event::Role::Participant) }
   end
 
   context '#application_possible?' do
     before { subject.state = 'application_open' }
 
     context 'without opening date' do
-      it { should be_application_possible }
+      it { is_expected.to be_application_possible }
     end
 
     context 'with opening date in the past' do
       before { subject.application_opening_at = Date.today - 1 }
-      it { should be_application_possible }
+      it { is_expected.to be_application_possible }
 
       context 'in other state' do
         before { subject.state = 'application_closed' }
-        it { should_not be_application_possible }
+        it { is_expected.not_to be_application_possible }
       end
     end
 
     context 'with ng date today' do
       before { subject.application_opening_at = Date.today }
-      it { should be_application_possible }
+      it { is_expected.to be_application_possible }
     end
 
     context 'with opening date in the future' do
       before { subject.application_opening_at = Date.today + 1 }
-      it { should_not be_application_possible }
+      it { is_expected.not_to be_application_possible }
     end
 
     context 'with closing date in the past' do
       before { subject.application_closing_at = Date.today - 1 }
-      it { should be_application_possible } # yep, we do not care about the closing date
+      it { is_expected.to be_application_possible } # yep, we do not care about the closing date
     end
 
     context 'in other state' do
       before { subject.state = 'created' }
-      it { should_not be_application_possible }
+      it { is_expected.not_to be_application_possible }
     end
 
   end
@@ -80,18 +80,18 @@ describe Event::Course do
     it "shouldn't change the advisor if the same is already set" do
       subject.advisor_id = person.id
       expect { subject.save! }.not_to change { Event::Role.count }
-      subject.advisor.should eq person
+      expect(subject.advisor).to eq person
     end
 
     it 'should update the advisor if another person is assigned' do
       event.advisor_id = person1.id
-      event.save.should be_true
-      event.advisor.should eq person1
+      expect(event.save).to be_truthy
+      expect(event.advisor).to eq person1
     end
 
     it "shouldn't try to add advisor if id is empty" do
       event = Fabricate(:jubla_course, advisor_id: '')
-      event.advisor.should be nil
+      expect(event.advisor).to be nil
     end
 
     it 'removes existing advisor if id is set blank' do
@@ -117,8 +117,8 @@ describe Event::Course do
       new_advisor = Fabricate(:person)
       subject.advisor_id = new_advisor.id
       expect { subject.save! }.not_to change { Event::Role.count }
-      Event.find(subject.id).advisor_id.should == new_advisor.id
-      subject.participations.where(person_id: person.id).should_not be_exists
+      expect(Event.find(subject.id).advisor_id).to eq(new_advisor.id)
+      expect(subject.participations.where(person_id: person.id)).not_to be_exists
     end
 
   end
@@ -127,32 +127,32 @@ describe Event::Course do
 
     it 'has two possible contact groups' do
       event = Fabricate(:jubla_course, groups: [groups(:be), groups(:no)])
-      event.possible_contact_groups.count.should eq 2
-      event.valid?.should be true
+      expect(event.possible_contact_groups.count).to eq 2
+      expect(event.valid?).to be true
     end
 
     it 'has one possible contact groups if the other is deleted' do
       groups(:no_agency).destroy
       event = Fabricate(:jubla_course, groups: [groups(:be), groups(:no)])
-      event.possible_contact_groups.count.should eq 1
-      event.valid?.should be true
+      expect(event.possible_contact_groups.count).to eq 1
+      expect(event.valid?).to be true
     end
 
     it 'has two possible contact groups' do
       event = Fabricate(:jubla_course, groups: [groups(:no)])
-      event.possible_contact_groups.count.should eq 1
+      expect(event.possible_contact_groups.count).to eq 1
     end
 
     it 'validation fails if no contact group is assigned' do
       event = Fabricate(:jubla_course, groups: [groups(:no)])
       event.application_contact_id = nil
-      event.valid?.should be false
+      expect(event.valid?).to be false
     end
 
     it 'validation fails if an invalid contact group is assigned' do
       event = Fabricate(:jubla_course, groups: [groups(:no)])
       event.application_contact_id = groups(:be).id
-      event.valid?.should be false
+      expect(event.valid?).to be false
     end
 
   end

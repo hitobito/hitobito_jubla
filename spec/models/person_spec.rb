@@ -18,22 +18,22 @@ describe Person do
   end
 
   it 'has origin flock and state for newly created roles' do
-    person.reload.originating_flock.should be_present
-    person.reload.originating_state.should be_present
+    expect(person.reload.originating_flock).to be_present
+    expect(person.reload.originating_state).to be_present
   end
 
   it 'has updated origins when destroying roles' do
     @innerroden.really_destroy!
 
-    person.reload.originating_flock.should eq groups(:bern)
-    person.reload.originating_state.should eq groups(:be)
+    expect(person.reload.originating_flock).to eq groups(:bern)
+    expect(person.reload.originating_state).to eq groups(:be)
   end
 
   it 'has updated origins when updating roles' do
     @bern.update_attribute(:label, 'test')
 
-    person.reload.originating_flock.should eq groups(:bern)
-    person.reload.originating_state.should eq groups(:be)
+    expect(person.reload.originating_flock).to eq groups(:bern)
+    expect(person.reload.originating_state).to eq groups(:be)
   end
 
   def create(*roles)

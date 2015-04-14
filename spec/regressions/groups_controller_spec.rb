@@ -28,24 +28,24 @@ describe GroupsController, type: :controller  do
   describe_action :get, :show, id: true do
     before { sign_in(bulei) }
 
-    context :json, perform_request: false do
+    context 'json', perform_request: false do
       it 'contains all jubla flock attrs' do
         flock.update_attributes(founding_year: 1950, bank_account: '123-456')
         get :show, id: flock.id, format: :json
         json = JSON.parse(response.body)
         group = json['groups'].first
-        group['founding_year'].should eq(1950)
-        group['bank_account'].should eq('123-456')
-        group.should have_key('unsexed')
+        expect(group['founding_year']).to eq(1950)
+        expect(group['bank_account']).to eq('123-456')
+        expect(group).to have_key('unsexed')
       end
 
       it 'contains all jubla state attrs' do
         get :show, id: state.id, format: :json
         json = JSON.parse(response.body)
         group = json['groups'].first
-        group.should have_key('bank_account')
-        group.should_not have_key('parish')
-        group.should_not have_key('unsexed')
+        expect(group).to have_key('bank_account')
+        expect(group).not_to have_key('parish')
+        expect(group).not_to have_key('unsexed')
       end
     end
   end
@@ -86,7 +86,7 @@ describe GroupsController, type: :controller  do
 
         it 'can render form' do
           get :new, group: { type: send(group).type, parent_id: send(group).parent.id }
-          dom.should have_selector('form[action="/groups"]')
+          expect(dom).to have_selector('form[action="/groups"]')
         end
       end
     end
@@ -126,10 +126,10 @@ describe GroupsController, type: :controller  do
           attrs = default_attrs.merge(extra_attrs)
           put :update, id: send(group).id, group: attrs
           if super_attr_update
-            assigns(:group).name.should eq 'dummy'
-            assigns(:group).jubla_insurance.should be_true if extra_attrs.present?
+            expect(assigns(:group).name).to eq 'dummy'
+            expect(assigns(:group).jubla_insurance).to be_truthy if extra_attrs.present?
           else
-            assigns(:group).jubla_insurance.should be_false if extra_attrs.present?
+            expect(assigns(:group).jubla_insurance).to be_falsey if extra_attrs.present?
           end
         end
       end
@@ -156,7 +156,7 @@ describe GroupsController, type: :controller  do
           attrs = attrs.merge(extra_attrs)
           if can_create_group
             expect { post :create, group: attrs }.to change(Group, :count).by(change_count(group))
-            should redirect_to group_path(assigns(:group))
+            is_expected.to redirect_to group_path(assigns(:group))
           else
             if extra_attrs.empty?
               expect do
@@ -164,7 +164,7 @@ describe GroupsController, type: :controller  do
               end.not_to change(Group, :count)
             else
               post :create, group: attrs
-              assigns(:group).jubla_insurance.should be_false
+              expect(assigns(:group).jubla_insurance).to be_falsey
             end
           end
         end

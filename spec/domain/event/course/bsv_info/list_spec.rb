@@ -15,14 +15,14 @@ describe Event::Course::BsvInfo::List do
     let(:headers) {  lines.first.encode('UTF-8').split(';') }
 
     it 'exports headers' do
-      headers.should eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Ausbildungstage",
+      expect(headers).to eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Ausbildungstage",
                          "Teilnehmende (17-30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
                          "Teilnehmende Total", "Leitungsteam Total", "Küchenteam", "Referenten"]
     end
 
     it 'exports semicolon separted list' do
-      lines[1].should eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
-      lines[2].should eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
+      expect(lines[1]).to eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
+      expect(lines[2]).to eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
     end
   end
 

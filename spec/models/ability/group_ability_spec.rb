@@ -20,41 +20,41 @@ describe GroupAbility do
 
     context 'without specific group' do
       it 'may not create subgroup' do
-        should_not be_able_to(:create, Group.new)
+        is_expected.not_to be_able_to(:create, Group.new)
       end
     end
 
     context 'in own group' do
       let(:group) { role.group }
       it 'may create subgroup' do
-        should be_able_to(:create, group.children.new)
+        is_expected.to be_able_to(:create, group.children.new)
       end
 
       it 'may edit group' do
-        should be_able_to(:update, group)
+        is_expected.to be_able_to(:update, group)
       end
 
       it 'may not modify superior' do
-        should_not be_able_to(:modify_superior, group)
+        is_expected.not_to be_able_to(:modify_superior, group)
       end
     end
 
     context 'in group from lower layer' do
       let(:group) { groups(:bern) }
       it 'may create subgroup' do
-        should be_able_to(:create, group.children.new)
+        is_expected.to be_able_to(:create, group.children.new)
       end
 
       it 'may edit group' do
-        should be_able_to(:update, group)
+        is_expected.to be_able_to(:update, group)
       end
 
       it 'may modify superior' do
-        should be_able_to(:modify_superior, group)
+        is_expected.to be_able_to(:modify_superior, group)
       end
 
       it 'may modify superior in new group' do
-        should be_able_to(:modify_superior, group.parent.children.new)
+        is_expected.to be_able_to(:modify_superior, group.parent.children.new)
       end
     end
   end
@@ -66,11 +66,11 @@ describe GroupAbility do
       let(:group) { role.group }
 
       it 'may edit group' do
-        should be_able_to(:update, group)
+        is_expected.to be_able_to(:update, group)
       end
 
       it 'may not modify superior' do
-        should_not be_able_to(:modify_superior, group)
+        is_expected.not_to be_able_to(:modify_superior, group)
       end
     end
   end
@@ -81,42 +81,42 @@ describe GroupAbility do
     context 'in own group' do
       let(:group) { role.group }
       it 'may not create subgroup' do
-        should_not be_able_to(:create, group.children.new)
+        is_expected.not_to be_able_to(:create, group.children.new)
       end
 
       it 'may edit group' do
-        should be_able_to(:update, group)
+        is_expected.to be_able_to(:update, group)
       end
 
       it 'may not modify superior' do
-        should_not be_able_to(:modify_superior, group)
+        is_expected.not_to be_able_to(:modify_superior, group)
       end
     end
 
     context 'without specific group' do
       it 'may not create subgroup' do
-        should_not be_able_to(:create, Group.new)
+        is_expected.not_to be_able_to(:create, Group.new)
       end
     end
 
     context 'in other group from same layer' do
       let(:group) { groups(:be_board) }
       it 'may not create subgroup' do
-        should_not be_able_to(:create, group.children.new)
+        is_expected.not_to be_able_to(:create, group.children.new)
       end
     end
 
     context 'in group from lower layer' do
       let(:group) { groups(:bern) }
       it 'may not create subgroup' do
-        should_not be_able_to(:create, group.children.new)
+        is_expected.not_to be_able_to(:create, group.children.new)
       end
     end
 
     context 'in group from other layer' do
       let(:group) { groups(:no_board) }
       it 'may not create subgroup' do
-        should_not be_able_to(:create, group.children.new)
+        is_expected.not_to be_able_to(:create, group.children.new)
       end
     end
   end
@@ -127,15 +127,15 @@ describe GroupAbility do
     before { group.destroy }
 
     it 'may not create subgroup' do
-      should_not be_able_to(:create, group.children.new)
+      is_expected.not_to be_able_to(:create, group.children.new)
     end
 
     it 'may not update group' do
-      should_not be_able_to(:update, group)
+      is_expected.not_to be_able_to(:update, group)
     end
 
     it 'may reactivate group' do
-      should be_able_to(:reactivate, group)
+      is_expected.to be_able_to(:reactivate, group)
     end
   end
 

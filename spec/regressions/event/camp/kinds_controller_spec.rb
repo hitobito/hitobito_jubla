@@ -13,7 +13,7 @@ describe Event::Camp::KindsController, type: :controller do
 
   class << self
     def it_should_redirect_to_show
-      it { should redirect_to event_camp_kinds_path(returning: true) }
+      it { is_expected.to redirect_to event_camp_kinds_path(returning: true) }
     end
   end
 
@@ -29,7 +29,7 @@ describe Event::Camp::KindsController, type: :controller do
     it 'main menu admin is active' do
       dom = Capybara::Node::Simple.new(response.body)
       item = dom.find('body nav ul.nav li', text: 'Admin')
-      item[:class].should == 'active'
+      expect(item[:class]).to eq('active')
     end
   end
 

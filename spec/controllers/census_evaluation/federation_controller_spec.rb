@@ -22,46 +22,46 @@ describe CensusEvaluation::FederationController do
 
 
   describe 'GET index' do
-    before { Date.stub(today: censuses(:two_o_12).finish_at) }
+    before { allow(Date).to receive_messages(today: censuses(:two_o_12).finish_at) }
 
     before { get :index, id: ch.id }
 
     it 'assigns counts' do
       counts = assigns(:group_counts)
-      counts.keys.should =~ [be.id, no.id]
-      counts[be.id].total.should == 19
-      counts[no.id].total.should == 9
+      expect(counts.keys).to match_array([be.id, no.id])
+      expect(counts[be.id].total).to eq(19)
+      expect(counts[no.id].total).to eq(9)
     end
 
     it 'assigns total' do
-      assigns(:total).should be_kind_of(MemberCount)
+      expect(assigns(:total)).to be_kind_of(MemberCount)
     end
 
     it 'assigns sub groups' do
-      assigns(:sub_groups).should == [be, no, zh]
+      expect(assigns(:sub_groups)).to eq([be, no, zh])
     end
 
     it 'assigns flocks' do
-      assigns(:flocks).should == {
+      expect(assigns(:flocks)).to eq({
         be.id => { confirmed: 2, total: 3 },
         no.id => { confirmed: 1, total: 2 },
         zh.id => { confirmed: 0, total: 0 },
-      }
+      })
     end
 
      it 'assigns details' do
       details = assigns(:details).to_a
-      details.should have(5).items
+      expect(details).to have(5).items
 
-      details[0].born_in.should == 1984
-      details[1].born_in.should == 1985
-      details[2].born_in.should == 1988
-      details[3].born_in.should == 1997
-      details[4].born_in.should == 1999
+      expect(details[0].born_in).to eq(1984)
+      expect(details[1].born_in).to eq(1985)
+      expect(details[2].born_in).to eq(1988)
+      expect(details[3].born_in).to eq(1997)
+      expect(details[4].born_in).to eq(1999)
     end
 
     it 'assigns year' do
-      assigns(:year).should == Census.last.year
+      expect(assigns(:year)).to eq(Census.last.year)
     end
   end
 

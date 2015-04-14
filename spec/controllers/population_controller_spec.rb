@@ -27,21 +27,21 @@ describe PopulationController do
 
     describe 'groups' do
       subject { assigns(:groups) }
-      it { should == [flock, groups(:asterix), groups(:obelix)] }
+      it { is_expected.to eq([flock, groups(:asterix), groups(:obelix)]) }
     end
 
     describe 'people by group' do
       subject { assigns(:people_by_group) }
 
-      it { subject[flock].collect(&:to_s).should =~ [leader, people(:flock_leader_bern), guide].collect(&:to_s) }
-      it { subject[groups(:asterix)].collect(&:to_s).should =~ [group_leader, child, people(:child)].collect(&:to_s) }
-      it { subject[groups(:obelix)].should == [] }
+      it { expect(subject[flock].collect(&:to_s)).to match_array([leader, people(:flock_leader_bern), guide].collect(&:to_s)) }
+      it { expect(subject[groups(:asterix)].collect(&:to_s)).to match_array([group_leader, child, people(:child)].collect(&:to_s)) }
+      it { expect(subject[groups(:obelix)]).to eq([]) }
     end
 
     describe 'complete' do
       subject { assigns(:people_data_complete) }
 
-      it { should be_false }
+      it { is_expected.to be_falsey }
     end
   end
 
@@ -53,6 +53,6 @@ describe PopulationController do
 
     subject { assigns(:groups) }
 
-    it { should_not include groups(:asterix) }
+    it { is_expected.not_to include groups(:asterix) }
   end
 end
