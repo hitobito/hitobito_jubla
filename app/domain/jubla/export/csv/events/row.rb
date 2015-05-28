@@ -14,7 +14,8 @@ module Jubla::Export::Csv::Events
     end
 
     def advisor
-      entry.advisor
+      # Only Event::Course provides restricted advisor role
+      entry.try(:advisor)
     end
   end
 end
