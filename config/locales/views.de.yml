@@ -14,8 +14,6 @@ de:
         explanation: Angezeigt werden hier Anlässe deiner Schar, deiner Regions- und Kantonsleitung, der Bundesebene, sowie von Gruppen bei welchen du Mitglied bist.
     participations:
       print:
-        signature: Unterschrift
-        signature_confirmation: Vorname, Name, Unterschrift
         requirements_for_event_camp: Voraussetzungen für das Lager
         read_and_agreed_for_event_camp: Ich erfülle die Voraussetzungen für das Lager, habe die Lagerbeschreibung gelesen und bin damit einverstanden.
 
@@ -23,18 +21,12 @@ de:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
     application_fields_jubla:
-      caption_signature: Teilnehmer müssen die Anmeldung unterschreiben
-      caption_signature_confirmation: Anmeldung muss durch eine Zweitunterschrift bestätigt werden
-      signature_confirmation_text_default: Eltern (bei Minderjährigen)
       remarks_default_text: "Wichtig: Zur Bestätigung deiner Online-Anmeldung schickst du dieses Formular (Seite 1)
         mit den erforderlichen Unterschriften und Beilagen an die Anmeldeadresse. Die weiteren Seiten enthalten
         wichtige Informationen zum Kurs inkl. Kursbestimmungen für dich.
 
 
         Beilagen: Nothelferausweis"
-
-  event/participations:
-    instructions: 'Für die definitive Anmeldung musst du diese Seite über <i>Drucken</i> ausdrucken, unterzeichnen und per Post an die entsprechende Adresse schicken.'
 
   groups:
     tabs:

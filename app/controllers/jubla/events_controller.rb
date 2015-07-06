@@ -11,8 +11,7 @@ module Jubla::EventsController
   included do
     before_filter :remove_restricted, only: [:create, :update]
 
-    self.permitted_attrs += [:signature, :signature_confirmation,
-                        :signature_confirmation_text, :remarks]
+    self.permitted_attrs += [:remarks]
 
     before_render_new :default_coach
 

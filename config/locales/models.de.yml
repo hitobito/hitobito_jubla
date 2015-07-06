@@ -271,9 +271,6 @@ de:
         application_contact: Anmeldung an
         application_contact_id: Anmeldung an
         remarks: Anmeldebemerkungen
-        signature: Unterschrift erforderlich
-        signature_confirmation: Zweitunterschrift erforderlich
-        signature_confirmation_text: Zweitunterschrift von
         training_days: Ausbildungstage
 
       event/course:
