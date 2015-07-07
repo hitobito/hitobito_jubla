@@ -271,7 +271,6 @@ de:
         application_contact: Anmeldung an
         application_contact_id: Anmeldung an
         remarks: Anmeldebemerkungen
-        training_days: Ausbildungstage
 
       event/course:
         states:

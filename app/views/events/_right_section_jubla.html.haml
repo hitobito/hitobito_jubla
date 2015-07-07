@@ -7,7 +7,6 @@
   - if can?(:update, entry)
     = section 'BSV-Angaben' do
       %dl.dl-horizontal
-        = labeled_attr(entry, :training_days)
         = entry.labeled_bsv_attr(:participants)
         = entry.labeled_bsv_attr(:leaders)
         = entry.labeled_bsv_attr(:cantons)

@@ -8,6 +8,5 @@
 class AddBsvFieldsToEventsAndKinds < ActiveRecord::Migration
   def change
     add_column(:event_kinds, :bsv_id, :string)
-    add_column(:events, :training_days, :integer)
   end
 end

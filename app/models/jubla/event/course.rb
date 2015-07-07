@@ -12,7 +12,7 @@ module Jubla::Event::Course
     include Event::RestrictedRole
     restricted_role :advisor, Event::Course::Role::Advisor
 
-    self.used_attributes += [:advisor_id, :application_contact_id, :condition_id, :training_days]
+    self.used_attributes += [:advisor_id, :application_contact_id, :condition_id]
 
     # states are used for workflow
     # translations in config/locales
