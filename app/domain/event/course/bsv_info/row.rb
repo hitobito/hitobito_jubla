@@ -40,7 +40,7 @@ class Event::Course::BsvInfo::Row
   end
 
   def kurs_id_fiver
-    course.kind.bsv_id
+    course.kind.kurs_id_fiver
   end
 
   def location
