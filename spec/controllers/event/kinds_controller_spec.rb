@@ -17,14 +17,15 @@ describe Event::KindsController do
 
     it 'POST#create' do
       post :create, event_kind: { label: 'label',
-                                  bsv_id: 'some id',
+                                  kurs_id_fiver: 'some id',
+                                  vereinbarungs_id_fiver: 'some other id',
                                   j_s_label: 'some other label' }
 
       expect(kind.errors.full_messages).to eq []
-      expect(kind.bsv_id).to eq 'some id'
+      expect(kind.kurs_id_fiver).to eq 'some id'
+      expect(kind.vereinbarungs_id_fiver).to eq 'some other id'
       expect(kind.j_s_label).to eq 'some other label'
     end
 
   end
 end
-
