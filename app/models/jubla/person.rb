@@ -13,4 +13,7 @@ module Jubla::Person
     belongs_to :originating_state, class_name: 'Group'
   end
 
+  def canton
+    self[:canton]
+  end
 end

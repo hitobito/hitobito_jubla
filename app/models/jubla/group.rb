@@ -24,4 +24,5 @@ module Jubla::Group
   def census?
     respond_to?(:census_total)
   end
+
 end
