@@ -6,7 +6,8 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'wagons'
-# require 'your_wagon_dependencies'
+# require 'your_wagon_dependencies'fails on missing application and primary_group
+require 'hitobito_youth'
 require 'hitobito_jubla/wagon'
 
 module HitobitoJubla
