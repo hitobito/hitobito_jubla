@@ -127,7 +127,8 @@ module Jubla::Export::Pdf
          PersonAndEvent,
          Export::Pdf::Participation::Specifics,
          Confirmation,
-         EventDetails]
+         EventDetails,
+         Export::Pdf::Participation::GeneralInformation]
       end
     end
 
