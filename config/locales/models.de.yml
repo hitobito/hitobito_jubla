@@ -196,15 +196,11 @@ de:
       person:
         name_mother: Name Mutter
         name_father: Name Vater
-        nationality: Nationalität
         profession: Beruf
         bank_account: Bankverbindung
-        ahv_number: AHV-Nummer
         ahv_number_old: AHV-Nummer alt
-        j_s_number: J+S-Nummer
         insurance_company: Versicherung
         insurance_number: Versicherungsnummer
-        canton: Wohnkanton (Abk.)
         originating_state: Jublakanton
         originating_flock: Schar
         originating_state_id: Jublakanton

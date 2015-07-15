@@ -31,3 +31,7 @@ de:
   groups:
     tabs:
       statistics: Statistik
+
+  people:
+    fields_jubla:
+      help_canton: Wird aus der PLZ berechnet falls leer.

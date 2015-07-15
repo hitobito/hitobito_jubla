@@ -36,10 +36,10 @@ describe Person do
     expect(person.reload.originating_state).to eq groups(:be)
   end
 
-  it 'does not map canton via location' do
+  it 'maps canton via location if zip_code is present' do
     Location.create!(zip_code: 3000, name: 'Bern', canton: 'BE')
-    expect(Person.new(zip_code: 3000).canton).to be_nil
-    expect(Person.new(zip_code: 3000, canton: 'BE').canton).to eq('BE')
+    expect(Person.new(zip_code: 3000).canton).to eq 'BE'
+    expect(Person.new(zip_code: 3000, canton: 'ZH').canton).to eq('ZH')
   end
 
   def create(*roles)

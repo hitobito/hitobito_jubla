@@ -14,6 +14,6 @@ module Jubla::Person
   end
 
   def canton
-    self[:canton]
+    self[:canton].presence || super
   end
 end
