@@ -101,6 +101,15 @@ module Jubla::Export::Pdf
 
     end
 
+    class GeneralInformation < Export::Pdf::Participation::GeneralInformation
+
+      private
+
+      def event_with_kind?
+        super && !event.kind.is_a?(Event::Camp::Kind)
+      end
+    end
+
 
     class Runner < Export::Pdf::Participation::Runner
 
@@ -128,7 +137,7 @@ module Jubla::Export::Pdf
          Export::Pdf::Participation::Specifics,
          Confirmation,
          EventDetails,
-         Export::Pdf::Participation::GeneralInformation]
+         GeneralInformation]
       end
     end
 
