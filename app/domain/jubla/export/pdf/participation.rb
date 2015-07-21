@@ -79,7 +79,7 @@ module Jubla::Export::Pdf
       private
 
       def render_condition
-        with_count(Event::Course::Condition.model_name.human) do
+        with_header(Event::Course::Condition.model_name.human) do
           text event.condition.content, inline_format: true
         end
       end
