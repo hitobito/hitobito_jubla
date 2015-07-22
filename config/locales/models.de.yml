@@ -196,6 +196,7 @@ de:
       person:
         name_mother: Name Mutter
         name_father: Name Vater
+        nationality: Nationalität
         profession: Beruf
         bank_account: Bankverbindung
         ahv_number_old: AHV-Nummer alt
