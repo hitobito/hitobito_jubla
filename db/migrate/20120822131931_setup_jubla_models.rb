@@ -10,6 +10,8 @@ class SetupJublaModels < ActiveRecord::Migration
     add_column :people, :name_mother, :string
     add_column :people, :name_father, :string
 
+    add_column :people, :nationality, :string
+
     add_column :people, :profession, :string
     add_column :people, :bank_account, :string
 
@@ -30,7 +32,6 @@ class SetupJublaModels < ActiveRecord::Migration
 
     add_column :groups, :coach_id, :integer
     add_column :groups, :advisor_id, :integer
-
 
     add_column :roles, :employment_percent, :integer
     add_column :roles, :honorary, :boolean
