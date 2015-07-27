@@ -13,6 +13,9 @@ application:
     links:
       "Fragen und Anregungen": http://feedback.jubla.ch
       Hilfe: http://jubla.ch/datenbank
+  # The languages available in the menu
+  languages:
+    de: Deutsch
 
 email:
   # Sender for all emails sent by the application

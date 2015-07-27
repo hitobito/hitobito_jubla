@@ -26,7 +26,19 @@ de:
         wichtige Informationen zum Kurs inkl. Kursbestimmungen für dich.
 
 
-        Beilagen: Nothelferausweis"
+       Beilagen: Nothelferausweis"
+    global:
+      link:
+        add_event/camp: Lager erstellen
+    new:
+      title_event/camp: Lager erstellen
+
+  event/camp/kinds:
+    global:
+      link:
+        add: Lagerart erstellen
+    new:
+      title: Lagerart erstellen
 
   groups:
     tabs:
