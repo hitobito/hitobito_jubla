@@ -14,6 +14,7 @@ module Jubla::Event::ParticipationFilter
 
   def load_entries_with_origins
     load_entries_without_origins.
-      includes(person: [:originating_flock, :originating_state])
+      includes(person: [:originating_flock, :originating_state]).
+      references(person: [:originating_flock, :originating_state])
   end
 end
