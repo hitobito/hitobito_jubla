@@ -19,6 +19,8 @@ module Jubla::Event::Course
     self.possible_states = %w(created confirmed application_open application_closed
                               assignment_closed canceled completed closed)
 
+    self.tentative_states = %w(created confirmed)
+
     ### ASSOCIATIONS
 
     belongs_to :application_contact, class_name: 'Group'

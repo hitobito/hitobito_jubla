@@ -10,7 +10,9 @@ class SetupJublaModels < ActiveRecord::Migration
     add_column :people, :name_mother, :string
     add_column :people, :name_father, :string
 
-    add_column :people, :nationality, :string
+    unless column_exists?(:people, :nationality)
+      add_column :people, :nationality, :string
+    end
 
     add_column :people, :profession, :string
     add_column :people, :bank_account, :string
