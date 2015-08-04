@@ -206,33 +206,6 @@ de:
         originating_flock: Schar
         originating_state_id: Jublakanton
         originating_flock_id: Schar
-        cantons:
-          ag: Aargau
-          ai: Appenzell Innerrhoden
-          ar: Appenzell Ausserrhoden
-          be: Bern
-          bl: Basel Land
-          bs: Basel Stadt
-          fr: Fribourg
-          ge: Geneva
-          gl: Glarus
-          gr: Graubünden
-          ju: Jura
-          lu: Luzern
-          ne: Neuchâtel
-          nw: Nidwalden
-          ow: Obwalden
-          sg: St. Gallen
-          sh: Schaffhausen
-          so: Solothurn
-          sz: Schwyz
-          tg: Thurgau
-          ti: Tessin
-          ur: Uri
-          vd: Waadt
-          vs: Wallis
-          zg: Zug
-          zh: Zürich
 
       group:
         bank_account: Bankverbindung

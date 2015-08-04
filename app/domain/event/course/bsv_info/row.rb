@@ -13,7 +13,7 @@ class Event::Course::BsvInfo::Row
 
   delegate :number, :training_days, :dates, to: :course
 
-  CANTONS = I18n.t('activerecord.attributes.person.cantons').keys.map(&:to_s)
+  CANTONS = Cantons.short_name_strings
 
   def initialize(course)
     @course = course
