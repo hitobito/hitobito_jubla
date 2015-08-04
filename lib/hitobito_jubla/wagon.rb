@@ -50,8 +50,9 @@ module HitobitoJubla
       Export::Csv::People::ParticipationRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
-
-      Event::ParticipationFilter.send :include, Jubla::Event::ParticipationFilter
+      Event::ParticipationFilter.load_entries_includes += [
+        person: [:originating_flock, :originating_state]
+      ]
 
       ### controllers
       PeopleController.permitted_attrs += [
