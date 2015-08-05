@@ -11,15 +11,16 @@ module Jubla::Export::Csv::Events
     extend ActiveSupport::Concern
 
     included do
-      alias_method_chain :build_attribute_labels, :advisor
+      alias_method_chain :add_contact_labels, :advisor
       alias_method_chain :contactable_keys, :j_s_number
       alias_method_chain :translated_prefix, :advisor
     end
 
     private
 
-    def build_attribute_labels_with_advisor
-      build_attribute_labels_without_advisor.tap do |labels|
+    def add_contact_labels_with_advisor(labels)
+      add_contact_labels_without_advisor(labels)
+      if attr_used?(:advisor_id)
         add_prefixed_contactable_labels(labels, :advisor)
       end
     end
