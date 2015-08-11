@@ -6,7 +6,8 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 Group::Federation.seed_once(:parent_id,
-  {name: 'Jubla Schweiz',
-   short_name: 'Schweiz'}
+  { parent_id: nil,
+    name: 'Jubla Schweiz',
+    short_name: 'Schweiz' }
 )
 
