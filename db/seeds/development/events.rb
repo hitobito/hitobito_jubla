@@ -75,4 +75,4 @@ seeder.camp_group_ids.each do |group_id|
   end
 end
 
-
+Event::Participation.update_all(state: 'assigned', active: true)

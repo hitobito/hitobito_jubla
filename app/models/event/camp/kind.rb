@@ -26,6 +26,9 @@ class Event::Camp
 
     has_many :events
 
+    validates_by_schema
+
+
     def self.list
       order(:deleted_at, :label)
     end

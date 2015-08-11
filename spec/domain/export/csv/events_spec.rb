@@ -57,7 +57,7 @@ describe Export::Csv::Events do
       let(:row) { Export::Csv::Events::Row.new(course, {}, {}) }
 
       it { expect(row.fetch(:state)).to eq 'Offen zur Anmeldung' }
-      it { expect(row.fetch(:contact_j_s_number)).to eq 123 }
+      it { expect(row.fetch(:contact_j_s_number)).to eq '123' }
       it { expect(row.fetch(:advisor_name)).to eq advisor.to_s }
       it { expect(row.fetch(:advisor_j_s_number)).to eq '123' } # varchar in db
     end
