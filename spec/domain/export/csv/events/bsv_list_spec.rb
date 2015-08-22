@@ -7,11 +7,11 @@
 
 require 'spec_helper'
 
-describe Event::Course::BsvInfo::List do
+describe Export::Csv::Events::BsvList do
   let(:course) { events(:top_course) }
 
   context 'export' do
-    let(:lines) { Event::Course::BsvInfo::List.export([course, course]).split("\n") }
+    let(:lines) { Export::Csv::Events::BsvList.export([course, course]).split("\r\n") }
     let(:headers) {  lines.first.encode('UTF-8').split(';') }
 
     it 'exports headers' do

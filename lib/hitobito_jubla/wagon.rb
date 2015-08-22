@@ -43,11 +43,15 @@ module HitobitoJubla
       GroupSerializer.send  :include, Jubla::GroupSerializer
 
       # domain
+      Bsv::Info.send :include, Jubla::Bsv::Info
+
       Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
       Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
       Export::Csv::People::PersonRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
-
       Export::Csv::People::ParticipationRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
+      Export::Csv::Events::BsvList.send :include, Jubla::Export::Csv::Events::BsvList
+      Export::Csv::Events::BsvRow.send :include, Jubla::Export::Csv::Events::BsvRow
+
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
       Event::ParticipationFilter.load_entries_includes += [
@@ -63,10 +67,10 @@ module HitobitoJubla
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
+      Event::ListsController.bsv_course_states = Event::Course.possible_states
       Event::ApplicationMarketController.send :include, Jubla::Event::ApplicationMarketController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
-      Event::ListsController.send :include, Jubla::Event::ListsController
       Event::ParticipationsController.send :include, Jubla::Event::ParticipationsController
       Subscriber::GroupController.send :include, Jubla::Subscriber::GroupController
 

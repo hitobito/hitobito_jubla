@@ -1,0 +1,9 @@
+be:
+  zip_code: 3000
+  name: Bern
+  canton: BE
+
+bs:
+  zip_code: 4000
+  name: Basel
+  canton: BS

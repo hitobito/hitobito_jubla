@@ -6,6 +6,8 @@
 de:
   event:
     lists:
+      popover_bsv_export:
+        export_only_includes_courses_of_states: Es werden Kurse in jedem Kursstatus exportiert.
       courses:
         explanation: Angezeigt werden hier Kurse deines Kantons und der Bundesebene. Weitere Kurse findest du beim entsprechenden Kanton.
         csv_export_button: Kursdatenliste

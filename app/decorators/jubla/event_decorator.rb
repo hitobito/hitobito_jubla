@@ -13,7 +13,7 @@ module Jubla::EventDecorator
   end
 
   def labeled_bsv_attr(key)
-    h.labeled(Event::Course::BsvInfo::List::FIELDS.fetch(key), bsv_field(key))
+    h.labeled(Export::Csv::Events::BsvList.new([]).attribute_labels.fetch(key), bsv_field(key))
   end
 
   def remarks_with_default(default)
@@ -33,7 +33,7 @@ module Jubla::EventDecorator
   end
 
   def bsv_info
-    @bsv_info ||= Event::Course::BsvInfo::Row.new(model)
+    @bsv_info ||= Bsv::Info.new(model)
   end
 
 end

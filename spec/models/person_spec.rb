@@ -37,7 +37,6 @@ describe Person do
   end
 
   it 'maps canton via location if zip_code is present' do
-    Location.create!(zip_code: 3000, name: 'Bern', canton: 'BE')
     expect(Person.new(zip_code: 3000).canton).to eq 'BE'
     expect(Person.new(zip_code: 3000, canton: 'ZH').canton).to eq('ZH')
   end

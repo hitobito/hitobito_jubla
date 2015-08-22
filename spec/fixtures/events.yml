@@ -44,6 +44,8 @@ top_course:
   priorization: true
   requires_approval: true
   external_applications: true
+  application_contact: be_agency
+  state: created
 
 camp:
   name: Summer camp
