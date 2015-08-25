@@ -12,7 +12,6 @@ module Jubla
     included do
       alias_method :participant_count, :participant_aged_17_to_30_count
       alias_method :location, :max_date_location_or_location
-      alias_method :language_count, :language_count_jubla
     end
 
     def total_day_count
@@ -51,10 +50,6 @@ module Jubla
 
     def max_date_location_or_location
       max_duration_date ? max_duration_date.location : course.location
-    end
-
-    def language_count_jubla
-      nil
     end
 
     private

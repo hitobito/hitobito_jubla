@@ -21,8 +21,8 @@ describe Export::Csv::Events::BsvList do
     end
 
     it 'exports semicolon separted list' do
-      expect(lines[1]).to eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
-      expect(lines[2]).to eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
+      expect(lines[1]).to eq ";;;01.03.2012;;;0;1;0;1;9;1;1;0;0"
+      expect(lines[2]).to eq ";;;01.03.2012;;;0;1;0;1;9;1;1;0;0"
     end
   end
 

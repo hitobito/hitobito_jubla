@@ -11,7 +11,8 @@ module Jubla::Export::Csv::Events
 
     included do
       delegate :total_day_count, :total_participant_count,
-        :total_leader_count, :cook_count, :speaker_count, to: :info
+               :total_leader_count, :cook_count, :speaker_count,
+               to: :info
     end
 
   end

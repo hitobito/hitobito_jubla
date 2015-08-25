@@ -8,5 +8,7 @@
 class AddRemarksAndSignatureToEvent < ActiveRecord::Migration
   def change
     add_column(:events, :remarks, :text)
+
+    Event.reset_column_information
   end
 end
