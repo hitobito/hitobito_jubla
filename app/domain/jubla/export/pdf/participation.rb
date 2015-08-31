@@ -48,11 +48,12 @@ module Jubla::Export::Pdf
 
     class Confirmation <  Export::Pdf::Participation::Confirmation
 
-      private
-
-      def first_page_extensions
+      def render
+        super
         render_remarks if event.remarks?
       end
+
+      private
 
       def render_remarks
         y = cursor
@@ -62,7 +63,7 @@ module Jubla::Export::Pdf
         end
 
         pdf.bounding_box([0 + 5, y - 5], width: bounds.width - 10, height: 65) do
-          shrinking_text_box event.remarks
+          pdf.text_box(event.remarks, overflow: :shrink_to_fit)
         end
         move_down_line
       end
@@ -72,6 +73,7 @@ module Jubla::Export::Pdf
     class EventDetails < Export::Pdf::Participation::EventDetails
 
       def render
+        pdf.start_new_page if description? || requirements?
         super
         render_condition if condition?
       end
