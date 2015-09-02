@@ -23,7 +23,7 @@ module Jubla::Event::Course
 
     validate :validate_application_contact
 
-    validates :training_days, modulus:  { multiple: 0.5 }, numericality: { allow_nil: true }
+    validates :training_days, modulus: { multiple: 0.5 }, numericality: { allow_nil: true }
   end
 
   def possible_contact_groups

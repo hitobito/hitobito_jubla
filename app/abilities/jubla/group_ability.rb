@@ -34,8 +34,8 @@ module Jubla::GroupAbility
   def in_same_layer_or_below_if_ast_or_bulei
     in_same_layer_or_below &&
     user.roles.any? do |r|
-      r.kind_of?(Group::StateAgency::Leader) ||
-      r.kind_of?(Group::FederalBoard::Member)
+      r.is_a?(Group::StateAgency::Leader) ||
+      r.is_a?(Group::FederalBoard::Member)
     end
   end
 end

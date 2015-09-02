@@ -30,7 +30,7 @@ module Jubla::Export::Csv::Events
     end
 
     def translated_prefix_with_advisor(prefix)
-      prefix == :advisor ?  'LKB' : translated_prefix_without_advisor(prefix)
+      prefix == :advisor ? 'LKB' : translated_prefix_without_advisor(prefix)
     end
   end
 end

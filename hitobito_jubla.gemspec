@@ -5,22 +5,22 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-$:.push File.expand_path("../lib", __FILE__)
+$LOAD_PATH.push File.expand_path('../lib', __FILE__)
 
 # Maintain your wagon's version:
-require "hitobito_jubla/version"
+require 'hitobito_jubla/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   # rubocop:disable SingleSpaceBeforeFirstArg
-  s.name        = "hitobito_jubla"
+  s.name        = 'hitobito_jubla'
   s.version     = HitobitoJubla::VERSION
-  s.authors     = ["Pascal Zumkehr"]
-  s.email       = ["zumkehr@puzzle.ch"]
-  s.summary     = "Jubla organization specific features"
-  s.description = "Jubla organization specific features"
+  s.authors     = ['Pascal Zumkehr']
+  s.email       = ['zumkehr@puzzle.ch']
+  s.summary     = 'Jubla organization specific features'
+  s.description = 'Jubla organization specific features'
 
-  s.files       = Dir["{app,config,db,lib}/**/*"] + ["Rakefile"]
+  s.files       = Dir['{app,config,db,lib}/**/*'] + ['Rakefile']
   s.add_dependency 'hitobito_youth'
 
   # Do not specify test files due to too long file names

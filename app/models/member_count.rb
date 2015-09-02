@@ -73,11 +73,11 @@ class MemberCount < ActiveRecord::Base
 
     def totals(year)
       select('state_id, ' \
-             'flock_id, ' +
-             'born_in, ' +
-             'SUM(leader_f) AS leader_f, ' +
-             'SUM(leader_m) AS leader_m, ' +
-             'SUM(child_f) AS child_f, ' +
+             'flock_id, ' \
+             'born_in, ' \
+             'SUM(leader_f) AS leader_f, ' \
+             'SUM(leader_m) AS leader_m, ' \
+             'SUM(child_f) AS child_f, ' \
              'SUM(child_m) AS child_m').
       where(year: year)
     end

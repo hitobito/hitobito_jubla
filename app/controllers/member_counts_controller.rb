@@ -9,7 +9,6 @@ class MemberCountsController < ApplicationController
 
   decorates :group
 
-
   def edit
     authorize!(:update_member_counts, flock)
     member_counts
@@ -19,18 +18,18 @@ class MemberCountsController < ApplicationController
     authorize!(:update_member_counts, flock)
 
     counts = member_counts.update(
-              params[:member_count].keys,
-              params[:member_count].values.collect do |attrs|
-                ActionController::Parameters.new(attrs).permit(:leader_f, :leader_m, :child_f, :child_m)
-              end)
+      params[:member_count].keys,
+      params[:member_count].values.collect do |attrs|
+        ActionController::Parameters.new(attrs).permit(:leader_f, :leader_m, :child_f, :child_m)
+      end)
     with_errors = counts.select { |c| c.errors.present? }
     if with_errors.blank?
       flash[:notice] = "Die Mitgliederzahlen für #{year} wurden erfolgreich gespeichert"
       redirect_to census_flock_group_path(flock, year: year)
     else
-      messages = with_errors.collect { |e| "#{e.born_in}: #{e.errors.full_messages.join(", ")}" }.join('; ')
-      flash.now[:alert] = 'Nicht alle Jahrgänge konnten gespeichert werden. ' +
-                          "Bitte überprüfen Sie Ihre Angaben. (#{messages})"
+      messages = with_errors.collect { |e| "#{e.born_in}: #{e.errors.full_messages.join(', ')}" }
+      flash.now[:alert] = 'Nicht alle Jahrgänge konnten gespeichert werden. ' \
+                          "Bitte überprüfen Sie Ihre Angaben. (#{messages.join('; ')})"
       render 'edit'
     end
   end
@@ -40,10 +39,11 @@ class MemberCountsController < ApplicationController
 
     if year = MemberCounter.create_counts_for(flock)
       total = MemberCount.total_for_flock(year, flock).try(:total) || 0
-      flash[:notice] = "Die Zahlen von Total #{total} Mitgliedern wurden für #{year} erfolgreich erzeugt."
+      flash[:notice] = "Die Zahlen von Total #{total} Mitgliedern wurden " \
+                       "für #{year} erfolgreich erzeugt."
     end
 
-    year ||= Date.today.year
+    year ||= Time.zone.today.year
     redirect_to census_flock_group_path(flock, year: year)
   end
 
@@ -58,6 +58,10 @@ class MemberCountsController < ApplicationController
   end
 
   def year
-    @year ||= params[:year] ? params[:year].to_i : fail(ActiveRecord::RecordNotFound, 'year required')
+    @year ||= if params[:year]
+                params[:year].to_i
+              else
+                fail(ActiveRecord::RecordNotFound, 'year required')
+              end
   end
 end

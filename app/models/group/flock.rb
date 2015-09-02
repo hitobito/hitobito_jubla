@@ -53,7 +53,7 @@ class Group::Flock < Group
   end
 
   def state
-    ancestors.where(type: Group::State.sti_name).first
+    ancestors.find_by(type: Group::State.sti_name)
   end
 
   def census_groups(_year)
@@ -125,7 +125,16 @@ class Group::Flock < Group
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles Leader, CampLeader, President, Treasurer, Guide, GroupAdmin, Alumnus, External, DispatchAddress
+  roles Leader,
+        CampLeader,
+        President,
+        Treasurer,
+        Guide,
+        GroupAdmin,
+        Alumnus,
+        External,
+        DispatchAddress
+
   restricted_role :coach, Coach
   restricted_role :advisor, Advisor
 

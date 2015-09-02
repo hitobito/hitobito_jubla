@@ -9,7 +9,7 @@ module Jubla::EventsController
   extend ActiveSupport::Concern
 
   included do
-    before_filter :remove_restricted, only: [:create, :update]
+    before_action :remove_restricted, only: [:create, :update]
 
     self.permitted_attrs += [:remarks]
 
@@ -45,7 +45,7 @@ module Jubla::EventsController
   end
 
   def load_conditions
-    if entry.kind_of?(Event::Course)
+    if entry.is_a?(Event::Course)
       @conditions = Event::Course::Condition.where(group_id: entry.group_ids).order(:label)
     end
   end

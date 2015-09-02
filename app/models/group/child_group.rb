@@ -8,7 +8,6 @@
 # Kindergruppe
 class Group::ChildGroup < Group
 
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full]
   end

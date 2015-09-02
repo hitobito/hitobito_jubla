@@ -6,8 +6,8 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 namespace :jublaost do
-  desc "Migrate the db as defined in jubla/lib/jubla_ost/config.yml"
-  task :migrate => :environment do
+  desc 'Migrate the db as defined in jubla/lib/jubla_ost/config.yml'
+  task migrate: :environment do
     require "#{JublaJubla::Wagon.root}/lib/jubla_ost/config"
     require "#{JublaJubla::Wagon.root}/lib/jubla_ost/base"
     require "#{JublaJubla::Wagon.root}/lib/jubla_ost/funktion"

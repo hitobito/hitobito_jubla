@@ -92,11 +92,11 @@ module Jubla::Role
   end
 
   def alumnus_class
-    "#{group.class.to_s}::Alumnus".constantize
+    "#{group.class}::Alumnus".constantize
   end
 
   def last_role_for_person_in_group?
-     group.roles.where(person_id: person_id).empty?
+    group.roles.where(person_id: person_id).empty?
   end
 
 end

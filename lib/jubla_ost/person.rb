@@ -52,7 +52,7 @@ module JublaOst
         person = ::Person.new
         assign_attributes(person, legacy)
         unless person.save
-          puts "#{person.inspect} ist nicht gültig: #{person.errors.full_messages.join(", ")}"
+          puts "#{person.inspect} ist nicht gültig: #{person.errors.full_messages.join(', ')}"
           fail ActiveRecord::RecordInvalid, person
         end
         cache[legacy.PEID] = person.id

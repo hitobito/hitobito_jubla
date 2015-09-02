@@ -25,6 +25,6 @@ module Jubla::Event::RegisterController
   end
 
   def external_role_class
-    "#{group.class.to_s}::External".constantize
+    "#{group.class}::External".constantize
   end
 end

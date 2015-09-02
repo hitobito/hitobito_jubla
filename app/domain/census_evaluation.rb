@@ -59,7 +59,7 @@ class CensusEvaluation
 
   # Is the displayed census the current or a future one?
   def census_current_or_future?
-    census && (census.year >= Date.today.year || census_current?)
+    census && (census.year >= Time.zone.today.year || census_current?)
   end
 
   # Is the displayed year the year of the current census?
@@ -70,7 +70,7 @@ class CensusEvaluation
   private
 
   def sub_groups_locked?
-    locked = current_census && year < current_census.year
+    current_census && year < current_census.year
   end
 
   def sub_groups_with_counts
@@ -81,7 +81,9 @@ class CensusEvaluation
 
   def current_census_sub_groups
     sub_group_ids = current_sub_groups.pluck(:id)
-    sub_group_ids -= sub_group_ids_with_other_group_count(sub_group_ids) unless group.class == Group::Federation
+    unless group.class == Group::Federation
+      sub_group_ids -= sub_group_ids_with_other_group_count(sub_group_ids)
+    end
     sub_group_ids += sub_groups_with_counts.pluck(:id)
     Group.where(id: sub_group_ids.uniq)
   end

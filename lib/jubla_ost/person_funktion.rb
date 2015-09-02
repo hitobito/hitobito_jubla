@@ -66,7 +66,7 @@ module JublaOst
         if group_id = Schar.cache[scid]
           Group.find(group_id)
         elsif !Schar::IGNORED.include?(scid)
-          puts "No Schar with id=#{scid} found while migrating roles of #{current.to_s}"
+          puts "No Schar with id=#{scid} found while migrating roles of #{current}"
         end
       end
 
@@ -79,12 +79,12 @@ module JublaOst
       end
 
       def build_role(group, funktion)
-          role_class = Funktion::Mappings[group.class][funktion]
-          if role_class.nil?
-            Funktion::Mappings[group.class][nil].new(label: funktion.label)
-          else
-            role_class.new
-          end
+        role_class = Funktion::Mappings[group.class][funktion]
+        if role_class.nil?
+          Funktion::Mappings[group.class][nil].new(label: funktion.label)
+        else
+          role_class.new
+        end
       end
 
       def assign_attributes(role, current, group, person_schar)

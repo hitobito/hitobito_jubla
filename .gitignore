@@ -18,3 +18,6 @@ spec/coverage
 brakeman-output.tabs
 rubocop-results.xml
 .envrc
+*.iml
+.generators
+.idea

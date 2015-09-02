@@ -46,7 +46,7 @@ module Jubla::Export::Pdf
 
     end
 
-    class Confirmation <  Export::Pdf::Participation::Confirmation
+    class Confirmation < Export::Pdf::Participation::Confirmation
 
       def render
         super
@@ -122,11 +122,11 @@ module Jubla::Export::Pdf
           font_path = JUBLA_CI.root.join('app/assets/fonts')
 
           pdf.font_families.update('Century Gothic' => {
-            normal: font_path.join('century-gothic.ttf'),
-            bold: font_path.join('century-gothic-b.ttf'),
-            italic: font_path.join('century-gothic-i.ttf'),
-            bold_italic: font_path.join('century-gothic-b.ttf')
-          })
+                                     normal: font_path.join('century-gothic.ttf'),
+                                     bold: font_path.join('century-gothic-b.ttf'),
+                                     italic: font_path.join('century-gothic-i.ttf'),
+                                     bold_italic: font_path.join('century-gothic-b.ttf')
+                                   })
 
           pdf.font 'Century Gothic'
         end
