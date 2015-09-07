@@ -26,6 +26,7 @@ module Jubla::GroupAbility
 
       permission(:any).may(:'index_event/camps').all
       permission(:group_full).may(:'export_event/camps').in_same_group
+      permission(:group_and_below_full).may(:'export_event/camps').in_same_group_or_below
       permission(:layer_read).may(:'export_event/camps').in_same_layer
       permission(:layer_and_below_read).may(:'export_event/camps').in_same_layer_or_below
     end
