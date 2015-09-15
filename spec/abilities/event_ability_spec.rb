@@ -9,9 +9,9 @@ require 'spec_helper'
 
 describe EventAbility do
 
-  let(:user)    { role.person }
-  let(:group)   { role.group }
-  let(:event)   { Fabricate(:event, groups: [group]) }
+  let(:user) { role.person }
+  let(:group) { role.group }
+  let(:event) { Fabricate(:event, groups: [group]) }
 
   let(:participant) { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:bern)).person }
   let(:participation) { Fabricate(:event_participation, person: participant, event: event, application: Fabricate(:jubla_event_application)) }
@@ -157,8 +157,8 @@ describe EventAbility do
   end
 
   context :event_full do
-    let(:group)  { groups(:be) }
-    let(:role)   { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
+    let(:group) { groups(:be) }
+    let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
     let(:participation) { Fabricate(:event_participation, event: event, person: user) }
 
     before { Fabricate(Event::Role::Leader.name.to_sym, participation: participation) }
@@ -226,8 +226,8 @@ describe EventAbility do
   end
 
   context :event_contact_data do
-    let(:role)   { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
-    let(:event)  { Fabricate(:event, groups: [groups(:be)]) }
+    let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
+    let(:event) { Fabricate(:event, groups: [groups(:be)]) }
     let(:participation) { Fabricate(:event_participation, event: event, person: user) }
 
     before { Fabricate(Event::Role::Cook.name.to_sym, participation: participation) }
@@ -310,9 +310,9 @@ describe EventAbility do
     let(:role) { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:bern)) }
     let(:participation) { Fabricate(:event_participation, person: user, event: event) }
 
-     context Event::Participation do
+    context Event::Participation do
       it 'may create his participation' do
-        p = event.participations.new
+        p           = event.participations.new
         p.person_id = user.id
         is_expected.to be_able_to(:create, p)
       end
@@ -330,7 +330,7 @@ describe EventAbility do
   end
 
   context :in_other_hierarchy do
-    let(:role)  { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:innerroden)) }
+    let(:role) { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:innerroden)) }
     let(:event) { Fabricate(:jubla_course, groups: [groups(:be)]) }
     let(:participation) { Fabricate(:event_participation, person: user, event: event) }
 
@@ -374,12 +374,12 @@ describe EventAbility do
       end
 
       it 'may show application' do
-        is_expected.to be_able_to(:show, participation.application)
+        is_expected.to be_able_to(:show_priorities, participation.application)
       end
 
       it 'may approve participations' do
         is_expected.to be_able_to(:approve, participation.application)
-    end
+      end
     end
 
     context 'for other participants' do
@@ -390,7 +390,7 @@ describe EventAbility do
       end
 
       it 'may not show application' do
-        is_expected.not_to be_able_to(:show, participation.application)
+        is_expected.not_to be_able_to(:show_priorities, participation.application)
       end
 
       it 'may not approve participations' do
@@ -478,7 +478,7 @@ describe EventAbility do
       end
 
       it 'can create, update, destroy participations' do
-        course = Fabricate(:jubla_course, groups: [groups(:ch)], state: 'closed')
+        course        = Fabricate(:jubla_course, groups: [groups(:ch)], state: 'closed')
         participation = Fabricate(:event_participation, event: course)
         [:create, :update, :destroy].each { |action| is_expected.to be_able_to(action, participation) }
       end
@@ -526,6 +526,49 @@ describe EventAbility do
 
     it 'cannot create new event' do
       is_expected.not_to be_able_to(:create, group.events.new.tap { |e| e.groups << group })
+    end
+  end
+
+
+  context 'index_participations_details on event in group ' do
+
+    let(:group) { groups(:be_board) }
+    context 'FederalBoard::Member' do
+      let(:user) { people(:top_leader) }
+
+      it 'is allowed because of :layer_and_below_full' do
+        is_expected.to be_able_to(:index_participations_details, event)
+      end
+    end
+
+    context 'State::GroupAdmin' do
+      let(:role) { Fabricate(Group::StateBoard::Leader.name, group: group) }
+
+      it 'is allowed because of :group_full' do
+        is_expected.to be_able_to(:index_participations_details, event)
+      end
+    end
+
+    context 'Flock::Leader' do
+      let(:user) { people(:flock_leader) }
+
+      it 'with leader role is allowed' do
+        create(Event::Role::Leader)
+
+        is_expected.to be_able_to(:index_participations_details, event)
+      end
+
+      it 'with participation role is not allowed' do
+        create(Event::Role::Participant,)
+
+        is_expected.not_to be_able_to(:index_participations_details, event)
+      end
+
+      def create(event_role_type)
+        participation = Fabricate(:event_participation, person: user, event: event)
+        Fabricate(event_role_type.name, participation: participation)
+      end
+
     end
   end
 
