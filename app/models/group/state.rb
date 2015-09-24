@@ -46,7 +46,7 @@ class Group::State < Group
 
 
   def census_total(year)
-    MemberCount.total_by_states(year).where(state_id: id).first
+    MemberCount.total_by_states(year).find_by(state_id: id)
   end
 
   def census_groups(year)

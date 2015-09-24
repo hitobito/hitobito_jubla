@@ -12,6 +12,8 @@ class AddOriginatingStateAndFlockToPerson < ActiveRecord::Migration
     add_column(:people, :originating_state_id, :integer)
     add_column(:people, :originating_flock_id, :integer)
 
+    Person.reset_column_information
+
     say_with_time("loading people") { load_people }
 
     say_with_time("compute origins") { compute_origins }

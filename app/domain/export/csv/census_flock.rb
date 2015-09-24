@@ -67,7 +67,7 @@ module Export::Csv
         contact_last_name: 'Kontakt Nachname',
         address: human_attribute(:address),
         zip_code: human_attribute(:zip_code),
-        town: human_attribute(:town) ,
+        town: human_attribute(:town),
         jubla_insurance: human_attribute(:jubla_insurance),
         jubla_full_coverage: human_attribute(:jubla_full_coverage),
         leader_count: 'Leitende',

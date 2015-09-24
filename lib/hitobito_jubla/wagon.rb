@@ -17,13 +17,13 @@ module HitobitoJubla
                                  #{config.root}/app/domain
                                  #{config.root}/app/jobs
                                  #{config.root}/app/serializers
-                               )
+                             )
 
     # extend application classes here
     config.to_prepare do
       ### models
-      Group.send  :include, Jubla::Group
-      Role.send   :include, Jubla::Role
+      Group.send :include, Jubla::Group
+      Role.send :include, Jubla::Role
       Person.send :include, Jubla::Person
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
@@ -40,32 +40,38 @@ module HitobitoJubla
       Ability.store.register Event::Course::ConditionAbility
 
       PersonSerializer.send :include, Jubla::PersonSerializer
-      GroupSerializer.send  :include, Jubla::GroupSerializer
+      GroupSerializer.send :include, Jubla::GroupSerializer
 
       # domain
+      Bsv::Info.send :include, Jubla::Bsv::Info
+
       Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
       Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
       Export::Csv::People::PersonRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
+      Export::Csv::People::ParticipationRow.send(
+        :include, Jubla::Export::Csv::People::OriginatingGroups)
+      Export::Csv::Events::BsvList.send :include, Jubla::Export::Csv::Events::BsvList
+      Export::Csv::Events::BsvRow.send :include, Jubla::Export::Csv::Events::BsvRow
 
-      Export::Csv::People::ParticipationRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
-
-      Event::ParticipationFilter.send :include, Jubla::Event::ParticipationFilter
+      Event::ParticipationFilter.load_entries_includes += [
+        person: [:originating_flock, :originating_state]
+      ]
 
       ### controllers
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
       Event::Camp::KindsController # load before Event::KindsController
-      Event::KindsController.permitted_attrs += [:j_s_label, :bsv_id]
+      Event::KindsController.permitted_attrs += [:j_s_label]
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
+      Event::ListsController.bsv_course_states = Event::Course.possible_states
       Event::ApplicationMarketController.send :include, Jubla::Event::ApplicationMarketController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
-      Event::ListsController.send :include, Jubla::Event::ListsController
       Event::ParticipationsController.send :include, Jubla::Event::ParticipationsController
       Subscriber::GroupController.send :include, Jubla::Subscriber::GroupController
 

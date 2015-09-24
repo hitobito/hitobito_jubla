@@ -17,14 +17,6 @@ module Jubla::Event::ParticipationsController
     sort_mappings_with_indifferent_access.
       merge!(originating_state: null_safe_sort('originating_states_people.name'),
              originating_flock: null_safe_sort('groups.name'))
-
-    alias_method_chain :append_mailing_instructions?, :signature
-  end
-
-
-  # only render instructions if signature flag is set
-  def append_mailing_instructions_with_signature?
-    user_course_application? && event.signature?
   end
 
 end

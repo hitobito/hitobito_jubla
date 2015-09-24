@@ -14,7 +14,7 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
 
     flock = evaluation.sub_groups.find(params[:flock_id])
     CensusReminderJob.new(current_user, evaluation.current_census, flock).enqueue!
-    notice = "Erinnerungsemail an #{flock.to_s} geschickt"
+    notice = "Erinnerungsemail an #{flock} geschickt"
 
     respond_to do |format|
       format.html { redirect_to census_state_group_path(group), notice: notice }

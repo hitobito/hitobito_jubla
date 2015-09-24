@@ -14,26 +14,26 @@ module JublaOst
     class << self
       def migrate
         # ActiveRecord::Base.transaction do
-          begin
-            sanitize_source
 
-            JublaOst::Region.migrate
-            JublaOst::Kurs.migrate
+        sanitize_source
 
-            ActiveRecord::Base.record_timestamps = false
-            JublaOst::Person.migrate
-            ActiveRecord::Base.record_timestamps = true
+        JublaOst::Region.migrate
+        JublaOst::Kurs.migrate
 
-            JublaOst::Schar.migrate_advisors
-            JublaOst::Kurs.migrate_special_roles
-            JublaOst::Person.migrate_updaters
-          rescue Exception => e
-            # some weird Sqlite3 BusyExceptions on rollback prevent
-            # the original message being passed on, so print it here
-            puts e.message
-            puts e.backtrace.join("\n")
-            raise e
-          end
+        ActiveRecord::Base.record_timestamps = false
+        JublaOst::Person.migrate
+        ActiveRecord::Base.record_timestamps = true
+
+        JublaOst::Schar.migrate_advisors
+        JublaOst::Kurs.migrate_special_roles
+        JublaOst::Person.migrate_updaters
+      rescue Exception => e
+        # some weird Sqlite3 BusyExceptions on rollback prevent
+        # the original message being passed on, so print it here
+        puts e.message
+        puts e.backtrace.join("\n")
+        raise e
+
         # end
       end
 

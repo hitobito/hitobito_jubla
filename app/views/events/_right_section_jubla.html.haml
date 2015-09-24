@@ -7,14 +7,13 @@
   - if can?(:update, entry)
     = section 'BSV-Angaben' do
       %dl.dl-horizontal
-        = labeled_attr(entry, :training_days)
-        = entry.labeled_bsv_attr(:participants)
-        = entry.labeled_bsv_attr(:leaders)
-        = entry.labeled_bsv_attr(:cantons)
+        = entry.labeled_bsv_attr(:participant_count)
+        = entry.labeled_bsv_attr(:leader_count)
+        = entry.labeled_bsv_attr(:canton_count)
 
       %dl.dl-horizontal
-        = entry.labeled_bsv_attr(:total_days)
-        = entry.labeled_bsv_attr(:participants_total)
-        = entry.labeled_bsv_attr(:leaders_total)
-        = entry.labeled_bsv_attr(:cooks)
-        = entry.labeled_bsv_attr(:speakers)
+        = entry.labeled_bsv_attr(:total_day_count)
+        = entry.labeled_bsv_attr(:total_participant_count)
+        = entry.labeled_bsv_attr(:total_leader_count)
+        = entry.labeled_bsv_attr(:cook_count)
+        = entry.labeled_bsv_attr(:speaker_count)

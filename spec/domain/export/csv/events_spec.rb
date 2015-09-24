@@ -40,7 +40,7 @@ describe Export::Csv::Events do
         Fabricate(:jubla_course, groups: [groups(:ch)], location: 'somewhere',
                   state: 'created')
       end
-      let(:list)  { Export::Csv::Events::List.new([course]) }
+      let(:list)  { Export::Csv::Events::List.new(Event::Course.where(id: course)) }
       let(:csv) { Export::Csv::Generator.new(list).csv.split("\n")  }
       subject { csv.second.split(';') }
 
@@ -54,17 +54,17 @@ describe Export::Csv::Events do
     let(:list) { OpenStruct.new(max_dates: 3, contactable_keys: contactable_keys) }
 
     context Event::Course do
-      let(:row) { Export::Csv::Events::Row.new(course) }
+      let(:row) { Export::Csv::Events::Row.new(course, {}, {}) }
 
       it { expect(row.fetch(:state)).to eq 'Offen zur Anmeldung' }
-      it { expect(row.fetch(:contact_j_s_number)).to eq 123 }
+      it { expect(row.fetch(:contact_j_s_number)).to eq '123' }
       it { expect(row.fetch(:advisor_name)).to eq advisor.to_s }
       it { expect(row.fetch(:advisor_j_s_number)).to eq '123' } # varchar in db
     end
 
     # Regression for #10969, test export with simple Event too
     context Event do
-      let(:row) { Export::Csv::Events::Row.new(event) }
+      let(:row) { Export::Csv::Events::Row.new(event, {}, {}) }
 
       it { expect(row.fetch(:advisor_name)).to be_nil }
       it { expect(row.fetch(:advisor_j_s_number)).to be_nil }

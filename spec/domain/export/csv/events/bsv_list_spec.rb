@@ -7,11 +7,11 @@
 
 require 'spec_helper'
 
-describe Event::Course::BsvInfo::List do
+describe Export::Csv::Events::BsvList do
   let(:course) { events(:top_course) }
 
   context 'export' do
-    let(:lines) { Event::Course::BsvInfo::List.export([course, course]).split("\n") }
+    let(:lines) { Export::Csv::Events::BsvList.export([course, course]).split("\r\n") }
     let(:headers) {  lines.first.encode('UTF-8').split(';') }
 
     it 'exports headers' do
@@ -21,8 +21,8 @@ describe Event::Course::BsvInfo::List do
     end
 
     it 'exports semicolon separted list' do
-      expect(lines[1]).to eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
-      expect(lines[2]).to eq ";;;01.03.2012;;;0;1;0;;9;1;1;0;0"
+      expect(lines[1]).to eq ";;;01.03.2012;;;0;1;0;1;9;1;1;0;0"
+      expect(lines[2]).to eq ";;;01.03.2012;;;0;1;0;1;9;1;1;0;0"
     end
   end
 

@@ -199,43 +199,13 @@ de:
         nationality: Nationalität
         profession: Beruf
         bank_account: Bankverbindung
-        ahv_number: AHV-Nummer
         ahv_number_old: AHV-Nummer alt
-        j_s_number: J+S-Nummer
         insurance_company: Versicherung
         insurance_number: Versicherungsnummer
-        canton: Wohnkanton (Abk.)
         originating_state: Jublakanton
         originating_flock: Schar
         originating_state_id: Jublakanton
         originating_flock_id: Schar
-        cantons:
-          ag: Aargau
-          ai: Appenzell Innerrhoden
-          ar: Appenzell Ausserrhoden
-          be: Bern
-          bl: Basel Land
-          bs: Basel Stadt
-          fr: Fribourg
-          ge: Geneva
-          gl: Glarus
-          gr: Graubünden
-          ju: Jura
-          lu: Luzern
-          ne: Neuchâtel
-          nw: Nidwalden
-          ow: Obwalden
-          sg: St. Gallen
-          sh: Schaffhausen
-          so: Solothurn
-          sz: Schwyz
-          tg: Thurgau
-          ti: Tessin
-          ur: Uri
-          vd: Waadt
-          vs: Wallis
-          zg: Zug
-          zh: Zürich
 
       group:
         bank_account: Bankverbindung
@@ -271,21 +241,8 @@ de:
         application_contact: Anmeldung an
         application_contact_id: Anmeldung an
         remarks: Anmeldebemerkungen
-        signature: Unterschrift erforderlich
-        signature_confirmation: Zweitunterschrift erforderlich
-        signature_confirmation_text: Zweitunterschrift von
-        training_days: Ausbildungstage
 
       event/course:
-        states:
-          created: Erstellt
-          confirmed: Bestätigt
-          application_open: Offen zur Anmeldung
-          application_closed: Anmeldung abgeschlossen
-          assignment_closed: Zuteilung abgeschlossen
-          canceled: Abgesagt
-          completed: Qualifikationen erfasst
-          closed: Abgeschlossen
         condition: Kursbestimmungen
         condition_id: Kursbestimmungen
 
@@ -310,7 +267,6 @@ de:
 
       event/kind:
         j_s_label: J+S Bezeichnung
-        bsv_id: Kurs-ID-FiVer
 
     errors:
       messages:

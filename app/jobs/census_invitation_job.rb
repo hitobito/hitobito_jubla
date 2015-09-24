@@ -19,7 +19,7 @@ class CensusInvitationJob < BaseJob
   end
 
   def perform
-    CensusMailer.invitation(census, recipients).deliver
+    CensusMailer.invitation(census, recipients).deliver_now
   end
 
   def recipients

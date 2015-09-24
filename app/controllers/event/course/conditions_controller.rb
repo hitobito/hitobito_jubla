@@ -38,7 +38,7 @@ class Event::Course::ConditionsController < SimpleCrudController
   end
 
   def parent_scope
-     group.course_conditions
+    group.course_conditions
   end
 
   def authorize_class

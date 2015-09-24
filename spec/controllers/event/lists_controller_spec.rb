@@ -10,13 +10,12 @@ require 'spec_helper'
 describe Event::ListsController do
 
   before { sign_in(people(:top_leader)) }
+  render_views
 
-  context 'BSV export' do
-    render_views
+  let(:bsv) { CSV.parse(response.body, headers: true) }
 
-    it 'POST#create' do
-      get :courses, year: 2012, kind: 'bsv', format: :csv
-      expect(response.body).to be_present
-    end
+  it 'GET#courses with kind csv' do
+    get :bsv_export, bsv_export: { date_from: '1.1.2012', date_to: '31.12.2012' }
+    expect(bsv).to have(1).item
   end
 end

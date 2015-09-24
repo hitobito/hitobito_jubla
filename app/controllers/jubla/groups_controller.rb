@@ -13,7 +13,7 @@ module Jubla::GroupsController
   end
 
   def load_advisors
-    return unless entry.kind_of?(Group::Flock)
+    return unless entry.is_a?(Group::Flock)
     @coaches = entry.available_coaches.only_public_data.order_by_name
     @advisors = entry.available_advisors.only_public_data.order_by_name
   end

@@ -46,16 +46,11 @@ module Jubla::Export::Pdf
 
     end
 
-    class Confirmation <  Export::Pdf::Participation::Confirmation
+    class Confirmation < Export::Pdf::Participation::Confirmation
 
       def render
-        first_page_section do
-          render_read_and_agreed
-          render_signature if event.signature?
-          render_signature_confirmation if signature_confirmation?
-          render_contact_address if contact
-          render_remarks if event.remarks?
-        end
+        super
+        render_remarks if event.remarks?
       end
 
       private
@@ -68,43 +63,17 @@ module Jubla::Export::Pdf
         end
 
         pdf.bounding_box([0 + 5, y - 5], width: bounds.width - 10, height: 65) do
-          shrinking_text_box event.remarks
+          pdf.text_box(event.remarks, overflow: :shrink_to_fit)
         end
         move_down_line
       end
 
-      def render_signature_confirmation
-        render_signature(event.signature_confirmation_text,
-                         'event.participations.print.signature_confirmation')
-      end
-
-      def render_signature(header = Event::Role::Participant.model_name.human,
-                           key = 'event.participations.print.signature')
-        y = cursor
-        render_boxed(-> { text header; label_with_dots(location_and_date) },
-                     -> { move_down_line; label_with_dots(I18n.t(key)) })
-        move_down_line
-      end
-
-      def signature_confirmation?
-        event.signature_confirmation? && event.signature_confirmation_text?
-      end
-
-      def location_and_date
-        [Event::Date.human_attribute_name(:location),
-         Event::Date.model_name.human].join(' / ')
-      end
-
-      def label_with_dots(content)
-        text content
-        move_down_line
-        text '.' * 55
-      end
     end
 
     class EventDetails < Export::Pdf::Participation::EventDetails
 
       def render
+        pdf.start_new_page if description? || requirements?
         super
         render_condition if condition?
       end
@@ -112,7 +81,7 @@ module Jubla::Export::Pdf
       private
 
       def render_condition
-        with_count(Event::Course::Condition.model_name.human) do
+        with_header(Event::Course::Condition.model_name.human) do
           text event.condition.content, inline_format: true
         end
       end
@@ -134,6 +103,15 @@ module Jubla::Export::Pdf
 
     end
 
+    class GeneralInformation < Export::Pdf::Participation::GeneralInformation
+
+      private
+
+      def event_with_kind?
+        super && !event.kind.is_a?(Event::Camp::Kind)
+      end
+    end
+
 
     class Runner < Export::Pdf::Participation::Runner
 
@@ -144,11 +122,11 @@ module Jubla::Export::Pdf
           font_path = JUBLA_CI.root.join('app/assets/fonts')
 
           pdf.font_families.update('Century Gothic' => {
-            normal: font_path.join('century-gothic.ttf'),
-            bold: font_path.join('century-gothic-b.ttf'),
-            italic: font_path.join('century-gothic-i.ttf'),
-            bold_italic: font_path.join('century-gothic-b.ttf')
-          })
+                                     normal: font_path.join('century-gothic.ttf'),
+                                     bold: font_path.join('century-gothic-b.ttf'),
+                                     italic: font_path.join('century-gothic-i.ttf'),
+                                     bold_italic: font_path.join('century-gothic-b.ttf')
+                                   })
 
           pdf.font 'Century Gothic'
         end
@@ -160,7 +138,8 @@ module Jubla::Export::Pdf
          PersonAndEvent,
          Export::Pdf::Participation::Specifics,
          Confirmation,
-         EventDetails]
+         EventDetails,
+         GeneralInformation]
       end
     end
 

@@ -18,7 +18,7 @@ module Jubla::EventConstraints
   private
 
   def is_closed_course?
-    event.kind_of?(Event::Course) && event.closed?
+    event.is_a?(Event::Course) && event.closed?
   end
 
 end

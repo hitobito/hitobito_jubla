@@ -19,7 +19,7 @@ class CensusEvaluation::BaseController < ApplicationController
 
   class_attribute :sub_group_type
 
-  before_filter :authorize
+  before_action :authorize
 
   decorates :group, :sub_groups
 
@@ -46,7 +46,7 @@ class CensusEvaluation::BaseController < ApplicationController
   end
 
   def current_year
-    @current_year ||= Date.today.year
+    @current_year ||= Time.zone.today.year
   end
 
   def year_range

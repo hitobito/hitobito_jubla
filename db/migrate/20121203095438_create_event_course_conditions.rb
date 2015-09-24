@@ -12,7 +12,7 @@ class CreateEventCourseConditions < ActiveRecord::Migration
       t.string :label, null: false
       t.text :content, null: false
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :event_conditions, [:group_id, :label], :unique => true

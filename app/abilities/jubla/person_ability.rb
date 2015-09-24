@@ -23,7 +23,7 @@ module Jubla::PersonAbility
 
   def accessible_participations
     events_with_valid_states.any? do |event|
-      (user_context.layers_and_below_full & event.group_ids).present?
+      (user_context.permission_layer_ids(:layer_and_below_full) & event.group_ids).present?
     end
   end
 

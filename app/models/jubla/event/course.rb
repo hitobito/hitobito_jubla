@@ -12,12 +12,7 @@ module Jubla::Event::Course
     include Event::RestrictedRole
     restricted_role :advisor, Event::Course::Role::Advisor
 
-    self.used_attributes += [:advisor_id, :application_contact_id, :condition_id, :training_days]
-
-    # states are used for workflow
-    # translations in config/locales
-    self.possible_states = %w(created confirmed application_open application_closed
-                              assignment_closed canceled completed closed)
+    self.used_attributes += [:advisor_id, :application_contact_id, :condition_id]
 
     ### ASSOCIATIONS
 
@@ -26,34 +21,9 @@ module Jubla::Event::Course
 
     ### VALIDATIONS
 
-    validates :state, inclusion: possible_states
-
     validate :validate_application_contact
 
-    validates :training_days, modulus:  { multiple: 0.5 }, numericality: { allow_nil: true }
-
-    # Define methods to query if a course is in the given state.
-    # eg course.canceled?
-    possible_states.each do |state|
-      define_method "#{state}?" do
-        self.state == state
-      end
-    end
-
-  end
-
-  # may participants apply now?
-  def application_possible?
-    application_open? &&
-    (!application_opening_at || application_opening_at <= ::Date.today)
-  end
-
-  def qualification_possible?
-    !completed? && !closed?
-  end
-
-  def state
-    super || possible_states.first
+    validates :training_days, modulus: { multiple: 0.5 }, numericality: { allow_nil: true }
   end
 
   def possible_contact_groups
@@ -70,13 +40,6 @@ module Jubla::Event::Course
   def validate_application_contact
     unless possible_contact_groups.include?(application_contact)
       errors.add(:application_contact_id, 'muss definiert sein')
-    end
-  end
-
-  module ClassMethods
-    def application_possible
-      where(state: 'application_open').
-      where('events.application_opening_at IS NULL OR events.application_opening_at <= ?', ::Date.today)
     end
   end
 

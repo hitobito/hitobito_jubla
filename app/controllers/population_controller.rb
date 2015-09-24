@@ -7,7 +7,7 @@
 
 class PopulationController < ApplicationController
 
-  before_filter :authorize
+  before_action :authorize
 
   decorates :groups, :people, :group
 

@@ -26,6 +26,7 @@ module Jubla::GroupAbility
 
       permission(:any).may(:'index_event/camps').all
       permission(:group_full).may(:'export_event/camps').in_same_group
+      permission(:group_and_below_full).may(:'export_event/camps').in_same_group_or_below
       permission(:layer_read).may(:'export_event/camps').in_same_layer
       permission(:layer_and_below_read).may(:'export_event/camps').in_same_layer_or_below
     end
@@ -34,8 +35,8 @@ module Jubla::GroupAbility
   def in_same_layer_or_below_if_ast_or_bulei
     in_same_layer_or_below &&
     user.roles.any? do |r|
-      r.kind_of?(Group::StateAgency::Leader) ||
-      r.kind_of?(Group::FederalBoard::Member)
+      r.is_a?(Group::StateAgency::Leader) ||
+      r.is_a?(Group::FederalBoard::Member)
     end
   end
 end

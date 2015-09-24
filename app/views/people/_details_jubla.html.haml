@@ -3,9 +3,7 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-= render_attrs(entry, :nationality, :profession, :canton)
-= render_attrs(entry, :name_mother, :name_father)
+= render_attrs(entry, :nationality, :profession, :name_mother, :name_father)
 
 - if show_full
-  = render_attrs(entry, :bank_account, :ahv_number, :ahv_number_old, :j_s_number)
-  = render_attrs(entry, :insurance_company, :insurance_number)
+  = render_attrs(entry, :bank_account, :ahv_number_old, :insurance_company, :insurance_number)

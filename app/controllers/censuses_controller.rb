@@ -9,7 +9,7 @@ class CensusesController < CrudController
 
   self.permitted_attrs = [:year, :start_at, :finish_at]
 
-  before_filter :group
+  before_action :group
 
   after_create :send_invitation_mail
 
