@@ -37,8 +37,8 @@ describe Person do
   end
 
   it 'maps canton via location if zip_code is present' do
-    expect(Person.new(zip_code: 3000).canton).to eq 'BE'
-    expect(Person.new(zip_code: 3000, canton: 'ZH').canton).to eq('ZH')
+    expect(Person.new(zip_code: 3000).canton).to eq 'be'
+    expect(Person.new(zip_code: 3000, canton: 'zh').canton).to eq('zh')
   end
 
   def create(*roles)
