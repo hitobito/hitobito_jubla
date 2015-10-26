@@ -4,10 +4,11 @@ AllCops:
   RunRailsCops: true
   Exclude:
     - Rakefile
-    - Guardfile
+    - Gemfile
     - db/**/*
     - config/**/*
     - bin/**/*
     - tmp/**/*
     - spec/**/*
     - test/**/*
+    - lib/jubla_ost/**/*

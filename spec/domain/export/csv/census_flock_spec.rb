@@ -12,8 +12,11 @@ describe Export::Csv::CensusFlock do
   describe '.headers' do
     subject { census_flock }
 
-    its(:labels) do should eq ['Name', 'Kontakt Vorname', 'Kontakt Nachname', 'Adresse', 'PLZ', 'Ort',
-                               'Jubla Versicherung', 'Jubla Vollkasko', 'Leitende', 'Kinder'] end
+    its(:labels) do
+      should eq ['Name', 'Kontakt Vorname', 'Kontakt Nachname', 'Adresse', 'PLZ', 'Ort',
+                 'Jubla Sachversicherung', 'Jubla Haftpflicht', 'Jubla Vollkasko',
+                 'Leitende', 'Kinder']
+    end
   end
 
   describe 'census flock' do
@@ -33,9 +36,13 @@ describe Export::Csv::CensusFlock do
 
     describe 'keys and values' do
 
-      its(:keys) do should eq [:name, :contact_first_name, :contact_last_name, :address, :zip_code, :town,
-                               :jubla_insurance, :jubla_full_coverage, :leader_count, :child_count]  end
-      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, false, false, 5, 7] }
+      its(:keys) do
+        should eq [:name, :contact_first_name, :contact_last_name, :address, :zip_code, :town,
+                   :jubla_property_insurance, :jubla_liability_insurance, :jubla_full_coverage,
+                   :leader_count, :child_count]
+      end
+
+      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, false, false, false, 5, 7] }
 
       its(:values) { should have(census_flock.labels.size).items }
     end
@@ -43,28 +50,29 @@ describe Export::Csv::CensusFlock do
     describe 'address, zip code and town' do
       before { flock.update_attributes(address: 'bar', zip_code: 123, town: 'foo') }
 
-      its(:values) { should eq ['Bern', nil, nil, 'bar', 123, 'foo', false, false, 5, 7] }
+      its(:values) { should eq ['Bern', nil, nil, 'bar', 123, 'foo', false, false, false, 5, 7] }
     end
 
     describe 'contact person' do
       before { flock.update_attribute(:contact_id, people(:top_leader).id) }
 
-      its(:values) { should eq ['Bern', 'Top', 'Leader', nil, nil, nil, false, false, 5, 7] }
+      its(:values) { should eq ['Bern', 'Top', 'Leader', nil, nil, nil, false, false, false, 5, 7] }
     end
 
     describe 'insurance attributes' do
       before do
-        flock.update_attribute(:jubla_insurance, true)
+        flock.update_attribute(:jubla_property_insurance, true)
+        flock.update_attribute(:jubla_liability_insurance, true)
         flock.update_attribute(:jubla_full_coverage, true)
       end
 
-      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, true, true, 5, 7] }
+      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, true, true, true, 5, 7] }
     end
 
     describe 'without member count' do
       before { MemberCount.where(flock_id: flock.id).destroy_all }
 
-      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, false, false, nil, nil] }
+      its(:values) { should eq ['Bern', nil, nil, nil, nil, nil, false, false, false, nil, nil] }
     end
   end
 
@@ -72,8 +80,11 @@ describe Export::Csv::CensusFlock do
 
     subject { Export::Csv::Generator.new(census_flock).csv.split("\n") }
 
-    its(:first) { should eq 'Name;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Versicherung;Jubla Vollkasko;Leitende;Kinder' }
-    its(:second) { should eq 'Ausserroden;;;;;;nein;nein;;' }
+    its(:first) do
+      should eq 'Name;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Sachversicherung;' \
+                'Jubla Haftpflicht;Jubla Vollkasko;Leitende;Kinder'
+    end
+    its(:second) { should eq 'Ausserroden;;;;;;nein;nein;nein;;' }
   end
 
 end

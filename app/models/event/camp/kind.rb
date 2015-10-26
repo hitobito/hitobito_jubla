@@ -4,17 +4,17 @@
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
-
 # == Schema Information
 #
 # Table name: event_camp_kinds
 #
-#  id          :integer          not null, primary key
-#  label       :string(255)      not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  deleted_at  :datetime
+#  id         :integer          not null, primary key
+#  label      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#  deleted_at :datetime
 #
+
 class Event::Camp
   class Kind < ActiveRecord::Base
 

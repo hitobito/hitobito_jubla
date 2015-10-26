@@ -111,12 +111,12 @@ describe GroupsController, type: :controller  do
   describe_action :put, :update, id: true do
     expected = [
       [:leader, :flock, true],
-      [:leader, :flock, false, { jubla_insurance: '1' }],
-      [:agent, :flock, true, { jubla_insurance: '1' }],
-      [:agent, :region, true, { jubla_insurance: '1' }],
+      [:leader, :flock, false, { jubla_liability_insurance: '1' }],
+      [:agent, :flock, true, { jubla_liability_insurance: '1' }],
+      [:agent, :region, true, { jubla_liability_insurance: '1' }],
       [:agent, :state, true],
-      [:agent, :state, false, { jubla_insurance: '1' }],
-      [:bulei, :state, true, { jubla_insurance: '1' }],
+      [:agent, :state, false, { jubla_liability_insurance: '1' }],
+      [:bulei, :state, true, { jubla_liability_insurance: '1' }],
     ]
 
     expected.each do |user, group, super_attr_update, extra_attrs = {} |
@@ -127,9 +127,9 @@ describe GroupsController, type: :controller  do
           put :update, id: send(group).id, group: attrs
           if super_attr_update
             expect(assigns(:group).name).to eq 'dummy'
-            expect(assigns(:group).jubla_insurance).to be_truthy if extra_attrs.present?
+            expect(assigns(:group).jubla_liability_insurance).to be_truthy if extra_attrs.present?
           else
-            expect(assigns(:group).jubla_insurance).to be_falsey if extra_attrs.present?
+            expect(assigns(:group).jubla_liability_insurance).to be_falsey if extra_attrs.present?
           end
         end
       end
@@ -140,7 +140,7 @@ describe GroupsController, type: :controller  do
   describe_action :post, :create do
     expected = [
       [:leader, :asterix, true],
-      [:leader, :asterix, false, { jubla_insurance: '1' }],
+      [:leader, :asterix, false, { jubla_liability_insurance: '1' }],
       [:leader, :flock, false],
       [:agent, :flock, true],
       [:agent, :region, true],
@@ -164,7 +164,7 @@ describe GroupsController, type: :controller  do
               end.not_to change(Group, :count)
             else
               post :create, group: attrs
-              expect(assigns(:group).jubla_insurance).to be_falsey
+              expect(assigns(:group).jubla_liability_insurance).to be_falsey
             end
           end
         end

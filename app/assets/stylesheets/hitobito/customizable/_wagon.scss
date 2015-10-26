@@ -135,6 +135,10 @@ legend {
   }
 }
 
+html.turbolinks-progress-bar::before {
+  background-color: $grayDark !important;
+  height: 1px !important;
+}
 
 // _form.scss
 

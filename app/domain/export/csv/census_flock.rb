@@ -55,7 +55,8 @@ module Export::Csv
         address: flock.address,
         zip_code: flock.zip_code,
         town: flock.town,
-        jubla_insurance: flock.jubla_insurance,
+        jubla_property_insurance: flock.jubla_property_insurance,
+        jubla_liability_insurance: flock.jubla_liability_insurance,
         jubla_full_coverage: flock.jubla_full_coverage,
         leader_count: member_count.leader,
         child_count: member_count.child }
@@ -68,7 +69,8 @@ module Export::Csv
         address: human_attribute(:address),
         zip_code: human_attribute(:zip_code),
         town: human_attribute(:town),
-        jubla_insurance: human_attribute(:jubla_insurance),
+        jubla_property_insurance: human_attribute(:jubla_property_insurance),
+        jubla_liability_insurance: human_attribute(:jubla_liability_insurance),
         jubla_full_coverage: human_attribute(:jubla_full_coverage),
         leader_count: 'Leitende',
         child_count: 'Kinder' }
