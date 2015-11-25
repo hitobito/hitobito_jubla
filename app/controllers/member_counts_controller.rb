@@ -24,7 +24,7 @@ class MemberCountsController < ApplicationController
       end)
     with_errors = counts.select { |c| c.errors.present? }
     if with_errors.blank?
-      flash[:notice] = "Die Mitgliederzahlen für #{year} wurden erfolgreich gespeichert"
+      flash[:notice] = "Die Mitgliederzahlen für #{year} wurden erfolgreich gespeichert."
       redirect_to census_flock_group_path(flock, year: year)
     else
       messages = with_errors.collect { |e| "#{e.born_in}: #{e.errors.full_messages.join(', ')}" }
@@ -45,6 +45,14 @@ class MemberCountsController < ApplicationController
 
     year ||= Time.zone.today.year
     redirect_to census_flock_group_path(flock, year: year)
+  end
+
+  def destroy
+    authorize!(:delete_member_counts, flock)
+
+    member_counts.destroy_all
+    redirect_to census_flock_group_path(flock, year: year),
+                notice: "Die Mitgliederzahlen für #{year} wurde erfolgreich gelöscht."
   end
 
   private

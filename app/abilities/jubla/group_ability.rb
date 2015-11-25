@@ -21,7 +21,7 @@ module Jubla::GroupAbility
         in_same_layer_or_below
 
       permission(:layer_and_below_full).
-        may(:update_member_counts).
+        may(:update_member_counts, :delete_member_counts).
         in_same_layer_or_below_if_ast_or_bulei
 
       permission(:any).may(:'index_event/camps').all
