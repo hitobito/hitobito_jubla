@@ -3,9 +3,10 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-- entry.used?(:advisor_id) do
-  = f.labeled_person_field :advisor
-- entry.used?(:coach_id) do
-  = f.labeled_person_field :coach
-- entry.used?(:condition_id) do
-  = f.labeled_input_field(:condition_id)
+= field_set_tag do
+  - entry.used?(:advisor_id) do
+    = f.labeled_person_field :advisor
+  - entry.used?(:coach_id) do
+    = f.labeled_person_field :coach
+  - entry.used?(:condition_id) do
+    = f.labeled_input_field(:condition_id)
