@@ -3,8 +3,8 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-- entry.used?(:condition_id) do
-  - if entry.condition
-    = section 'Kursbestimmungen' do
-      = entry.condition.content.html_safe
+- if entry.is_a?(Event::Camp)
+  %dl.dl-horizontal
+    = labeled_attr(entry, :coach_id)
+
 
