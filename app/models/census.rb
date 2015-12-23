@@ -1,4 +1,14 @@
 # encoding: utf-8
+# == Schema Information
+#
+# Table name: censuses
+#
+#  id        :integer          not null, primary key
+#  year      :integer          not null
+#  start_at  :date
+#  finish_at :date
+#
+
 
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3

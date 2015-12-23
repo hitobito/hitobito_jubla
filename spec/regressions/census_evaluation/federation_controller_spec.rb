@@ -51,7 +51,7 @@ describe CensusEvaluation::FederationController, type: :controller do
       it 'renders correct templates' do
         expect(response).to be_success
         expect(csv).to have(5).items
-        expect(csv.headers).to have(10).items
+        expect(csv.headers).to have(11).items
       end
     end
 

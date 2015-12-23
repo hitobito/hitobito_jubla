@@ -110,6 +110,14 @@ describe MemberCountsController do
     end
   end
 
+  describe 'DELETE destroy' do
+    it 'removes member count' do
+      expect { delete :destroy, group_id: flock.id, year: 2012 }.to change { MemberCount.count }.by(-3)
+
+      is_expected.to redirect_to(census_flock_group_path(flock, year: 2012))
+      expect(flash[:notice]).to be_present
+    end
+  end
 
   def assert_member_counts(count, leader_f, leader_m, child_f, child_m)
     expect(count.leader_f).to eq(leader_f)

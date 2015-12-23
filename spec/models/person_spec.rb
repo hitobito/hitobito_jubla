@@ -37,8 +37,14 @@ describe Person do
   end
 
   it 'maps canton via location if zip_code is present' do
-    expect(Person.new(zip_code: 3000).canton).to eq 'BE'
-    expect(Person.new(zip_code: 3000, canton: 'ZH').canton).to eq('ZH')
+    expect(Person.new(zip_code: 3000).canton).to eq 'be'
+    expect(Person.new(zip_code: 3000, canton: 'zh').canton).to eq('zh')
+  end
+
+  it 'displays flock kind for role group' do
+    p = Person.preload_groups.find_by_id(person.id)
+    names = p.roles.collect { |r| r.group.to_s }
+    expect(names).to match_array(['Jungwacht Bern', 'Jubla Innerroden'])
   end
 
   def create(*roles)

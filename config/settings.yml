@@ -47,12 +47,6 @@ social_account:
     - Webseite
     - Andere
 
-# Preset for addresses
-address:
-  switzerland_variations:
-    - ch
-    - schweiz
-
 # Presets for CSV export
 csv:
   # optimized for M$ Excel

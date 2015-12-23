@@ -11,7 +11,8 @@ module Jubla::GroupSerializer
   included do
     extension(:attrs) do |_|
       map_properties(*item.used_attributes(:parish, :founding_year, :unsexed, :bank_account,
-                                           :clairongarde, :jubla_insurance, :jubla_full_coverage,
+                                           :clairongarde, :jubla_property_insurance,
+                                           :jubla_liability_insurance, :jubla_full_coverage,
                                            :coach_id, :advisor_id))
     end
   end

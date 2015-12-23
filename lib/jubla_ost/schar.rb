@@ -144,7 +144,7 @@ module JublaOst
         else
           group.parish = legacy.Pfarrei
         end
-        group.jubla_insurance = legacy.Jublavers == 1
+        group.jubla_liability_insurance = legacy.Jublavers == 1
         group.jubla_full_coverage = legacy.Vollkasko == 1
         group.founding_year = legacy.gruendung
         group.clairongarde = legacy.clairon == 1

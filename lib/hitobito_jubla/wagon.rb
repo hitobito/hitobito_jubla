@@ -82,7 +82,8 @@ module HitobitoJubla
 
       ### helpers
       # add more active_for urls to main navigation
-      NavigationHelper::MAIN[:admin][:active_for] << 'event_camp_kinds'
+      admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
+      admin[:active_for] << 'event_camp_kinds'
       Sheet::Group.send :include, Jubla::Sheet::Group
     end
 

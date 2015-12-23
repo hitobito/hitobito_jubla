@@ -209,7 +209,8 @@ de:
 
       group:
         bank_account: Bankverbindung
-        jubla_insurance: Jubla Versicherung
+        jubla_property_insurance: Jubla Sachversicherung
+        jubla_liability_insurance: Jubla Haftpflicht
         jubla_full_coverage: Jubla Vollkasko
         parish: Pfarrei
         kind: Art

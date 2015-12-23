@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
 
     resources :event_course_conditions, module: 'event', controller: 'course/conditions'
-    resource :member_counts, only: [:create, :edit, :update]
+    resource :member_counts, only: [:create, :edit, :update, :destroy]
   end
 
 end
