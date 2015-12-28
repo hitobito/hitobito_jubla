@@ -7,13 +7,13 @@
 
 class CensusReminderJob < BaseJob
 
-  self.parameters = [:census, :sender, :flock_id]
+  self.parameters = [:census, :sender_id, :flock_id]
 
-  attr_reader :census, :sender
+  attr_reader :census, :sender_id
 
   def initialize(sender, census, flock)
     @census = census
-    @sender = sender.email
+    @sender_id = sender.id
     @flock_id = flock.id
   end
 
@@ -31,6 +31,10 @@ class CensusReminderJob < BaseJob
 
   def flock
     @flock ||= Group::Flock.find(@flock_id)
+  end
+
+  def sender
+    @sender ||= Person.find(@sender_id)
   end
 
   def state_agency

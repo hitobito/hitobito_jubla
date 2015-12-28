@@ -42,18 +42,19 @@ describe CensusMailer do
     end
 
     context 'with contact address' do
-      let(:mail) { CensusMailer.reminder(people(:top_leader).email, census, leaders, groups(:bern), groups(:be_agency)) }
+      let(:mail) { CensusMailer.reminder(people(:top_leader), census, leaders, groups(:bern), groups(:be_agency)) }
 
       its(:subject) { should == 'Bestandesmeldung ausfüllen!' }
       its(:to)      { should == ['test@example.com', 'test2@example.com'] }
-      its(:from)    { should == [people(:top_leader).email] }
+      its(:from)    { should == ['noreply@localhost'] }
+      its(:reply_to){ should == [people(:top_leader).email] }
       its(:body)    { should =~ /Hallo firsty, lasty/ }
       its(:body)    { should =~ /AST<br\/>3000 Bern<br\/>ast_be@jubla.example.com/ }
       its(:body)    { should =~ /bis am 31\.10\.2012/ }
     end
 
     context 'without contact address' do
-      let(:mail) { CensusMailer.reminder(people(:top_leader).email, census, leaders, groups(:bern), groups(:no_agency)) }
+      let(:mail) { CensusMailer.reminder(people(:top_leader), census, leaders, groups(:bern), groups(:no_agency)) }
 
       its(:body) { should =~ /AST<br\/><br\/>/ }
     end
