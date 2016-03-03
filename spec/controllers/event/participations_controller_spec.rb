@@ -25,23 +25,17 @@ describe Event::ParticipationsController do
     other
   end
 
-  let(:participation) do
-    p = Fabricate(:event_participation, event: course, application: Fabricate(:jubla_event_application, priority_2: Fabricate(:jubla_course, kind: course.kind)))
-    p.answers.create!(question_id: course.questions[0].id, answer: 'juhu')
-    p.answers.create!(question_id: course.questions[1].id, answer: 'blabla')
-    p
-  end
-
-
   let(:user) { people(:top_leader) }
 
   before { sign_in(user); other_course }
 
 
   context 'GET index' do
-    before do @leader, @advisor, @participant = *create(Event::Role::Leader,
-                                                        Event::Course::Role::Advisor,
-                                                        course.participant_types.first) end
+    before do
+      @leader, @advisor, @participant = *create(Event::Role::Leader,
+                                                Event::Course::Role::Advisor,
+                                                course.participant_types.first)
+    end
 
     it 'lists participant and leader group by default without advisor' do
       get :index, group_id: group.id, event_id: course.id
@@ -61,7 +55,7 @@ describe Event::ParticipationsController do
     def create(*roles)
       roles.map do |role_class|
         role = Fabricate(:event_role, type: role_class.sti_name)
-        Fabricate(:event_participation, event: course, roles: [role], active: true)
+        Fabricate(:event_participation, event: course, roles: [role], state: 'assigned')
       end
     end
   end

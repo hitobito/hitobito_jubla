@@ -16,6 +16,7 @@ de:
         explanation: Angezeigt werden hier Anlässe deiner Schar, deiner Regions- und Kantonsleitung, der Bundesebene, sowie von Gruppen bei welchen du Mitglied bist.
     participations:
       print:
+        heading_event/camp: Lageranmeldung
         requirements_for_event_camp: Voraussetzungen für das Lager
         read_and_agreed_for_event_camp: Ich erfülle die Voraussetzungen für das Lager, habe die Lagerbeschreibung gelesen und bin damit einverstanden.
 

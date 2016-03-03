@@ -11,30 +11,21 @@ class CensusMailer < ApplicationMailer
   CONTENT_REMINDER   = 'census_reminder'
 
   def reminder(sender, census, recipients, flock, state_agency)
-    content = CustomContent.get(CONTENT_REMINDER)
     values = {
       'due-date'        => due_date(census),
       'recipient-names' => recipients.collect(&:first_name).join(', '),
       'contact-address' => contact_address(state_agency),
-      'census-url'      => "<a href=\"#{census_url(flock)}\">#{census_url(flock)}</a>"
+      'census-url'      => link_to(census_url(flock))
     }
-
-    mail(to: Person.mailing_emails_for(recipients),
-         from: sender,
-         subject: content.subject) do |format|
-      format.html { render text: content.body_with_values(values) }
-    end
+    custom_content_mail(recipients, CONTENT_REMINDER, values, with_personal_sender(sender))
   end
 
   def invitation(census, recipients)
-    content = CustomContent.get(CONTENT_INVITATION)
-    values = { 'due-date' => due_date(census) }
-
-    mail(to: Settings.email.mass_recipient,
-         bcc: Person.mailing_emails_for(recipients),
-         subject: content.subject) do |format|
-      format.html { render text: content.body_with_values(values) }
-    end
+    custom_content_mail(
+      Settings.email.mass_recipient,
+      CONTENT_INVITATION,
+      { 'due-date' => due_date(census) },
+      bcc: Person.mailing_emails_for(recipients))
   end
 
   private

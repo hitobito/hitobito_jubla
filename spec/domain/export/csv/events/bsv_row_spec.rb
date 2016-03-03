@@ -14,7 +14,7 @@ describe Export::Csv::Events::BsvRow do
 
   def create_participation(*role_types)
     roles = role_types.map { |type| Fabricate(:event_role, type: type.name) }
-    Fabricate(:event_participation, event: course, roles: roles, active: true)
+    Fabricate(:event_participation, event: course, roles: roles, state: 'assigned')
   end
 
   def create_participant_with_person_attrs(attrs)
