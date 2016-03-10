@@ -117,7 +117,9 @@ describe Export::Csv::Events::BsvRow do
       end
 
       it 'ignores case when counting' do
+        create_participant_with_person_attrs(canton: 'ag', birthday: birthday)
         create_participant_with_person_attrs(canton: 'AG', birthday: birthday)
+        create_participant_with_person_attrs(canton: 'aG', birthday: birthday)
         expect(info.canton_count).to eq 1
       end
 
