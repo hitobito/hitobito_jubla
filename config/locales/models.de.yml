@@ -29,115 +29,150 @@ de:
 
       group/federal_professional_group:
         one: Fachgruppe
+        other: Fachgruppen
         long: Fachgruppe Bund
       group/federal_work_group:
         one: Arbeitsgruppe
+        other: Arbeitsgruppen
         long: Arbeitsgruppe Bund
       group/state_professional_group:
         one: Fachgruppe
+        other: Fachgruppen
         long: Fachgruppe Kanton
       group/state_work_group:
         one: Arbeitsgruppe
+        other: Arbeitsgruppen
         long: Arbeitsgruppe Kanton
       group/regional_professional_group:
         one: Fachgruppe
+        other: Fachgruppen
         long: Fachgruppe Region
       group/regional_work_group:
         one: Arbeitsgruppe
+        other: Arbeitsgruppen
         long: Arbeitsgruppe Region
 
       group/federal_board/member:
         one: Mitglied
+        other: Mitglieder
         long: Bundesleitung
       group/federal_board/president:
         one: Präses
+        other: Präses
         long: Bundesleitung Präses
 
       group/federal_professional_group/leader:
         one: Leitung
+        other: Leitung
         long: Bund FG Leitung
       group/federal_professional_group/member:
         one: Mitglied
+        other: Mitglieder
         long: Bund FG Mitglied
 
       group/federal_work_group/leader:
         one: Leitung
+        other: Leitung
         long: Bund AG Leitung
       group/federal_work_group/member:
         one: Mitglied
+        other: Mitglieder
         long: Bund AG Mitglied
 
       group/state_board/leader:
         one: Leitung
+        other: Leitung
         long: Kantonsleitung Leitung
       group/state_board/president:
         one: Präses
+        other: Präses
         long: Kantonsleitung Präses
 
       group/state_board/member:
         one: Mitglied
+        other: Mitglieder
         long: Kantonsleitung Mitglied
       group/state_board/supervisor:
         one: Stellenbegleitung
+        other: Stellenbegleitungen
 
       group/state_agency/leader:
         one: Leitung
+        other: Leitung
         long: AST Leitung
 
       group/state_professional_group/leader:
         one: Leitung
+        other: Leitung
         long: Kanton FG Leitung
       group/state_professional_group/member:
         one: Mitglied
+        other: Mitglieder
         long: Kanton FG Mitglied
 
       group/state_work_group/leader:
         one: Leitung
+        other: Leitung
         long: Kanton AG Leitung
       group/state_work_group/member:
         one: Mitglied
+        other: Mitglieder
         long: Kanton AG Mitglied
 
       group/regional_board/leader:
         one: Leitung
+        other: Leitung
         long: Regionalleitung Leitung
       group/regional_board/member:
         one: Mitglied
+        other: Mitglieder
         long: Regionalleitung Mitglied
       group/regional_board/president:
         one: Präses
+        other: Präses
         long: Regionalleitung Präses
 
       group/regional_professional_group/leader:
         one: Leitung
+        other: Leitung
         long: Region FG Leitung
       group/regional_professional_group/member:
         one: Mitglied
+        other: Mitglieder
         long: Region FG Mitglied
 
       group/regional_work_group/leader:
         one: Leitung
+        other: Leitung
         long: Region AG Leitung
       group/regional_work_group/member:
         one: Mitglied
+        other: Mitglieder
         long: Region AG Mitglied
 
       group/flock/leader:
         one: Scharleitung
+        other: Scharleitungen
       group/flock/camp_leader:
         one: Lagerleitung
+        other: Lagerleitungen
       group/flock/president:
         one: Präses
+        other: Präses
       group/flock/guide:
         one: Leiter/in
+        other: Leiter/innen
         long: Schar Leiter/in
       group/flock/advisor:
         one: Scharbegleitung
+        other: Scharbegleitungen
       group/flock/coach:
         one: Coach
+        other: Coaches
 
       group/child_group/child:
         one: Kind
+        other: Kinder
 
       jubla/role/external: Extern
       jubla/role/alumnus: Ehemalig
@@ -150,26 +185,32 @@ de:
 
       group/state_professional_group/dispatch_address:
         one: Versandadresse
+        other: Versandadresse
         long: Versandadresse Fachgruppe
 
       group/state_board/dispatch_address:
         one: Versandadresse
+        other: Versandadresse
         long: Versandadresse Kantonsvorstand
 
       group/region/dispatch_address:
         one: Versandadresse
+        other: Versandadresse
         long: Versandadresse Region
 
       group/regional_board/dispatch_address:
         one: Versandadresse
+        other: Versandadresse
         long: Versandadresse Regionalleitung
 
       group/flock/dispatch_address:
         one: Versandadresse
+        other: Versandadresse
         long: Versandadresse Schar
 
       group/simple_group/dispatch_address:
         one: Versandadresse
+        other: Versandadresse
         long: Versandadresse Einfache Gruppe
 
 
