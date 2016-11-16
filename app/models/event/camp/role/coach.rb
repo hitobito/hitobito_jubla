@@ -18,7 +18,7 @@
 module Event::Camp::Role
   class Coach < ::Event::Role
 
-    self.permissions = [:contact_data]
+    self.permissions = [:participations_read, :contact_data]
 
     self.kind = nil
 
