@@ -48,7 +48,7 @@ class Group::StateBoard < Group
   end
 
   class Member < Jubla::Role::Member
-    self.permissions = [:group_read, :contact_data]
+    self.permissions = [:layer_and_below_read, :contact_data]
   end
 
   class President < Member
