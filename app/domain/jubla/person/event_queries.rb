@@ -14,7 +14,7 @@ module Jubla
         uptoamonthago.
         merge(::Event::Participation.active).
         joins(participations: :roles).
-        where(event_roles: {type: ['Event::Camp::Role::Coach', 'Event::Role::AssistantLeader']}).
+        where(event_roles: {type: ['Event::Camp::Role::Coach', 'Event::Course::Role::Advisor']}).
         uniq.
         includes(:groups).
         preload_all_dates.
