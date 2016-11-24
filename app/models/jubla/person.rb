@@ -16,4 +16,10 @@ module Jubla::Person
   def canton
     self[:canton].presence || super
   end
+
+  def signed_in?(entry, person, event_id)
+    entry.participations.where(person_id: person.id,
+                        event_id: event_id).any?
+  end
+
 end

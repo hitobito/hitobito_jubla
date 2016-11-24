@@ -26,8 +26,10 @@ module HitobitoJubla
       Role.send :include, Jubla::Role
       Person.send :include, Jubla::Person
       Subscription.send :include, Jubla::Subscription
+      Event.send :include, Jubla::Event
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
+      Event.used_attributes += [:signout_active]
 
       ### abilities
       EventAbility.send :include, Jubla::EventAbility
@@ -66,6 +68,7 @@ module HitobitoJubla
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
       Event::Camp::KindsController # load before Event::KindsController
       Event::KindsController.permitted_attrs += [:j_s_label]
+      EventsController.permitted_attrs += [:signout_active]
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
@@ -85,6 +88,9 @@ module HitobitoJubla
       admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
       admin[:active_for] << 'event_camp_kinds'
       Sheet::Group.send :include, Jubla::Sheet::Group
+
+      ### mailers
+      Event::ParticipationMailer.send :include, Jubla::Event::ParticipationMailer
     end
 
     initializer 'jubla.add_settings' do |_app|

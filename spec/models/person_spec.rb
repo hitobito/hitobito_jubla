@@ -47,6 +47,20 @@ describe Person do
     expect(names).to match_array(['Jungwacht Bern', 'Jubla Innerroden'])
   end
 
+  context 'person has participation' do
+
+    let(:participant) { people(:top_leader) }
+    let(:participation) { Fabricate(:event_participation, person: participant) }
+    let(:user) { participant }
+    let(:event) { participation.event }
+    let(:group) { event.groups.first }
+    
+    it 'check for participation' do
+      expect(user.signed_in?(event,user,event.id)).to eq(true)
+    end
+
+  end
+
   def create(*roles)
     roles.map do |role_class, group|
       Fabricate(role_class.name, group: group, person: person)

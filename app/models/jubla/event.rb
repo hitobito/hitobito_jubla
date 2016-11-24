@@ -5,18 +5,12 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-module Jubla::Event::ParticipationAbility
+module Jubla::Event
   extend ActiveSupport::Concern
 
-  include Jubla::EventConstraints
-
   included do
-    on(Event::Participation) do
-      general(:update, :destroy).not_closed_or_admin
-      general(:create).at_least_one_group_not_deleted_and_not_closed_or_admin
+    class_attribute :signout_enabled
 
-      permission(:any).may(:destroy).her_own_if_application_possible
-    end
+    self.signout_enabled = true
   end
-
 end

@@ -7,16 +7,25 @@
 
 module Jubla::Event::ParticipationsController
   extend ActiveSupport::Concern
-
+  
   # both originating_state and originating_flock reference a group
   #
   # when associations are included in participation_filter AR uses
   # the groups table name for the first included association (flocks)
   # and aliases the table name for the second association (states)
   included do
+    after_destroy :send_signout_email
+
     sort_mappings_with_indifferent_access.
       merge!(originating_state: null_safe_sort('originating_states_people.name'),
              originating_flock: null_safe_sort('groups.name'))
-  end
 
+    def destroy
+      super(location: group_event_path(group, event))
+    end
+
+    def send_signout_email
+      EventParticipationSignoutJob.new(entry.event, entry.person).enqueue!
+    end
+  end
 end

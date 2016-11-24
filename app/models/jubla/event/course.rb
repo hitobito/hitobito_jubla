@@ -12,6 +12,9 @@ module Jubla::Event::Course
     include Event::RestrictedRole
     restricted_role :advisor, Event::Course::Role::Advisor
 
+    class_attribute :signout_enabled
+
+    self.signout_enabled = false
     self.used_attributes += [:advisor_id, :application_contact_id, :condition_id]
 
     ### ASSOCIATIONS
