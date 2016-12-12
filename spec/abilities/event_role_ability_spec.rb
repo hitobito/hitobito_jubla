@@ -8,25 +8,22 @@
 require 'spec_helper'
 
 describe EventAbility do
-  let(:user) { participation.person }
-  let(:event) { participation.event }
-  let(:participation) { Fabricate(:event_participation, application: Fabricate(:jubla_event_application)) }
 
-  before {  }
+  let(:user)  { Fabricate(:person) }
+  let(:event) { Fabricate(:jubla_course, advisor_id: user.id).reload }
 
   subject { Ability.new(user.reload) }
 
-  context :coach do
-    context Event do
-      it 'may read participants when coaching' do
-        # TODO fabricate an Event::Camp::Role::Coach and assert read permissions
-      end
+  context 'is coach' do
 
-      it 'may not read participants in other event' do
-        other = Fabricate(:event, groups: [groups(:no)])
-        is_expected.not_to be_able_to(:participations_read, other)
-      end
+    it 'may read participants when coaching' do
+      is_expected.to be_able_to(:index_participations, event)
     end
-  end
 
+    it 'may not read participants when not coaching' do
+      event = Fabricate(:jubla_course, advisor_id: '')
+      is_expected.not_to be_able_to(:index_participations, event)
+    end
+     
+  end
 end
