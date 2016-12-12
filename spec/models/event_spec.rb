@@ -7,13 +7,14 @@
 
 require 'spec_helper'
 
-describe Person::EventQueries do
+describe Event::Camp do
+
   let(:person) { participation.person }
   let(:event) { participation.event }
   let(:participation) { role.participation }
 
   context :coach do
-    let(:role) { Fabricate(:event_role, type: 'Event::Camp::Role::Coach' )}
+    let(:role) { Fabricate(:event_role, type: Event::Camp::Role::Coach.sti_name )}
 
     it 'can see event 20 days ago' do
       event.dates.first.update(finish_at: Time.now - 20.day)
@@ -29,7 +30,7 @@ describe Person::EventQueries do
   end
 
   context :assistant_leader do
-    let(:role) { Fabricate(:event_role, type: 'Event::Role::AssistantLeader' )}
+    let(:role) { Fabricate(:event_role, type: Event::Course::Role::Advisor.sti_name )}
 
     it 'can see event 20 days ago' do
       event.dates.first.update(finish_at: Time.now - 20.day)
