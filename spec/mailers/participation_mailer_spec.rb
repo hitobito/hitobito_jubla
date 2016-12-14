@@ -17,7 +17,7 @@ describe Jubla::Event::ParticipationMailer do
   let(:person) { people(:top_leader) }
   let(:event) { Fabricate(:event) }
   let(:participation) { Fabricate(:event_participation, event: event, person: person) }
-  let(:mail) { Event::ParticipationMailer.signout(event, person) }
+  let(:mail) { Event::ParticipationMailer.unparticipate(event, person) }
 
   subject { mail.body }
 
@@ -42,7 +42,7 @@ describe Jubla::Event::ParticipationMailer do
 
   end
 
-  describe '#signout' do
+  describe '#unparticipate' do
 
     it 'renders the headers' do
       expect(mail.subject).to eq 'Bestätigung der Abmeldung'

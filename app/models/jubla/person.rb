@@ -17,9 +17,8 @@ module Jubla::Person
     self[:canton].presence || super
   end
 
-  def signed_in?(entry, person, event_id)
-    entry.participations.where(person_id: person.id,
-                        event_id: event_id).any?
+  def participating_in?(event)
+    event_participations.where(event: event).any?
   end
 
 end

@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class EventParticipationSignoutJob < BaseJob
+class EventUnparticipationJob < BaseJob
 
   self.parameters = [:event_type, :event_id, :person_id]
   
@@ -16,7 +16,7 @@ class EventParticipationSignoutJob < BaseJob
   end
 
   def perform
-    Event::ParticipationMailer.signout(event, person).deliver_now
+    Event::ParticipationMailer.unparticipate(event, person).deliver_now
   end
 
   def event

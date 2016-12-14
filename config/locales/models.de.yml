@@ -283,7 +283,7 @@ de:
         application_contact: Anmeldung an
         application_contact_id: Anmeldung an
         remarks: Anmeldebemerkungen
-        signout_active: Abmeldung möglich
+        unparticipation_enabled: Abmeldung möglich
 
       event/course:
         condition: Kursbestimmungen
@@ -310,7 +310,6 @@ de:
 
       event/kind:
         j_s_label: J+S Bezeichnung
-        signout_active: Abmeldung
 
     errors:
       messages:

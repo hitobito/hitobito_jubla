@@ -1,14 +1,14 @@
 module Jubla::Event::ParticipationMailer
   extend ActiveSupport::Concern
 
-  CONTENT_SIGNOUT = 'event_application_signout'
+  CONTENT_UNPARTICIPATE = 'event_unparticipation'
 
-  def signout(event, person)
+  def unparticipate(event, person)
     @event = event
     @person = person
 
     custom_content_mail(@person,
-                        CONTENT_SIGNOUT,
+                        CONTENT_UNPARTICIPATE,
                         { 'recipient-name' => @person.greeting_name,
                           'event-details' => event_without_participation })
   end

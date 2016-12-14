@@ -9,8 +9,8 @@ module Jubla::Event
   extend ActiveSupport::Concern
 
   included do
-    class_attribute :signout_enabled
+    class_attribute :unparticipation_possible
 
-    self.signout_enabled = true
+    self.unparticipation_possible = true
   end
 end

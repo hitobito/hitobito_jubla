@@ -56,7 +56,7 @@ describe Person do
     let(:group) { event.groups.first }
     
     it 'check for participation' do
-      expect(user.signed_in?(event,user,event.id)).to eq(true)
+      expect(user.participating_in?(event.id)).to eq(true)
     end
 
   end

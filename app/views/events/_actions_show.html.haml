@@ -3,7 +3,7 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-- if current_user.signed_in?(entry, current_user, params[:id]) && entry.application_possible? && entry.event.signout_active
+- if current_user.participating_in?(entry) && entry.application_possible? && entry.unparticipation_enabled
   = render partial: 'banner_signed_in'
 - else
   = button_action_event_apply(entry, @group)

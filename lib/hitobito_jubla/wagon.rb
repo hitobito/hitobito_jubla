@@ -29,7 +29,7 @@ module HitobitoJubla
       Event.send :include, Jubla::Event
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
-      Event.used_attributes += [:signout_active]
+      Event.used_attributes += [:unparticipation_enabled]
 
       ### abilities
       EventAbility.send :include, Jubla::EventAbility
@@ -68,7 +68,7 @@ module HitobitoJubla
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
       Event::Camp::KindsController # load before Event::KindsController
       Event::KindsController.permitted_attrs += [:j_s_label]
-      EventsController.permitted_attrs += [:signout_active]
+      EventsController.permitted_attrs += [:unparticipation_enabled]
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController

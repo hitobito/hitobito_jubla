@@ -8,13 +8,14 @@
 module Jubla::ActionHelper
   extend ::ActionHelper
 
-  def button_action_signout( options={} )
-    path = group_event_participation_path(params[:group_id], entry.id, 
-            entry.participations.where(person_id: current_user.id, 
-            event_id: params[:id]).first.id )
-    options[:data] = { confirm: ti(:confirm_signout),
+  def action_button_unparticipate( options={} )
+    participation = entry.participations.where(person: current_user).first
+    path = group_event_participation_path(parent,
+                                          entry,
+                                          participation)
+    options[:data] = { confirm: t('event.participations.unparticipate.confirm_unparticipation'),
                        method: :delete }
-    action_button ti(:"link.signout"), path, 'trash', options
+    action_button t('event.participations.unparticipate.unparticipate'), path, 'trash', options
   end
 
 end

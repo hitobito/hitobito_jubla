@@ -3,6 +3,6 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito.
 
-%div{:class => "alert alert-success signout-flash"}
-  %p= t("event.participations.signout.explanation")
-  = button_action_signout
+.alert.alert-success.unparticipate-flash
+  %p= t("event.participations.unparticipate.explanation")
+  = action_button_unparticipate
