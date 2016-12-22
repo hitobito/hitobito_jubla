@@ -6,13 +6,14 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
+require_relative '../support/fabrication.rb'
 
 describe EventAbility do
 
-  let(:user)  { Fabricate(:person) }
-  let(:event) { Fabricate(:jubla_course, advisor_id: user.id).reload }
+  let(:person)  { Fabricate(:person) }
+  let(:event)   { Fabricate(:camp, coach_id: person.id).reload }
 
-  subject { Ability.new(user.reload) }
+  subject { Ability.new(person.reload) }
 
   context 'is coach' do
 
@@ -21,7 +22,7 @@ describe EventAbility do
     end
 
     it 'may not read participants when not coaching' do
-      event = Fabricate(:jubla_course, advisor_id: '')
+      event = Fabricate(:camp, coach_id: '')
       is_expected.not_to be_able_to(:index_participations, event)
     end
      
