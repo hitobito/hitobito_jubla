@@ -7,41 +7,22 @@
 
 require 'spec_helper'
 
-describe Event::Camp do
+describe Event do
 
-  let(:person) { participation.person }
-  let(:event) { participation.event }
-  let(:participation) { role.participation }
+  let(:event)   { Fabricate(:jubla_course) }
 
-  context :coach do
-    let(:role) { Fabricate(:event_role, type: Event::Camp::Role::Coach.sti_name )}
+  context '#up_to_a_month_ago' do
 
-    it 'can see event 20 days ago' do
+    it 'find event 20 days ago' do
       event.dates.first.update(finish_at: Time.now - 20.day)
-      p = PersonDecorator.new(person)
-      expect(p.coached_events.count).to eq(1)
+      expect(::Event.up_to_a_month_ago.count).to eq(1)
     end
 
-    it 'can not see event 40 days ago' do
+    it 'not find event 40 days ago' do
       event.dates.first.update(finish_at: Time.now - 40.day)
-      p = PersonDecorator.new(person)
-      expect(p.coached_events.count).to eq(0)
+      expect(::Event.up_to_a_month_ago.count).to eq(0)
     end
+
   end
 
-  context :assistant_leader do
-    let(:role) { Fabricate(:event_role, type: Event::Course::Role::Advisor.sti_name )}
-
-    it 'can see event 20 days ago' do
-      event.dates.first.update(finish_at: Time.now - 20.day)
-      p = PersonDecorator.new(person)
-      expect(p.coached_events.count).to eq(1)
-    end
-
-    it 'can not see event 40 days ago' do
-      event.dates.first.update(finish_at: Time.now - 40.day)
-      p = PersonDecorator.new(person)
-      expect(p.coached_events.count).to eq(0)
-    end
-  end
 end
