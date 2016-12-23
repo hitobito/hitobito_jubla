@@ -17,8 +17,4 @@ module Jubla::Person
     self[:canton].presence || super
   end
 
-  def participating_in?(event)
-    event_participations.where(event: event).any?
-  end
-
 end

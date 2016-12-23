@@ -3,9 +3,6 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito_jubla.
 
-- if entry.object.class.unparticipation_possible
-  = f.labeled_boolean_field(:unparticipation_enabled,
-                            caption: t('events.form.caption_unparticipate_active'))
 
 - entry.used?(:application_contact_id) do
   - if entry.multiple_contact_groups?

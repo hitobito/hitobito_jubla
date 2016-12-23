@@ -13,9 +13,6 @@ CustomContent.seed_once(:key,
   {key: CensusMailer::CONTENT_REMINDER,
    placeholders_optional: 'recipient-names, due-date, contact-address, census-url'},
 
-  {key: Jubla::Event::ParticipationMailer::CONTENT_UNPARTICIPATE,
-   placeholders_required: 'event-details, application-url',
-   placeholders_optional: 'recipient-name'}
 )
 
 CustomContent::Translation.seed_once(:custom_content_id, :locale,
@@ -31,11 +28,4 @@ CustomContent::Translation.seed_once(:custom_content_id, :locale,
    subject: 'Bestandesmeldung ausfüllen!',
    body: "Hallo {recipient-names}<br/><br/>Wir bitten dich, den Bestand deiner Gruppe zu aktualisieren und die Bestandesmeldung bis am {due-date} zu bestätigen:<br/><br/>{census-url}<br/><br/>Vielen Dank für deine Mithilfe. Bei Fragen kannst du dich an die folgende Adresse wenden:<br/><br/>{contact-address}<br/><br/>Deine Jubla"},
   
-  {custom_content_id: CustomContent.where(key: Jubla::Event::ParticipationMailer::CONTENT_UNPARTICIPATE).first.id,
-   locale: 'de',
-   label: 'Anlass: E-Mail Abmeldebestätigung',
-   subject: 'Bestätigung der Abmeldung',
-   body: "Hallo {recipient-name}<br/><br/>" \
-         "Du hast dich für folgenden Anlass abgemeldet:<br/><br/>" \
-         "{event-details}<br/><br/>"}
 )

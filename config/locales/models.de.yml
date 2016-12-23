@@ -283,7 +283,6 @@ de:
         application_contact: Anmeldung an
         application_contact_id: Anmeldung an
         remarks: Anmeldebemerkungen
-        unparticipation_enabled: Abmeldung möglich
 
       event/course:
         condition: Kursbestimmungen

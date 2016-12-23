@@ -23,15 +23,10 @@ de:
         heading_event/camp: Lageranmeldung
         requirements_for_event_camp: Voraussetzungen für das Lager
         read_and_agreed_for_event_camp: Ich erfülle die Voraussetzungen für das Lager, habe die Lagerbeschreibung gelesen und bin damit einverstanden.
-      unparticipate:
-        explanation: Du bist für diesen Anlass angemeldet
-        unparticipate: Abmelden
-        confirm_unparticipation: Sind Sie sicher, dass Sie sich abmelden möchten?
-
+  
   events:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
-      caption_unparticipate_active: Die Teilnehmer können sich wieder abmelden
     application_fields_jubla:
       remarks_default_text: "Wichtig: Zur Bestätigung deiner Online-Anmeldung schickst du dieses Formular (Seite 1)
         mit den erforderlichen Unterschriften und Beilagen an die Anmeldeadresse. Die weiteren Seiten enthalten
