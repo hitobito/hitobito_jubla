@@ -50,8 +50,7 @@ class Event::Camp < Event
   require_dependency 'event/camp/role/coach'
   require_dependency 'event/camp/kind'
   require_dependency 'event/camp/kinds_controller'
-
-
+  
   self.used_attributes += [:number, :coach_id, :kind_id]
 
   self.kind_class = Event::Camp::Kind

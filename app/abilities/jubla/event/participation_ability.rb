@@ -14,6 +14,8 @@ module Jubla::Event::ParticipationAbility
     on(Event::Participation) do
       general(:update, :destroy).not_closed_or_admin
       general(:create).at_least_one_group_not_deleted_and_not_closed_or_admin
+
+      permission(:any).may(:destroy).her_own_if_application_possible
     end
   end
 

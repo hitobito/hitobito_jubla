@@ -4,6 +4,10 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 de:
+  global:
+    link:
+    
+
   event:
     lists:
       popover_bsv_export:
@@ -19,7 +23,7 @@ de:
         heading_event/camp: Lageranmeldung
         requirements_for_event_camp: Voraussetzungen für das Lager
         read_and_agreed_for_event_camp: Ich erfülle die Voraussetzungen für das Lager, habe die Lagerbeschreibung gelesen und bin damit einverstanden.
-
+  
   events:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
@@ -50,3 +54,7 @@ de:
   people:
     fields_jubla:
       help_canton: Wird aus der PLZ berechnet falls leer.
+
+  kinds:
+    form:
+      signout_is_possible: Abmeldungen können aktiviert werden
