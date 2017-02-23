@@ -13,8 +13,9 @@ module Jubla::Event
     def up_to_a_month_ago
       midnight = Time.zone.now.midnight
       joins(:dates).
-      where('event_dates.start_at >= ? OR event_dates.finish_at >= ?', 
-            midnight - 1.month, midnight - 1.month)
+      where('event_dates.start_at >= ? OR event_dates.finish_at >= ?',
+            midnight - 1.month,
+            midnight - 1.month)
     end
 
   end

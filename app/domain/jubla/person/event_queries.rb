@@ -14,8 +14,8 @@ module Jubla
         up_to_a_month_ago.
         merge(::Event::Participation.active).
         joins(participations: :roles).
-        where(event_roles: {type: [ ::Event::Camp::Role::Coach.sti_name, 
-                                    ::Event::Course::Role::Advisor.sti_name ]}).
+        where(event_roles: { type: [::Event::Camp::Role::Coach.sti_name,
+                                    ::Event::Course::Role::Advisor.sti_name] }).
         uniq.
         includes(:groups).
         preload_all_dates.
