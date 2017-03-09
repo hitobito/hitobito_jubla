@@ -28,7 +28,7 @@ describe Event::Camp::KindsController, type: :controller do
   describe_action :get, :index do
     it 'main menu admin is active' do
       dom = Capybara::Node::Simple.new(response.body)
-      item = dom.find('body nav ul.nav li', text: 'Admin')
+      item = dom.find('body nav ul.nav li', text: 'Einstellungen')
       expect(item[:class]).to eq('active')
     end
   end
