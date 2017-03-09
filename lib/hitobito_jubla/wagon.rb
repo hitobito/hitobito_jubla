@@ -26,6 +26,7 @@ module HitobitoJubla
       Role.send :include, Jubla::Role
       Person.send :include, Jubla::Person
       Subscription.send :include, Jubla::Subscription
+      Event.send :include, Jubla::Event
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
 
@@ -45,6 +46,7 @@ module HitobitoJubla
 
       # domain
       Bsv::Info.send :include, Jubla::Bsv::Info
+      Person::EventQueries.send :include, Jubla::Person::EventQueries
 
       Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
       Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
