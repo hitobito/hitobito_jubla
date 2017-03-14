@@ -12,3 +12,4 @@ AllCops:
     - spec/**/*
     - test/**/*
     - lib/jubla_ost/**/*
+    - vendor/**/*
