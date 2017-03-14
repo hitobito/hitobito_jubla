@@ -101,6 +101,10 @@ module Jubla::Export::Pdf
         requirements.any?(&:present?)
       end
 
+      def event_with_kind?
+        super && !event.kind.is_a?(Event::Camp::Kind)
+      end
+
     end
 
     class GeneralInformation < Export::Pdf::Participation::GeneralInformation
