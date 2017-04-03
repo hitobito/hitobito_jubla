@@ -6,15 +6,14 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 
-module Export::Csv
-  class CensusFlock < Export::Csv::Base
+module Export::Tabular
+  class CensusFlock < Export::Tabular::Base
 
-    class Row < Export::Csv::Row
+    class Row < Export::Tabular::Row
       def value_for(attr)
         entry.fetch(attr)
       end
     end
-
 
     self.model_class = Group::Flock
     self.row_class = Row

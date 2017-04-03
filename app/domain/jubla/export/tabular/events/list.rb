@@ -6,8 +6,9 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 
-module Jubla::Export::Csv::Events
+module Jubla::Export::Tabular::Events
   module List
+
     extend ActiveSupport::Concern
 
     included do
@@ -32,5 +33,6 @@ module Jubla::Export::Csv::Events
     def translated_prefix_with_advisor(prefix)
       prefix == :advisor ? 'LKB' : translated_prefix_without_advisor(prefix)
     end
+
   end
 end

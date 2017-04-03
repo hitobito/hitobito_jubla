@@ -587,7 +587,7 @@ describe EventAbility do
       event = Fabricate(:camp, coach_id: '')
       is_expected.not_to be_able_to(:index_participations, event)
     end
-     
+
   end
 
 end

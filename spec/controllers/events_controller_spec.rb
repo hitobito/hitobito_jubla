@@ -67,13 +67,13 @@ describe EventsController do
       let(:coach) { Person.last }
 
       it 'creates new event camp with dates,coach' do
-        post :create, event: {  group_ids: [group.id],
-                                name: 'foo',
-                                kind_id: Event::Kind.where(short_name: 'SLK').first.id,
-                                dates_attributes: [date],
-                                contact_id: contact.id,
-                                coach_id: coach.id,
-                                type: 'Event::Camp' },
+        post :create, event: { group_ids: [group.id],
+                               name: 'foo',
+                               kind_id: Event::Kind.where(short_name: 'SLK').first.id,
+                               dates_attributes: [date],
+                               contact_id: contact.id,
+                               coach_id: coach.id,
+                               type: 'Event::Camp' },
                       group_id: group.id
 
 
@@ -99,8 +99,8 @@ describe EventsController do
         # assign flock coach
         Fabricate(:role, group: flock, type: 'Group::Flock::Coach', person: coach)
 
-        get :new, event: {  group_ids: [flock.id],
-                            type: 'Event::Camp' },
+        get :new, event: { group_ids: [flock.id],
+                           type: 'Event::Camp' },
                   group_id: flock.id
 
         event = assigns(:event)
@@ -109,8 +109,8 @@ describe EventsController do
 
       it '#new event camp it should NOT set default coach' do
         # no flock coach assigned
-        get :new, event: {  group_ids: [flock.id],
-                            type: 'Event::Camp' },
+        get :new, event: { group_ids: [flock.id],
+                           type: 'Event::Camp' },
                   group_id: flock.id
 
         event = assigns(:event)

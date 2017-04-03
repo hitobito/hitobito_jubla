@@ -48,13 +48,14 @@ module HitobitoJubla
       Bsv::Info.send :include, Jubla::Bsv::Info
       Person::EventQueries.send :include, Jubla::Person::EventQueries
 
-      Export::Csv::Events::List.send :include, Jubla::Export::Csv::Events::List
-      Export::Csv::Events::Row.send :include, Jubla::Export::Csv::Events::Row
-      Export::Csv::People::PersonRow.send :include, Jubla::Export::Csv::People::OriginatingGroups
-      Export::Csv::People::ParticipationRow.send(
-        :include, Jubla::Export::Csv::People::OriginatingGroups)
-      Export::Csv::Events::BsvList.send :include, Jubla::Export::Csv::Events::BsvList
-      Export::Csv::Events::BsvRow.send :include, Jubla::Export::Csv::Events::BsvRow
+      Export::Tabular::Events::List.send :include, Jubla::Export::Tabular::Events::List
+      Export::Tabular::Events::Row.send :include, Jubla::Export::Tabular::Events::Row
+      Export::Tabular::People::PersonRow.send(
+        :include, Jubla::Export::Tabular::People::OriginatingGroups)
+      Export::Tabular::People::ParticipationRow.send(
+        :include, Jubla::Export::Tabular::People::OriginatingGroups)
+      Export::Tabular::Events::BsvList.send :include, Jubla::Export::Tabular::Events::BsvList
+      Export::Tabular::Events::BsvRow.send :include, Jubla::Export::Tabular::Events::BsvRow
 
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner

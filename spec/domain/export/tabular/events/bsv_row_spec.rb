@@ -7,10 +7,10 @@
 
 require 'spec_helper'
 
-describe Export::Csv::Events::BsvRow do
+describe Export::Tabular::Events::BsvRow do
   let(:course) { events(:top_course) }
   let(:participant) { people(:flock_leader_bern) }
-  let(:info) { Export::Csv::Events::BsvRow.new(course.reload) }
+  let(:info) { Export::Tabular::Events::BsvRow.new(course.reload) }
 
   def create_participation(*role_types)
     roles = role_types.map { |type| Fabricate(:event_role, type: type.name) }

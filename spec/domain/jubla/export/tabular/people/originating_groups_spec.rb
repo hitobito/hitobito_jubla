@@ -1,13 +1,20 @@
+# encoding: utf-8
+
+#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla.
+
 require 'spec_helper'
 
-describe Jubla::Export::Csv::People::OriginatingGroups do
+describe Jubla::Export::Tabular::People::OriginatingGroups do
 
   let(:person) { people(:top_leader) }
   before { person.update_attributes(originating_flock: groups(:bern),
                                     originating_state: groups(:be)) }
 
-  context Export::Csv::People::PersonRow do
-    let(:row) { Export::Csv::People::PersonRow.new(person.reload) }
+  context Export::Tabular::People::PersonRow do
+    let(:row) { Export::Tabular::People::PersonRow.new(person.reload) }
 
     it 'includes originating flock and state name' do
       expect(row.originating_flock_id).to eq 'Jungwacht Bern'
@@ -15,8 +22,8 @@ describe Jubla::Export::Csv::People::OriginatingGroups do
     end
   end
 
-  context Export::Csv::People::ParticipationRow do
-    let(:row) { Export::Csv::People::ParticipationRow.new(participation) }
+  context Export::Tabular::People::ParticipationRow do
+    let(:row) { Export::Tabular::People::ParticipationRow.new(participation) }
     let(:participation) { Fabricate(:event_participation, person: person) }
 
     it 'includes originating flock and state name' do

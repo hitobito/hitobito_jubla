@@ -5,8 +5,9 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-module Jubla::Export::Csv::Events
+module Jubla::Export::Tabular::Events
   module BsvList
+
     extend ActiveSupport::Concern
 
     included do
