@@ -18,16 +18,12 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
       end
       format.csv do
         authorize!(:create, Census)
-        send_data csv, type: :csv
+        send_data Export::Tabular::CensusFlock.csv(year), type: :csv
       end
     end
   end
 
   private
-
-  def csv
-    Export::Csv::Generator.new(Export::Csv::CensusFlock.new(year)).csv
-  end
 
   def flock_confirmation_ratios
     @sub_groups.inject({}) do |hash, state|

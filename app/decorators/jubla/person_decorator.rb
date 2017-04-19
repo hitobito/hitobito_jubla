@@ -20,6 +20,10 @@ module Jubla::PersonDecorator
     end
   end
 
+  def coached_events
+    @coached_events ||= EventDecorator.decorate_collection(event_queries.coached_events)
+  end
+
   private
 
   def roles_array

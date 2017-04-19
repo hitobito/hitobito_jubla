@@ -13,7 +13,7 @@ module Jubla::EventDecorator
   end
 
   def labeled_bsv_attr(key)
-    h.labeled(Export::Csv::Events::BsvList.new([]).attribute_labels.fetch(key), bsv_field(key))
+    h.labeled(Export::Tabular::Events::BsvList.new([]).attribute_labels.fetch(key), bsv_field(key))
   end
 
   def remarks_with_default(default)

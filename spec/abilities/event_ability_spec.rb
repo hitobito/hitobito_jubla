@@ -572,4 +572,22 @@ describe EventAbility do
     end
   end
 
+  context 'Coach' do
+
+    let(:person)  { Fabricate(:person) }
+    let(:event)   { Fabricate(:camp, coach_id: person.id).reload }
+
+    subject { Ability.new(person.reload) }
+
+    it 'may read participants when coaching' do
+      is_expected.to be_able_to(:index_participations, event)
+    end
+
+    it 'may not read participants when not coaching' do
+      event = Fabricate(:camp, coach_id: '')
+      is_expected.not_to be_able_to(:index_participations, event)
+    end
+
+  end
+
 end

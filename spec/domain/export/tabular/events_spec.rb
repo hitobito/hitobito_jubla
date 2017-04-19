@@ -7,7 +7,7 @@
 
 require 'spec_helper'
 
-describe Export::Csv::Events do
+describe Export::Tabular::Events do
 
   let(:person) { Fabricate.build(:person_with_address_and_phone, j_s_number: 123) }
   let(:advisor) { Fabricate(:person_with_address_and_phone, j_s_number: 123) }
@@ -19,10 +19,10 @@ describe Export::Csv::Events do
     [:name, :address, :zip_code, :town, :email, :phone_numbers, :j_s_number]
   end
 
-  context Export::Csv::Events::List do
+  context Export::Tabular::Events::List do
 
     context 'used labels' do
-      let(:list) { Export::Csv::Events::List.new(double('courses', map: [], first: nil)) }
+      let(:list) { Export::Tabular::Events::List.new(double('courses', map: [], first: nil)) }
       subject { list.attribute_labels }
 
       its(:keys) do
@@ -40,8 +40,8 @@ describe Export::Csv::Events do
         Fabricate(:jubla_course, groups: [groups(:ch)], location: 'somewhere',
                   state: 'created')
       end
-      let(:list)  { Export::Csv::Events::List.new(Event::Course.where(id: course)) }
-      let(:csv) { Export::Csv::Generator.new(list).csv.split("\n")  }
+      let(:list)  { Export::Tabular::Events::List.new(Event::Course.where(id: course)) }
+      let(:csv) { Export::Csv::Generator.new(list).call.split("\n")  }
       subject { csv.second.split(';') }
 
       # This tests the case where Event.possible_states is non-empty,
@@ -50,11 +50,11 @@ describe Export::Csv::Events do
     end
   end
 
-  context Export::Csv::Events::Row do
+  context Export::Tabular::Events::Row do
     let(:list) { OpenStruct.new(max_dates: 3, contactable_keys: contactable_keys) }
 
     context Event::Course do
-      let(:row) { Export::Csv::Events::Row.new(course, {}, {}) }
+      let(:row) { Export::Tabular::Events::Row.new(course, nil, {}, {}) }
 
       it { expect(row.fetch(:state)).to eq 'Offen zur Anmeldung' }
       it { expect(row.fetch(:contact_j_s_number)).to eq '123' }
@@ -64,7 +64,7 @@ describe Export::Csv::Events do
 
     # Regression for #10969, test export with simple Event too
     context Event do
-      let(:row) { Export::Csv::Events::Row.new(event, {}, {}) }
+      let(:row) { Export::Tabular::Events::Row.new(event, nil, {}, {}) }
 
       it { expect(row.fetch(:advisor_name)).to be_nil }
       it { expect(row.fetch(:advisor_j_s_number)).to be_nil }

@@ -10,6 +10,10 @@
 
 - if check_approveable?
   - if @people_data_complete
-    = action_button('Bestand bestätigen', group_member_counts_path(@group), nil, method: :post)
+    = action_button('Bestand bestätigen',
+                    group_member_counts_path(@group),
+                    nil,
+                    method: :post,
+                    data: { disable_with: 'Bestand bestätigen' })
   - else
     %p.alert Um den Bestand bestätigen zu können, muss bei allen Mitgliedern das Geburtsdatum und das Geschlecht ausgefüllt sein.

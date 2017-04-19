@@ -5,8 +5,9 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-module Jubla::Export::Csv::Events
+module Jubla::Export::Tabular::Events
   module Row
+
     extend ActiveSupport::Concern
 
     included do
@@ -17,5 +18,6 @@ module Jubla::Export::Csv::Events
       # Only Event::Course provides restricted advisor role
       entry.try(:advisor)
     end
+
   end
 end
