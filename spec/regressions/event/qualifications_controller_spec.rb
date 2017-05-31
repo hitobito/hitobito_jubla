@@ -49,14 +49,9 @@ describe Event::QualificationsController, type: :controller do
 
       it { is_expected.to have(2).items }
 
-      it 'should have links' do
-        expect(dom.find("#event_participation_#{participant_1.id} td.issue")).to have_selector('a')
-        expect(dom.find("#event_participation_#{participant_1.id} td.revoke")).to have_selector('a')
-      end
-
-      it 'should have icons' do
-        expect(dom.find("#event_participation_#{participant_1.id} td.issue")).to have_selector('.icon-ok.disabled')
-        expect(dom.find("#event_participation_#{participant_1.id} td.revoke")).to have_selector('.icon-remove.disabled')
+      it 'should have enabled checkboxes' do
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector('input[type=checkbox]')
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_no_selector('input[type=checkbox][disabled]')
       end
 
       it 'should not have message' do
@@ -72,69 +67,63 @@ describe Event::QualificationsController, type: :controller do
 
       it { is_expected.to have(2).items }
 
-      it 'should not have links' do
-        expect(dom).not_to have_selector("#event_participation_#{participant_1.id} td:first a")
-      end
-
       it 'should have message' do
         expect(dom).to have_content('können die Qualifikationen nicht mehr bearbeitet werden')
       end
 
-      it 'should have icons' do
-        expect(dom).to have_selector("#event_participation_#{participant_1.id} td:first .icon-remove")
+      it 'should have disabled checkboxes' do
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector('input[type=checkbox][disabled]')
       end
+
     end
   end
 
   describe 'PUT update' do
-    context 'in open state' do
-      before { put :update, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
+    context 'adding' do
+      context 'in open state' do
+        before { put :update, group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] }
 
-      subject { obtained_qualifications }
+        subject { obtained_qualifications }
 
-      it { is_expected.to have(1).item }
-      it { is_expected.to render_template('qualification') }
+        it { is_expected.to have(1).item }
+      end
+
+      context 'in closed state' do
+        before { event.update_column(:state, 'closed') }
+        before { put :update, group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] }
+
+        subject { obtained_qualifications }
+
+        it { is_expected.to have(0).items }
+      end
     end
 
-    context 'in closed state' do
-      before { event.update_column(:state, 'closed') }
-      before { put :update, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
+    context 'removing' do
+      before do
+        id = event.kind.event_kind_qualification_kinds.first.qualification_kind_id
+        participant_1.person.qualifications.create!(qualification_kind_id: id,
+                                                    start_at: event.qualification_date)
+      end
 
-      subject { obtained_qualifications }
+      context 'in open state' do
+        before { put :update, group_id: group.id, event_id: event.id }
 
-      it { is_expected.to have(0).items }
-      it { is_expected.to render_template('qualification') }
+        subject { obtained_qualifications }
+
+        it { is_expected.to have(0).item }
+      end
+
+      context 'in closed state' do
+        before { event.update_column(:state, 'closed') }
+        before { put :update, group_id: group.id, event_id: event.id, participation_ids: [] }
+
+        subject { obtained_qualifications }
+
+        it { is_expected.to have(1).items }
+      end
+
     end
   end
-
-  describe 'DELETE destroy' do
-    before do
-      id = event.kind.event_kind_qualification_kinds.first.qualification_kind_id
-      participant_1.person.qualifications.create!(qualification_kind_id: id,
-                                                  start_at: event.qualification_date)
-    end
-
-    context 'in open state' do
-      before { delete :destroy, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
-
-      subject { obtained_qualifications }
-
-      it { is_expected.to have(0).item }
-      it { is_expected.to render_template('qualification') }
-    end
-
-    context 'in closed state' do
-      before { event.update_column(:state, 'closed') }
-      before { delete :destroy, group_id: group.id, event_id: event.id, id: participant_1.id, format: :js }
-
-      subject { obtained_qualifications }
-
-      it { is_expected.to have(1).items }
-      it { is_expected.to render_template('qualification') }
-    end
-
-  end
-
 
   def obtained_qualifications
     q = Event::Qualifier.for(participant_1)
