@@ -68,6 +68,16 @@ module Jubla::Export::Pdf
         move_down_line
       end
 
+      def contact_address
+        [contact.respond_to?(:company_name) && contact.company_name,
+         contact.to_s,
+         contact.address.present? && contact.address.split("\n"),
+         "#{contact.zip_code} #{contact.town}".strip]
+          .flatten
+          .select { |v| v.present? }
+          .join(', ')
+      end
+
     end
 
     class EventDetails < Export::Pdf::Participation::EventDetails
