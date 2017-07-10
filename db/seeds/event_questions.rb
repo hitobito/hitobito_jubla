@@ -13,7 +13,7 @@ Event::Question.seed(:event_id, :question,
   {question: 'Ich habe während dem Kurs folgendes ÖV Abo',
    choices: 'GA, Halbtax / unter 16, keine Vergünstigung'},
 
-  {question: 'Ich bin Vegetarier',
+  {question: 'Ich bin Vegetarier/in',
    choices: 'ja, nein'},
 
   {question: 'Ich habe bereits das neue Kurshilfsmittel «schub» (Auflage 2016)',
