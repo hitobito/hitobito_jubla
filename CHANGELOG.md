@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## Version 1.X
+
+* Neuer Gruppentyp Ehemalige
+
 ## Version 1.10
 
 * Scharnamen enthalten bei der Anzeige von Rollen immer auch die Art (Jungwacht/Blauring/Jubla).

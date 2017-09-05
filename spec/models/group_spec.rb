@@ -15,7 +15,7 @@ describe Group do
   describe Group::Federation do
     subject { Group::Federation }
 
-    it { is_expected.to have(6).possible_children }
+    it { is_expected.to have(7).possible_children }
     it { is_expected.to have(2).default_children }
     it { is_expected.to have(4).role_types }
     it { is_expected.to be_layer }
@@ -26,7 +26,7 @@ describe Group do
   describe Group::Flock do
     subject { Group::Flock }
 
-    it { is_expected.to have(2).possible_children }
+    it { is_expected.to have(3).possible_children }
     it { is_expected.to have(0).default_children }
     it { is_expected.to have(11).role_types }
     it { is_expected.to be_layer }

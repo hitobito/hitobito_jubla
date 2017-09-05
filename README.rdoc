@@ -42,6 +42,13 @@ Additional features include member census, camps and course conditions.
     * Ehemalig: [:group_read]
     * Extern: []
     * Versandadresse: []
+  * Ehemalige
+    * Leitung: [:group_and_below_full, :contact_data]
+    * Versandadresse: [:group_and_below_full]
+    * Kassier/in: [:group_and_below_read]
+    * Mitglied: [:group_read]
+    * Extern: []
+    * Versandadresse: []
 * Kanton
   * Kanton
     * Coach: [:contact_data, :group_read]
@@ -78,6 +85,13 @@ Additional features include member census, camps and course conditions.
     * Ehemalig: [:group_read]
     * Extern: []
     * Versandadresse: []
+  * Ehemalige
+    * Leitung: [:group_and_below_full, :contact_data]
+    * Versandadresse: [:group_and_below_full]
+    * Kassier/in: [:group_and_below_read]
+    * Mitglied: [:group_read]
+    * Extern: []
+    * Versandadresse: []
 * Region
   * Region
     * Coach: [:contact_data, :group_read]
@@ -107,6 +121,13 @@ Additional features include member census, camps and course conditions.
     * Ehemalig: [:group_read]
     * Extern: []
     * Versandadresse: []
+  * Ehemalige
+    * Leitung: [:group_and_below_full, :contact_data]
+    * Versandadresse: [:group_and_below_full]
+    * Kassier/in: [:group_and_below_read]
+    * Mitglied: [:group_read]
+    * Extern: []
+    * Versandadresse: []
 * Schar
   * Schar
     * Scharleitung: [:layer_and_below_full, :contact_data, :approve_applications]
@@ -125,6 +146,13 @@ Additional features include member census, camps and course conditions.
     * Ehemalig: [:group_read]
     * Extern: []
     * Versandadresse: []
+  * Ehemalige
+    * Leitung: [:group_and_below_full, :contact_data]
+    * Versandadresse: [:group_and_below_full]
+    * Kassier/in: [:group_and_below_read]
+    * Mitglied: [:group_read]
+    * Extern: []
+    * Versandadresse: []
 * Global
   * Einfache Gruppe
     * Leitung: [:group_full]
@@ -133,5 +161,5 @@ Additional features include member census, camps and course conditions.
     * Ehemalig: [:group_read]
     * Extern: []
     * Versandadresse: []
-         
+
 (Output of rake app:hitobito:roles)

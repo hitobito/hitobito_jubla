@@ -40,24 +40,25 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-# Ebene Region
-class Group::Region < Group
+# Ehemalige
+class Group::AlumnusGroup < Group
 
-  self.layer = true
-  self.default_children = [Group::RegionalBoard]
+  children Group::AlumnusGroup
 
-  self.used_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                           :jubla_full_coverage]
-  self.superior_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                               :jubla_full_coverage]
-
-  class Coach < Jubla::Role::Coach
+  class Leader < Jubla::Role::Leader
+    self.permissions = [:group_and_below_full, :contact_data]
   end
 
-  class GroupAdmin < Jubla::Role::GroupAdmin
+  class GroupAdmin < Jubla::Role::DispatchAddress
+    self.permissions = [:group_and_below_full]
   end
 
-  class Alumnus < Jubla::Role::Alumnus
+  class Treasurer < Jubla::Role::Treasurer
+    self.permissions = [:group_and_below_read]
+  end
+
+  class Member < Jubla::Role::Member
+    self.permissions = [:group_read]
   end
 
   class External < Jubla::Role::External
@@ -65,13 +66,5 @@ class Group::Region < Group
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
-
-  roles Coach, GroupAdmin, Alumnus, External, DispatchAddress
-
-  children Group::RegionalBoard,
-           Group::RegionalProfessionalGroup,
-           Group::RegionalWorkGroup,
-           Group::Flock,
-           Group::RegionalAlumnusGroup
 
 end

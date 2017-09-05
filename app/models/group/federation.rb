@@ -35,7 +35,7 @@
 #
 
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -52,7 +52,8 @@ class Group::Federation < Group
            Group::OrganizationBoard,
            Group::FederalProfessionalGroup,
            Group::FederalWorkGroup,
-           Group::State
+           Group::State,
+           Group::FederalAlumnusGroup
 
   def census_total(year)
     MemberCount.total_for_federation(year)
