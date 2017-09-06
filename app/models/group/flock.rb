@@ -46,6 +46,7 @@ class Group::Flock < Group
   include RestrictedRole
 
   self.layer = true
+  self.default_children = [Group::FlockAlumnusGroup]
   self.event_types = [Event, Event::Camp]
 
   children Group::ChildGroup,

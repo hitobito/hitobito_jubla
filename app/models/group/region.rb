@@ -44,7 +44,7 @@
 class Group::Region < Group
 
   self.layer = true
-  self.default_children = [Group::RegionalBoard]
+  self.default_children = [Group::RegionalBoard, Group::RegionalAlumnusGroup]
 
   self.used_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
                            :jubla_full_coverage]

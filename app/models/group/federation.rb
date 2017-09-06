@@ -44,7 +44,8 @@
 class Group::Federation < Group
 
   self.layer = true
-  self.default_children = [Group::FederalBoard, Group::OrganizationBoard]
+  self.default_children = [Group::FederalBoard, Group::OrganizationBoard,
+                           Group::FederalAlumnusGroup]
   self.contact_group_type = Group::FederalBoard
   self.event_types = [Event, Event::Course]
 
