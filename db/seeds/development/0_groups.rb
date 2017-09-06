@@ -14,7 +14,9 @@ seeder = GroupSeeder.new
 
 ch = Group.roots.first
 unless ch.address.present?
-  ch.update_attributes(seeder.group_attributes)
+  # avoid callbacks to prevent creating default groups twice
+  ch.update_columns(seeder.group_attributes)
+
   ch.default_children.each do |child_class|
     child_class.first.update_attributes(seeder.group_attributes)
   end
