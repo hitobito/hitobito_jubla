@@ -45,6 +45,11 @@ class Group::AlumnusGroup < Group
 
   children Group::AlumnusGroup
 
+  # Duplicate class attribute to customize it just for AlumnusGroups
+  self.protect_if_methods = Group.protect_if_methods.dup
+
+  protect_if :last_alumnus_group_in_layer?
+
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_and_below_full, :contact_data]
   end
@@ -65,6 +70,12 @@ class Group::AlumnusGroup < Group
   end
 
   class DispatchAddress < Jubla::Role::DispatchAddress
+  end
+
+  private
+
+  def last_alumnus_group_in_layer?
+    parent.children.without_deleted.alumni_groups.count == 1
   end
 
 end

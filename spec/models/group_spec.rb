@@ -81,6 +81,25 @@ describe Group do
     it 'must have simple group as last item' do
       expect(subject.last).to eq(Group::SimpleGroup)
     end
+
+    context '#destroy' do
+      it 'deletes Layer if there are only Alumnus Group childs' do
+        group = Group::Region.all.first
+        group.children.delete_all
+        alumnus_group = Group::RegionalAlumnusGroup.create(name: 'test_group', parent_id: group.id)
+        alumnus_group2 = Group::RegionalAlumnusGroup.create(name: 'test_group2',
+                                                            parent_id: group.id)
+        alumnus_group3 = Group::RegionalAlumnusGroup.create(name: 'test_group3',
+                                                            parent_id: alumnus_group2.id)
+
+        expect(group.destroy).not_to be false
+
+        expect(Group.without_deleted.where(id: group.id)).not_to be_exists
+        expect(Group.without_deleted.where(id: alumnus_group.id)).not_to be_exists
+        expect(Group.without_deleted.where(id: alumnus_group2.id)).not_to be_exists
+        expect(Group.without_deleted.where(id: alumnus_group3.id)).not_to be_exists
+      end
+    end
   end
 
   describe '.course_offerers' do
