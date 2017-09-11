@@ -28,7 +28,6 @@ module Jubla::Group
     scope :alumni_groups, -> { where(type: ALUMNI_GROUPS_CLASSES) }
     scope :without_alumni_groups, -> { where.not(type: ALUMNI_GROUPS_CLASSES) }
 
-
     self.used_attributes += [:bank_account]
 
     has_many :course_conditions, class_name: '::Event::Course::Condition', dependent: :destroy
@@ -50,7 +49,6 @@ module Jubla::Group
   def census?
     respond_to?(:census_total)
   end
-
 
   def children_without_deleted_and_alumni_groups
     children.without_deleted.without_alumni_groups

@@ -94,10 +94,10 @@ describe Group do
 
         expect(group.destroy).not_to be false
 
-        expect(Group.without_deleted.where(id: group.id)).not_to be_exists
-        expect(Group.without_deleted.where(id: alumnus_group.id)).not_to be_exists
-        expect(Group.without_deleted.where(id: alumnus_group2.id)).not_to be_exists
-        expect(Group.without_deleted.where(id: alumnus_group3.id)).not_to be_exists
+        expect(Group.without_deleted.where(id: group.id)).not_to exist
+        expect(Group.without_deleted.where(id: alumnus_group.id)).not_to exist
+        expect(Group.without_deleted.where(id: alumnus_group2.id)).not_to exist
+        expect(Group.without_deleted.where(id: alumnus_group3.id)).not_to exist
       end
     end
   end

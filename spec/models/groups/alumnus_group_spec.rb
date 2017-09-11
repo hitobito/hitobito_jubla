@@ -18,7 +18,7 @@ describe Group::AlumnusGroup do
                                                        parent_id: parent_group.id)
 
       expect(alumnus_group2.destroy).not_to be false
-      expect(Group.without_deleted.where(id: alumnus_group2.id)).not_to be_exists
+      expect(Group.without_deleted.where(id: alumnus_group2.id)).not_to exist
     end
 
     it 'cannot destroy if last alumnus group in layer' do
@@ -26,7 +26,7 @@ describe Group::AlumnusGroup do
                                                       parent_id: parent_group.id)
 
       expect(alumnus_group.destroy).to be false
-      expect(Group.without_deleted.where(id: alumnus_group.id)).to be_exists
+      expect(Group.without_deleted.where(id: alumnus_group.id)).to exist
     end
 
   end
