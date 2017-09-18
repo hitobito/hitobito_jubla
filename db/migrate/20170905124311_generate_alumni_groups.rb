@@ -26,7 +26,7 @@ class GenerateAlumniGroups < ActiveRecord::Migration
   def generate_groups
     LAYERS.each do |l|
       group_class(l).find_each do |g|
-        group_class(ALUMNI_GROUPS[l]).create(name: 'Ehemalig', parent_id: g.id)
+        group_class(ALUMNI_GROUPS[l]).create(name: 'Ehemalige', parent_id: g.id)
       end
     end
   end
