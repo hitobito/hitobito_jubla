@@ -11,8 +11,10 @@ module Jubla::Role
   included do
     Role::Kinds << :alumnus
 
-    after_destroy :create_alumnus_role
+    attr_accessor :skip_alumnus_callback
+    after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
 
+    validate :validate_alumnus_group
     after_save :set_person_origins
     after_destroy :set_person_origins
   end
@@ -75,28 +77,45 @@ module Jubla::Role
 
   private
 
+  def validate_alumnus_group
+    if group.is_a?(Group::AlumnusGroup) && !last_role_for_person_in_layer?
+      errors.add(:base, I18n.t('activerecord.errors.messages.other_roles_exists'))
+      return false
+    end
+  end
+
   def set_person_origins
     person.update_columns(GroupOriginator.new(person).to_h)
   end
 
-  def create_alumnus_role
-    if (self.class.member? || self.class.alumnus?) &&
+  def create_role_in_alumnus_group
+    if self.class.member? &&
         old_enough_to_archive? &&
-        last_role_for_person_in_group?
-      role = alumnus_class.new
-      role.person = person
-      role.group = group
-      role.label = self.class.label
-      role.save!
+        last_role_for_person_in_layer? &&
+        !group.is_a?(Group::AlumnusGroup) &&
+        !is_a?(Group::ChildGroup::Child)
+
+      @group = group.alumni_groups.first
+      build_new_role.save
     end
   end
 
-  def alumnus_class
-    "#{group.class}::Alumnus".constantize
+  def build_new_role
+    new_role = Role.new
+    new_role.person_id = person_id
+    new_role.group_id = @group.id
+    new_role.type = alumnus_role_type
+    new_role
   end
 
-  def last_role_for_person_in_group?
-    group.roles.where(person_id: person_id).empty?
+  def alumnus_role_type
+    "#{@group.type}#{type.match(/::\w*$/)}".constantize
+  end
+
+  def last_role_for_person_in_layer?
+    group.groups_in_same_layer.collect do |g|
+      g.roles.where(person_id: person_id)
+    end.flatten.empty?
   end
 
 end

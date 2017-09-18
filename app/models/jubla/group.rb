@@ -46,6 +46,10 @@ module Jubla::Group
     end
   end
 
+  def alumni_groups
+    groups_in_same_layer.where(type: ALUMNI_GROUPS_CLASSES)
+  end
+
   def census?
     respond_to?(:census_total)
   end

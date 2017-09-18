@@ -336,3 +336,4 @@ de:
     errors:
       messages:
         must_be_multiple_of: muss ein vielfaches von %{multiple} sein.
+        other_roles_exists: Es befinden sich noch andere aktive Rollen in diesem Layer

@@ -82,43 +82,5 @@ describe Role do
         expect(Role.with_deleted.where(id: role.id)).not_to be_exists
       end
     end
-
-    context 'old roles' do
-      let(:created_at) { Time.zone.now - Settings.role.minimum_days_to_archive.days - 1.day }
-
-      context 'single role' do
-        it 'flags as deleted, creates alumnus role' do
-          expect { role.destroy }.to change { Group::Flock::Alumnus.count }.by(1)
-          expect(Role.only_deleted.find(role.id)).to be_present
-        end
-      end
-
-      context 'multiple roles' do
-        before { Fabricate(role_class.name.to_s, group: groups(:bern), person: role.person, created_at: created_at) }
-
-        it 'flags as deleted, does not create alumnus role' do
-          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-          expect(Role.only_deleted.find(role.id)).to be_present
-        end
-      end
-
-      context 'external role' do
-        let(:role_class) { Group::Flock::External }
-
-        it 'flags as deleted, does not create alumnus role' do
-          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-          expect(Role.only_deleted.find(role.id)).to be_present
-        end
-      end
-
-      context 'alumnus role' do
-        let(:role_class) { Group::Flock::Alumnus }
-        before { role } # ensure we have created the original Alumnus role before expecting
-
-        it 'can be destroyed, creates new alumnus role' do
-          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-        end
-      end
-    end
   end
 end

@@ -27,7 +27,7 @@ describe PopulationController do
 
     describe 'groups' do
       subject { assigns(:groups) }
-      it { is_expected.to eq([flock, groups(:asterix), groups(:obelix)]) }
+      it { is_expected.to eq([flock, groups(:asterix), groups(:obelix), groups(:bern_ehemalige)]) }
     end
 
     describe 'people by group' do

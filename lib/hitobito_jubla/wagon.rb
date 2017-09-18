@@ -57,6 +57,8 @@ module HitobitoJubla
       Export::Tabular::Events::BsvList.send :include, Jubla::Export::Tabular::Events::BsvList
       Export::Tabular::Events::BsvRow.send :include, Jubla::Export::Tabular::Events::BsvRow
 
+      Group::Merger.send :include, Jubla::Group::Merger
+
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
       Event::ParticipationFilter.load_entries_includes += [
@@ -67,6 +69,9 @@ module HitobitoJubla
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
+
+      RolesController.send :include, Jubla::RolesController
+
       Event::Camp::KindsController # load before Event::KindsController
       Event::KindsController.permitted_attrs += [:j_s_label]
 

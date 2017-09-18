@@ -219,7 +219,7 @@ describe GroupsController, type: :controller  do
     before { sign_in(agent) }
 
     it 'can destroy flock without subgroups' do
-      flock.children.destroy_all
+      flock.children.delete_all
       expect { delete :destroy, id: flock.id }.to change { Group.without_deleted.count }.by(-1)
     end
   end
@@ -228,7 +228,7 @@ describe GroupsController, type: :controller  do
     before { sign_in(leader) }
 
     it 'cannot destroy flock without subgroups' do
-      flock.children.destroy_all
+      flock.children.delete_all
       expect do
          expect { delete :destroy, id: flock.id }.to raise_error(CanCan::AccessDenied)
       end.not_to change { Group.count }
