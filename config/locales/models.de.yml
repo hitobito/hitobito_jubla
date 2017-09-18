@@ -30,6 +30,14 @@ de:
         other: Kantone
       group/work_group: Arbeitsgruppe
 
+      group/alumnus_group/president:
+        one: Präses
+        other: Präses
+        long: Bundesleitung Präses
+      group/alumnus_group/coach:
+        one: Coach
+        other: Coaches
+
       group/federal_professional_group:
         one: Fachgruppe
         other: Fachgruppen
@@ -96,6 +104,10 @@ de:
         other: Mitglieder
         long: Kantonsleitung Mitglied
       group/state_board/supervisor:
+        one: Stellenbegleitung
+        other: Stellenbegleitungen
+
+      group/state_alumnus_group/supervisor:
         one: Stellenbegleitung
         other: Stellenbegleitungen
 
@@ -172,6 +184,14 @@ de:
       group/flock/coach:
         one: Coach
         other: Coaches
+
+      group/flock_alumnus_group/camp_leader:
+        one: Lagerleitung
+        other: Lagerleitungen
+      group/flock_alumnus_group/guide:
+        one: Leiter/in
+        other: Leiter/innen
+        long: Schar Leiter/in
 
       group/child_group/child:
         one: Kind

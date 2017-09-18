@@ -61,7 +61,10 @@ class Group::FederalAlumnusGroup < Group::AlumnusGroup
   class DispatchAddress < Group::AlumnusGroup::DispatchAddress
   end
 
+  class President < Group::AlumnusGroup::President
+  end
 
-  roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress
+
+  roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress, President
 
 end
