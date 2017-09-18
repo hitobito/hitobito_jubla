@@ -33,10 +33,12 @@
 #  jubla_property_insurance  :boolean          default(FALSE), not null
 #
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
+
+
 
 ch:
   name: Jubla Schweiz
@@ -44,23 +46,31 @@ ch:
   type: Group::Federation
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:ch) %>
   lft: 1
-  rgt: 48
+  rgt: 68
 
 federal_board:
   name: Bulei
-  type: Group::FederalBoard
   parent: ch
+  type: Group::FederalBoard
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:ch) %>
   lft: 2
   rgt: 3
 
-organization_board:
-  name: Verbandsleitung
-  type: Group::OrganizationBoard
+ch_ehemalige:
+  name: Ehemalige
   parent: ch
+  type: Group::FederalAlumnusGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:ch) %>
   lft: 4
   rgt: 5
+
+organization_board:
+  name: Verbandsleitung
+  parent: ch
+  type: Group::OrganizationBoard
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:ch) %>
+  lft: 6
+  rgt: 7
 
 be:
   name: Kanton Bern
@@ -68,16 +78,16 @@ be:
   parent: ch
   type: Group::State
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:be) %>
-  lft: 6
-  rgt: 37
+  lft: 8
+  rgt: 51
 
 be_board:
   name: Kalei
   parent: be
   type: Group::StateBoard
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:be) %>
-  lft: 7
-  rgt: 8
+  lft: 9
+  rgt: 10
 
 be_agency:
   name: AST
@@ -87,81 +97,48 @@ be_agency:
   zip_code: 3000
   town: Bern
   email: ast_be@jubla.example.com
-  lft: 9
-  rgt: 10
+  lft: 11
+  rgt: 12
 
 be_security:
   name: FG Sicherheit
   parent: be
   type: Group::StateProfessionalGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:be) %>
-  lft: 11
-  rgt: 12
+  lft: 13
+  rgt: 14
 
 be_state_camp:
   name: AG Kantonslager
   parent: be
   type: Group::StateWorkGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:be) %>
-  lft: 13
-  rgt: 14
+  lft: 15
+  rgt: 16
 
-"no":
-  name: Nordostschweiz
-  short_name: NO
-  parent: ch
-  type: Group::State
-  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
-  lft: 38
-  rgt: 47
-
-no_board:
-  name: Kalei
-  parent: "no"
-  type: Group::StateBoard
-  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
-  lft: 39
-  rgt: 40
-
-no_agency:
-  name: AST
-  parent: "no"
-  type: Group::StateAgency
-  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
-  lft: 41
-  rgt: 42
+be_ehemalige:
+  name: Ehemalige
+  parent: be
+  type: Group::StateAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:be) %>
+  lft: 17
+  rgt: 18
 
 city:
   name: Stadt
   parent: be
   type: Group::Region
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:city) %>
-  lft: 15
-  rgt: 28
+  lft: 19
+  rgt: 38
 
 city_board:
   name: Relei
   parent: city
   type: Group::RegionalBoard
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:city) %>
-  lft: 16
-  rgt: 17
-
-oberland:
-  name: Oberland
-  parent: be
-  type: Group::Region
-  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:oberland) %>
-  lft: 29
-  rgt: 36
-
-oberland_board:
-  name: Relei
-  parent: oberland
-  type: Group::RegionalBoard
-  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:oberland) %>
-  lft: 30
-  rgt: 31
+  lft: 20
+  rgt: 21
 
 bern:
   name: Bern
@@ -169,32 +146,48 @@ bern:
   type: Group::Flock
   kind: Jungwacht
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:bern) %>
-  lft: 18
-  rgt: 25
+  lft: 22
+  rgt: 31
 
 asterix:
   name: Asterix
   parent: bern
   type: Group::ChildGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:bern) %>
-  lft: 19
-  rgt: 20
+  lft: 23
+  rgt: 24
+
+bern_ehemalige:
+  name: Ehemalige
+  parent: bern
+  type: Group::FlockAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:bern) %>
+  lft: 25
+  rgt: 26
 
 obelix:
   name: Obelix
   parent: bern
   type: Group::ChildGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:bern) %>
-  lft: 21
-  rgt: 22
+  lft: 27
+  rgt: 28
 
 fussball:
   name: Fussballgruppe
   parent: bern
   type: Group::SimpleGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:bern) %>
-  lft: 23
-  rgt: 24
+  lft: 29
+  rgt: 30
+
+city_ehemalige:
+  name: Ehemalige
+  parent: city
+  type: Group::RegionalAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:city) %>
+  lft: 32
+  rgt: 33
 
 muri:
   name: Muri
@@ -202,8 +195,40 @@ muri:
   type: Group::Flock
   kind: Blauring
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:muri) %>
-  lft: 26
-  rgt: 27
+  lft: 34
+  rgt: 37
+
+muri_ehemalige:
+  name: Ehemalige
+  parent: muri
+  type: Group::FlockAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:muri) %>
+  lft: 35
+  rgt: 36
+
+oberland:
+  name: Oberland
+  parent: be
+  type: Group::Region
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:oberland) %>
+  lft: 39
+  rgt: 50
+
+oberland_ehemalige:
+  name: Ehemalige
+  parent: oberland
+  type: Group::RegionalAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:oberland) %>
+  lft: 40
+  rgt: 41
+
+oberland_board:
+  name: Relei
+  parent: oberland
+  type: Group::RegionalBoard
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:oberland) %>
+  lft: 42
+  rgt: 43
 
 thun:
   name: Thun
@@ -211,16 +236,49 @@ thun:
   type: Group::Flock
   kind: Jungwacht
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:thun) %>
-  lft: 32
-  rgt: 35
+  lft: 44
+  rgt: 49
+
+thun_ehemalige:
+  name: Ehemalige
+  parent: thun
+  type: Group::FlockAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:thun) %>
+  lft: 45
+  rgt: 46
 
 mickey:
   name: Mickey
   parent: thun
   type: Group::ChildGroup
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:thun) %>
-  lft: 33
-  rgt: 34
+  lft: 47
+  rgt: 48
+
+"no":
+  name: Nordostschweiz
+  short_name: NO
+  parent: ch
+  type: Group::State
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
+  lft: 52
+  rgt: 67
+
+no_board:
+  name: Kalei
+  parent: "no"
+  type: Group::StateBoard
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
+  lft: 53
+  rgt: 54
+
+no_agency:
+  name: AST
+  parent: "no"
+  type: Group::StateAgency
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
+  lft: 55
+  rgt: 56
 
 innerroden:
   name: Innerroden
@@ -228,8 +286,16 @@ innerroden:
   type: Group::Flock
   kind: Jubla
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:innerroden) %>
-  lft: 43
-  rgt: 44
+  lft: 57
+  rgt: 60
+
+innerroden_ehemalige:
+  name: Ehemalige
+  parent: innerroden
+  type: Group::FlockAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:innerroden) %>
+  lft: 58
+  rgt: 59
 
 ausserroden:
   name: Ausserroden
@@ -237,5 +303,22 @@ ausserroden:
   type: Group::Flock
   kind: Jungwacht
   layer_group_id: <%= ActiveRecord::FixtureSet.identify(:ausserroden) %>
-  lft: 45
-  rgt: 46
+  lft: 61
+  rgt: 64
+
+ausserroden_ehemalige:
+  name: Ehemalige
+  parent: ausserroden
+  type: Group::FlockAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:ausserroden) %>
+  lft: 62
+  rgt: 63
+
+no_ehemalige:
+  name: Ehemalige
+  parent: "no"
+  type: Group::StateAlumnusGroup
+  layer_group_id: <%= ActiveRecord::FixtureSet.identify(:no) %>
+  lft: 65
+  rgt: 66
+
