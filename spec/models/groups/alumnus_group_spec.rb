@@ -56,7 +56,7 @@ describe Group::AlumnusGroup do
         end
 
         it 'creates alumnus role' do
-          expect { role.destroy }.to change(Group::FlockAlumnusGroup::Leader, :count).by(1)
+          expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
         end
       end
 
@@ -65,7 +65,7 @@ describe Group::AlumnusGroup do
                          group: groups(:asterix),
                          created_at: created_at)
 
-        expect { role.destroy }.not_to change { Group::FlockAlumnusGroup::Leader.count }
+        expect { role.destroy }.not_to change { Group::FlockAlumnusGroup::Member.count }
       end
 
       it 'unless alumnus group' do
