@@ -25,6 +25,7 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
   end
 
   def find_peple_sql
+    role_types =  existing_alumni_role_types - ["Group::ChildGroup::Alumnus"]
     <<-SQL
     SELECT person_id, group_id FROM roles
     WHERE type IN (#{sanitize(existing_alumni_role_types)})
@@ -72,7 +73,6 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
     list.collect { |item| ActiveRecord::Base.sanitize(item) }.join(',')
   end
 
-
   def new_alumni_group_types
     ["Group::AlumnusGroup",
      "Group::StateAlumnusGroup",
@@ -100,5 +100,26 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
      "Group::ChildGroup::Alumnus",
      "Group::Flock::Alumnus",
      "Group::Federation::Alumnus"]
+  end
+
+  def external_role_types
+    ["Group::AlumnusGroup::External",
+     "Group::SimpleGroup::External",
+     "Group::FederalBoard::External",
+     "Group::OrganizationBoard::External",
+     "Group::FederalProfessionalGroup::External",
+     "Group::FederalWorkGroup::External",
+     "Group::StateAgency::External",
+     "Group::StateBoard::External",
+     "Group::State::External",
+     "Group::StateProfessionalGroup::External",
+     "Group::StateWorkGroup::External",
+     "Group::RegionalBoard::External",
+     "Group::Region::External",
+     "Group::RegionalProfessionalGroup::External",
+     "Group::RegionalWorkGroup::External",
+     "Group::ChildGroup::External",
+     "Group::Flock::External",
+     "Group::Federation::External"]
   end
 end
