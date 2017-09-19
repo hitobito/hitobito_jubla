@@ -52,11 +52,18 @@ describe Group::AlumnusGroup do
     context 'single role' do
       describe 'moves to alumnus group' do
         it 'deletes old role' do
+          expect_any_instance_of(AlumniMailJob).to receive(:enqueue!).and_call_original
           expect { role.destroy }.to change(Group::Flock::Leader, :count).by(-1)
         end
 
         it 'creates alumnus role' do
           expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
+        end
+
+        it 'creates new background job' do
+          expect_any_instance_of(AlumniMailJob).to receive(:enqueue!).and_call_original
+          expect { role.destroy }.to change(Delayed::Job, :count).by(1)
+          expect(Delayed::Job.first.run_at).to be_within(10.seconds).of(1.day.from_now)
         end
       end
 
@@ -74,6 +81,12 @@ describe Group::AlumnusGroup do
                          created_at: created_at)
 
         expect { role.destroy }.to change { Group::FlockAlumnusGroup::Leader.count }.by(-1)
+      end
+
+      it 'does not create job if saving new role fails' do
+        expect_any_instance_of(AlumniMailJob).not_to receive(:enqueue!).and_call_original
+        expect_any_instance_of(Role).to receive(:save).and_return(false)
+        role.destroy
       end
     end
   end

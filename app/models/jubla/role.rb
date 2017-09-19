@@ -89,14 +89,10 @@ module Jubla::Role
   end
 
   def create_role_in_alumnus_group
-    if self.class.member? &&
-        old_enough_to_archive? &&
-        last_role_for_person_in_layer? &&
-        !group.is_a?(Group::AlumnusGroup) &&
-        !is_a?(Group::ChildGroup::Child)
-
+    if create_role?
       @group = group.alumni_groups.first
-      build_new_role.save
+      return unless build_new_role.save
+      AlumniMailJob.new(group.id, person.id).enqueue!(run_at: 1.day.from_now)
     end
   end
 
@@ -116,6 +112,14 @@ module Jubla::Role
     group.groups_in_same_layer.collect do |g|
       g.roles.where(person_id: person_id)
     end.flatten.empty?
+  end
+
+  def create_role?
+    self.class.member? &&
+      old_enough_to_archive? &&
+      last_role_for_person_in_layer? &&
+      !group.is_a?(Group::AlumnusGroup) &&
+      !is_a?(Group::ChildGroup::Child)
   end
 
 end
