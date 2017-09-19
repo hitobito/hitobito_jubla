@@ -25,6 +25,8 @@ puzzlers = ['Pascal Zumkehr',
             'Andreas Maierhofer',
             'Roland Studer',
             'Mathis Hofer',
+            'Matthias Viehweger',
+            'Janiss Binder',
             'Bruno Santschi']
 devs = {'Martin Zust' => 'animation@jublaluzern.ch',
         'Roman Oester' => 'roman.oester@jubla.ch'}
