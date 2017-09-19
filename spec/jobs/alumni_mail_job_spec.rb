@@ -15,7 +15,7 @@ describe AlumniMailJob do
       group = groups(:bern) #Flock
 
       expect(AlumniMailer).to receive(:new_member_flock).with(person).and_call_original
-      expect { AlumniMailJob.new(group, person).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
+      expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
 
     it 'sends email if there are only Alumnus::Member roles left' do
@@ -23,17 +23,16 @@ describe AlumniMailJob do
       group = groups(:city) #No Flock
 
       expect(AlumniMailer).to receive(:new_member).with(person).and_call_original
-      expect { AlumniMailJob.new(group, person).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
+      expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
 
-
-    it 'doesnt send email if there are other roles left' do
+    it 'does not send email if there are other roles left' do
       person = people(:top_leader)
       group = person.groups.first
 
       expect(AlumniMailer).not_to receive(:new_member_flock).and_call_original
       expect(AlumniMailer).not_to receive(:new_member).and_call_original
-      expect { AlumniMailJob.new(group, person).perform }.to change { ActionMailer::Base.deliveries.size }.by(0)
+      expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(0)
     end
   end
 
