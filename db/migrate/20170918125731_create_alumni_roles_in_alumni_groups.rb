@@ -2,7 +2,8 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
 
   def up
     alumni = select_rows(find_peple_sql)
-    alumni_groups = select_rows(find_groups_sql(alumni))
+    alumni_groups = select_rows(find_groups_sql(alumni.collect(&:second).uniq))
+
     execute(insert_roles_sql(alumni, alumni_groups.index_by(&:first)))
   end
 
@@ -43,12 +44,11 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
     SQL
   end
 
-  def find_groups_sql(list)
+  def find_groups_sql(layer_group_ids)
     <<-SQL
-    SELECT groups.id, g1.id, g1.type FROM groups
-    INNER JOIN groups AS g1 ON g1.layer_group_id = groups.layer_group_id
-    WHERE groups.id IN (#{sanitize(list.collect(&:second))})
-    AND g1.type IN (#{sanitize(new_alumni_group_types)})
+    SELECT layer_group_id, id, type FROM groups
+    WHERE layer_group_id IN (#{sanitize(layer_group_ids)})
+    AND groups.type IN (#{sanitize(new_alumni_group_types)})
     SQL
   end
 
@@ -60,8 +60,8 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
   end
 
   def values(list, group_memo, now)
-    list.collect do |person_id, group_id|
-      _, group_id, group_type = group_memo.fetch(group_id)
+    list.collect do |person_id, layer_group_id, _|
+      _, group_id, group_type = group_memo.fetch(layer_group_id)
       type = Role.sanitize(member(group_type))
       "(#{now}, #{now}, #{person_id}, #{group_id}, #{type})"
     end
