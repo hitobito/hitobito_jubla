@@ -16,12 +16,7 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
   def delete_alumni_group_members_sql
     <<-SQL
     DELETE FROM roles
-    WHERE roles.id IN (
-      SELECT roles.id FROM roles
-      INNER JOIN groups ON roles.group_id = groups.id
-      WHERE groups.type IN (#{sanitize(new_alumni_group_types)})
-      AND roles.type IN (#{sanitize(alumni_member_types)})
-    )
+    WHERE type IN (#{sanitize(alumni_member_types)})
     SQL
   end
 
