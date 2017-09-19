@@ -72,14 +72,6 @@ class Group::AlumnusGroup < Group
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  class Coach < ::Role
-    self.permissions = []
-  end
-
-  class President < ::Role
-    self.permissions = []
-  end
-
   private
 
   def last_alumnus_group_in_layer?

@@ -61,18 +61,7 @@ class Group::StateAlumnusGroup < Group::AlumnusGroup
   class DispatchAddress < Group::AlumnusGroup::DispatchAddress
   end
 
-  class Coach < Group::AlumnusGroup::Coach
-  end
 
-  class President < Group::AlumnusGroup::President
-  end
-
-  class Supervisor < ::Role
-    self.permissions = []
-  end
-
-
-  roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress, Coach,
-        Supervisor, President
+  roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress
 
 end

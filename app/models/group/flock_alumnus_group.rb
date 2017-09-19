@@ -61,19 +61,7 @@ class Group::FlockAlumnusGroup < Group::AlumnusGroup
   class DispatchAddress < Group::AlumnusGroup::DispatchAddress
   end
 
-  class President < Group::AlumnusGroup::President
-  end
 
-  class CampLeader < ::Role
-    self.permissions = []
-  end
-
-  class Guide < ::Role
-    self.permissions = []
-  end
-
-
-  roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress,
-        CampLeader, Guide, President
+  roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress
 
 end
