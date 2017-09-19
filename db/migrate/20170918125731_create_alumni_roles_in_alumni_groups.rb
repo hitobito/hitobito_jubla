@@ -27,13 +27,19 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
   def find_peple_sql
     role_types =  existing_alumni_role_types - ["Group::ChildGroup::Alumnus"]
     <<-SQL
-    SELECT person_id, group_id FROM roles
-    WHERE type IN (#{sanitize(existing_alumni_role_types)})
+    SELECT DISTINCT person_id, layer_group_id FROM roles
+    INNER JOIN groups ON roles.group_id = groups.id
+    WHERE roles.type IN (#{sanitize(role_types)})
+    AND roles.deleted_at IS NULL
     AND person_id NOT IN (
       SELECT DISTINCT person_id FROM roles
-      WHERE type NOT IN (#{sanitize(existing_alumni_role_types)})
+      INNER JOIN groups g ON roles.group_id = g.id
+      WHERE g.layer_group_id = layer_group_id
+      AND roles.deleted_at IS NULL
+      AND (roles.type NOT IN (#{sanitize(role_types)}) OR
+          roles.type IN (#{sanitize(external_role_types)}))
     )
-    GROUP BY person_id, group_id
+    GROUP BY person_id, layer_group_id
     SQL
   end
 
