@@ -14,7 +14,7 @@ module Jubla::Role
     attr_accessor :skip_alumnus_callback
     after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
 
-    validate :validate_alumnus_group
+    validate :assert_no_active_roles, if: :alumnus_group_member?
     after_create :destroy_alumnus_member_role
     after_save :set_person_origins
     after_destroy :set_person_origins
@@ -78,10 +78,13 @@ module Jubla::Role
 
   private
 
-  def validate_alumnus_group
-    if group.is_a?(Group::AlumnusGroup) && !last_role_for_person_in_layer?
+  def alumnus_group_member?
+    is_a?(Group::AlumnusGroup::Member)
+  end
+
+  def assert_no_active_roles
+    if roles_in_layer.exists?
       errors.add(:base, I18n.t('activerecord.errors.messages.other_roles_exists'))
-      return false
     end
   end
 
@@ -109,16 +112,16 @@ module Jubla::Role
     "#{@group.type}::Member".constantize
   end
 
-  def last_role_for_person_in_layer?
-    group.groups_in_same_layer.collect do |g|
-      g.roles.where(person_id: person_id)
-    end.flatten.empty?
+  def roles_in_layer
+    Role.joins(:group).
+      where(person: person_id,
+            groups: { layer_group_id: group.layer_group_id })
   end
 
   def create_role?
     self.class.member? &&
       old_enough_to_archive? &&
-      last_role_for_person_in_layer? &&
+      roles_in_layer.empty? &&
       !group.is_a?(Group::AlumnusGroup) &&
       !is_a?(Group::ChildGroup::Child)
   end

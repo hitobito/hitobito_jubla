@@ -105,4 +105,27 @@ describe Role do
     end
   end
 
+  context 'creating of alumnus member role' do
+    let(:alumni_group) { groups(:ch_ehemalige) }
+
+    it 'does not allow to creating alumnus member if active role in same layer exists' do
+      person = Fabricate(Group::FederalBoard::Member.to_s, group: groups(:federal_board)).person
+      role = person.roles.build(type: Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
+      expect(role).not_to be_valid
+      expect(role.errors.full_messages.first).to eq 'Es befinden sich noch andere aktive Rollen in diesem Layer'
+    end
+
+    it 'allows creating alumnus member if active exists in other layer' do
+      person = Fabricate(Group::Flock::Leader.to_s, group: groups(:bern)).person
+      role = person.roles.build(type: Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
+      expect(role).to be_valid
+    end
+
+    it 'allows creating alumnus leader if active role exists in same layer' do
+      person = Fabricate(Group::FederalBoard::Member.to_s, group: groups(:federal_board)).person
+      role = person.roles.build(type: Group::FederalAlumnusGroup::Leader.to_s, group: alumni_group)
+      expect(role).to be_valid
+    end
+  end
+
 end
