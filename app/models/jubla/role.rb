@@ -15,6 +15,7 @@ module Jubla::Role
     after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
 
     validate :validate_alumnus_group
+    after_create :destroy_alumnus_member_role
     after_save :set_person_origins
     after_destroy :set_person_origins
   end
@@ -120,6 +121,18 @@ module Jubla::Role
       last_role_for_person_in_layer? &&
       !group.is_a?(Group::AlumnusGroup) &&
       !is_a?(Group::ChildGroup::Child)
+  end
+
+  def destroy_alumnus_member_role
+    return if alumnus? ||
+      is_a?(Jubla::Role::External) ||
+      is_a?(Jubla::Role::DispatchAddress) ||
+      (is_a?(Jubla::Role::Member) && group.is_a?(Group::AlumnusGroup))
+
+    person.roles.joins(:group).
+      where(roles: { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)},
+            groups: { layer_group_id: group.layer_group_id }).
+    where.not(roles: { id: id }).destroy_all
   end
 
 end

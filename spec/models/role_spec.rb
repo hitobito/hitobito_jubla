@@ -83,4 +83,26 @@ describe Role do
       end
     end
   end
+
+  context 'destroying of alumnus member role' do
+    let(:group) { groups(:ch) }
+    let(:alumni_group) { groups(:ch_ehemalige) }
+
+    [ %w(Group::FederalBoard::Member federal_board -1),
+      %w(Group::FederalBoard::President federal_board -1),
+      %w(Group::FederalBoard::GroupAdmin federal_board -1),
+      %w(Group::FederalBoard::Alumnus federal_board 0),
+      %w(Group::FederalBoard::External federal_board 0),
+      %w(Group::FederalBoard::DispatchAddress federal_board 0),
+      %w(Group::FederalAlumnusGroup::Leader ch_ehemalige -1),
+    ].each do |role_type, group, change|
+      it "creating role of #{role_type} changes alumni members by #{change}" do
+        role = Fabricate(Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
+        expect do
+          Fabricate(role_type, person: role.person, group: groups(group))
+        end.to change { Group::FederalAlumnusGroup::Member.where(group: alumni_group).count }.by(change.to_i)
+      end
+    end
+  end
+
 end
