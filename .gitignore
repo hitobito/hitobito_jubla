@@ -22,3 +22,4 @@ rubocop-results.xml
 .generators
 .idea
 .rakeTasks
+.tool-versions
