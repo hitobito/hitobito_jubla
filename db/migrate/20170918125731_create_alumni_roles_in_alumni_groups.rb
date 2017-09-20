@@ -2,7 +2,9 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
 
   def up
     alumni = select_rows(find_people_sql)
-    alumni_groups = select_rows(find_groups_sql(alumni.collect(&:second).uniq.concat([0])))
+    return unless alumni.present?
+
+    alumni_groups = select_rows(find_groups_sql(alumni.collect(&:second).uniq))
 
     execute(insert_roles_sql(alumni, alumni_groups.index_by(&:first)))
   end
@@ -48,7 +50,6 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
   end
 
   def insert_roles_sql(list, group_memo, now = Role.sanitize(Time.zone.now))
-    return "SELECT 'No Roles to insert' AS placeholder" if list.empty? || group_memo.empty?
     <<-SQL
     INSERT INTO roles(created_at, updated_at, person_id, group_id, type)
     VALUES #{values(list, group_memo, now).join(',')}
