@@ -50,5 +50,6 @@ de:
   people:
     fields_jubla:
       help_canton: Wird aus der PLZ berechnet falls leer.
+      info_alumnus_contactable: "Mit dem Setzen eines Häkchens erlaubst du folgenden Ebenen, dich zu kontaktieren und dir Informationen zu senden:"
     show_event_jubla:
       coached: Meine Betreuungen

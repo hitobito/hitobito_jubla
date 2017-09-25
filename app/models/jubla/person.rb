@@ -16,4 +16,8 @@ module Jubla::Person
   def canton
     self[:canton].presence || super
   end
+
+  def only_alumnus_group_member?
+    roles.all?(&:alumnus_group_member?)
+  end
 end

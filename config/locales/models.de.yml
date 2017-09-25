@@ -250,6 +250,9 @@ de:
         originating_flock: Schar
         originating_state_id: Jublakanton
         originating_flock_id: Schar
+        contactable_by_federation: nationale Ebene
+        contactable_by_state: kantonale Ebene
+        contactable_by_region: regionale Ebene
 
       group:
         bank_account: Bankverbindung

@@ -73,7 +73,8 @@ module HitobitoJubla
       ### controllers
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
-        :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number]
+        :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number,
+        :contactable_by_federation, :contactable_by_state, :contactable_by_region ]
 
       RolesController.send :include, Jubla::RolesController
 

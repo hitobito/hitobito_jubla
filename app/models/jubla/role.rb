@@ -83,11 +83,11 @@ module Jubla::Role
     self.class.alumnus?
   end
 
-  private
-
   def alumnus_group_member?
     type.match(/AlumnusGroup::Member$/) # we cannot check inheritance if the role is not persisted
   end
+
+  private
 
   def assert_no_active_roles
     if roles_in_layer.exists?
