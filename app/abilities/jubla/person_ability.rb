@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -8,12 +8,19 @@
 module Jubla::PersonAbility
   extend ActiveSupport::Concern
 
+  include Jubla::RoleAbility
+
   included do
     STATES = %w(application_open application_closed assignment_closed completed)
 
     on(Person) do
       permission(:layer_and_below_full).may(:update).
         non_restricted_in_same_layer_or_visible_below_or_accessible_participations
+    end
+
+    on(Person) do
+      permission(:alumnus_below_full).
+        may(:show, :show_full, :show_details, :update).in_child_alumnus_group
     end
   end
 
@@ -24,6 +31,16 @@ module Jubla::PersonAbility
   def accessible_participations
     events_with_valid_states.any? do |event|
       (user_context.permission_layer_ids(:layer_and_below_full) & event.group_ids).present?
+    end
+  end
+
+  def in_child_alumnus_group
+    roles = Role.joins(:group).where(person_id: person.id,
+                                     groups: { type: Group::AlumnusGroup.descendants })
+
+    if alumnus_leader_layer_ids.present?
+      layer_hierarchy_ids = roles.collect { |r| r.group.layer_hierarchy.collect(&:id) }.flatten
+      (alumnus_leader_layer_ids & layer_hierarchy_ids).present?
     end
   end
 

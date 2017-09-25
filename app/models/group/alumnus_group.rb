@@ -51,7 +51,7 @@ class Group::AlumnusGroup < Group
   protect_if :last_alumnus_group_in_layer?
 
   class Leader < Jubla::Role::Leader
-    self.permissions = [:group_and_below_full, :contact_data]
+    self.permissions = [:group_and_below_full, :contact_data, :alumnus_below_full]
   end
 
   class GroupAdmin < Jubla::Role::DispatchAddress

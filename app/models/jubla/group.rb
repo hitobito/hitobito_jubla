@@ -50,6 +50,10 @@ module Jubla::Group
     groups_in_same_layer.where(type: ALUMNI_GROUPS_CLASSES)
   end
 
+  def alumnus?
+    is_a?(Group::AlumnusGroup)
+  end
+
   def census?
     respond_to?(:census_total)
   end

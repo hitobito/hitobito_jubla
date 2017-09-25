@@ -10,6 +10,7 @@ module Jubla::Role
 
   included do
     Role::Kinds << :alumnus
+    Role::Types::Permissions << :alumnus_below_full
 
     attr_accessor :skip_alumnus_callback
     after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
