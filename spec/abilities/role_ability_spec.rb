@@ -21,35 +21,24 @@ describe RoleAbility do
       Group::FlockAlumnusGroup::Treasurer,
       Group::FlockAlumnusGroup::Member,
       Group::FlockAlumnusGroup::External,
-      Group::FlockAlumnusGroup::DispatchAddress 
+      Group::FlockAlumnusGroup::DispatchAddress
     ].each do |role_type|
-      it 'can show if role is in alumnus below' do
+      it 'can manage if role is in alumnus below' do
         role = Fabricate(role_type.name, group: group)
         is_expected.to be_able_to(:show, role)
-      end
-
-      it 'can update if role is in alumnus below' do
-        role = Fabricate(role_type.name, group: group)
         is_expected.to be_able_to(:update, role)
-      end
-
-      it 'can create if role is in alumnus below' do
-        role = Fabricate(role_type.name, group: group)
         is_expected.to be_able_to(:create, role)
-      end
-
-      it 'can destroy if role is in alumnus below' do
-        role = Fabricate(role_type.name, group: group)
         is_expected.to be_able_to(:destroy, role)
       end
+
     end
 
     it 'cannot access if role is in alumnus below' do
-        role = Fabricate(Group::Flock::Coach.name, group: groups(:bern))
-        is_expected.not_to be_able_to(:destroy, role)
-        is_expected.not_to be_able_to(:create, role)
-        is_expected.not_to be_able_to(:update, role)
-        is_expected.not_to be_able_to(:show, role)
+      role = Fabricate(Group::Flock::Coach.name, group: groups(:bern))
+      is_expected.not_to be_able_to(:destroy, role)
+      is_expected.not_to be_able_to(:create, role)
+      is_expected.not_to be_able_to(:update, role)
+      is_expected.not_to be_able_to(:show, role)
     end
 
   end
