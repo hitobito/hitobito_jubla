@@ -8,8 +8,11 @@
 class FilterMigrator < RelationMigrator
   def current_relations
     PeopleFilter
-      .joins(:related_role_types)
-      .where(related_role_types: { role_type: role_type})
+      .joins(<<-SQL.strip_heredoc).where('`related_role_types`.`role_type` = ?', role_type)
+        INNER JOIN `related_role_types`
+          ON (`related_role_types`.`relation_id` = `people_filters`.`id`
+          AND `related_role_types`.`relation_type` = 'PeopleFilter')
+      SQL
   end
 
   def handle(filter)
@@ -20,7 +23,7 @@ class FilterMigrator < RelationMigrator
     role_types = attrs.fetch(:role_types)
     if role_types.present?
       filter = PeopleFilter.find(attrs.fetch(:id))
-      role_types.each { |role_type| filter.related_role_types.build(role_type: role_type) }
+      role_types.each { |role_type| RelatedRoleType.new(role_type: role_type, relation: filter) }
       filter
     end
   end

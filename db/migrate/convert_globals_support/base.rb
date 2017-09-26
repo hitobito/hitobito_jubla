@@ -16,16 +16,19 @@ class RelationMigrator
   def perform
     current_relations.each do |relation|
       specific_role_types(relation).each do |specific_role_type|
-        relation.related_role_types.create(role_type: specific_role_type)
+        RelatedRoleType.create(role_type: specific_role_type, relation: relation)
       end
-      relation.related_role_types.where(role_type: role_type).destroy_all
+      RelatedRoleType.where(role_type: role_type, relation: relation).destroy_all
     end
   end
 
   def current_relations
     @current_relations ||= relation_class
-      .where(related_role_types: { role_type: role_type})
-      .joins(:related_role_types)
+      .joins(<<-SQL.strip_heredoc).where('`related_role_types`.`role_type` = ?', role_type)
+        INNER JOIN `related_role_types`
+          ON (`related_role_types`.`relation_id` = `#{relation_class.name.tableize}`.`id`
+          AND `related_role_types`.`relation_type` = '#{relation_class.name}')
+      SQL
   end
 
   private
