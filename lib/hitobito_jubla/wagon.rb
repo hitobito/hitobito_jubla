@@ -72,7 +72,6 @@ module HitobitoJubla
 
       GroupsController.send :include, Jubla::GroupsController
       EventsController.send :include, Jubla::EventsController
-      Event::ListsController.bsv_course_states = Event::Course.possible_states
       Event::ApplicationMarketController.send :include, Jubla::Event::ApplicationMarketController
       Event::QualificationsController.send :include, Jubla::Event::QualificationsController
       Event::RegisterController.send :include, Jubla::Event::RegisterController
