@@ -25,6 +25,12 @@ module Jubla::Role
     def alumnus?
       kind == :alumnus
     end
+
+    def roles_in_layer(person_id, layer_group_id)
+      Role.joins(:group).
+        where(person: person_id,
+              groups: { layer_group_id: layer_group_id })
+    end
   end
 
   # Common roles not attached to a specific group
@@ -80,7 +86,7 @@ module Jubla::Role
   private
 
   def alumnus_group_member?
-    is_a?(Group::AlumnusGroup::Member)
+    type.match(/AlumnusGroup::Member$/) # we cannot check inheritance if the role is not persisted
   end
 
   def assert_no_active_roles
@@ -109,14 +115,12 @@ module Jubla::Role
     new_role
   end
 
-  def alumnus_role_type
-    "#{@group.type}::Member".constantize
+  def roles_in_layer
+    Role.roles_in_layer(person_id, group.layer_group.id)
   end
 
-  def roles_in_layer
-    Role.joins(:group).
-      where(person: person_id,
-            groups: { layer_group_id: group.layer_group_id })
+  def alumnus_role_type
+    "#{@group.type}::Member".constantize
   end
 
   def create_role?

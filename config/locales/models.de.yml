@@ -317,3 +317,4 @@ de:
       messages:
         must_be_multiple_of: muss ein vielfaches von %{multiple} sein.
         other_roles_exists: Es befinden sich noch andere aktive Rollen in diesem Layer
+        cannot_import_alumnus: '%{name} wird nicht als Ehemaligenmitglied hinzugefügt, da er/sie noch eine aktive Rolle hat'

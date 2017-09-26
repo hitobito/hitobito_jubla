@@ -68,6 +68,8 @@ module HitobitoJubla
         person: [:originating_flock, :originating_state]
       ]
 
+      Import::PersonImporter.send :include, Jubla::Import::PersonImporter
+
       ### controllers
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
