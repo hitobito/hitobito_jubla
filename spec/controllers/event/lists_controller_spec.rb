@@ -16,6 +16,6 @@ describe Event::ListsController do
 
   it 'GET#courses with kind csv' do
     get :bsv_export, bsv_export: { date_from: '1.1.2012', date_to: '31.12.2012' }
-    expect(bsv).to have(1).item
+    expect(bsv).to have(0).item
   end
 end
