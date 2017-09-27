@@ -137,10 +137,10 @@ module Jubla::Role
       is_a?(Jubla::Role::DispatchAddress) ||
       (is_a?(Jubla::Role::Member) && group.is_a?(Group::AlumnusGroup))
 
-    person.roles.joins(:group).
-      where(roles: { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)},
-            groups: { layer_group_id: group.layer_group_id }).
-    where.not(roles: { id: id }).destroy_all
+    person.roles.joins(:group)
+          .where(roles:  { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)},
+                 groups: { layer_group_id: group.layer_group_id })
+          .where.not(roles: { id: id }).destroy_all
   end
 
 end

@@ -88,13 +88,13 @@ describe Role do
     let(:group) { groups(:ch) }
     let(:alumni_group) { groups(:ch_ehemalige) }
 
-    [ %w(Group::FederalBoard::Member federal_board -1),
-      %w(Group::FederalBoard::President federal_board -1),
-      %w(Group::FederalBoard::GroupAdmin federal_board -1),
-      %w(Group::FederalBoard::Alumnus federal_board 0),
-      %w(Group::FederalBoard::External federal_board 0),
-      %w(Group::FederalBoard::DispatchAddress federal_board 0),
-      %w(Group::FederalAlumnusGroup::Leader ch_ehemalige -1),
+    [ %w(Group::FederalBoard::Member          federal_board -1),
+      %w(Group::FederalBoard::President       federal_board -1),
+      %w(Group::FederalBoard::GroupAdmin      federal_board -1),
+      %w(Group::FederalBoard::Alumnus         federal_board  0),
+      %w(Group::FederalBoard::External        federal_board  0),
+      %w(Group::FederalBoard::DispatchAddress federal_board  0),
+      %w(Group::FederalAlumnusGroup::Leader   ch_ehemalige  -1),
     ].each do |role_type, group, change|
       it "creating role of #{role_type} changes alumni members by #{change}" do
         role = Fabricate(Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
