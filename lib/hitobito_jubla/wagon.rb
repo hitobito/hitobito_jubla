@@ -13,11 +13,12 @@ module HitobitoJubla
     app_requirement '>= 0'
 
     # Add a load path for this specific wagon
-    config.autoload_paths += %W( #{config.root}/app/abilities
-                                 #{config.root}/app/domain
-                                 #{config.root}/app/jobs
-                                 #{config.root}/app/serializers
-                             )
+    config.autoload_paths += %W(
+      #{config.root}/app/abilities
+      #{config.root}/app/domain
+      #{config.root}/app/jobs
+      #{config.root}/app/serializers
+    )
 
     # extend application classes here
     config.to_prepare do
@@ -54,9 +55,11 @@ module HitobitoJubla
       Export::Tabular::Events::List.send :include, Jubla::Export::Tabular::Events::List
       Export::Tabular::Events::Row.send :include, Jubla::Export::Tabular::Events::Row
       Export::Tabular::People::PersonRow.send(
-        :include, Jubla::Export::Tabular::People::OriginatingGroups)
+        :include, Jubla::Export::Tabular::People::OriginatingGroups
+      )
       Export::Tabular::People::ParticipationRow.send(
-        :include, Jubla::Export::Tabular::People::OriginatingGroups)
+        :include, Jubla::Export::Tabular::People::OriginatingGroups
+      )
       Export::Tabular::Events::BsvList.send :include, Jubla::Export::Tabular::Events::BsvList
       Export::Tabular::Events::BsvRow.send :include, Jubla::Export::Tabular::Events::BsvRow
 
@@ -74,11 +77,12 @@ module HitobitoJubla
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
         :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number,
-        :contactable_by_federation, :contactable_by_state, :contactable_by_region ]
+        :contactable_by_federation, :contactable_by_state, :contactable_by_region
+      ]
 
       RolesController.send :include, Jubla::RolesController
 
-      Event::Camp::KindsController # load before Event::KindsController
+      Event::Camp::KindsController # rubocop:disable Lint/Void load before Event::KindsController
       Event::KindsController.permitted_attrs += [:j_s_label]
 
       GroupsController.send :include, Jubla::GroupsController
