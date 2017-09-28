@@ -30,6 +30,7 @@ module HitobitoJubla
       Event.send :include, Jubla::Event
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
+      MailingList.send :include, Jubla::MailingList
 
       ### abilities
       EventAbility.send :include, Jubla::EventAbility
