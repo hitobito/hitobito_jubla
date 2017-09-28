@@ -1,7 +1,6 @@
 inherit_from: ../hitobito/.rubocop.yml
 
 AllCops:
-  RunRailsCops: true
   Exclude:
     - Rakefile
     - Gemfile
@@ -13,3 +12,5 @@ AllCops:
     - test/**/*
     - lib/jubla_ost/**/*
     - vendor/**/*
+Rails:
+  Enabled: true
