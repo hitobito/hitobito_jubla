@@ -128,7 +128,18 @@ module Jubla::Role
       old_enough_to_archive? &&
       roles_in_layer.empty? &&
       !group.is_a?(Group::AlumnusGroup) &&
-      !is_a?(Group::ChildGroup::Child)
+      person_old_enough?
+  end
+
+  def person_old_enough?
+    return true unless is_a?(Group::ChildGroup::Child)
+    return false unless self.person.years
+    min_age_for_alumni_member <= self.person.years
+  end
+
+  def min_age_for_alumni_member
+    @min_age_for_alumni_member ||=
+      Settings.alumni_administrations.min_age_for_alumni_member
   end
 
   def destroy_alumnus_member_role

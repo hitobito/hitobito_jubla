@@ -11,6 +11,10 @@ describe Group::AlumnusGroup do
 
   let(:parent_group) { groups(:bern) }
 
+  before do
+    allow_any_instance_of(Person).to receive(:years).and_return(15)
+  end
+
   context '#destroy' do
     it 'destroy if not last alumnus group in layer' do
       Group::FlockAlumnusGroup.create(name: 'test_group', parent_id: parent_group.id)
@@ -55,12 +59,35 @@ describe Group::AlumnusGroup do
         end
       end
 
-      it 'unless child role' do
+      it 'moves to alumnus group if not old enough but no child' do
+        allow_any_instance_of(Person).to receive(:years).and_return(14)
+        expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
+      end
+
+      it 'moves child to alumnus group if old enough' do
         role = Fabricate(Group::ChildGroup::Child.name.to_s,
                          group: groups(:asterix),
                          created_at: created_at)
 
-        expect { role.destroy }.not_to change { Group::FlockAlumnusGroup::Member.count }
+        expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
+      end
+
+      it 'unless child not old enough' do
+        allow_any_instance_of(Person).to receive(:years).and_return(14)
+        role = Fabricate(Group::ChildGroup::Child.name.to_s,
+                         group: groups(:asterix),
+                         created_at: created_at)
+
+        expect { role.destroy }.not_to change(Group::FlockAlumnusGroup::Member, :count)
+      end
+
+      it 'unless child has no birthday' do
+        allow_any_instance_of(Person).to receive(:years)
+        role = Fabricate(Group::ChildGroup::Child.name.to_s,
+                         group: groups(:asterix),
+                         created_at: created_at)
+
+        expect { role.destroy }.not_to change(Group::FlockAlumnusGroup::Member, :count)
       end
 
       it 'unless alumnus group' do
@@ -68,7 +95,7 @@ describe Group::AlumnusGroup do
                          group: groups(:bern_ehemalige),
                          created_at: created_at)
 
-        expect { role.destroy }.to change { Group::FlockAlumnusGroup::Leader.count }.by(-1)
+        expect { role.destroy }.to change(Group::FlockAlumnusGroup::Leader, :count).by(-1)
       end
 
       it 'does not create job if saving new role fails' do

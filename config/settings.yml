@@ -63,3 +63,6 @@ census:
 
 people:
   default_sort: role
+
+alumni_administrations:
+  min_age_for_alumni_member: 15
