@@ -84,6 +84,16 @@ describe Role do
     end
   end
 
+  context '#create' do
+    let(:group) { groups(:ch) }
+
+    it 'cannot create role without type' do
+      person = Fabricate(Group::Flock::Leader.to_s, group: groups(:bern)).person
+      role = person.roles.build(type: '', group: group)
+      expect(role).not_to be_valid
+    end
+  end
+
   context 'destroying of alumnus member role' do
     let(:group) { groups(:ch) }
     let(:alumni_group) { groups(:ch_ehemalige) }

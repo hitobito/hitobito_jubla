@@ -84,6 +84,7 @@ module Jubla::Role
   end
 
   def alumnus_group_member?
+    return unless type
     type.match(/AlumnusGroup::Member$/) # we cannot check inheritance if the role is not persisted
   end
 
