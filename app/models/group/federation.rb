@@ -75,14 +75,11 @@ class Group::Federation < Group
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
-  class Alumnus < Jubla::Role::Alumnus
-  end
-
   class External < Jubla::Role::External
   end
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles GroupAdmin, Alumnus, External, DispatchAddress
+  roles GroupAdmin, External, DispatchAddress
 end

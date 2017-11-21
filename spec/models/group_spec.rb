@@ -128,4 +128,23 @@ describe Group do
     end
   end
 
+  describe 'alumnus filter' do
+    let(:group) { groups(:ch) }
+
+    it 'creating non alumnus group creats alumnus filter' do
+      expect do
+        board = Group::FederalBoard.create(name: 'board', parent_id: group.id)
+        filter = board.people_filters.find_by(name: 'Ehemalige')
+        expect(filter.filter_chain).to be_present
+      end.to change { PeopleFilter.count  }.by(1)
+    end
+
+    it 'creating alumnus group does not create alumnus filter' do
+      expect do
+        Group::FederalAlumnusGroup.create(name: 'board', parent_id: group.id)
+      end.not_to change { PeopleFilter.count  }
+    end
+
+  end
+
 end
