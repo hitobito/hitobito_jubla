@@ -24,6 +24,7 @@ module Jubla::Group
     protect_if :children_without_deleted_and_alumni_groups
 
     before_destroy :delete_alumni_groups
+    after_create :create_alumni_filter, unless: :alumnus?
 
     scope :alumni_groups, -> { where(type: ALUMNI_GROUPS_CLASSES) }
     scope :without_alumni_groups, -> { where.not(type: ALUMNI_GROUPS_CLASSES) }
@@ -62,4 +63,18 @@ module Jubla::Group
     children.without_deleted.without_alumni_groups
   end
 
+  def create_alumni_filter
+    people_filters.create!(name: 'Ehemalige',
+                           group_id: id,
+                           range: :group,
+                           filter_chain: alumni_filter_chain)
+  end
+
+  def alumni_filter_chain
+    { role: {
+      kind: 'deleted',
+      start_at: Time.zone.at(0).to_s,
+      role_types: self.class.roles.collect(&:sti_name)
+    } }
+  end
 end
