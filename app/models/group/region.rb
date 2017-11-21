@@ -57,16 +57,13 @@ class Group::Region < Group
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
-  class Alumnus < Jubla::Role::Alumnus
-  end
-
   class External < Jubla::Role::External
   end
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles Coach, GroupAdmin, Alumnus, External, DispatchAddress
+  roles Coach, GroupAdmin, External, DispatchAddress
 
   children Group::RegionalBoard,
            Group::RegionalProfessionalGroup,

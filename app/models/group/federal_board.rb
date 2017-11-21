@@ -56,15 +56,12 @@ class Group::FederalBoard < Group
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
-  class Alumnus < Jubla::Role::Alumnus
-  end
-
   class External < Jubla::Role::External
   end
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles Member, President, GroupAdmin, Alumnus, External, DispatchAddress
+  roles Member, President, GroupAdmin, External, DispatchAddress
 
 end

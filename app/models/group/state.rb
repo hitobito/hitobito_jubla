@@ -63,9 +63,6 @@ class Group::State < Group
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
-  class Alumnus < Jubla::Role::Alumnus
-  end
-
   class External < Jubla::Role::External
   end
 
@@ -73,7 +70,7 @@ class Group::State < Group
   end
 
 
-  roles Coach, GroupAdmin, Alumnus, External, DispatchAddress
+  roles Coach, GroupAdmin, External, DispatchAddress
 
   children Group::StateAgency,
            Group::StateBoard,

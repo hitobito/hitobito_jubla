@@ -51,12 +51,6 @@ module Jubla::Role
     self.kind = :external
   end
 
-  # Ehemalige
-  class Alumnus < ::Role
-    self.permissions = [:group_read]
-    self.kind = :alumnus
-  end
-
   # Common superclass for all J+S Coach roles
   class Coach < ::Role
     self.permissions = [:contact_data, :group_read]

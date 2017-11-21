@@ -50,15 +50,12 @@ class Group::StateAgency < Group
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
-  class Alumnus < Jubla::Role::Alumnus
-  end
-
   class External < Jubla::Role::External
   end
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles Leader, GroupAdmin, Alumnus, External, DispatchAddress
+  roles Leader, GroupAdmin, External, DispatchAddress
 
 end
