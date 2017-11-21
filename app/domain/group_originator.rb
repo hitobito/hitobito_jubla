@@ -7,13 +7,11 @@
 
 class GroupOriginator
 
-  FLOCK_ROLES = Group::Flock.roles - [Group::Flock::Alumnus,
-                                      Group::Flock::External,
+  FLOCK_ROLES = Group::Flock.roles - [Group::Flock::External,
                                       Group::Flock::Coach,
                                       Group::Flock::Advisor]
 
-  STATE_ROLES = Group::StateBoard.roles - [Group::StateBoard::Alumnus,
-                                           Group::StateBoard::External,
+  STATE_ROLES = Group::StateBoard.roles - [Group::StateBoard::External,
                                            Group::StateBoard::DispatchAddress] +
                                            [Group::StateAgency::Leader]
 

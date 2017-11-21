@@ -20,7 +20,6 @@ class ConvertGlobalsToSpecificRoles < ActiveRecord::Migration
   def roles
     [Jubla::Role::GroupAdmin,
      Jubla::Role::DispatchAddress,
-     Jubla::Role::Alumnus,
      Jubla::Role::External]
   end
 end
