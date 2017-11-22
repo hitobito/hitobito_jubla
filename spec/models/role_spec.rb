@@ -44,20 +44,6 @@ describe Role do
     end
   end
 
-  describe Group::Region::Alumnus do
-    subject { Group::Region::Alumnus }
-
-    it { is_expected.to be_alumnus }
-    it { is_expected.not_to be_member }
-    it { is_expected.to be_visible_from_above }
-
-    its(:permissions) { should ==  [:group_read] }
-
-    it 'may be created for region' do
-      role = Fabricate.build(subject.name.to_sym, group: groups(:city))
-      expect(role).to be_valid
-    end
-  end
 
   describe '#all_types' do
     subject { Role.all_types }
@@ -68,19 +54,6 @@ describe Role do
 
     it 'finishes with bottom most role' do
       expect(subject.last).to eq(Group::SimpleGroup::DispatchAddress)
-    end
-  end
-
-  context '#destroy' do
-    let(:role) { Fabricate(role_class.name.to_s, group: groups(:bern), created_at: created_at) }
-    let(:role_class) { Group::Flock::Leader }
-    let(:created_at) { Time.zone.now }
-
-    context 'young role' do
-      it 'deletes from database' do
-        expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-        expect(Role.with_deleted.where(id: role.id)).not_to be_exists
-      end
     end
   end
 
@@ -101,7 +74,6 @@ describe Role do
     [ %w(Group::FederalBoard::Member          federal_board -1),
       %w(Group::FederalBoard::President       federal_board -1),
       %w(Group::FederalBoard::GroupAdmin      federal_board -1),
-      %w(Group::FederalBoard::Alumnus         federal_board  0),
       %w(Group::FederalBoard::External        federal_board  0),
       %w(Group::FederalBoard::DispatchAddress federal_board  0),
       %w(Group::FederalAlumnusGroup::Leader   ch_ehemalige  -1),

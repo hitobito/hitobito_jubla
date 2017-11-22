@@ -17,7 +17,7 @@ describe Group do
 
     it { is_expected.to have(7).possible_children }
     it { is_expected.to have(3).default_children }
-    it { is_expected.to have(4).role_types }
+    it { is_expected.to have(3).role_types }
     it { is_expected.to be_layer }
 
     its(:possible_children) { should include(Group::SimpleGroup) }
@@ -28,7 +28,7 @@ describe Group do
 
     it { is_expected.to have(3).possible_children }
     it { is_expected.to have(1).default_children }
-    it { is_expected.to have(11).role_types }
+    it { is_expected.to have(10).role_types }
     it { is_expected.to be_layer }
 
     it 'may have same name as other flock with different kind' do
@@ -48,7 +48,7 @@ describe Group do
     subject { Group::SimpleGroup }
     it { is_expected.to have(1).possible_children }
     it { is_expected.to have(0).default_children }
-    it { is_expected.to have(6).role_types }
+    it { is_expected.to have(5).role_types }
     it { is_expected.not_to be_layer }
     its(:possible_children) { should include(Group::SimpleGroup) }
 

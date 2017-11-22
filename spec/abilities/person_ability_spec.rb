@@ -48,13 +48,6 @@ describe PersonAbility do
       is_expected.not_to be_able_to(:update, other)
     end
 
-    it 'may view alumni in lower layers' do
-      other = Fabricate(Group::State::Alumnus.name.to_sym, group: groups(:be))
-      is_expected.to be_able_to(:show_full, other.person.reload)
-      is_expected.to be_able_to(:update, other)
-    end
-
-
     it 'may not modify any restricted roles in lower layers' do
       other = Fabricate(Group::Flock::Coach.name.to_sym, group: groups(:bern))
       Fabricate(Group::State::Coach.name.to_sym, group: groups(:be), person: other.person)
@@ -232,11 +225,6 @@ describe PersonAbility do
       is_expected.not_to be_able_to(:show, other.person.reload)
     end
 
-    it 'may view alumni in groups below' do
-      other = Fabricate(Group::Flock::Alumnus.name.to_sym, group: groups(:thun))
-      is_expected.to be_able_to(:show, other.person.reload)
-    end
-
     it 'may index groups in lower layer' do
       is_expected.to be_able_to(:index_people, groups(:bern))
       is_expected.to be_able_to(:index_full_people, groups(:bern))
@@ -379,11 +367,6 @@ describe PersonAbility do
       is_expected.to be_able_to(:show, other.person.reload)
     end
 
-    it 'may view alumni in same group' do
-      other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: groups(:be_state_camp))
-      is_expected.to be_able_to(:show, other.person.reload)
-    end
-
     it 'may not view details of others in same group' do
       other = Fabricate(Group::StateWorkGroup::Leader.name.to_sym, group: groups(:be_state_camp))
       is_expected.to be_able_to(:show_details, other.person.reload)
@@ -438,11 +421,6 @@ describe PersonAbility do
 
     it 'may not view externals in same group' do
       other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: groups(:be_state_camp))
-      is_expected.not_to be_able_to(:show, other.person.reload)
-    end
-
-    it 'may not view alumni in same group' do
-      other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: groups(:be_state_camp))
       is_expected.not_to be_able_to(:show, other.person.reload)
     end
 

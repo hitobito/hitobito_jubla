@@ -275,11 +275,6 @@ describe PersonReadables do
             other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
             is_expected.to include(other.person)
           end
-
-          it 'may get alumni in his group' do
-            other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: group)
-            is_expected.to include(other.person)
-          end
         end
 
         context 'group in same layer' do
@@ -354,11 +349,6 @@ describe PersonReadables do
 
           it 'may not get external people in his group' do
             other = Fabricate(Group::StateWorkGroup::External.name.to_sym, group: group)
-            is_expected.not_to include(other.person)
-          end
-
-          it 'may not get alumni in his group' do
-            other = Fabricate(Group::StateWorkGroup::Alumnus.name.to_sym, group: group)
             is_expected.not_to include(other.person)
           end
         end
