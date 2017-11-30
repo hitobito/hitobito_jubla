@@ -59,7 +59,7 @@ class Group::AlumnusGroup < Group
   end
 
   class Treasurer < Jubla::Role::Treasurer
-    self.permissions = [:group_and_below_read]
+    self.permissions = [:group_and_below_read, :finance]
   end
 
   class Member < Jubla::Role::Member
