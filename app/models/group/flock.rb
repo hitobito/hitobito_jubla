@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 # == Schema Information
 #
 # Table name: groups
@@ -70,16 +71,16 @@ class Group::Flock < Group
 
   def available_coaches
     coach_role_types = [Group::State::Coach, Group::Region::Coach].collect(&:sti_name)
-    Person.in_layer(*layer_hierarchy).
-           where(roles: { type: coach_role_types })
+    Person.in_layer(*layer_hierarchy)
+          .where(roles: { type: coach_role_types })
   end
 
   def available_advisors
     advisor_group_types = [Group::StateBoard, Group::RegionalBoard]
     advisor_role_types = advisor_group_types.collect(&:role_types).flatten.select(&:member?)
-    Person.in_layer(*layer_hierarchy).
-           where(groups: { type: advisor_group_types.collect(&:sti_name) }).
-           where(roles: { type: advisor_role_types.collect(&:sti_name) })
+    Person.in_layer(*layer_hierarchy)
+          .where(groups: { type: advisor_group_types.collect(&:sti_name) })
+          .where(roles: { type: advisor_role_types.collect(&:sti_name) })
   end
 
   def to_s(format = :default)

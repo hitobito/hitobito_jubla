@@ -68,7 +68,7 @@ module Jubla::Role
 
   end
 
-  # Common superclass for all traesurer roles
+  # Common superclass for all treasurer roles
   class Treasurer < ::Role
 
   end
@@ -128,8 +128,8 @@ module Jubla::Role
 
   def person_old_enough?
     return true unless is_a?(Group::ChildGroup::Child)
-    return false unless self.person.years
-    min_age_for_alumni_member <= self.person.years
+    return false unless person.years
+    min_age_for_alumni_member <= person.years
   end
 
   def min_age_for_alumni_member
@@ -144,7 +144,7 @@ module Jubla::Role
       (is_a?(Jubla::Role::Member) && group.is_a?(Group::AlumnusGroup))
 
     person.roles.joins(:group)
-          .where(roles:  { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)},
+          .where(roles:  { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name) },
                  groups: { layer_group_id: group.layer_group_id })
           .where.not(roles: { id: id }).destroy_all
   end
