@@ -6,11 +6,11 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 module Event::CampHelper
-  def format_event_advisor_id(event)
+  def format_event_advisor_id(_event)
     person_link(entry.advisor)
   end
 
-  def format_event_coach_id(event)
+  def format_event_coach_id(_event)
     person_link(entry.coach)
   end
 end

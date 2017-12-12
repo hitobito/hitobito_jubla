@@ -53,7 +53,7 @@ class Group::Flock < Group
   children Group::ChildGroup,
            Group::FlockAlumnusGroup
 
-  AVAILABLE_KINDS = %w(Jungwacht Blauring Jubla)
+  AVAILABLE_KINDS = %w(Jungwacht Blauring Jubla).freeze
 
 
   self.used_attributes += [:bank_account, :parish, :kind, :unsexed, :clairongarde, :founding_year,

@@ -26,16 +26,15 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
   private
 
   def flock_confirmation_ratios
-    @sub_groups.inject({}) do |hash, state|
+    @sub_groups.each_with_object({}) do |state, hash|
       hash[state.id] = { confirmed: number_of_confirmations(state), total: number_of_flocks(state) }
-      hash
     end
   end
 
   def number_of_confirmations(state)
     MemberCount.where(state_id: state.id, year: year).
-                distinct.
-                count(:flock_id)
+      distinct.
+      count(:flock_id)
   end
 
   def number_of_flocks(state)

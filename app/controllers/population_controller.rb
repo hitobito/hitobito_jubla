@@ -27,9 +27,9 @@ class PopulationController < ApplicationController
 
   def load_groups
     flock.self_and_descendants
-      .without_deleted
-      .where('type != ?', Group::SimpleGroup.sti_name)
-      .order_by_type(flock)
+         .without_deleted
+         .where('type != ?', Group::SimpleGroup.sti_name)
+         .order_by_type(flock)
   end
 
   def load_people_by_group
@@ -46,10 +46,10 @@ class PopulationController < ApplicationController
 
   def load_people(group)
     @member_counter.members.
-                    where(roles: { group_id: group }).
-                    preload_groups.
-                    order_by_role.
-                    order_by_name
+      where(roles: { group_id: group }).
+      preload_groups.
+      order_by_role.
+      order_by_name
   end
 
   def authorize

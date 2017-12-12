@@ -9,9 +9,9 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
 
   self.sub_group_type = Group::Flock
 
-  def remind
-    authorize!(:remind_census, group)
+  before_action :check_authorization, only: [:remind]
 
+  def remind
     flock = evaluation.sub_groups.find(params[:flock_id])
     CensusReminderJob.new(current_user, evaluation.current_census, flock).enqueue!
     notice = "Erinnerungsemail an #{flock} geschickt"
@@ -20,6 +20,12 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
       format.html { redirect_to census_state_group_path(group), notice: notice }
       format.js { flash.now.notice = notice }
     end
+  end
+
+  private
+
+  def check_authorization
+    authorize!(:remind_census, group)
   end
 
 end

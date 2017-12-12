@@ -24,9 +24,9 @@ class CensusReminderJob < BaseJob
 
   def recipients
     flock.people.only_public_data.
-                 where(roles: { type: Group::Flock::Leader.sti_name }).
-                 where("email IS NOT NULL OR email <> ''").
-                 uniq
+      where(roles: { type: Group::Flock::Leader.sti_name }).
+      where("email IS NOT NULL OR email <> ''").
+      uniq
   end
 
   def flock
@@ -40,7 +40,7 @@ class CensusReminderJob < BaseJob
   def state_agency
     state = flock.state
     state.children.where(type: state.contact_group_type.sti_name).
-                   without_deleted.
-                   first
+      without_deleted.
+      first
   end
 end

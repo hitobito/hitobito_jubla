@@ -21,7 +21,8 @@ class MemberCountsController < ApplicationController
       params[:member_count].keys,
       params[:member_count].values.collect do |attrs|
         ActionController::Parameters.new(attrs).permit(:leader_f, :leader_m, :child_f, :child_m)
-      end)
+      end
+    )
     with_errors = counts.select { |c| c.errors.present? }
     if with_errors.blank?
       flash[:notice] = "Die Mitgliederzahlen für #{year} wurden erfolgreich gespeichert."
@@ -37,7 +38,8 @@ class MemberCountsController < ApplicationController
   def create
     authorize!(:create_member_counts, flock)
 
-    if year = MemberCounter.create_counts_for(flock)
+    year = MemberCounter.create_counts_for(flock)
+    if year
       total = MemberCount.total_for_flock(year, flock).try(:total) || 0
       flash[:notice] = "Die Zahlen von Total #{total} Mitgliedern wurden " \
                        "für #{year} erfolgreich erzeugt."
@@ -69,7 +71,7 @@ class MemberCountsController < ApplicationController
     @year ||= if params[:year]
                 params[:year].to_i
               else
-                fail(ActiveRecord::RecordNotFound, 'year required')
+                raise(ActiveRecord::RecordNotFound, 'year required')
               end
   end
 end

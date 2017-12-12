@@ -29,9 +29,8 @@ class CensusEvaluation
   def counts_by_sub_group
     if sub_group_type
       sub_group_field = :"#{sub_group_type.model_name.element}_id"
-      group.census_groups(year).inject({}) do |hash, count|
+      group.census_groups(year).each_with_object({}) do |count, hash|
         hash[count.send(sub_group_field)] = count
-        hash
       end
     end
   end
@@ -95,8 +94,8 @@ class CensusEvaluation
   def sub_group_ids_with_other_group_count(sub_group_ids)
     MemberCount.where(sub_group_id_col => sub_group_ids,
                       :year => year).
-                where("#{group_id_col} <> ?", group.id).
-                pluck(sub_group_id_col)
+      where("#{group_id_col} <> ?", group.id).
+      pluck(sub_group_id_col)
   end
 
   def sub_group_id_col

@@ -8,7 +8,7 @@
 module Jubla::EventConstraints
 
   def not_closed_or_admin
-    user_context.admin || !is_closed_course?
+    user_context.admin || !closed_course?
   end
 
   def at_least_one_group_not_deleted_and_not_closed_or_admin
@@ -17,7 +17,7 @@ module Jubla::EventConstraints
 
   private
 
-  def is_closed_course?
+  def closed_course?
     event.is_a?(Event::Course) && event.closed?
   end
 

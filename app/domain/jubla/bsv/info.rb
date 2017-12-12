@@ -60,8 +60,8 @@ module Jubla
 
     def max_duration_date
       @max_duration_date ||= course.dates.
-        select { |date| date.location.present? }.
-        max { |a, b| a.duration.days <=> b.duration.days }
+                             select { |date| date.location.present? }.
+                             max { |a, b| a.duration.days <=> b.duration.days }
     end
   end
 end

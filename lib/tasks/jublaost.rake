@@ -23,12 +23,12 @@ namespace :jublaost do
     require "#{JublaJubla::Wagon.root}/lib/jubla_ost/schar"
     require "#{JublaJubla::Wagon.root}/lib/jubla_ost/schartyp"
 
-    start = Time.now
+    start = Time.zone.now
     old_count = counts
 
     JublaOst::Base.migrate
 
-    seconds = (Time.now - start).to_i
+    seconds = (Time.zone.now - start).to_i
     minutes = seconds / 60
 
     puts "\n\nMigrated the following models in #{minutes}:#{seconds % 60} minutes"
@@ -38,18 +38,19 @@ namespace :jublaost do
   end
 end
 
-def counts
-  [Group,
-   Event,
-   Person,
-   Role,
-   Qualification,
-   Event::Participation,
-   Event::Date,
-   Event::Question,
-   Event::Answer,
-   PhoneNumber,
-   SocialAccount
+def counts # rubocop:disable Metrics/MethodLength
+  [
+    Group,
+    Event,
+    Person,
+    Role,
+    Qualification,
+    Event::Participation,
+    Event::Date,
+    Event::Question,
+    Event::Answer,
+    PhoneNumber,
+    SocialAccount
   ].each_with_object({}) do |model, all|
     all[model] = model.count
   end

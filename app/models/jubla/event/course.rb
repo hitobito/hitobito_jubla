@@ -28,7 +28,8 @@ module Jubla::Event::Course
 
   def possible_contact_groups
     groups.each_with_object([]) do |g, contact_groups|
-      if type = g.class.contact_group_type
+      type = g.class.contact_group_type
+      if type
         children = g.children.where(type: type.sti_name).without_deleted
         contact_groups.concat(children)
       end

@@ -69,9 +69,9 @@ class MemberCount < ActiveRecord::Base
 
     def total_for_flock(year, flock)
       totals(year).
-      where(flock_id: flock.id).
-      group(:flock_id).
-      first
+        where(flock_id: flock.id).
+        group(:flock_id).
+        first
     end
 
     def details_for_federation(year)
@@ -94,16 +94,15 @@ class MemberCount < ActiveRecord::Base
              'SUM(leader_m) AS leader_m, ' \
              'SUM(child_f) AS child_f, ' \
              'SUM(child_m) AS child_m').
-      where(year: year)
+        where(year: year)
     end
 
     private
 
-
     def details(year)
       totals(year).
-      group(:born_in).
-      order(:born_in)
+        group(:born_in).
+        order(:born_in)
     end
   end
 

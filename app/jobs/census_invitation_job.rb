@@ -9,7 +9,7 @@ class CensusInvitationJob < BaseJob
 
   RECIPIENT_ROLES = [Group::StateAgency::Leader,
                      Group::Flock::Leader,
-                     Group::ChildGroup::Leader]
+                     Group::ChildGroup::Leader].freeze
 
 
   self.parameters = [:census_id]
@@ -24,8 +24,8 @@ class CensusInvitationJob < BaseJob
 
   def recipients
     Person.joins(:roles).
-           where(roles: { type: RECIPIENT_ROLES.collect(&:sti_name), deleted_at: nil }).
-           uniq
+      where(roles: { type: RECIPIENT_ROLES.collect(&:sti_name), deleted_at: nil }).
+      uniq
   end
 
   def census

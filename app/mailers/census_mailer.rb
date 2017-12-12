@@ -7,8 +7,8 @@
 
 class CensusMailer < ApplicationMailer
 
-  CONTENT_INVITATION = 'census_invitation'
-  CONTENT_REMINDER   = 'census_reminder'
+  CONTENT_INVITATION = 'census_invitation'.freeze
+  CONTENT_REMINDER   = 'census_reminder'.freeze
 
   def reminder(sender, census, recipients, flock, state_agency)
     values = {
@@ -25,7 +25,8 @@ class CensusMailer < ApplicationMailer
       Settings.email.mass_recipient,
       CONTENT_INVITATION,
       { 'due-date' => due_date(census) },
-      bcc: Person.mailing_emails_for(recipients))
+      bcc: Person.mailing_emails_for(recipients)
+    )
   end
 
   private
@@ -41,11 +42,12 @@ class CensusMailer < ApplicationMailer
   def contact_address(group)
     return '' if group.nil?
 
-    address = [group.to_s]
-    address << group.address.to_s.gsub("\n", '<br/>').presence
-    address << [group.zip_code, group.town].compact.join(' ').presence
-    address << group.phone_numbers.where(public: true).collect(&:to_s).join('<br/>').presence
-    address << group.email
-    address.compact.join('<br/>')
+    [
+      group.to_s,
+      group.address.to_s.gsub("\n", '<br/>').presence,
+      [group.zip_code, group.town].compact.join(' ').presence,
+      group.phone_numbers.where(public: true).collect(&:to_s).join('<br/>').presence,
+      group.email
+    ].compact.join('<br/>')
   end
 end

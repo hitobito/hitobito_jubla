@@ -15,7 +15,7 @@ class Event::Course::ConditionsController < SimpleCrudController
 
   decorates :group
 
-  prepend_before_filter :parent
+  prepend_before_action :parent
 
 
   private

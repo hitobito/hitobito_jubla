@@ -12,7 +12,6 @@ require 'hitobito_jubla/version'
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  # rubocop:disable SingleSpaceBeforeFirstArg
   s.name        = 'hitobito_jubla'
   s.version     = HitobitoJubla::VERSION
   s.authors     = ['Pascal Zumkehr']

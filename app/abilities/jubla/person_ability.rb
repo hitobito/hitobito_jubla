@@ -11,7 +11,7 @@ module Jubla::PersonAbility
   include Jubla::RoleAbility
 
   included do
-    STATES = %w(application_open application_closed assignment_closed completed)
+    STATES = %w(application_open application_closed assignment_closed completed).freeze
 
     on(Person) do
       permission(:layer_and_below_full).may(:update).

@@ -7,7 +7,7 @@
 
 module CensusEvaluationHelper
 
-  EMPTY_COUNT_VALUE = '-'
+  EMPTY_COUNT_VALUE = '-'.freeze
 
   def census_evaluation_path(group, options = {})
     klass = group.respond_to?(:klass) ? group.klass : group.class
@@ -19,7 +19,8 @@ module CensusEvaluationHelper
   end
 
   def count_field(group, field)
-    if count = @group_counts[group.id]
+    count = @group_counts[group.id]
+    if count
       count_value(count.send(field))
     else
       EMPTY_COUNT_VALUE

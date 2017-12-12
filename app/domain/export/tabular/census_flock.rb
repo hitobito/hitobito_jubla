@@ -47,7 +47,7 @@ module Export::Tabular
       ::MemberCount.totals(@year).group(:flock_id)
     end
 
-    def build_item(flock, member_count)
+    def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
       { name: flock.name,
         contact_first_name: flock.contact ? flock.contact.first_name : nil,
         contact_last_name: flock.contact ? flock.contact.last_name : nil,
@@ -61,7 +61,7 @@ module Export::Tabular
         child_count: member_count.child }
     end
 
-    def build_attribute_labels
+    def build_attribute_labels # rubocop:disable Metrics/MethodLength
       { name: human_attribute(:name),
         contact_first_name: 'Kontakt Vorname',
         contact_last_name: 'Kontakt Nachname',
