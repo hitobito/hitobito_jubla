@@ -11,11 +11,11 @@
 #  cost                        :string(255)
 #  maximum_participants        :integer
 #  contact_id                  :integer
-#  description                 :text
-#  location                    :text
+#  description                 :text(65535)
+#  location                    :text(65535)
 #  application_opening_at      :date
 #  application_closing_at      :date
-#  application_conditions      :text
+#  application_conditions      :text(65535)
 #  kind_id                     :integer
 #  state                       :string(60)
 #  priorization                :boolean          default(FALSE), not null
@@ -26,18 +26,21 @@
 #  application_contact_id      :integer
 #  external_applications       :boolean          default(FALSE)
 #  applicant_count             :integer          default(0)
-#  condition_id                :integer
+#  teamer_count                :integer          default(0)
 #  signature                   :boolean
 #  signature_confirmation      :boolean
 #  signature_confirmation_text :string(255)
-#  remarks                     :text
-#  training_days               :integer
-#  teamer_count                :integer          default(0)
-#  tentative_applications      :boolean          default(FALSE), not null
 #  creator_id                  :integer
 #  updater_id                  :integer
+#  applications_cancelable     :boolean          default(FALSE), not null
+#  required_contact_attrs      :text(65535)
+#  hidden_contact_attrs        :text(65535)
+#  display_booking_info        :boolean          default(TRUE), not null
+#  training_days               :decimal(12, 1)
+#  tentative_applications      :boolean          default(FALSE), not null
+#  condition_id                :integer
+#  remarks                     :text(65535)
 #
-
 
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3

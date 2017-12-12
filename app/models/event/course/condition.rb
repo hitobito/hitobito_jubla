@@ -6,11 +6,10 @@
 #  id         :integer          not null, primary key
 #  group_id   :integer
 #  label      :string(255)      not null
-#  content    :text             not null
+#  content    :text(65535)      not null
 #  created_at :datetime
 #  updated_at :datetime
 #
-
 
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
