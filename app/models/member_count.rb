@@ -3,17 +3,17 @@
 #
 # Table name: member_counts
 #
-#  id       :integer          not null, primary key
-#  state_id :integer          not null
-#  flock_id :integer          not null
-#  year     :integer          not null
-#  born_in  :integer
-#  leader_f :integer
-#  leader_m :integer
-#  child_f  :integer
-#  child_m  :integer
+#  id        :integer          not null, primary key
+#  state_id  :integer          not null
+#  flock_id  :integer          not null
+#  year      :integer          not null
+#  born_in   :integer
+#  leader_f  :integer
+#  leader_m  :integer
+#  child_f   :integer
+#  child_m   :integer
+#  region_id :integer
 #
-
 
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
@@ -24,6 +24,7 @@ class MemberCount < ActiveRecord::Base
 
   belongs_to :flock, class_name: 'Group::Flock'
   belongs_to :state, class_name: 'Group::State'
+  belongs_to :region, class_name: 'Group::Region'
 
   validates_by_schema
   validates :born_in, uniqueness: { scope: [:flock_id, :year] }
@@ -57,10 +58,18 @@ class MemberCount < ActiveRecord::Base
       totals(year).group(:state_id)
     end
 
-    def total_by_flocks(year, state)
+    def total_by_regions(year)
+      totals(year).group(:region_id)
+    end
+
+    def total_by_flocks(year, group)
+      condition = case group
+                  when Group::State  then { state_id: group.id }
+                  when Group::Region then { region_id: group.id }
+                  end
       totals(year).
-      where(state_id: state.id).
-      group(:flock_id)
+        where(condition).
+        group(:flock_id)
     end
 
     def total_for_federation(year)
@@ -82,6 +91,10 @@ class MemberCount < ActiveRecord::Base
       details(year).where(state_id: state.id)
     end
 
+    def details_for_region(year, region)
+      details(year).where(region_id: region.id)
+    end
+
     def details_for_flock(year, flock)
       details(year).where(flock_id: flock.id)
     end
@@ -89,6 +102,7 @@ class MemberCount < ActiveRecord::Base
     def totals(year)
       select('state_id, ' \
              'flock_id, ' \
+             'region_id, ' \
              'born_in, ' \
              'SUM(leader_f) AS leader_f, ' \
              'SUM(leader_m) AS leader_m, ' \

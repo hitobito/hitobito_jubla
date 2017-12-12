@@ -91,6 +91,10 @@ class Group::Flock < Group
     end
   end
 
+  def region
+    ancestors.find_by(type: Group::Region.sti_name)
+  end
+
   def state
     ancestors.find_by(type: Group::State.sti_name)
   end

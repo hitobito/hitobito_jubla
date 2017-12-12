@@ -71,6 +71,10 @@ class MemberCounter
     @state ||= flock.state
   end
 
+  def region
+    @region ||= flock.region
+  end
+
   def members
     Person.joins(:roles).
       where(roles: { group_id: flock.self_and_descendants,
@@ -89,6 +93,7 @@ class MemberCounter
     count = MemberCount.new
     count.flock = flock
     count.state = state
+    count.region = region
     count.year = year
     count.born_in = born_in
     count

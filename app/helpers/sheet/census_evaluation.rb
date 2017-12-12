@@ -15,6 +15,9 @@ module Sheet
     class State < Sheet::CensusEvaluation
     end
 
+    class Region < Sheet::CensusEvaluation
+    end
+
     class Flock < Sheet::CensusEvaluation
     end
   end

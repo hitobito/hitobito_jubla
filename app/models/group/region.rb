@@ -51,6 +51,8 @@ class Group::Region < Group
   self.superior_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
                                :jubla_full_coverage]
 
+  has_many :member_counts
+
   class Coach < Jubla::Role::Coach
   end
 
@@ -70,5 +72,18 @@ class Group::Region < Group
            Group::RegionalWorkGroup,
            Group::Flock,
            Group::RegionalAlumnusGroup
+
+
+  def census_total(year)
+    MemberCount.total_by_regions(year).find_by(region_id: id)
+  end
+
+  def census_groups(year)
+    MemberCount.total_by_flocks(year, self)
+  end
+
+  def census_details(year)
+    MemberCount.details_for_region(year, self)
+  end
 
 end

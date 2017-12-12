@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       scope module: 'census_evaluation' do
         get 'census/federation' => 'federation#index'
         get 'census/state' => 'state#index'
+        get 'census/region' => 'state#index'
         get 'census/flock' => 'flock#index'
         post 'census/state/remind' => 'state#remind'
       end
