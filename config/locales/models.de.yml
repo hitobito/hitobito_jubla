@@ -253,6 +253,7 @@ de:
         contactable_by_federation: nationale Ebene
         contactable_by_state: kantonale Ebene
         contactable_by_region: regionale Ebene
+        contactable_by_flock: lokale Ebene
 
       group:
         bank_account: Bankverbindung

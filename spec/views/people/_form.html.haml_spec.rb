@@ -17,6 +17,7 @@ describe 'people/_form.html.haml' do
     is_expected.not_to have_field :person_contactable_by_federation
     is_expected.not_to have_field :person_contactable_by_state
     is_expected.not_to have_field :person_contactable_by_region
+    is_expected.not_to have_field :person_contactable_by_flock
   end
 
   it 'shows contactable fields if only alumnus roles exist' do
@@ -25,5 +26,6 @@ describe 'people/_form.html.haml' do
     is_expected.to have_field :person_contactable_by_federation
     is_expected.to have_field :person_contactable_by_state
     is_expected.to have_field :person_contactable_by_region
+    is_expected.to have_field :person_contactable_by_flock
   end
 end
