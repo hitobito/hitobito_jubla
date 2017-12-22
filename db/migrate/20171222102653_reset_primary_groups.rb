@@ -17,7 +17,7 @@ class ResetPrimaryGroups < ActiveRecord::Migration
   private
   
   def set_primary_group_to_active_role_group(people_ids)
-    <<-SQL
+    sql = <<-SQL
     UPDATE people 
     SET primary_group_id = (
       SELECT group_id from roles
@@ -26,12 +26,13 @@ class ResetPrimaryGroups < ActiveRecord::Migration
       AND roles.deleted_at is NULL
       LIMIT 1
     ) 
-    WHERE id NOT IN (#{people_ids})
     SQL
+    sql << "WHERE id NOT IN (#{people_ids})" if people_ids.present?
+    sql
   end
 
   def set_primary_group_to_alumnus_role_group(people_ids)
-    <<-SQL
+    sql = <<-SQL
     UPDATE people 
     SET primary_group_id = (
       SELECT group_id from roles
@@ -39,8 +40,9 @@ class ResetPrimaryGroups < ActiveRecord::Migration
       AND roles.deleted_at is NULL
       LIMIT 1
     ) 
-    WHERE id NOT IN (#{people_ids})
     SQL
+    sql << "WHERE id NOT IN (#{people_ids})" if people_ids.present?
+    sql
   end
 
   def people_with_wrong_assigned_primary_group
