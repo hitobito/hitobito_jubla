@@ -72,6 +72,8 @@ module HitobitoJubla
         person: [:originating_flock, :originating_state]
       ]
 
+      Person::Filter::List.send :include, Jubla::Person::Filter::List
+
       Import::PersonImporter.send :include, Jubla::Import::PersonImporter
 
       ### controllers
