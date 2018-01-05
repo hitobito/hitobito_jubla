@@ -52,6 +52,19 @@ describe Group::AlumnusGroup do
           expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
         end
 
+        it 'resets contactable flags' do
+          role.person.update(contactable_by_federation: false,
+                             contactable_by_state: false,
+                             contactable_by_region: false,
+                             contactable_by_flock: false)
+
+          expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
+          expect(role.person.reload).to be_contactable_by_federation
+          expect(role.person).to be_contactable_by_state
+          expect(role.person).to be_contactable_by_region
+          expect(role.person).to be_contactable_by_flock
+        end
+
         it 'creates new background job' do
           expect_any_instance_of(AlumniMailJob).to receive(:enqueue!).and_call_original
           expect { role.destroy }.to change(Delayed::Job, :count).by(1)

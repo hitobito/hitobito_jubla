@@ -143,6 +143,11 @@ module Jubla::Role
       is_a?(Jubla::Role::DispatchAddress) ||
       (is_a?(Jubla::Role::Member) && group.is_a?(Group::AlumnusGroup))
 
+    person.update(contactable_by_federation: true,
+                  contactable_by_state: true,
+                  contactable_by_region: true,
+                  contactable_by_flock: true)
+
     person.roles.joins(:group)
           .where(roles:  { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name) },
                  groups: { layer_group_id: group.layer_group_id })
