@@ -119,7 +119,7 @@ module Jubla::Role
   end
 
   def create_role?
-    self.class.member? &&
+    applies_for_alumnus? &&
       old_enough_to_archive? &&
       roles_in_layer.empty? &&
       !group.is_a?(Group::AlumnusGroup) &&
@@ -137,10 +137,12 @@ module Jubla::Role
       Settings.alumni_administrations.min_age_for_alumni_member
   end
 
+  def applies_for_alumnus?
+    [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
+  end
+
   def destroy_alumnus_member_role
-    return if alumnus? ||
-      is_a?(Jubla::Role::External) ||
-      is_a?(Jubla::Role::DispatchAddress) ||
+    return if alumnus? || !applies_for_alumnus? ||
       (is_a?(Jubla::Role::Member) && group.is_a?(Group::AlumnusGroup))
 
     person.update(contactable_by_federation: true,
@@ -148,10 +150,17 @@ module Jubla::Role
                   contactable_by_region: true,
                   contactable_by_flock: true)
 
+    alumnus_member_roles_in_layer.where.not(roles: { id: id }).destroy_all
+  end
+
+  def alumnus_member_roles_in_layer
     person.roles.joins(:group)
-          .where(roles:  { type: Group::AlumnusGroup::Member.subclasses.collect(&:sti_name) },
+          .where(roles:  { type: alumnus_member_role_types },
                  groups: { layer_group_id: group.layer_group_id })
-          .where.not(roles: { id: id }).destroy_all
+  end
+
+  def alumnus_member_role_types
+    Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)
   end
 
 end
