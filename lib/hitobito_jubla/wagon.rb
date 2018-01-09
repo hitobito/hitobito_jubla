@@ -65,6 +65,7 @@ module HitobitoJubla
       Export::Tabular::Events::BsvRow.send :include, Jubla::Export::Tabular::Events::BsvRow
 
       Group::Merger.send :include, Jubla::Group::Merger
+      Group::Mover.send :include, Jubla::Group::Mover
 
       Export::Pdf::Participation.send :include, Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
