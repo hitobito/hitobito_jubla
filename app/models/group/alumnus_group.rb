@@ -54,7 +54,7 @@ class Group::AlumnusGroup < Group
     self.permissions = [:group_and_below_full, :contact_data, :alumnus_below_full]
   end
 
-  class GroupAdmin < Jubla::Role::DispatchAddress
+  class GroupAdmin < Jubla::Role::GroupAdmin
     self.permissions = [:group_and_below_full]
   end
 
