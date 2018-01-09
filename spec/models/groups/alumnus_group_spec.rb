@@ -16,20 +16,20 @@ describe Group::AlumnusGroup do
   end
 
   context '#destroy' do
-    it 'destroy if not last alumnus group in layer' do
-      Group::FlockAlumnusGroup.create(name: 'test_group', parent_id: parent_group.id)
-      alumnus_group2 = Group::FlockAlumnusGroup.create(name: 'test_group2',
-                                                       parent_id: parent_group.id)
+    let(:group) { groups(:bern_ehemalige) }
 
-      expect(alumnus_group2.destroy).not_to be false
-      expect(Group.without_deleted.where(id: alumnus_group2.id)).not_to exist
+    it 'may not destroy if group is last alumnus group in layer' do
+      expect { group.destroy }.not_to change { Group.without_deleted.count }
     end
 
-    it 'cannot destroy if last alumnus group in layer' do
-      alumnus_group = groups(:bern_ehemalige)
+    it 'may destroy group if other alumnus group exists in layer' do
+      Group::FlockAlumnusGroup.create!(name: 'test_group', parent: groups(:bern))
+      expect { group.destroy }.to change { Group.without_deleted.count }.by(-1)
+    end
 
-      expect(alumnus_group.destroy).to be false
-      expect(Group.without_deleted.where(id: alumnus_group.id)).to exist
+    it 'may always destroy nested alumnus group' do
+      nested = Group::AlumnusGroup.create!(name: 'test_group', parent: group)
+      expect { nested.destroy }.to change { Group.without_deleted.count }.by(-1)
     end
   end
 

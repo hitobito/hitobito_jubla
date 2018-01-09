@@ -75,7 +75,7 @@ class Group::AlumnusGroup < Group
   private
 
   def last_alumnus_group_in_layer?
-    parent.children.without_deleted.alumni_groups.count == 1
+    parent.layer? && siblings.without_deleted.alumni_groups.empty?
   end
 
 end
