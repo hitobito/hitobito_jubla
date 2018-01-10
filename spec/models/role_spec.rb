@@ -104,11 +104,18 @@ describe Role do
     end
 
     context 'validations'do
-      it 'does not allow to creating alumnus member if active role in same layer exists' do
+      it 'does not allow creating alumnus member if active role in same layer exists' do
         person = Fabricate(Group::FederalBoard::Member.to_s, group: groups(:federal_board)).person
         role = person.roles.build(type: Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
         expect(role).not_to be_valid
         expect(role.errors.full_messages.first).to eq 'Es befinden sich noch andere aktive Rollen in diesem Layer'
+      end
+
+      it 'does allow creating alumnus member if only role in same layer is in another alumnus group' do
+        group = Group::FederalAlumnusGroup.create!(name: 'other', parent: groups(:ch))
+        person = Fabricate(Group::FederalAlumnusGroup::Member.to_s, group: group).person
+        role = person.roles.build(type: Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
+        expect(role).to be_valid
       end
 
       it 'allows creating alumnus member if active exists in other layer' do

@@ -85,7 +85,7 @@ module Jubla::Role
   private
 
   def assert_no_active_roles
-    if roles_in_layer.exists?
+    if active_roles_in_layer.exists?
       errors.add(:base, I18n.t('activerecord.errors.messages.other_roles_exists'))
     end
   end
@@ -112,6 +112,10 @@ module Jubla::Role
 
   def roles_in_layer
     Role.roles_in_layer(person_id, group.layer_group.id)
+  end
+
+  def active_roles_in_layer
+    roles_in_layer.where.not(roles: { type: alumnus_member_role_types })
   end
 
   def alumnus_role_type
