@@ -48,6 +48,8 @@ de:
       statistics: Statistik
 
   people:
+    show_left_jubla:
+      contactable_by: Kontaktfreigabe
     fields_jubla:
       help_canton: Wird aus der PLZ berechnet falls leer.
       info_alumnus_contactable: "Mit dem Setzen eines Häkchens erlaubst du folgenden Ebenen, dich zu kontaktieren und dir Informationen zu senden:"
