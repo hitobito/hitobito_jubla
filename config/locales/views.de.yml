@@ -10,7 +10,6 @@ de:
         export_only_includes_courses_of_states: Es werden Kurse in jedem Kursstatus exportiert.
       courses:
         explanation: Angezeigt werden hier Kurse deines Kantons und der Bundesebene. Weitere Kurse findest du beim entsprechenden Kanton.
-        csv_export_button: Kursdatenliste
         bsv_export_button: BSV Export
       events:
         explanation: Angezeigt werden hier Anlässe deiner Schar, deiner Regions- und Kantonsleitung, der Bundesebene, sowie von Gruppen bei welchen du Mitglied bist.
