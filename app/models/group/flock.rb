@@ -138,7 +138,7 @@ class Group::Flock < Group
 
   # Kassier
   class Treasurer < Jubla::Role::Treasurer
-    self.permissions = [:layer_and_below_read, :contact_data, :finance]
+    self.permissions = [:layer_and_below_read, :contact_data]
   end
 
   # Coach
