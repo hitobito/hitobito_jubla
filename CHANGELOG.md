@@ -1,8 +1,10 @@
 # Hitobito Jubla Changelog
 
-## Version 1.X
+## Version 1.18
 
 * Neuer Gruppentyp Ehemalige
+* Personen, die keine aktiven Rollen mehr haben, werden automatisch zur Ehemaligengruppe hinzufügt.
+* Bei Ehemaligen kann man konfigurieren, von wem man noch kontaktiert werden will (Schar, Kanton, Dachverband).
 
 ## Version 1.10
 
