@@ -27,7 +27,7 @@ module Jubla::PersonDecorator
   private
 
   def roles_array
-    @roles_array ||= roles.to_a
+    @roles_array ||= roles.includes(:group).to_a
   end
 
 end
