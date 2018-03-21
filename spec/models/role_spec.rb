@@ -97,9 +97,16 @@ describe Role do
           role = Fabricate(role_type, group: groups(group))
           role.update(created_at: Time.zone.now - Settings.role.minimum_days_to_archive.days - 1.day)
           expect do
-            role.destroy
+            expect { role.destroy }.to change { Delayed::Job.count }.by(change.to_i * -1)
           end.to change { Group::FederalAlumnusGroup::Member.where(group: alumni_group).count }.by(change.to_i * -1)
         end
+      end
+
+      it 'does not not enqueue mail job when no email is set' do
+        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board))
+        role.update(created_at: Time.zone.now - Settings.role.minimum_days_to_archive.days - 1.day)
+        role.person.update(email: nil)
+        expect { role.destroy }.not_to change { Delayed::Job.count }
       end
     end
 

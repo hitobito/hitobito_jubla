@@ -98,6 +98,7 @@ module Jubla::Role
     if create_role?
       @group = group.alumni_groups.first
       return unless build_new_role.save
+      return if person.email.blank?
       AlumniMailJob.new(group.id, person.id).enqueue!(run_at: 1.day.from_now)
     end
   end
