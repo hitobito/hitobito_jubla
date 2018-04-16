@@ -82,6 +82,10 @@ module Jubla::Role
     type.match(/AlumnusGroup::Member$/) # we cannot check inheritance if the role is not persisted
   end
 
+  def applies_for_alumnus?
+    [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
+  end
+
   private
 
   def assert_no_active_roles
@@ -140,10 +144,6 @@ module Jubla::Role
   def min_age_for_alumni_member
     @min_age_for_alumni_member ||=
       Settings.alumni_administrations.min_age_for_alumni_member
-  end
-
-  def applies_for_alumnus?
-    [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
   end
 
   def destroy_alumnus_member_role

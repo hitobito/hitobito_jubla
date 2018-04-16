@@ -9,15 +9,11 @@ module Jubla::PersonDecorator
   extend ActiveSupport::Concern
 
   def active_roles_grouped
-    roles_array.reject(&:alumnus?).each_with_object(Hash.new { |h, k| h[k] = [] }) do |role, memo|
-      memo[role.group] << role
-    end
+    build_memo(active_roles)
   end
 
-  def alumni_roles_grouped
-    roles_array.select(&:alumnus?).each_with_object(Hash.new { |h, k| h[k] = [] }) do |role, memo|
-      memo[role.group] << role
-    end
+  def inactive_roles_grouped
+    build_memo(alumnus_roles + deleted_alumnus_applicable_roles)
   end
 
   def coached_events
@@ -30,4 +26,25 @@ module Jubla::PersonDecorator
     @roles_array ||= roles.includes(:group).to_a
   end
 
+  def active_roles
+    roles_array.reject(&:alumnus?)
+  end
+
+  def alumnus_roles
+    roles_array - active_roles
+  end
+
+  def deleted_alumnus_applicable_roles
+    roles.deleted.includes(:group).select do |role|
+      role.group &&
+        role.applies_for_alumnus? &&
+        !(role.group.is_a?(Group::AlumnusGroup) && role.is_a?(Jubla::Role::Member))
+    end
+  end
+
+  def build_memo(roles)
+    roles.each_with_object(Hash.new { |h, k| h[k] = [] }) do |role, memo|
+      memo[role.group] << role
+    end
+  end
 end
