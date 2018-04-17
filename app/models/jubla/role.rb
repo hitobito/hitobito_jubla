@@ -80,14 +80,10 @@ module Jubla::Role
   end
 
   def alumnus_applicable?
-    group.present? && potential_alumnus? && !member_of_alumnus_group?
+    potential_alumnus? && !alumnus?
   end
 
   private
-
-  def member_of_alumnus_group?
-    group.is_a?(Group::AlumnusGroup) && is_a?(Jubla::Role::Member)
-  end
 
   def assert_no_active_roles
     if active_roles_in_layer.exists?
@@ -152,7 +148,7 @@ module Jubla::Role
   end
 
   def destroy_alumnus_member_role
-    return if alumnus? || !potential_alumnus? || member_of_alumnus_group?
+    return unless alumnus_applicable?
 
     person.update(contactable_by_federation: true,
                   contactable_by_state: true,
