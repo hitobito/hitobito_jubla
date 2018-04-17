@@ -35,11 +35,7 @@ module Jubla::PersonDecorator
   end
 
   def deleted_alumnus_applicable_roles
-    roles.deleted.includes(:group).select do |role|
-      role.group &&
-        role.applies_for_alumnus? &&
-        !(role.group.is_a?(Group::AlumnusGroup) && role.is_a?(Jubla::Role::Member))
-    end
+    roles.deleted.includes(:group).select(&:alumnus_applicable?)
   end
 
   def build_memo(roles)

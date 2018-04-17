@@ -82,11 +82,15 @@ module Jubla::Role
     type.match(/AlumnusGroup::Member$/) # we cannot check inheritance if the role is not persisted
   end
 
-  def applies_for_alumnus?
-    [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
+  def alumnus_applicable?
+    group.present? && potential_alumnus? && !member_of_alumnus_group?
   end
 
   private
+
+  def member_of_alumnus_group?
+    group.is_a?(Group::AlumnusGroup) && is_a?(Jubla::Role::Member)
+  end
 
   def assert_no_active_roles
     if active_roles_in_layer.exists?
@@ -128,7 +132,7 @@ module Jubla::Role
   end
 
   def create_role?
-    applies_for_alumnus? &&
+    potential_alumnus? &&
       old_enough_to_archive? &&
       roles_in_layer.empty? &&
       !group.is_a?(Group::AlumnusGroup) &&
@@ -146,9 +150,12 @@ module Jubla::Role
       Settings.alumni_administrations.min_age_for_alumni_member
   end
 
+  def potential_alumnus?
+    [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
+  end
+
   def destroy_alumnus_member_role
-    return if alumnus? || !applies_for_alumnus? ||
-      (is_a?(Jubla::Role::Member) && group.is_a?(Group::AlumnusGroup))
+    return if alumnus? || !potential_alumnus? || member_of_alumnus_group?
 
     person.update(contactable_by_federation: true,
                   contactable_by_state: true,
