@@ -18,7 +18,7 @@ describe Import::PersonImporter do
 
   context 'records failed imports' do
     let(:person) { people(:top_leader) }
-    let(:data) do 
+    let(:data) do
       [{ first_name: person.first_name, last_name: person.last_name, email: person.email},
        { first_name: 'foobar', email: 'foo3@bar.net' }]
     end
@@ -29,7 +29,7 @@ describe Import::PersonImporter do
 
     context 'alumnus group member error' do
       before { importer.import }
-      let(:error_message) { I18n.t('activerecord.errors.messages.cannot_import_alumnus', 
+      let(:error_message) { I18n.t('activerecord.errors.messages.cannot_import_alumnus',
                                    name: person.full_name) }
 
       its('errors.first') { should eq 'Zeile 1: Rollen ist nicht gültig' }

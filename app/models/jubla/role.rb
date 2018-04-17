@@ -59,18 +59,15 @@ module Jubla::Role
   # Common superclass for all leader roles
   # Primarly used for common naming
   class Leader < ::Role
-
   end
 
   # Common superclass for all member roles
   # Primarly used for common naming
   class Member < ::Role
-
   end
 
   # Common superclass for all treasurer roles
   class Treasurer < ::Role
-
   end
 
   def alumnus?
