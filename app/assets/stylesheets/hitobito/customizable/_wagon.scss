@@ -183,6 +183,10 @@ html.turbolinks-progress-bar::before {
   }
 }
 
+.btn-danger {
+  @include buttonBackground($btnDangerBackground, $btnDangerBackgroundHighlight);
+}
+
 .btn-primary {
   @include buttonBackground($btnPrimaryBackground, $btnPrimaryBackgroundHighlight);
 }
