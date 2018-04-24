@@ -12,8 +12,12 @@ module Jubla::PersonDecorator
     build_memo(active_roles)
   end
 
+  def alumnus_roles_grouped
+    build_memo(alumnus_roles)
+  end
+
   def inactive_roles_grouped
-    build_memo(alumnus_roles + deleted_alumnus_applicable_roles)
+    build_memo(deleted_alumnus_applicable_roles)
   end
 
   def coached_events
