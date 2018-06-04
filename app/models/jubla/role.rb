@@ -13,12 +13,20 @@ module Jubla::Role
     Role::Types::Permissions << :alumnus_below_full
 
     attr_accessor :skip_alumnus_callback
-    after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
 
     validate :assert_no_active_roles, if: :alumnus_group_member?
-    after_create :destroy_alumnus_member_role, if: :alumnus_applicable?
+
+    # setting origin
     after_save :set_person_origins
     after_destroy :set_person_origins
+
+    # managing membership in alumnus group
+    after_create :destroy_role_in_alumnus_group, if: :alumnus_applicable?
+    after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
+
+    # managing group alumnus role
+    after_create :destroy_alumnus_role, if: ->(role) { !role.alumnus? }
+    after_destroy :create_alumnus_role, unless: :skip_alumnus_callback
   end
 
   module ClassMethods
@@ -103,7 +111,23 @@ module Jubla::Role
 
   def create_role_in_alumnus_group
     if old_enough_to_archive? && potential_alumnus?
-      Jubla::Role::AlumnusManager.new(self).create
+      Jubla::Role::AlumnusManager.new(self).create_alumnus_member
+    end
+  end
+
+  def destroy_role_in_alumnus_group
+    Jubla::Role::AlumnusManager.new(self).destroy_alumnus_member
+  end
+
+  def create_alumnus_role
+    if old_enough_to_archive? && potential_alumnus?
+      Jubla::Role::AlumnusManager.new(self).create_alumnus_role
+    end
+  end
+
+  def destroy_alumnus_role
+    unless alumnus?
+      Jubla::Role::AlumnusManager.new(self).destroy_alumnus_role
     end
   end
 
@@ -117,10 +141,6 @@ module Jubla::Role
 
   def potential_alumnus?
     [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
-  end
-
-  def destroy_alumnus_member_role
-    Jubla::Role::AlumnusManager.new(self).destroy
   end
 
   def alumnus_member_role_types

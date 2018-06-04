@@ -9,17 +9,28 @@ module Jubla::Role
       @person = role.person
     end
 
-    def create
+    def create_alumnus_role
+      if last_role_for_person_in_group?
+        role = alumnus_class.new(person: person, group: group)
+        role.label = role.class.label
+        role.save!
+      end
+    end
+
+    def destroy_alumnus_role
+    end
+
+    def create_alumnus_member
       return unless applies?
       alumnus_member = create_member_role
 
       if alumnus_member
         update_contactable_flags
-        enqueue_mail_job if  person.email.present?
+        enqueue_mail_job if person.email.present?
       end
     end
 
-    def destroy
+    def destroy_alumnus_member
       update_contactable_flags
       alumnus_member_roles_in_layer.where.not(roles: { id: role.id }).destroy_all
     end
@@ -64,6 +75,10 @@ module Jubla::Role
       "#{alumnus_group.type}::Member".constantize
     end
 
+    def alumnus_class
+      "#{group.class}::Alumnus".constantize
+    end
+
     def update_contactable_flags
       person.update(contactable_by_federation: true,
                     contactable_by_state: true,
@@ -79,6 +94,10 @@ module Jubla::Role
 
     def alumnus_member_role_types
       Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)
+    end
+
+    def last_role_for_person_in_group?
+      group.roles.where(person_id: person.id).empty?
     end
 
 
