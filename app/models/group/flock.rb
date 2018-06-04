@@ -159,6 +159,9 @@ class Group::Flock < Group
     self.permissions = [:layer_and_below_full]
   end
 
+  class Alumnus < Jubla::Role::Alumnus
+  end
+
   class External < Jubla::Role::External
   end
 
@@ -171,6 +174,7 @@ class Group::Flock < Group
         Treasurer,
         Guide,
         GroupAdmin,
+        Alumnus,
         External,
         DispatchAddress
 

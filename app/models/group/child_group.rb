@@ -55,12 +55,15 @@ class Group::ChildGroup < Group
   class GroupAdmin < Jubla::Role::GroupAdmin
   end
 
+  class Alumnus < Jubla::Role::Alumnus
+  end
+
   class External < Jubla::Role::External
   end
 
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles Leader, Child, GroupAdmin, External, DispatchAddress
+  roles Leader, Child, GroupAdmin, Alumnus, External, DispatchAddress
 
 end
