@@ -8,6 +8,7 @@
 require 'spec_helper'
 
 describe Role do
+  let(:some_time_ago) { Time.zone.now - Settings.role.minimum_days_to_archive.days - 1.day }
 
   describe Group::Flock::Leader do
     subject { Group::Flock::Leader }
@@ -211,7 +212,63 @@ describe Role do
         expect(person).to be_contactable_by_flock
       end
     end
-
   end
 
+  context 'alumnus role' do
+    let(:role) { Fabricate(role_class.name.to_s, group: groups(:bern), created_at: some_time_ago) }
+    let(:role_class) { Group::Flock::Leader }
+
+    context 'create' do
+      it 'creating active role flags alumnus role as deleted' do
+        role = Fabricate(Group::Flock::Alumnus.name, group: groups(:bern), created_at: some_time_ago)
+        expect do
+          Fabricate(Group::Flock::Leader.name, group: groups(:bern), person: role.person)
+        end.to change { Group::Flock::Alumnus.count }.by(-1)
+        expect(Role.with_deleted.find(role.id)).to be_present
+      end
+
+      it 'creating alumnus role does not flag existing alumnus role as deleted' do
+        role = Fabricate(Group::Flock::Alumnus.name, group: groups(:bern), created_at: some_time_ago)
+        expect do
+          Fabricate(Group::Flock::Alumnus.name, group: groups(:bern), person: role.person)
+        end.to change { Group::Flock::Alumnus.count }.by(1)
+      end
+    end
+
+    context 'destroy' do
+      it 'recent role is flagged as deleted without creating alumnus role' do
+        role.update(created_at: 1.minute.ago)
+        expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+        expect(Role.with_deleted.where(id: role.id)).not_to be_exists
+      end
+
+      it 'older role is flagged as deleted without creating alumnus role when another active role exists' do
+        Fabricate(role_class.name.to_s, group: groups(:bern), person: role.person)
+        expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+        expect(Role.only_deleted.find(role.id)).to be_present
+      end
+
+      it 'older role is flagged as deleted and alumnus role is created' do
+        expect { role.destroy }.to change { Group::Flock::Alumnus.count }.by(1)
+        expect(Role.only_deleted.find(role.id)).to be_present
+      end
+
+      context 'external role' do
+        let(:role_class) { Group::Flock::External }
+
+        it 'flags as deleted, does not create alumnus role' do
+          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+          expect(Role.only_deleted.find(role.id)).to be_present
+        end
+      end
+
+      context 'alumnus role' do
+        let(:role_class) { Group::Flock::Alumnus }
+
+        it 'can be destroyed, does not creates new alumnus role' do
+          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+        end
+      end
+    end
+  end
 end

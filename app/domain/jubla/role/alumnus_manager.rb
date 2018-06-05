@@ -18,6 +18,9 @@ module Jubla::Role
     end
 
     def destroy_alumnus_role
+      person.roles.joins(:group)
+        .where(group: group, type: group.alumnus_class)
+        .destroy_all
     end
 
     def create_alumnus_group_member
