@@ -11,7 +11,7 @@ module Jubla::Role
 
     def create_alumnus_role
       if last_role_for_person_in_group?
-        role = alumnus_class.new(person: person, group: group)
+        role = group.alumnus_class.new(person: person, group: group)
         role.label = role.class.label
         role.save!
       end
@@ -59,24 +59,12 @@ module Jubla::Role
     end
 
     def create_member_role
-      member = alumnus_member_class.new(person: person, group: alumnus_group)
+      member = group.alumnus_member_class.new(person: person, group: group.alumnus_group)
       member.save
     end
 
     def enqueue_mail_job
-      AlumniMailJob.new(alumnus_group.id, role.person.id).enqueue!(run_at: 1.day.from_now)
-    end
-
-    def alumnus_group
-      @alumnus_group ||= group.alumni_groups.first
-    end
-
-    def alumnus_member_class
-      "#{alumnus_group.type}::Member".constantize
-    end
-
-    def alumnus_class
-      "#{group.class}::Alumnus".constantize
+      AlumniMailJob.new(group.alumnus_group.id, role.person.id).enqueue!(run_at: 1.day.from_now)
     end
 
     def update_contactable_flags
