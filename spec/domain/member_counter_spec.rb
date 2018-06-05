@@ -31,10 +31,10 @@ describe MemberCounter do
   end
 
   it 'flock has external and deleted people as well' do
-    expect(flock.people.count).to eq(5)
+    expect(flock.people.count).to eq(6)
     expect(Person.joins('INNER JOIN roles ON roles.person_id = people.id').
            where(roles: { group_id: flock.id }).
-           count).to eq(6)
+           count).to eq(7)
   end
 
   context 'instance' do
