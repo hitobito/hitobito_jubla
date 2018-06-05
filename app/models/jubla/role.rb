@@ -16,17 +16,14 @@ module Jubla::Role
 
     validate :assert_no_active_roles, if: :alumnus_group_member?
 
-    # setting origin
     after_save :set_person_origins
     after_destroy :set_person_origins
 
-    # managing membership in alumnus group
-    after_create :destroy_role_in_alumnus_group, if: :alumnus_applicable?
-    after_destroy :create_role_in_alumnus_group, unless: :skip_alumnus_callback
+    after_create :destroy_alumnus_group_member, if: :alumnus_applicable?
+    after_destroy :create_alumnus_group_member, unless: :skip_alumnus_callback
 
-    # managing group alumnus role
-    after_create :destroy_alumnus_role, if: ->(role) { !role.alumnus? }
-    after_destroy :create_alumnus_role, unless: :skip_alumnus_callback
+    after_create :destroy_alumnus_role, unless: ->(r) { r.group.alumnus? || r.alumnus? }
+    after_destroy :create_alumnus_role, unless: ->(r) { r.group.alumnus? }
   end
 
   module ClassMethods
@@ -64,7 +61,6 @@ module Jubla::Role
     self.permissions = [:group_read]
     self.kind = :alumnus
   end
-
 
   # Common superclass for all J+S Coach roles
   class Coach < ::Role
@@ -118,42 +114,30 @@ module Jubla::Role
     person.update_columns(GroupOriginator.new(person).to_h)
   end
 
-  def create_role_in_alumnus_group
+  def create_alumnus_group_member
     if old_enough_to_archive? && potential_alumnus?
-      Jubla::Role::AlumnusManager.new(self).create_alumnus_member
+      alumnus_manager.create_alumnus_group_member
     end
   end
 
-  def destroy_role_in_alumnus_group
-    Jubla::Role::AlumnusManager.new(self).destroy_alumnus_member
+  def destroy_alumnus_group_member
+    alumnus_manager.destroy_alumnus_group_member
   end
 
   def create_alumnus_role
-    if old_enough_to_archive? && potential_alumnus?
-      Jubla::Role::AlumnusManager.new(self).create_alumnus_role
-    end
+    alumnus_manager.create_alumnus_role if old_enough_to_archive? && self.class.member?
   end
 
   def destroy_alumnus_role
-    unless alumnus?
-      Jubla::Role::AlumnusManager.new(self).destroy_alumnus_role
-    end
+    alumnus_manager.destroy_alumnus_role
   end
 
-  def roles_in_layer
-    Role.roles_in_layer(person_id, group.layer_group.id)
-  end
-
-  def active_roles_in_layer
-    roles_in_layer.where.not(roles: { type: alumnus_member_role_types })
+  def alumnus_manager
+    @alumnus_manager ||= Jubla::Role::AlumnusManager.new(self)
   end
 
   def potential_alumnus?
     [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
-  end
-
-  def alumnus_member_role_types
-    Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)
   end
 
 end

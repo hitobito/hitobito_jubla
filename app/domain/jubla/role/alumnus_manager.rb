@@ -20,7 +20,7 @@ module Jubla::Role
     def destroy_alumnus_role
     end
 
-    def create_alumnus_member
+    def create_alumnus_group_member
       return unless applies?
       alumnus_member = create_member_role
 
@@ -30,7 +30,7 @@ module Jubla::Role
       end
     end
 
-    def destroy_alumnus_member
+    def destroy_alumnus_group_member
       update_contactable_flags
       alumnus_member_roles_in_layer.where.not(roles: { id: role.id }).destroy_all
     end
