@@ -97,6 +97,15 @@ module Jubla::Role
     potential_alumnus? && !alumnus?
   end
 
+  def roles_in_layer
+    Role.roles_in_layer(person_id, group.layer_group.id)
+  end
+
+  def active_roles_in_layer
+    roles_in_layer.where.
+      not('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
+  end
+
   private
 
   def assert_no_active_roles

@@ -38,13 +38,7 @@ module Jubla::Role
     private
 
     def applies?
-      roles_in_layer.empty? &&
-        !group.is_a?(Group::AlumnusGroup) &&
-        person_old_enough?
-    end
-
-    def roles_in_layer
-      Role.roles_in_layer(person.id, group.layer_group_id)
+      role.active_roles_in_layer.empty? && !group.alumnus? && person_old_enough?
     end
 
     def person_old_enough?
