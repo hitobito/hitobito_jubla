@@ -42,7 +42,7 @@ module Jubla::Role
     end
 
     def person_old_enough?
-      return true unless is_a?(Group::ChildGroup::Child)
+      return true unless role.is_a?(Group::ChildGroup::Child)
       return false unless person.years
       min_age_for_alumni_member <= person.years
     end
@@ -69,19 +69,13 @@ module Jubla::Role
     end
 
     def alumnus_member_roles_in_layer
-      person.roles.joins(:group)
-        .where(roles:  { type: alumnus_member_role_types },
-               groups: { layer_group_id: group.layer_group_id })
-    end
-
-    def alumnus_member_role_types
-      Group::AlumnusGroup::Member.subclasses.collect(&:sti_name)
+      role.roles_in_layer.
+        where('roles.type REGEXP "AlumnusGroup::Member"')
     end
 
     def last_role_for_person_in_group?
       group.roles.where(person_id: person.id).empty?
     end
-
 
   end
 end
