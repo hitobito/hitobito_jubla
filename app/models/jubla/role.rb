@@ -27,6 +27,9 @@ module Jubla::Role
   end
 
   module ClassMethods
+    def alumnus
+      where('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
+    end
     def without_alumnus
       where.not('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
     end

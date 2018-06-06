@@ -1,3 +1,3 @@
-- if entry.only_alumnus_group_member?
+- if entry.roles.alumnus.exists?
   %h2= t('.contactable_by')
   = render_attrs(entry, :contactable_by_federation, :contactable_by_state, :contactable_by_region, :contactable_by_flock)
