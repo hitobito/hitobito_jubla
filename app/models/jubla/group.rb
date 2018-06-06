@@ -45,6 +45,19 @@ module Jubla::Group
     def delete_alumni_groups
       children.where(type: ALUMNI_GROUPS_CLASSES).delete_all
     end
+
+  end
+
+  def alumnus_class
+    "#{self.class.name}::Alumnus".constantize
+  end
+
+  def alumnus_member_class
+    "#{alumnus_group.type}::Member".constantize
+  end
+
+  def alumnus_group
+    @alumnus_group ||= alumni_groups.first
   end
 
   def alumni_groups
