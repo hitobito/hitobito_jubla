@@ -204,6 +204,7 @@ describe Role do
       it 'older role is flagged as deleted and alumnus role is created' do
         expect { role.destroy }.to change { Group::Flock::Alumnus.count }.by(1)
         expect(Role.only_deleted.find(role.id)).to be_present
+        expect(Group::Flock::Alumnus.find_by(person_id: role.person_id).label).to eq 'Scharleitung'
       end
 
       context 'external role' do

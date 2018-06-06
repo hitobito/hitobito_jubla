@@ -11,9 +11,9 @@ module Jubla::Role
 
     def create_alumnus_role
       if last_role_for_person_in_group?
-        role = group.alumnus_class.new(person: person, group: group)
-        role.label = role.class.label
-        role.save!
+        alumnus_role = group.alumnus_class.new(person: person, group: group)
+        alumnus_role.label = role.class.label
+        alumnus_role.save!
       end
     end
 
