@@ -22,15 +22,11 @@ module Jubla::Role
     after_create :destroy_alumnus_group_member, if: :alumnus_applicable?
     after_destroy :create_alumnus_group_member, unless: :skip_alumnus_callback
 
-    after_create :destroy_alumnus_role, unless: ->(r) { r.group.alumnus? || r.alumnus? }
+    after_create :destroy_alumnus_role, unless: ->(r) { r.group.alumnus? || r.kind == :alumnus }
     after_destroy :create_alumnus_role, unless: ->(r) { r.group.alumnus? }
   end
 
   module ClassMethods
-    def alumnus?
-      kind == :alumnus
-    end
-
     def without_alumnus
       where.not('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
     end
@@ -85,16 +81,14 @@ module Jubla::Role
   class Treasurer < ::Role
   end
 
-  def alumnus?
-    self.class.alumnus?
-  end
-
   def alumnus_group_member?
     type.to_s.match(/AlumnusGroup::Member$/)
   end
 
   def alumnus_applicable?
-    potential_alumnus? && !alumnus?
+    [Jubla::Role::External,
+     Jubla::Role::DispatchAddress,
+     Jubla::Role::Alumnus].none? { |r| is_a?(r) } && !group.alumnus?
   end
 
   def roles_in_layer
@@ -118,7 +112,7 @@ module Jubla::Role
   end
 
   def create_alumnus_group_member
-    if old_enough_to_archive? && potential_alumnus?
+    if old_enough_to_archive? && alumnus_applicable?
       alumnus_manager.create_alumnus_group_member
     end
   end
@@ -137,10 +131,6 @@ module Jubla::Role
 
   def alumnus_manager
     @alumnus_manager ||= Jubla::Role::AlumnusManager.new(self)
-  end
-
-  def potential_alumnus?
-    [Jubla::Role::External, Jubla::Role::DispatchAddress].none? { |r| is_a?(r) }
   end
 
 end

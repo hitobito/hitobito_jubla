@@ -77,6 +77,7 @@ describe Role do
         %w(Group::FederalBoard::GroupAdmin      federal_board -1),
         %w(Group::FederalBoard::External        federal_board  0),
         %w(Group::FederalBoard::DispatchAddress federal_board  0),
+        %w(Group::FederalAlumnusGroup::Leader   ch_ehemalige   0),
       ]
     end
 
@@ -85,7 +86,7 @@ describe Role do
     end
 
     context 'create' do
-      (samples + [%w(Group::FederalAlumnusGroup::Leader ch_ehemalige -1)]).each do |role_type, group, change|
+      samples.each do |role_type, group, change|
         it "#{role_type} changes alumni members by #{change}" do
           role = Fabricate(Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
           expect do
