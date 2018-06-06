@@ -13,7 +13,7 @@ module Jubla::PersonDecorator
   end
 
   def inactive_roles_grouped
-    build_memo(deleted_alumnus_applicable_roles)
+    build_memo(active_roles.deleted.to_a.select(&:alumnus_applicable?))
   end
 
   def coached_events
@@ -22,16 +22,8 @@ module Jubla::PersonDecorator
 
   private
 
-  def roles_array
-    @roles_array ||= roles.includes(:group).to_a
-  end
-
   def active_roles
-    roles_array.reject(&:alumnus?)
-  end
-
-  def deleted_alumnus_applicable_roles
-    roles.deleted.includes(:group).select(&:alumnus_applicable?)
+    roles.includes(:group).without_alumnus
   end
 
   def build_memo(roles)

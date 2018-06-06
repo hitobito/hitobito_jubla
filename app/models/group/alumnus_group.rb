@@ -63,7 +63,6 @@ class Group::AlumnusGroup < Group
   end
 
   class Member < Jubla::Role::Member
-    self.kind = :alumnus
     self.permissions = [:group_read]
   end
 
