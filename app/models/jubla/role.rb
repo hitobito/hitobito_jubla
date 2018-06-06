@@ -31,6 +31,10 @@ module Jubla::Role
       kind == :alumnus
     end
 
+    def without_alumnus
+      where.not('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
+    end
+
     def roles_in_layer(person_id, layer_group_id)
       Role.joins(:group).
         where(person: person_id,
@@ -98,8 +102,7 @@ module Jubla::Role
   end
 
   def active_roles_in_layer
-    roles_in_layer.where.
-      not('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
+    roles_in_layer.without_alumnus
   end
 
   private
