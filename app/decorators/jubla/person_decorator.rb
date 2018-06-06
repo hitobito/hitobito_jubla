@@ -12,10 +12,6 @@ module Jubla::PersonDecorator
     build_memo(active_roles)
   end
 
-  def alumnus_roles_grouped
-    build_memo(alumnus_roles)
-  end
-
   def inactive_roles_grouped
     build_memo(deleted_alumnus_applicable_roles)
   end
@@ -32,10 +28,6 @@ module Jubla::PersonDecorator
 
   def active_roles
     roles_array.reject(&:alumnus?)
-  end
-
-  def alumnus_roles
-    roles_array - active_roles
   end
 
   def deleted_alumnus_applicable_roles
