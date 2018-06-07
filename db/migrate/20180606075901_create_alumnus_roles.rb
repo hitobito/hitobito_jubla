@@ -2,8 +2,9 @@ class CreateAlumnusRoles < ActiveRecord::Migration
   def up
     rows = select_rows(find_missing_roles_statement)
     rows.each do |person_id, group_id, group_type, role_type|
-      label = role_type.constantize.model_name.human rescue ""
-      execute(insert_role_statement(person_id, group_id, group_type, label))
+      label = "'#{role_type.constantize.model_name.human}'" rescue nil
+      current_time = ActiveRecord::Base::sanitize(DateTime.now)
+      execute(insert_role_statement(person_id, group_id, group_type, label, current_time))
     end
     execute delete_filter_statement
   end
@@ -33,10 +34,10 @@ class CreateAlumnusRoles < ActiveRecord::Migration
     SQL
   end
 
-  def insert_role_statement(person_id, group_id, group_type, label)
+  def insert_role_statement(person_id, group_id, group_type, label, current_time)
     <<-SQL
-    INSERT INTO roles(person_id, group_id, type, label)
-    VALUES(#{person_id}, #{group_id}, "#{group_type}::Alumnus", "#{label}")
+    INSERT INTO roles(person_id, group_id, type, label, created_at, updated_at)
+    VALUES(#{person_id}, #{group_id}, "#{group_type}::Alumnus", #{label}, #{current_time}, #{current_time})
     SQL
   end
 
