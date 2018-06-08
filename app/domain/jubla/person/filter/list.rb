@@ -20,24 +20,7 @@ module Jubla::Person::Filter::List
 
   def excluded_people_ids
     layer_type = group.layer_group.type.demodulize.underscore
-    all_role_types = group_role_types(Group)
-    alumnus_role_types = role_types(Group::AlumnusGroup::Member, Jubla::Role::Alumnus)
-
-    Person.
-      joins(:roles).
-      where(:"contactable_by_#{layer_type}" => false).
-      where(roles: { type: alumnus_role_types }).
-      where.not(roles: { type: all_role_types - alumnus_role_types }).
-      pluck(:id)
+    Person.alumnus_only.where(:"contactable_by_#{layer_type}" => false).pluck(:id)
   end
 
-  def role_types(*role_types)
-    role_types.flat_map(&:subclasses).collect(&:sti_name)
-  end
-
-  def group_role_types(groups)
-    groups.subclasses.flat_map do |group|
-      group.roles.collect(&:sti_name)
-    end
-  end
 end
