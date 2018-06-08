@@ -146,26 +146,6 @@ describe Role do
         expect(role.errors.full_messages.first).to eq 'Es befinden sich noch andere aktive Rollen in diesem Layer'
       end
     end
-
-    context 'contactable_flags' do
-      include ActiveSupport::Testing::TimeHelpers
-
-      it 'resets contactable flags when creating new alumnus role' do
-        person = people(:flock_leader_bern)
-        person.update(contactable_by_federation: false,
-                      contactable_by_state: false,
-                      contactable_by_region: false,
-                      contactable_by_flock: false)
-
-        travel_to(Time.zone.now + Settings.role.minimum_days_to_archive.days + 1.day) do
-          person.roles.first.destroy
-        end
-        expect(person.reload).to be_contactable_by_federation
-        expect(person).to be_contactable_by_state
-        expect(person).to be_contactable_by_region
-        expect(person).to be_contactable_by_flock
-      end
-    end
   end
 
   context 'alumnus role' do

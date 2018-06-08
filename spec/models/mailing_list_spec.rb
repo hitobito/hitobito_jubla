@@ -24,17 +24,55 @@ require 'spec_helper'
 
 describe MailingList do
 
-  let(:list)   { Fabricate(:mailing_list, group: layer) }
-  let(:layer)  { groups(:ch) }
   let(:person) { Fabricate(:person) }
 
+
+  [[Group::FlockAlumnusGroup::Member, :bern_ehemalige],
+   [Group::Flock::Alumnus, :bern]].each do |role_type, role_group|
+    context "#{role_type}" do
+
+      %w(ch be city bern).zip(%w(federation state region flock)).each do |group, layer|
+        let(:alumnus) { Fabricate(role_type.name, group: groups(role_group), person: person) }
+
+        context "contactable_by_#{layer}" do
+
+          before do
+            @list = Fabricate(:mailing_list, group: groups(group))
+            @list.subscriptions.create!(subscriber: person)
+          end
+
+          it "true includes alumnus role" do
+            alumnus.person.update("contactable_by_#{layer}" => true)
+            expect(@list.subscribed?(person)).to be_truthy
+          end
+
+          it "false does not include alumnus role" do
+            alumnus.person.update("contactable_by_#{layer}" => false)
+            expect(@list.subscribed?(person)).not_to be_truthy
+          end
+
+          next unless role_type == Group::Flock::Alumnus
+
+          it "false includes alumnus role, if it has another active role" do
+            Fabricate(Group::Flock::Leader.name, group: groups(:bern), person: person)
+            alumnus.person.update("contactable_by_#{layer}" => false)
+            expect(@list.subscribed?(person)).to be_truthy
+          end
+        end
+      end
+    end
+  end
+
   describe 'exclusion by contact-preference' do
+    let(:list)   { Fabricate(:mailing_list, group: layer) }
+    let(:layer)  { groups(:ch) }
     before :each do
       create_subscription(person)
     end
 
     context 'list on federal level respect federal preference' do
       let(:layer) { groups(:ch) }
+      before { Fabricate(Group::Federation::Alumnus.name, group: layer, person: person) }
 
       it 'if not wanted' do
         person.update_attributes(contactable_by_federation: false)
@@ -51,6 +89,7 @@ describe MailingList do
 
     context 'list on state level respect state preference' do
       let(:layer) { groups(:be) }
+      before { Fabricate(Group::State::Alumnus.name, group: layer, person: person) }
 
       it 'if not wanted' do
         person.update_attributes(contactable_by_state: false)
@@ -67,6 +106,7 @@ describe MailingList do
 
     context 'list on region level respect region preference' do
       let(:layer) { groups(:city) }
+      before {  Fabricate(Group::Region::Alumnus.name, group: layer, person: person) }
 
       it 'if not wanted' do
         person.update_attributes(contactable_by_region: false)

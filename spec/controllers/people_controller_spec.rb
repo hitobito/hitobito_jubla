@@ -22,34 +22,37 @@ describe PeopleController do
   end
 
 
-
-  context 'with alumnus role' do
+  context 'GET#show' do
     render_views
 
-    it 'GET#show renders contactable info' do
-      Fabricate(Group::FlockAlumnusGroup::Member.sti_name, group: groups(:ausserroden_ehemalige), person: person)
+    it 'GET#show hides contactable info for alumnus and active roles' do
+      Fabricate(Group::Flock::Alumnus.sti_name, group: flock, person: person)
       get :show, group_id: flock.id, id: person.id
-      expect(response.body).to match /Kontaktfreigabe/
+      expect(response.body).not_to match(/Kontaktfreigabe/)
     end
 
-    it 'GET#edit renders contactable fields' do
-      Fabricate(Group::FlockAlumnusGroup::Member.sti_name, group: groups(:ausserroden_ehemalige), person: person)
-      get :edit, group_id: flock.id, id: person.id
-      expect(response.body).to match /erlaubst du folgenden Ebenen, dich zu kontaktieren/
+    it 'GET#show shows contactable info for alumnus and active roles' do
+      role.really_delete
+      Fabricate(Group::Flock::Alumnus.sti_name, group: flock, person: person)
+      get :show, group_id: flock.id, id: person.id
+      expect(response.body).to match(/Kontaktfreigabe/)
     end
   end
 
-  context 'without alumnus role' do
+  context 'GET#edit' do
     render_views
 
-    it 'GET#show hides contactable info for only active roles' do
-      get :show, group_id: flock.id, id: person.id
-      expect(response.body).not_to match /Kontaktfreigabe/
+    it 'GET#edit hides contactable info for alumnus and active roles' do
+      Fabricate(Group::Flock::Alumnus.sti_name, group: flock, person: person)
+      get :edit, group_id: flock.id, id: person.id
+      expect(response.body).not_to match(/erlaubst du folgenden Ebenen, dich zu kontaktieren/)
     end
 
-    it 'GET#edit hides contactable fields for alumnus role' do
+    it 'GET#edit shows contactable info for alumnus and active roles' do
+      role.really_delete
+      Fabricate(Group::Flock::Alumnus.sti_name, group: flock, person: person)
       get :edit, group_id: flock.id, id: person.id
-      expect(response.body).not_to match /erlaubst du folgenden Ebenen, dich zu kontaktieren/
+      expect(response.body).to match(/erlaubst du folgenden Ebenen, dich zu kontaktieren/)
     end
   end
 
