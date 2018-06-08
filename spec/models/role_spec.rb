@@ -71,14 +71,17 @@ describe Role do
     let(:group) { groups(:ch) }
     let(:alumni_group) { groups(:ch_ehemalige) }
 
-    def self.samples
+    def self.create_samples
       [ %w(Group::FederalBoard::Member          federal_board -1),
         %w(Group::FederalBoard::President       federal_board -1),
         %w(Group::FederalBoard::GroupAdmin      federal_board -1),
-        %w(Group::FederalBoard::External        federal_board  0),
-        %w(Group::FederalBoard::DispatchAddress federal_board  0),
-        %w(Group::FederalAlumnusGroup::Leader   ch_ehemalige   0),
       ]
+    end
+
+    def self.destroy_samples
+      create_samples + [ %w(Group::FederalBoard::External        federal_board  0),
+                         %w(Group::FederalBoard::DispatchAddress federal_board  0),
+                         %w(Group::FederalAlumnusGroup::Leader   ch_ehemalige   0), ]
     end
 
     def alumnus_member_count
@@ -86,7 +89,7 @@ describe Role do
     end
 
     context 'create' do
-      samples.each do |role_type, group, change|
+      create_samples.each do |role_type, group, change|
         it "#{role_type} changes alumni members by #{change}" do
           role = Fabricate(Group::FederalAlumnusGroup::Member.to_s, group: alumni_group)
           expect do
@@ -97,7 +100,9 @@ describe Role do
     end
 
     context 'destroy' do
-      samples.each do |role_type, group, change|
+      let(:too_young) { Settings.alumni_administrations.min_age_for_alumni_member - 1 }
+
+      destroy_samples.each do |role_type, group, change|
         it "#{role_type} changes alumni members by #{change.to_i * -1}, enqueues job" do
           role = Fabricate(role_type, group: groups(group), created_at: some_time_ago)
           expect do
@@ -106,10 +111,16 @@ describe Role do
         end
       end
 
-      it 'still creates alumni member, if user has an alumnus role in same layer' do
+      it 'still creates alumni member, if person has an alumnus role in same layer' do
         person = Fabricate(Group::OrganizationBoard::Alumnus.sti_name, group: groups(:organization_board)).person
         role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board), created_at: some_time_ago, person: person)
         expect { role.destroy }.to change { alumnus_member_count }.by(1)
+      end
+
+      it 'does not creates alumni member, if person is too young' do
+        role = Fabricate(Group::ChildGroup::Child.sti_name, group: groups(:asterix), created_at: some_time_ago)
+        role.person.update(birthday: too_young.years.ago)
+        expect { role.destroy }.not_to change { alumnus_member_count }
       end
 
       it 'does not not enqueue mail job when no email is set' do

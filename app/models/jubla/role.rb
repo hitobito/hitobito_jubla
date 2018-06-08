@@ -19,11 +19,8 @@ module Jubla::Role
     after_save :set_person_origins
     after_destroy :set_person_origins
 
-    after_create :destroy_alumnus_group_member, if: :alumnus_applicable?
-    after_destroy :create_alumnus_group_member, unless: :skip_alumnus_callback
-
-    after_create :destroy_alumnus_role, unless: ->(r) { r.group.alumnus? || r.kind == :alumnus }
-    after_destroy :create_alumnus_role, unless: ->(r) { r.group.alumnus? }
+    after_create :alumnus_manager_destroy
+    after_destroy :alumnus_manager_create
   end
 
   module ClassMethods
@@ -115,26 +112,16 @@ module Jubla::Role
     person.update_columns(GroupOriginator.new(person).to_h)
   end
 
-  def create_alumnus_group_member
-    if old_enough_to_archive? && alumnus_applicable?
-      alumnus_manager.create_alumnus_group_member
-    end
+  def alumnus_manager_create
+    alumnus_manager.create if old_enough_to_archive? && alumnus_applicable?
   end
 
-  def destroy_alumnus_group_member
-    alumnus_manager.destroy_alumnus_group_member
-  end
-
-  def create_alumnus_role
-    alumnus_manager.create_alumnus_role if old_enough_to_archive? && self.class.member?
-  end
-
-  def destroy_alumnus_role
-    alumnus_manager.destroy_alumnus_role
+  def alumnus_manager_destroy
+    alumnus_manager.destroy unless group.alumnus? || self.class.kind == :alumnus
   end
 
   def alumnus_manager
-    @alumnus_manager ||= Jubla::Role::AlumnusManager.new(self)
+    @alumnus_manager ||= Jubla::Role::AlumnusManager.new(self, skip_alumnus_callback)
   end
 
 end
