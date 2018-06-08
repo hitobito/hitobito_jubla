@@ -28,13 +28,11 @@ module Jubla::Role
       alumnus_member = create_member_role
 
       if alumnus_member
-        update_contactable_flags
         enqueue_mail_job if person.email.present?
       end
     end
 
     def destroy_alumnus_group_member
-      update_contactable_flags
       alumnus_member_roles_in_layer.where.not(roles: { id: role.id }).destroy_all
     end
 
@@ -62,13 +60,6 @@ module Jubla::Role
 
     def enqueue_mail_job
       AlumniMailJob.new(group.alumnus_group.id, role.person.id).enqueue!(run_at: 1.day.from_now)
-    end
-
-    def update_contactable_flags
-      person.update(contactable_by_federation: true,
-                    contactable_by_state: true,
-                    contactable_by_region: true,
-                    contactable_by_flock: true)
     end
 
     def alumnus_member_roles_in_layer
