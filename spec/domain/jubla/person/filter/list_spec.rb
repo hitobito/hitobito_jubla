@@ -43,10 +43,11 @@ describe Jubla::Person::Filter::List do
   end
 
   def build_params(roles)
-    { range: 'deep',
+    {
+      range: 'deep',
       filters: {
-      role: { role_type_ids: roles.collect(&:id).join('-') }
-    }
+        role: { role_type_ids: roles.collect(&:id).join('-') }
+      }
     }
   end
 

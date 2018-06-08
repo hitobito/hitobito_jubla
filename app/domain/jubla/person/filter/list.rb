@@ -15,8 +15,7 @@ module Jubla::Person::Filter::List
   private
 
   def accessibles_with_excluded
-    scope = accessibles_without_excluded
-    group ? scope.where.not(people: { id: excluded_people_ids }) : scope
+    accessibles_without_excluded.where.not(people: { id: excluded_people_ids })
   end
 
   def excluded_people_ids
