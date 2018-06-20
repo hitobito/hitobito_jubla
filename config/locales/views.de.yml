@@ -23,12 +23,12 @@ de:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
     application_fields_jubla:
-      remarks_default_text: "Wichtig: Zur Bestätigung deiner Online-Anmeldung schickst du dieses Formular (Seite 1)
-        mit den erforderlichen Unterschriften und Beilagen an die Anmeldeadresse. Die weiteren Seiten enthalten
-        wichtige Informationen zum Kurs inkl. Kursbestimmungen für dich.
+      remarks_default_text: "Wichtig: Zur definitiven Anmeldung deiner Online-Anmeldung schickst du dieses Formular 
+        (Seite 1) mit den erforderlichen Unterschriften und Beilagen innert 14 Tagen an die Anmeldeadresse. 
+        Die weiteren Seiten enthalten wichtige Informationen zum Kurs inkl. Kursbestimmungen für dich.
 
 
-       Beilagen: Nothelferausweis"
+       Beilagen: Kopie des Nothelferausweises"
     global:
       link:
         add_event/camp: Lager erstellen
@@ -51,6 +51,6 @@ de:
       contactable_by: Kontaktfreigabe
     fields_jubla:
       help_canton: Wird aus der PLZ berechnet falls leer.
-      info_alumnus_contactable: "Mit dem Setzen eines Häkchens erlaubst du folgenden Ebenen, dich zu kontaktieren und dir Informationen zu senden:"
+      info_alumnus_contactable: "Mit dem Setzen eines Häkchens erlaubst du folgenden Ebenen, dich zu kontaktieren und dir Informationen zu senden:"
     show_event_jubla:
       coached: Meine Betreuungen
