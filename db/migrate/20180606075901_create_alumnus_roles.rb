@@ -1,11 +1,8 @@
 class CreateAlumnusRoles < ActiveRecord::Migration
   def up
-    rows = select_rows(find_missing_roles_statement)
-    rows.each do |person_id, group_id, group_type, role_type|
-      label = "'#{role_type.constantize.model_name.human}'" rescue nil
-      current_time = ActiveRecord::Base::sanitize(DateTime.now)
-      execute(insert_role_statement(person_id, group_id, group_type, label, current_time))
-    end
+    deleted_role_rows = select_rows(find_missing_roles_statement)
+
+    execute(insert_roles_statement(most_recent_deleted_role_rows(deleted_role_rows)))
     execute delete_filter_statement
   end
 
@@ -34,22 +31,38 @@ class CreateAlumnusRoles < ActiveRecord::Migration
     SQL
   end
 
-  def insert_role_statement(person_id, group_id, group_type, label, current_time)
+  def insert_roles_statement(rows)
     <<-SQL
     INSERT INTO roles(person_id, group_id, type, label, created_at, updated_at)
-    VALUES(#{person_id}, #{group_id}, "#{group_type}::Alumnus", #{label}, #{current_time}, #{current_time})
+    VALUES #{values(rows).join(',')}
     SQL
+  end
+
+  def values(rows)
+    rows.collect do |person_id, group_id, group_type, role_type, deleted_at|
+      sanitized_time = Role.sanitize(deleted_at)
+      label = "'#{role_type.constantize.model_name.human}'" rescue nil
+      "(#{person_id}, #{group_id}, '#{group_type}::Alumnus',"\
+        " #{label}, #{sanitized_time}, #{sanitized_time})"
+    end
   end
 
   def find_missing_roles_statement
     <<-SQL
-      SELECT person_id, group_id, groups.type, roles.type FROM roles
+      SELECT roles.person_id, roles.group_id, groups.type, roles.type, roles.deleted_at FROM roles
       INNER JOIN groups ON roles.group_id = groups.id
-      WHERE roles.deleted_at IS NOT NULL AND person_id NOT IN (
-        SELECT person_id FROM roles
-        WHERE roles.person_id = person_id AND roles.group_id = group_id AND roles.deleted_at is null
-      ) GROUP BY group_id, person_id
+      WHERE roles.deleted_at IS NOT NULL AND roles.person_id NOT IN (
+        SELECT person_id FROM roles r1
+        WHERE r1.person_id = roles.person_id AND r1.group_id = roles.group_id AND r1.deleted_at is null
+      )
+      ORDER BY deleted_at DESC
     SQL
+  end
+
+  def most_recent_deleted_role_rows(rows)
+    rows.group_by do |person_id, group_id|
+      [person_id, group_id]
+    end.values.collect(&:first)
   end
 
 end
