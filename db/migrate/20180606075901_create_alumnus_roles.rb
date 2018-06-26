@@ -51,7 +51,9 @@ class CreateAlumnusRoles < ActiveRecord::Migration
     <<-SQL
       SELECT roles.person_id, roles.group_id, groups.type, roles.type, roles.deleted_at FROM roles
       INNER JOIN groups ON roles.group_id = groups.id
-      WHERE roles.deleted_at IS NOT NULL AND roles.person_id NOT IN (
+      WHERE roles.deleted_at IS NOT NULL
+      AND roles.type NOT LIKE '%::External' AND roles.type NOT LIKE '%::DispatchAddress'
+      AND roles.person_id NOT IN (
         SELECT person_id FROM roles r1
         WHERE r1.person_id = roles.person_id AND r1.group_id = roles.group_id AND r1.deleted_at is null
       )
