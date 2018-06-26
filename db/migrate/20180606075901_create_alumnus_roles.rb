@@ -1,6 +1,7 @@
 class CreateAlumnusRoles < ActiveRecord::Migration
   def up
     deleted_role_rows = select_rows(find_missing_roles_statement)
+    return if deleted_role_rows.blank?
 
     execute(insert_roles_statement(most_recent_deleted_role_rows(deleted_role_rows)))
     execute delete_filter_statement
