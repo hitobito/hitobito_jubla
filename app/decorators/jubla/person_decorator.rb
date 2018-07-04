@@ -9,11 +9,11 @@ module Jubla::PersonDecorator
   extend ActiveSupport::Concern
 
   def active_roles_grouped
-    build_memo(active_roles)
+    build_memo(roles.includes(:group).without_alumnus)
   end
 
   def inactive_roles_grouped
-    build_memo(active_roles.deleted.to_a.select(&:alumnus_applicable?))
+    build_memo(roles.includes(:group).alumnus)
   end
 
   def coached_events
@@ -21,10 +21,6 @@ module Jubla::PersonDecorator
   end
 
   private
-
-  def active_roles
-    roles.includes(:group).without_alumnus
-  end
 
   def build_memo(roles)
     roles.each_with_object(Hash.new { |h, k| h[k] = [] }) do |role, memo|
