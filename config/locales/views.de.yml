@@ -23,8 +23,8 @@ de:
     form:
       caption_requires_approval: Der Scharleiter wird informiert und muss die Anmeldung bestätigen
     application_fields_jubla:
-      remarks_default_text: "Wichtig: Zur definitiven Anmeldung deiner Online-Anmeldung schickst du dieses Formular 
-        (Seite 1) mit den erforderlichen Unterschriften und Beilagen innert 14 Tagen an die Anmeldeadresse. 
+      remarks_default_text: "Wichtig: Zur definitiven Anmeldung deiner Online-Anmeldung schickst du dieses Formular
+        (Seite 1) mit den erforderlichen Unterschriften und Beilagen innert 14 Tagen an die Anmeldeadresse.
         Die weiteren Seiten enthalten wichtige Informationen zum Kurs inkl. Kursbestimmungen für dich.
 
 
@@ -34,6 +34,10 @@ de:
         add_event/camp: Lager erstellen
     new:
       title_event/camp: Lager erstellen
+
+  event/participations:
+    success: '%{full_entry_label} wurde erfolgreich erstellt.'
+    instructions: 'Für die definitive Anmeldung musst du diese über den Button <i>Drucken</i> ausdrucken, unterzeichnen und innert 14 Tagen per Post oder per E-Mail an die entsprechende Adresse senden.'
 
   event/camp/kinds:
     global:
