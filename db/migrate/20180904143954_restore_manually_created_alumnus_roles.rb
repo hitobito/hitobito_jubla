@@ -20,16 +20,16 @@ class RestoreManuallyCreatedAlumnusRoles < ActiveRecord::Migration
   private
 
   def find_group_layer_ids_sql(group_ids)
-    <<-SQL
-    SELECT id, layer_group_id FROM groups
-    WHERE id IN (#{sanitize(group_ids)})
+    <<-SQL.strip_heredoc
+      SELECT id, layer_group_id FROM groups
+      WHERE id IN (#{sanitize(group_ids)})
     SQL
   end
 
   def find_alumni_groups_sql
-    <<-SQL
-    SELECT layer_group_id, id, type FROM groups
-    WHERE groups.type like '%AlumnusGroup'
+    <<-SQL.strip_heredoc
+      SELECT layer_group_id, id, type FROM groups
+      WHERE groups.type like '%AlumnusGroup'
     SQL
   end
 
@@ -44,16 +44,16 @@ class RestoreManuallyCreatedAlumnusRoles < ActiveRecord::Migration
 
   def insert_roles_sql(new_alumnus_roles)
     now = Role.sanitize(Time.zone.now)
-    <<-SQL
-    INSERT INTO roles(created_at, updated_at, person_id, group_id, type)
-    VALUES #{values(new_alumnus_roles, now).join(',')}
+
+    <<-SQL.strip_heredoc
+      INSERT INTO roles(created_at, updated_at, person_id, group_id, type)
+      VALUES #{values(new_alumnus_roles, now).join(',')}
     SQL
   end
 
   def values(list, now)
     list.collect do |group_id, person_id, type|
-      "(#{now}, #{now}, #{person_id}, #{group_id},"\
-        " '#{type}::Member')"
+      "(#{now}, #{now}, #{person_id}, #{group_id}, '#{type}::Member')"
     end
   end
 
@@ -66,14 +66,14 @@ class RestoreManuallyCreatedAlumnusRoles < ActiveRecord::Migration
   end
 
   def created_roles
-    filter_role_versions(:create).map do |v| 
+    filter_role_versions(:create).map do |v|
       next unless v.changeset['type']
       format_role_version(v.changeset['group_id'][1], v.main_id, v.changeset['type'][1])
     end.compact
   end
 
   def deleted_roles
-    filter_role_versions(:destroy).map do |v| 
+    filter_role_versions(:destroy).map do |v|
       v_object = YAML.load(v.object)
       format_role_version(v_object['group_id'], v_object['person_id'], v_object['type'])
     end.compact
@@ -81,7 +81,7 @@ class RestoreManuallyCreatedAlumnusRoles < ActiveRecord::Migration
 
   def format_role_version(group_id, person_id, type)
     return unless type
-    if type.match(/::Alumnus/)
+    if type =~ /::Alumnus/
       [group_id, person_id]
     end
   end
