@@ -64,7 +64,7 @@ module Jubla::Role
     end
 
     def person_old_enough?
-      return true unless role.is_a?(Group::ChildGroup::Child)
+      return true unless group.is_a?(Group::ChildGroup)
       return false unless person.years
       min_age_for_alumni_member <= person.years
     end
