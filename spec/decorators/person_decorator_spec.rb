@@ -18,11 +18,11 @@ describe PersonDecorator do
     expect(person.decorate.inactive_roles_grouped).to be_empty
   end
 
-  it 'alumnus group member role is considered inactive'  do
+  it 'alumnus group member role is considered as nothing'  do
     role.really_delete
     Fabricate(Group::FlockAlumnusGroup::Member.sti_name, group: alumni, person: person)
     expect(person.decorate.active_roles_grouped).not_to have_key(alumni)
-    expect(person.decorate.inactive_roles_grouped).to have_key(alumni)
+    expect(person.decorate.inactive_roles_grouped).not_to have_key(alumni)
   end
 
   it 'any alumnus role is considered inactive' do

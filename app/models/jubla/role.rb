@@ -21,11 +21,18 @@ module Jubla::Role
 
     after_create :alumnus_manager_destroy
     after_destroy :alumnus_manager_create
+
+    after_create :alumnus_manager_create_for_alumnus, if: :alumnus_member?
+    after_destroy :alumnus_manager_destroy_for_alumnus, if: :alumnus_member?
   end
 
   module ClassMethods
     def alumnus
       where('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
+    end
+
+    def alumnus_members
+      where("roles.type LIKE '%::Alumnus'")
     end
 
     def without_alumnus
@@ -86,6 +93,10 @@ module Jubla::Role
     type.to_s.match(/AlumnusGroup::Member$/)
   end
 
+  def alumnus_member?
+    kind == :alumnus
+  end
+
   def alumnus_applicable?
     [Jubla::Role::External,
      Jubla::Role::DispatchAddress,
@@ -117,7 +128,15 @@ module Jubla::Role
   end
 
   def alumnus_manager_destroy
-    alumnus_manager.destroy unless group.alumnus? || self.class.kind == :alumnus
+    alumnus_manager.destroy unless group.alumnus? || alumnus_member?
+  end
+
+  def alumnus_manager_create_for_alumnus
+    alumnus_manager.create if roles_in_layer.alumnus_members.one?
+  end
+
+  def alumnus_manager_destroy_for_alumnus
+    alumnus_manager.destroy if roles_in_layer.alumnus_members.blank?
   end
 
   def alumnus_manager

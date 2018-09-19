@@ -130,6 +130,38 @@ describe Role do
       end
     end
 
+    context 'after alumnus creation' do
+      it 'create alumni member if new alumni role added' do
+        expect do
+          Fabricate('Group::FederalBoard::Alumnus', group: groups(:federal_board))
+        end.to change { alumnus_member_count }.by(1)
+      end
+
+      it 'only create one alumni member if multiple new alumni roles added in same layer' do
+        expect do
+          role = Fabricate('Group::FederalBoard::Alumnus', group: groups(:federal_board))
+          Fabricate('Group::OrganizationBoard::Alumnus', group: groups(:organization_board), person: role.person)
+        end.to change { alumnus_member_count }.by(1)
+      end
+    end
+
+    context 'after alumnus deletion' do
+      it 'destroies alumnus membership if last role' do
+        role = Fabricate('Group::FederalBoard::Alumnus', group: groups(:federal_board))
+        expect do
+          role.destroy
+        end.to change { alumnus_member_count }.by(-1)
+      end
+
+      it 'does nothing if there are some alumnus roles left in same layer' do
+        role = Fabricate('Group::FederalBoard::Alumnus', group: groups(:federal_board))
+        Fabricate('Group::OrganizationBoard::Alumnus', group: groups(:organization_board), person: role.person)
+        expect do
+          role.destroy
+        end.to change { alumnus_member_count }.by(0)
+      end
+    end
+
     context 'validations'do
       it 'allows creating alumnus leader if active role exists in same layer' do
         person = Fabricate(Group::FederalBoard::Member.to_s, group: groups(:federal_board)).person

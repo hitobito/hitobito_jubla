@@ -32,11 +32,19 @@ module Jubla::Role
     end
 
     def create_alumnus_group_member
+      return if alumnus_group_member_exists?
+
       member = group.alumnus_member_class.new(person: person, group: alumnus_group)
 
       if member.save
         enqueue_mail_job if person.email.present?
       end
+    end
+
+    def alumnus_group_member_exists?
+      Role.where("type like '%::Member'")
+          .where(person: person, group: alumnus_group)
+          .present?
     end
 
     def destroy_alumnus_role
@@ -56,7 +64,7 @@ module Jubla::Role
     end
 
     def person_old_enough?
-      return true unless role.is_a?(Group::ChildGroup::Child)
+      return true unless group.is_a?(Group::ChildGroup)
       return false unless person.years
       min_age_for_alumni_member <= person.years
     end
