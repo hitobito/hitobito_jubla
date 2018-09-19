@@ -13,7 +13,7 @@ module Jubla::PersonDecorator
   end
 
   def inactive_roles_grouped
-    build_memo(roles.includes(:group).alumnus)
+    build_memo(roles.includes(:group).alumnus_members)
   end
 
   def coached_events

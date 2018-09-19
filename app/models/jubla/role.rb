@@ -28,6 +28,10 @@ module Jubla::Role
       where('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
     end
 
+    def alumnus_members
+      where("roles.type LIKE '%::Alumnus'")
+    end
+
     def without_alumnus
       where.not('roles.type REGEXP "AlumnusGroup::Member|::Alumnus"')
     end
