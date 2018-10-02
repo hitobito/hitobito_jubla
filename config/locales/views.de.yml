@@ -36,7 +36,7 @@ de:
       title_event/camp: Lager erstellen
 
   event/participations:
-    success: '%{full_entry_label} wurde erfolgreich erstellt.'
+    success: '%{full_entry_label} wurde erfolgreich erstellt. Bitte überprüfe die Kontaktdaten und passe diese gegebenenfalls an.'
     instructions: 'Für die definitive Anmeldung musst du diese über den Button <i>Drucken</i> ausdrucken, unterzeichnen und innert 14 Tagen per Post oder per E-Mail an die entsprechende Adresse senden.'
 
   event/camp/kinds:
