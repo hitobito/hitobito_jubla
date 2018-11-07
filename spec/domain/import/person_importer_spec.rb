@@ -11,7 +11,9 @@ describe Import::PersonImporter do
   let(:group) { groups(:ch_ehemalige) }
   let(:role_type) { Group::FederalAlumnusGroup::Member }
   let(:importer) do
-    Import::PersonImporter.new(data, group, role_type)
+    importer = Import::PersonImporter.new(data, group, role_type)
+    importer.user_ability = Ability.new(people(:top_leader))
+    importer
   end
 
   subject { importer }
