@@ -67,15 +67,10 @@ legend {
 
 #page-header {
   @include clearfix;
-  margin: 10px 0 0;
   padding: 0;
   background: none;
 
-  @include responsive(mediaTablet) {
-    margin: 10px 20px 0;
-  }
-
-  .options > ul > li > a { // header links on the right side
+  & > a { // header links on the right side
     color: $blue;
     &:hover {
      color: $blueDark;
@@ -83,19 +78,17 @@ legend {
   }
 }
 
-.brand {
-  width: auto;
-  height: auto;
-  padding: 0;
-  background: none;
-  text-indent: 0;
-
-
-  // Retina version
-  @media
-    only screen and (-webkit-min-device-pixel-ratio : 2),
-    only screen and (min-device-pixel-ratio : 2) {
-      background: none;
+.logo {
+  .logo-image {
+    width: auto;
+    height: auto;
+    padding: 0;
+    background: none;
+    text-indent: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 0.4rem;
   }
 }
 
@@ -128,6 +121,7 @@ legend {
 
 #page-footer {
   padding-top: $vSpace*2;
+  background: none;
 
   & > .container-fluid {
     @include single-box-shadow($grayDarker, 0, 2px, 8px, 0, true);
