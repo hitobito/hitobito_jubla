@@ -132,7 +132,7 @@ describe EventsController do
 
       it 'lists events' do
         get :index, group_id: group.id, year: 2012
-        expect(assigns(:events)).to eq [event, events(:top_event)]
+        expect(assigns(:events)).to match_array [event, events(:top_event)]
       end
 
       it 'lists courses' do
