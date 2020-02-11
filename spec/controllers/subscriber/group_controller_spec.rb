@@ -11,7 +11,7 @@ describe Subscriber::GroupController do
   before do
     Group::StateAgency::Leader.create!(group: groups(:be_agency), person: people(:top_leader))
     sign_in(people(:top_leader))
-    get :query, q: 'Nor', group_id: group.id, mailing_list_id: list.id
+    get :query, params: { q: 'Nor', group_id: group.id, mailing_list_id: list.id }
   end
 
   context 'GET query' do

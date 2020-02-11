@@ -19,12 +19,14 @@ describe RolesController do
 
   context 'PUT update' do
     it 'may update special attributes' do
-      put :update, group_id: group.id,
-                   id: role.id,
-                   role: { type: Group::FederalBoard::President.sti_name,
-                           label: 'Foo',
-                           honorary: true,
-                           employment_percent: 50 }
+      put :update, params: {
+                     group_id: group.id,
+                     id: role.id,
+                     role: { type: Group::FederalBoard::President.sti_name,
+                             label: 'Foo',
+                             honorary: true,
+                             employment_percent: 50 }
+                   }
 
       role = assigns(:role)
       expect(role).to be_kind_of(Group::FederalBoard::President)

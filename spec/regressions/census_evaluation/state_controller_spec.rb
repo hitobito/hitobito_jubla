@@ -19,7 +19,7 @@ describe CensusEvaluation::StateController, type: :controller do
   before { sign_in(people(:top_leader)) }
 
   describe 'GET total' do
-    before { get :index, id: be.id }
+    before { get :index, params: { id: be.id } }
 
     it 'renders correct templates' do
       is_expected.to render_template('index')

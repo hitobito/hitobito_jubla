@@ -20,7 +20,7 @@ describe PopulationController, type: :controller do
   describe 'GET index' do
 
     it 'does not show any approveable content if there is no current census' do
-      get :index, id: be.id
+      get :index, params: { id: be.id }
       expect(dom.all('#content h2').count).to eq 4
       expect(dom).to have_no_selector('a', text: 'Bestand bestätigen')
       expect(dom).to have_no_selector('.alert.alert-info.approveable')
@@ -29,7 +29,7 @@ describe PopulationController, type: :controller do
     end
 
     it 'does show all approveable content if there is a current census' do
-      get :index, id: ar.id
+      get :index, params: { id: ar.id }
       expect(dom.all('#content h2').count).to eq 2
       expect(dom).to have_selector('a', text: 'Bestand bestätigen')
       expect(dom).to have_content('Bitte ergänze')

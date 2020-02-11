@@ -22,7 +22,7 @@ describe PopulationController do
   before { sign_in(leader) }
 
   describe 'GET index' do
-    before { get :index, id: flock.id }
+    before { get :index, params: { id: flock.id } }
 
     describe 'groups' do
       subject { assigns(:groups) }
@@ -47,7 +47,7 @@ describe PopulationController do
   describe 'GET index does not include deleted groups' do
     before do
       groups(:asterix).destroy
-      get :index, id: flock.id
+      get :index, params: { id: flock.id }
     end
 
     subject { assigns(:groups) }
