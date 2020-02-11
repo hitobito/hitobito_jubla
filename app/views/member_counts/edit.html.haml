@@ -7,9 +7,9 @@
 
 = form_for(@group, url: group_member_counts_path(@group), method: :put) do |f|
   = hidden_field_tag(:year, @year)
-  = save_form_buttons(f, nil, census_flock_group_path(@group))
+  = form_buttons(f, submit_label: nil, cancel_url: census_flock_group_path(@group))
 
-  = render layout: 'member_counts/table_header', 
+  = render layout: 'member_counts/table_header',
            locals: { before_columns: %w(Jahrgang)} do
     - @member_counts.each do |count|
       = fields_for 'member_count[]', count, builder: StandardFormBuilder do |f|
@@ -19,5 +19,5 @@
           %td= f.input_field :leader_m, class: 'span1'
           %td= f.input_field :child_f, class: 'span1'
           %td= f.input_field :child_m, class: 'span1'
-        
-  = save_form_buttons(f, nil, census_flock_group_path(@group))
+
+  = form_buttons(f, submit_label: nil, cancel_url: census_flock_group_path(@group))
