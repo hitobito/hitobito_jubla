@@ -15,7 +15,7 @@ describe Event::ListsController do
   let(:bsv) { CSV.parse(response.body, headers: true) }
 
   it 'GET#courses with kind csv' do
-    get :bsv_export, bsv_export: { date_from: '1.1.2012', date_to: '31.12.2012' }
+    get :bsv_export, params: { bsv_export: { date_from: '1.1.2012', date_to: '31.12.2012' } }
     expect(bsv).to have(0).item
   end
 end

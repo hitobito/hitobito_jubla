@@ -38,17 +38,17 @@ describe Event::ParticipationsController do
     end
 
     it 'lists participant and leader group by default without advisor' do
-      get :index, group_id: group.id, event_id: course.id
+      get :index, params: { group_id: group.id, event_id: course.id }
       expect(assigns(:participations)).to eq [@leader, @participant]
     end
 
     it 'lists only leader_group without advisor' do
-      get :index, group_id: group.id, event_id: course.id, filter: :teamers
+      get :index, params: { group_id: group.id, event_id: course.id, filter: :teamers }
       expect(assigns(:participations)).to eq [@leader]
     end
 
     it 'lists only participant_group' do
-      get :index, group_id: group.id, event_id: course.id, filter: :participants
+      get :index, params: { group_id: group.id, event_id: course.id, filter: :participants }
       expect(assigns(:participations)).to eq [@participant]
     end
 

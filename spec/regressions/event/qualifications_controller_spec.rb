@@ -43,7 +43,7 @@ describe Event::QualificationsController, type: :controller do
   describe 'GET index' do
 
     context 'in open state' do
-      before { get :index, group_id: group.id, event_id: event.id }
+      before { get :index, params: { group_id: group.id, event_id: event.id } }
 
       subject { assigns(:participants) }
 
@@ -61,7 +61,7 @@ describe Event::QualificationsController, type: :controller do
 
     context 'in closed state' do
       before { event.update_column(:state, 'closed') }
-      before { get :index, group_id: group.id, event_id: event.id }
+      before { get :index, params: { group_id: group.id, event_id: event.id } }
 
       subject { assigns(:participants) }
 
@@ -81,7 +81,7 @@ describe Event::QualificationsController, type: :controller do
   describe 'PUT update' do
     context 'adding' do
       context 'in open state' do
-        before { put :update, group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] }
+        before { put :update, params: { group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] } }
 
         subject { obtained_qualifications }
 
@@ -90,7 +90,7 @@ describe Event::QualificationsController, type: :controller do
 
       context 'in closed state' do
         before { event.update_column(:state, 'closed') }
-        before { put :update, group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] }
+        before { put :update, params: { group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] } }
 
         subject { obtained_qualifications }
 
@@ -106,7 +106,7 @@ describe Event::QualificationsController, type: :controller do
       end
 
       context 'in open state' do
-        before { put :update, group_id: group.id, event_id: event.id }
+        before { put :update, params: { group_id: group.id, event_id: event.id } }
 
         subject { obtained_qualifications }
 
@@ -115,7 +115,7 @@ describe Event::QualificationsController, type: :controller do
 
       context 'in closed state' do
         before { event.update_column(:state, 'closed') }
-        before { put :update, group_id: group.id, event_id: event.id, participation_ids: [] }
+        before { put :update, params: { group_id: group.id, event_id: event.id, participation_ids: [] } }
 
         subject { obtained_qualifications }
 

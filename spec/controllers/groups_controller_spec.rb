@@ -13,7 +13,7 @@ describe GroupsController do
   before { sign_in(leader) }
 
   it '#edit - loads advisors and coaches' do
-    get :edit, id: flock.id
+    get :edit, params: { id: flock.id }
     expect(assigns(:coaches)).to eq flock.available_coaches.only_public_data.order_by_name
     expect(assigns(:advisors)).to eq flock.available_advisors.only_public_data.order_by_name
   end
