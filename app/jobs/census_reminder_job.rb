@@ -26,7 +26,7 @@ class CensusReminderJob < BaseJob
     flock.people.only_public_data.
       where(roles: { type: Group::Flock::Leader.sti_name }).
       where("email IS NOT NULL OR email <> ''").
-      uniq
+      distinct
   end
 
   def flock

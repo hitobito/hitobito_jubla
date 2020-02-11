@@ -30,7 +30,7 @@ describe GroupsController, type: :controller  do
 
     context 'json', perform_request: false do
       it 'contains all jubla flock attrs' do
-        flock.update_attributes(founding_year: 1950, bank_account: '123-456')
+        flock.update(founding_year: 1950, bank_account: '123-456')
         get :show, params: { id: flock.id }, format: :json
         json = JSON.parse(response.body)
         group = json['groups'].first

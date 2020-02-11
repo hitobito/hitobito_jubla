@@ -75,13 +75,13 @@ describe MailingList do
       before { Fabricate(Group::Federation::Alumnus.name, group: layer, person: person) }
 
       it 'if not wanted' do
-        person.update_attributes(contactable_by_federation: false)
+        person.update(contactable_by_federation: false)
 
         expect(list.subscribed?(person)).not_to be_truthy
       end
 
       it 'if wanted' do
-        person.update_attributes(contactable_by_federation: true)
+        person.update(contactable_by_federation: true)
 
         expect(list.subscribed?(person)).to be_truthy
       end
@@ -92,13 +92,13 @@ describe MailingList do
       before { Fabricate(Group::State::Alumnus.name, group: layer, person: person) }
 
       it 'if not wanted' do
-        person.update_attributes(contactable_by_state: false)
+        person.update(contactable_by_state: false)
 
         expect(list.subscribed?(person)).not_to be_truthy
       end
 
       it 'if wanted' do
-        person.update_attributes(contactable_by_state: true)
+        person.update(contactable_by_state: true)
 
         expect(list.subscribed?(person)).to be_truthy
       end
@@ -109,13 +109,13 @@ describe MailingList do
       before {  Fabricate(Group::Region::Alumnus.name, group: layer, person: person) }
 
       it 'if not wanted' do
-        person.update_attributes(contactable_by_region: false)
+        person.update(contactable_by_region: false)
 
         expect(list.subscribed?(person)).not_to be_truthy
       end
 
       it 'if wanted' do
-        person.update_attributes(contactable_by_region: true)
+        person.update(contactable_by_region: true)
 
         expect(list.subscribed?(person)).to be_truthy
       end
