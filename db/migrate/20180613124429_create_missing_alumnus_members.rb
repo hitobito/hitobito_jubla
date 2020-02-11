@@ -17,7 +17,7 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
     <<-SQL
     SELECT DISTINCT person_id, layer_group_id FROM roles
     INNER JOIN groups ON roles.group_id = groups.id
-    WHERE roles.type IN (#{sanitize(role_types)})
+    WHERE roles.type IN (#{quote(role_types)})
     AND roles.deleted_at IS NOT NULL
     AND person_id NOT IN (
       SELECT DISTINCT person_id FROM roles
@@ -25,7 +25,7 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
       WHERE g.layer_group_id = groups.layer_group_id
       AND roles.deleted_at IS NULL
       AND (
-        roles.type IN (#{sanitize(role_types)}) OR
+        roles.type IN (#{quote(role_types)}) OR
         roles.type IN ('Group::FlockAlumnusGroup::Member', 'Group::ChildGroup::Child'))
     )
     AND layer_group_id NOT IN (
@@ -39,13 +39,13 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
   def find_alumni_groups_sql(layer_group_ids)
     <<-SQL
     SELECT layer_group_id, id FROM groups
-    WHERE layer_group_id IN (#{sanitize(layer_group_ids)})
+    WHERE layer_group_id IN (#{quote(layer_group_ids)})
     AND groups.type = 'Group::FlockAlumnusGroup'
     SQL
   end
 
   def insert_roles_sql(list, alumni_groups)
-    now = Role.sanitize(Time.zone.now)
+    now = Role.quote(Time.zone.now)
     <<-SQL
     INSERT INTO roles(created_at, updated_at, person_id, group_id, type)
     VALUES #{values(list, alumni_groups, now).join(',')}
@@ -74,8 +74,8 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
      "Group::ChildGroup::DispatchAddress"]
   end
 
-  def sanitize(list)
-    list.collect { |item| ActiveRecord::Base.sanitize(item) }.join(',')
+  def quote(list)
+    list.collect { |item| ActiveRecord::Base.connection.quote(item) }.join(',')
   end
 
 end
