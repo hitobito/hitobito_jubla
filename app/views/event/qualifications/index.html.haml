@@ -4,6 +4,7 @@
 -#  https://github.com/hitobito/hitobito.
 
 - if event.qualification_possible?
+  - # This renders the file from core with a deprecation warning, not sure how to work around
   = render file: Rails.root.join('app', 'views', 'event', 'qualifications', 'index')
 
 - else
