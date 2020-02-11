@@ -20,7 +20,7 @@ module Jubla
         joins(participations: :roles).
         where(event_roles: { type: [::Event::Camp::Role::Coach.sti_name,
                                     ::Event::Course::Role::Advisor.sti_name] }).
-        uniq.
+        distinct.
         includes(:groups).
         preload_all_dates.
         order_by_date

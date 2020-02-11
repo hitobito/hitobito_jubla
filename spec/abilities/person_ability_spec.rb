@@ -598,11 +598,11 @@ describe PersonAbility do
     let(:role)        { Fabricate(Group::StateAgency::Leader.name, group: groups(:no_agency)) }
     let(:participant) { people(:flock_leader_bern) }
 
-    before { course.update_attributes!(application_contact_id: groups(:be_agency).id) }
+    before { course.update!(application_contact_id: groups(:be_agency).id) }
 
     Event::Course.possible_states.each do |state|
       it "cannot update participant when event is in state #{state}" do
-        course.update_attributes!(state: state)
+        course.update!(state: state)
         is_expected.not_to be_able_to(:update, participant)
       end
     end
@@ -611,7 +611,7 @@ describe PersonAbility do
       Jubla::PersonAbility::STATES.each do |state|
         it "can update participant when event is in state #{state}" do
           course.groups << groups(:no)
-          course.update_attributes!(state: state)
+          course.update!(state: state)
           is_expected.to be_able_to(:update, participant)
         end
       end

@@ -10,8 +10,8 @@ require 'spec_helper'
 describe Jubla::Export::Tabular::People::OriginatingGroups do
 
   let(:person) { people(:top_leader) }
-  before { person.update_attributes(originating_flock: groups(:bern),
-                                    originating_state: groups(:be)) }
+  before { person.update(originating_flock: groups(:bern),
+                         originating_state: groups(:be)) }
 
   context Export::Tabular::People::PersonRow do
     let(:row) { Export::Tabular::People::PersonRow.new(person.reload) }
