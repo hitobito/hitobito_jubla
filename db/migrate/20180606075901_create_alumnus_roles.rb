@@ -1,4 +1,4 @@
-class CreateAlumnusRoles < ActiveRecord::Migration
+class CreateAlumnusRoles < ActiveRecord::Migration[4.2]
   def up
     deleted_role_rows = select_rows(find_missing_roles_statement)
     return if deleted_role_rows.blank?

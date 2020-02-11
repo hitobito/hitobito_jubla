@@ -1,4 +1,4 @@
-class CreateMissingAlumnusMembers < ActiveRecord::Migration
+class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
   include Rails.application.routes.url_helpers
 
   def down; end
@@ -15,7 +15,7 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration
 
   def find_missing_people_sql
     <<-SQL
-    SELECT DISTINCT person_id, layer_group_id FROM roles 
+    SELECT DISTINCT person_id, layer_group_id FROM roles
     INNER JOIN groups ON roles.group_id = groups.id
     WHERE roles.type IN (#{sanitize(role_types)})
     AND roles.deleted_at IS NOT NULL
@@ -43,7 +43,7 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration
     AND groups.type = 'Group::FlockAlumnusGroup'
     SQL
   end
-  
+
   def insert_roles_sql(list, alumni_groups)
     now = Role.sanitize(Time.zone.now)
     <<-SQL

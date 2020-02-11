@@ -1,4 +1,4 @@
-class DeleteObsoleteRelatedRoleTypes < ActiveRecord::Migration
+class DeleteObsoleteRelatedRoleTypes < ActiveRecord::Migration[4.2]
   def change
     execute statement
   end

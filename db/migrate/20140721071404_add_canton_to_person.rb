@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class AddCantonToPerson < ActiveRecord::Migration
+class AddCantonToPerson < ActiveRecord::Migration[4.2]
   def change
     add_column(:people, :canton, :string)
     Person.reset_column_information

@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class SetupJublaModels < ActiveRecord::Migration
+class SetupJublaModels < ActiveRecord::Migration[4.2]
   def change
     add_column :people, :name_mother, :string
     add_column :people, :name_father, :string
