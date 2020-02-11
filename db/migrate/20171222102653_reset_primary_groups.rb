@@ -5,27 +5,27 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class ResetPrimaryGroups < ActiveRecord::Migration
+class ResetPrimaryGroups < ActiveRecord::Migration[4.2]
   def up
     people_ids = select_all(people_with_wrong_assigned_primary_group).rows.join(',')
     execute(set_primary_group_to_active_role_group(people_ids))
-    
+
     reloaded_people_ids = select_all(people_with_wrong_assigned_primary_group).rows.join(',')
     execute(set_primary_group_to_alumnus_role_group(reloaded_people_ids))
   end
 
   private
-  
+
   def set_primary_group_to_active_role_group(people_ids)
     sql = <<-SQL
-    UPDATE people 
+    UPDATE people
     SET primary_group_id = (
       SELECT group_id from roles
       WHERE roles.person_id = people.id
       AND roles.type not in (#{alumni_role_types})
       AND roles.deleted_at is NULL
       LIMIT 1
-    ) 
+    )
     SQL
     sql << "WHERE id NOT IN (#{people_ids})" if people_ids.present?
     sql
@@ -33,13 +33,13 @@ class ResetPrimaryGroups < ActiveRecord::Migration
 
   def set_primary_group_to_alumnus_role_group(people_ids)
     sql = <<-SQL
-    UPDATE people 
+    UPDATE people
     SET primary_group_id = (
       SELECT group_id from roles
       WHERE roles.person_id = people.id
       AND roles.deleted_at is NULL
       LIMIT 1
-    ) 
+    )
     SQL
     sql << "WHERE id NOT IN (#{people_ids})" if people_ids.present?
     sql
@@ -48,7 +48,7 @@ class ResetPrimaryGroups < ActiveRecord::Migration
   def people_with_wrong_assigned_primary_group
     <<-SQL
     SELECT DISTINCT people.id from people
-    LEFT JOIN roles ON roles.person_id = people.id 
+    LEFT JOIN roles ON roles.person_id = people.id
     WHERE roles.group_id = people.primary_group_id
     AND roles.deleted_at IS NULL
     SQL

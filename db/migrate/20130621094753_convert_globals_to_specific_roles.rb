@@ -7,7 +7,7 @@
 
 %w(base filter abo migrator).each { |file| require_relative "convert_globals_support/#{file}" }
 
-class ConvertGlobalsToSpecificRoles < ActiveRecord::Migration
+class ConvertGlobalsToSpecificRoles < ActiveRecord::Migration[4.2]
 
   def up
     roles.each { |role| Migrator.new(role).perform }

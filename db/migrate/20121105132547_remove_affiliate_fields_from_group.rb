@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class RemoveAffiliateFieldsFromGroup < ActiveRecord::Migration
+class RemoveAffiliateFieldsFromGroup < ActiveRecord::Migration[4.2]
   def up
     remove_column :groups, :coach_id
     remove_column :groups, :advisor_id

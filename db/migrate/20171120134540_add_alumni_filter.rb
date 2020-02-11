@@ -1,4 +1,4 @@
-class AddAlumniFilter < ActiveRecord::Migration
+class AddAlumniFilter < ActiveRecord::Migration[4.2]
   def up
     Group.find_each do |group|
       next if group.alumnus?

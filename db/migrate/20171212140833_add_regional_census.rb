@@ -6,7 +6,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class AddRegionalCensus < ActiveRecord::Migration
+class AddRegionalCensus < ActiveRecord::Migration[4.2]
   def change
     add_column :member_counts, :region_id, :integer
 

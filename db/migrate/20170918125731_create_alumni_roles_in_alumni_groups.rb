@@ -1,4 +1,4 @@
-class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration
+class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration[4.2]
 
   def up
     alumni = select_rows(find_people_sql)
