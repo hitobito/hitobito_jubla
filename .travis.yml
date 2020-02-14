@@ -1,9 +1,10 @@
 language: ruby
 cache: bundler
+services:
+  - mysql
 branches:
   only:
     - master
-    - stable
 env:
   global:
     - HEADLESS=true
@@ -12,9 +13,6 @@ env:
     - RAILS_ENV=development
 rvm:
   - 2.2.3
-  - 2.3.1
-  - 2.4.0
-  - 2.5.1
 install:
   - unset BUNDLE_GEMFILE # we bundle in different directories
   - cd .. && git clone https://github.com/hitobito/hitobito_youth.git hitobito_youth
@@ -28,11 +26,8 @@ install:
   - bundle install --path vendor/bundle
   - for d in ../hitobito_*; do cd $d && cp -v $HITOBITO_CORE_DIR/Gemfile.lock ./ && rvm use $TRAVIS_RUBY_VERSION --fuzzy && bundle install --path vendor/bundle; done
   - cd $HITOBITO_CORE_DIR && rvm use $TRAVIS_RUBY_VERSION --fuzzy
+  - mysql -e 'CREATE DATABASE hitobito_test;'
 script:
   - bundle exec rake db:create ci:wagon --trace
 matrix:
   allow_failures:
-
-  - rvm: 2.3.1
-  - rvm: 2.4.0
-  - rvm: 2.5.1
