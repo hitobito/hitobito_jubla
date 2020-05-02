@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-module Jubla::MailingList
+module Jubla::MailingList::Subscribers
   extend ActiveSupport::Concern
 
   included do
@@ -29,7 +29,7 @@ module Jubla::MailingList
   end
 
   def layer_type
-    group.layer_group.type.demodulize.underscore
+    @list.group.layer_group.type.demodulize.underscore
   end
 
   SqlString = Struct.new(:sql) do
