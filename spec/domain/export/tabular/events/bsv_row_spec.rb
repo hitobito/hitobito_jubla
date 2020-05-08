@@ -19,7 +19,7 @@ describe Export::Tabular::Events::BsvRow do
 
   def create_participant_with_person_attrs(attrs)
     participation = create_participation(course.participant_types.first)
-    participation.person.update_attributes(attrs)
+    participation.person.update(attrs)
   end
 
   context 'info from dates' do

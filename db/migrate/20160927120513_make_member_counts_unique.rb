@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_pbs.
 
-class MakeMemberCountsUnique < ActiveRecord::Migration
+class MakeMemberCountsUnique < ActiveRecord::Migration[4.2]
   def change
     add_index :member_counts,
               [:year, :flock_id, :born_in],

@@ -49,7 +49,7 @@ describe Export::Tabular::CensusFlock do
     end
 
     describe 'address, zip code and town' do
-      before { flock.update_attributes(address: 'bar', zip_code: 1234, town: 'foo') }
+      before { flock.update(address: 'bar', zip_code: 1234, town: 'foo') }
 
       its(:values) { should eq ['Bern', nil, nil, 'bar', 1234, 'foo', false, false, false, 5, 7] }
     end

@@ -30,8 +30,8 @@ describe GroupsController, type: :controller  do
 
     context 'json', perform_request: false do
       it 'contains all jubla flock attrs' do
-        flock.update_attributes(founding_year: 1950, bank_account: '123-456')
-        get :show, id: flock.id, format: :json
+        flock.update(founding_year: 1950, bank_account: '123-456')
+        get :show, params: { id: flock.id }, format: :json
         json = JSON.parse(response.body)
         group = json['groups'].first
         expect(group['founding_year']).to eq(1950)
@@ -40,7 +40,7 @@ describe GroupsController, type: :controller  do
       end
 
       it 'contains all jubla state attrs' do
-        get :show, id: state.id, format: :json
+        get :show, params: { id: state.id }, format: :json
         json = JSON.parse(response.body)
         group = json['groups'].first
         expect(group).to have_key('bank_account')
@@ -62,7 +62,7 @@ describe GroupsController, type: :controller  do
       context "#{user} on #{group}" do
         before { sign_in(send(user)) }
         it " #{super_attr_present ? "can" : "cannot"} see superior_attributes" do
-          get :edit, id: send(group).id
+          get :edit, params: { id: send(group).id }
           matcher_for(super_attr_present) =~ /Jubla Versicherung/
         end
       end
@@ -85,7 +85,7 @@ describe GroupsController, type: :controller  do
         before { sign_in(send(user)) }
 
         it 'can render form' do
-          get :new, group: { type: send(group).type, parent_id: send(group).parent.id }
+          get :new, params: { group: { type: send(group).type, parent_id: send(group).parent.id } }
           expect(dom).to have_selector('form[action="/groups"]')
         end
       end
@@ -101,7 +101,7 @@ describe GroupsController, type: :controller  do
 
         it 'cannot render form' do
           expect do
-            get :new, group: { type: send(group).type, parent_id: send(group).parent.id }
+            get :new, params: { group: { type: send(group).type, parent_id: send(group).parent.id } }
           end.to raise_error(CanCan::AccessDenied)
         end
       end
@@ -124,7 +124,7 @@ describe GroupsController, type: :controller  do
         before { sign_in(send(user)) }
         it "#{super_attr_update ? "can" : "cannot"} update with #{extra_attrs}" do
           attrs = default_attrs.merge(extra_attrs)
-          put :update, id: send(group).id, group: attrs
+          put :update, params: { id: send(group).id, group: attrs }
           if super_attr_update
             expect(assigns(:group).name).to eq 'dummy'
             expect(assigns(:group).jubla_liability_insurance).to be_truthy if extra_attrs.present?
@@ -155,15 +155,15 @@ describe GroupsController, type: :controller  do
           attrs = default_attrs.merge(type: send(group).type, parent_id: send(group).parent.id)
           attrs = attrs.merge(extra_attrs)
           if can_create_group
-            expect { post :create, group: attrs }.to change(Group, :count).by(change_count(group))
+            expect { post :create, params: { group: attrs } }.to change(Group, :count).by(change_count(group))
             is_expected.to redirect_to group_path(assigns(:group))
           else
             if extra_attrs.empty?
               expect do
-                expect { post :create, group: attrs }.to raise_error(CanCan::AccessDenied)
+                expect { post :create, params: { group: attrs } }.to raise_error(CanCan::AccessDenied)
               end.not_to change(Group, :count)
             else
-              post :create, group: attrs
+              post :create, params: { group: attrs }
               expect(assigns(:group).jubla_liability_insurance).to be_falsey
             end
           end
@@ -185,7 +185,7 @@ describe GroupsController, type: :controller  do
         before { sign_in(send(user)) }
 
         it 'can destroy group' do
-          expect { delete :destroy, id: send(group).id }.to change { Group.without_deleted.count }.by(-1)
+          expect { delete :destroy, params: { id: send(group).id } }.to change { Group.without_deleted.count }.by(-1)
         end
       end
     end
@@ -197,7 +197,7 @@ describe GroupsController, type: :controller  do
         before { sign_in(send(user)) }
 
         it 'cannot destroy group with children' do
-          expect { delete :destroy, id: send(group).id }.not_to change { Group.without_deleted.count }
+          expect { delete :destroy, params: { id: send(group).id } }.not_to change { Group.without_deleted.count }
         end
       end
     end
@@ -209,7 +209,7 @@ describe GroupsController, type: :controller  do
         before { sign_in(send(user)) }
 
         it 'is not allowed to destroy group' do
-          expect { delete :destroy, id: send(group).id }.to raise_error(CanCan::AccessDenied)
+          expect { delete :destroy, params: { id: send(group).id } }.to raise_error(CanCan::AccessDenied)
         end
       end
     end
@@ -220,7 +220,7 @@ describe GroupsController, type: :controller  do
 
     it 'can destroy flock without subgroups' do
       flock.children.delete_all
-      expect { delete :destroy, id: flock.id }.to change { Group.without_deleted.count }.by(-1)
+      expect { delete :destroy, params: { id: flock.id } }.to change { Group.without_deleted.count }.by(-1)
     end
   end
 
@@ -230,7 +230,7 @@ describe GroupsController, type: :controller  do
     it 'cannot destroy flock without subgroups' do
       flock.children.delete_all
       expect do
-         expect { delete :destroy, id: flock.id }.to raise_error(CanCan::AccessDenied)
+         expect { delete :destroy, params: { id: flock.id } }.to raise_error(CanCan::AccessDenied)
       end.not_to change { Group.count }
     end
   end

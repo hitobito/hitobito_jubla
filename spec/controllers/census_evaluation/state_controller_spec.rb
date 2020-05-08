@@ -18,7 +18,7 @@ describe CensusEvaluation::StateController do
   before { sign_in(people(:top_leader)) }
 
   describe 'GET index' do
-    before { get :index, id: be.id }
+    before { get :index, params: { id: be.id } }
 
     it 'assigns counts' do
       counts = assigns(:group_counts)
@@ -49,11 +49,11 @@ describe CensusEvaluation::StateController do
 
   describe 'POST remind' do
     it 'creates mail job' do
-      expect { post :remind, id: be.id, flock_id: bern.id, format: :js }.to change { Delayed::Job.count }.by(1)
+      expect { post :remind, params: { id: be.id, flock_id: bern.id }, format: :js }.to change { Delayed::Job.count }.by(1)
     end
 
     context '.js' do
-      before { post :remind, id: be.id, flock_id: bern.id, format: :js }
+      before { post :remind, params: { id: be.id, flock_id: bern.id }, format: :js }
 
       it 'renders update_flash' do
         is_expected.to render_template('census_evaluation/state/remind')
@@ -67,7 +67,7 @@ describe CensusEvaluation::StateController do
     it 'redirects flock leaders' do
       sign_in(people(:flock_leader))
       expect do
-        expect { post :remind, id: be.id, flock_id: bern.id, format: :js }.to raise_error(CanCan::AccessDenied)
+        expect { post :remind, params: { id: be.id, flock_id: bern.id }, format: :js }.to raise_error(CanCan::AccessDenied)
       end.not_to change { Delayed::Job.count }
     end
   end

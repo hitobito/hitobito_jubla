@@ -1,4 +1,4 @@
-class RestoreManuallyCreatedAlumnusRoles < ActiveRecord::Migration
+class RestoreManuallyCreatedAlumnusRoles < ActiveRecord::Migration[4.2]
   include Rails.application.routes.url_helpers
 
   def down; end

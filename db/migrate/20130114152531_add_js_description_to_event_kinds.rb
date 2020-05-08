@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class AddJsDescriptionToEventKinds < ActiveRecord::Migration
+class AddJsDescriptionToEventKinds < ActiveRecord::Migration[4.2]
   def change
     add_column :event_kinds, :j_s_description, :string
   end

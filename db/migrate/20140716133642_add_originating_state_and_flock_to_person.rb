@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class AddOriginatingStateAndFlockToPerson < ActiveRecord::Migration
+class AddOriginatingStateAndFlockToPerson < ActiveRecord::Migration[4.2]
   attr_reader :people, :flocks, :states
 
   def change

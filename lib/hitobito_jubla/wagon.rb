@@ -30,7 +30,6 @@ module HitobitoJubla
       Event.send :include, Jubla::Event
       Event::Course.send :include, Jubla::Event::Course
       Event::Application.send :include, Jubla::Event::Application
-      MailingList.send :include, Jubla::MailingList
 
       ### abilities
       EventAbility.send :include, Jubla::EventAbility
@@ -73,6 +72,7 @@ module HitobitoJubla
         person: [:originating_flock, :originating_state]
       ]
 
+      MailingList::Subscribers.send :include, Jubla::MailingList::Subscribers
       Person::Filter::List.send :include, Jubla::Person::Filter::List
 
       Import::PersonImporter.send :include, Jubla::Import::PersonImporter

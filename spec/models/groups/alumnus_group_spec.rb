@@ -55,7 +55,9 @@ describe Group::AlumnusGroup do
         it 'creates new background job' do
           expect_any_instance_of(AlumniMailJob).to receive(:enqueue!).and_call_original
           expect { role.destroy }.to change(Delayed::Job, :count).by(1)
-          expect(Delayed::Job.first.run_at).to be_within(10.seconds).of(1.day.from_now)
+
+          alumni_job = Delayed::Job.find_by("handler like '%Alumni%'")
+          expect(alumni_job.run_at).to be_within(10.seconds).of(1.day.from_now)
         end
       end
 

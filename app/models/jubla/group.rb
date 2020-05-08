@@ -38,8 +38,6 @@ module Jubla::Group
 
     root_types Group::Federation
 
-    ::Group::MINIMAL_SELECT << 'groups.kind'
-
     private
 
     def delete_alumni_groups

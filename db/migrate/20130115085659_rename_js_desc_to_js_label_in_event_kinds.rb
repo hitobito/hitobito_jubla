@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class RenameJsDescToJsLabelInEventKinds < ActiveRecord::Migration
+class RenameJsDescToJsLabelInEventKinds < ActiveRecord::Migration[4.2]
   def up
     rename_column :event_kinds, :j_s_description, :j_s_label
   end

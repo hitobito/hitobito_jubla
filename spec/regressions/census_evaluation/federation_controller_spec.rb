@@ -21,7 +21,7 @@ describe CensusEvaluation::FederationController, type: :controller do
 
   describe 'GET total' do
     context 'as admin' do
-      before { get :index, id: ch.id }
+      before { get :index, params: { id: ch.id } }
 
       it 'renders correct templates' do
         is_expected.to render_template('index')
@@ -32,7 +32,7 @@ describe CensusEvaluation::FederationController, type: :controller do
 
     context 'as normal user' do
       before { sign_in(people(:flock_leader)) }
-      before { get :index, id: ch.id }
+      before { get :index, params: { id: ch.id } }
 
       it 'renders correct templates' do
         is_expected.to render_template('index')
@@ -45,11 +45,11 @@ describe CensusEvaluation::FederationController, type: :controller do
   describe 'GET csv' do
 
     context 'as admin' do
-      before { get :index, id: ch.id, format: :csv }
+      before { get :index, params: { id: ch.id }, format: :csv }
       let(:csv) { CSV.parse(response.body, headers: true, col_sep: ';') }
 
       it 'renders correct templates' do
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(csv).to have(5).items
         expect(csv.headers).to have(11).items
       end
@@ -60,7 +60,7 @@ describe CensusEvaluation::FederationController, type: :controller do
       before { sign_in(people(:flock_leader)) }
 
       it 'is rejected' do
-        expect { get :index, id: ch.id, format: :csv }.to raise_error(CanCan::AccessDenied)
+        expect { get :index, params: { id: ch.id }, format: :csv }.to raise_error(CanCan::AccessDenied)
       end
     end
   end

@@ -21,7 +21,7 @@ class Event::Course::Condition < ActiveRecord::Base
   belongs_to :group
 
   validates_by_schema
-  validates :label, uniqueness: { scope: :group_id }
+  validates :label, uniqueness: { scope: :group_id, case_sensitive: false }
   validate :assert_group_can_have_courses
 
 

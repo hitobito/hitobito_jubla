@@ -1,4 +1,4 @@
-class ChangeAlumnusContactableFlags < ActiveRecord::Migration
+class ChangeAlumnusContactableFlags < ActiveRecord::Migration[4.2]
   def up
     change_table(:people) do |t|
       t.change_default(:contactable_by_federation, true)

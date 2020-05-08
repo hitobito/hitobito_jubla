@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-class UpdateEventQuestionsWording < ActiveRecord::Migration
+class UpdateEventQuestionsWording < ActiveRecord::Migration[4.2]
   def change
     question = Event::Question.find_by(event_id: nil, question: 'Ich habe folgendes ÖV Abo')
     question && question.update_attribute(:question, 'Ich habe während dem Kurs folgendes ÖV Abo')

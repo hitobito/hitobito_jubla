@@ -22,7 +22,7 @@ describe EventsController do
     before { sign_in(people(:top_leader)) }
 
     it 'creates new event course with dates, advisor' do
-      post :create, event: event_attrs.merge(contact_id: Person.first, advisor_id: Person.last), group_id: group.id
+      post :create, params: { event: event_attrs.merge(contact_id: Person.first, advisor_id: Person.last), group_id: group.id }
       expect(event.dates).to have(1).item
       expect(event.dates.first).to be_persisted
       expect(event.contact).to eq Person.first
@@ -30,7 +30,7 @@ describe EventsController do
     end
 
     it 'creates new event course without contact, advisor' do
-      post :create, event: event_attrs.merge(contact_id: '', advisor_id: ''), group_id: group.id
+      post :create, params: { event: event_attrs.merge(contact_id: '', advisor_id: ''), group_id: group.id }
 
       expect(event.contact).not_to be_present
       expect(event.advisor).not_to be_present
@@ -38,13 +38,13 @@ describe EventsController do
     end
 
     it 'should set application contact if only one is available' do
-      post :create, event: event_attrs, group_id: group.id
+      post :create, params: { event: event_attrs, group_id: group.id }
 
       expect(event.application_contact).to eq event.possible_contact_groups.first
     end
 
     it 'should set training days' do
-      post :create, event: event_attrs.merge(training_days: 5), group_id: group.id
+      post :create, params: { event: event_attrs.merge(training_days: 5), group_id: group.id }
 
       expect(event.training_days).to eq 5
     end
@@ -67,14 +67,16 @@ describe EventsController do
       let(:coach) { Person.last }
 
       it 'creates new event camp with dates,coach' do
-        post :create, event: { group_ids: [group.id],
-                               name: 'foo',
-                               kind_id: Event::Kind.where(short_name: 'SLK').first.id,
-                               dates_attributes: [date],
-                               contact_id: contact.id,
-                               coach_id: coach.id,
-                               type: 'Event::Camp' },
-                      group_id: group.id
+        post :create, params: {
+                                                       event: { group_ids: [group.id],
+                                                        name: 'foo',
+                                                        kind_id: Event::Kind.where(short_name: 'SLK').first.id,
+                                                        dates_attributes: [date],
+                                                        contact_id: contact.id,
+                                                        coach_id: coach.id,
+                                                        type: 'Event::Camp' },
+                                               group_id: group.id
+        }
 
 
         event = assigns(:event)
@@ -99,9 +101,11 @@ describe EventsController do
         # assign flock coach
         Fabricate(:role, group: flock, type: 'Group::Flock::Coach', person: coach)
 
-        get :new, event: { group_ids: [flock.id],
-                           type: 'Event::Camp' },
-                  group_id: flock.id
+        get :new, params: {
+                                               event: { group_ids: [flock.id],
+                                                type: 'Event::Camp' },
+                                       group_id: flock.id
+        }
 
         event = assigns(:event)
         expect(event.coach).to eq coach
@@ -109,9 +113,11 @@ describe EventsController do
 
       it '#new event camp it should NOT set default coach' do
         # no flock coach assigned
-        get :new, event: { group_ids: [flock.id],
-                           type: 'Event::Camp' },
-                  group_id: flock.id
+        get :new, params: {
+                                               event: { group_ids: [flock.id],
+                                                type: 'Event::Camp' },
+                                       group_id: flock.id
+        }
 
         event = assigns(:event)
         expect(event.coach).to be nil
@@ -131,12 +137,12 @@ describe EventsController do
 
 
       it 'lists events' do
-        get :index, group_id: group.id, year: 2012
+        get :index, params: { group_id: group.id, year: 2012 }
         expect(assigns(:events)).to match_array [event, events(:top_event)]
       end
 
       it 'lists courses' do
-        get :index, group_id: group.id, year: 2012, type: Event::Course.sti_name
+        get :index, params: { group_id: group.id, year: 2012, type: Event::Course.sti_name }
         expect(assigns(:events)).to eq [events(:top_course), course]
       end
     end
@@ -147,13 +153,13 @@ describe EventsController do
       let!(:camp) { Fabricate(:camp, groups: [group]) }
 
       it 'lists event' do
-        get :index, group_id: group.id, year: 2012
+        get :index, params: { group_id: group.id, year: 2012 }
         expect(assigns(:events)).to eq [event]
       end
 
 
       it 'lists camp' do
-        get :index, group_id: group.id, year: 2012, type: Event::Camp.sti_name
+        get :index, params: { group_id: group.id, year: 2012, type: Event::Camp.sti_name }
         expect(assigns(:events)).to eq [camp]
       end
 

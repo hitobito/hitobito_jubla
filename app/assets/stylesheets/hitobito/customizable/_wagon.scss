@@ -93,22 +93,13 @@ legend {
 }
 
 #page {
-  padding: 0 0 30px 0;
-  margin: 20px 0 20px;
   background: none;
-
-  @include responsive(mediaTablet) {
-    padding: 0 20px 30px 20px;
-    margin: 20px 0;
-  }
 }
 
 .sheet.parent {
-  padding-bottom: 1px;
   background: lighten($grayLighter, 1%);
   @include single-box-shadow($grayDarker, 0, 2px, 8px);
   .sheet {
-    margin: 0 -10px -30px 10px;
     &.parent {
       background: lighten($grayLighter, 3%);
     }
