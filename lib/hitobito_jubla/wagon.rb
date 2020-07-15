@@ -99,6 +99,8 @@ module HitobitoJubla
 
       ### decorators
       Event::ParticipationDecorator.send :include, Jubla::Event::ParticipationDecorator
+
+      EventDecorator.icons['Event::Camp'] = :campground
       EventDecorator.send :include, Jubla::EventDecorator
       PersonDecorator.send :include, Jubla::PersonDecorator
 
