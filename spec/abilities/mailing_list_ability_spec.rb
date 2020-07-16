@@ -59,8 +59,8 @@ describe MailingListAbility do
     context 'in group in lower layer' do
       let(:group) { groups(:bern) }
 
-      it 'may show mailing lists' do
-        is_expected.to be_able_to(:show, list)
+      it 'may not show mailing lists' do
+        is_expected.not_to be_able_to(:show, list)
       end
 
       it 'may not update mailing lists' do
@@ -79,8 +79,8 @@ describe MailingListAbility do
     context 'in group in upper layer' do
       let(:group) { groups(:ch) }
 
-      it 'may show mailing lists' do
-        is_expected.to be_able_to(:show, list)
+      it 'may not show mailing lists' do
+        is_expected.not_to be_able_to(:show, list)
       end
 
       it 'may not update mailing lists' do
@@ -121,8 +121,8 @@ describe MailingListAbility do
     context 'in group in same layer' do
       let(:group) { groups(:be_board) }
 
-      it 'may show mailing lists' do
-        is_expected.to be_able_to(:show, list)
+      it 'may not show mailing lists' do
+        is_expected.not_to be_able_to(:show, list)
       end
 
       it 'may not update mailing lists' do
@@ -141,8 +141,8 @@ describe MailingListAbility do
     context 'in group in lower layer' do
       let(:group) { groups(:bern) }
 
-      it 'may show mailing lists' do
-        is_expected.to be_able_to(:show, list)
+      it 'may not show mailing lists' do
+        is_expected.not_to be_able_to(:show, list)
       end
 
       it 'may not update mailing lists' do
@@ -161,8 +161,8 @@ describe MailingListAbility do
     context 'in group in upper layer' do
       let(:group) { groups(:ch) }
 
-      it 'may show mailing lists' do
-        is_expected.to be_able_to(:show, list)
+      it 'may not show mailing lists' do
+        is_expected.not_to be_able_to(:show, list)
       end
 
       it 'may not update mailing lists' do
