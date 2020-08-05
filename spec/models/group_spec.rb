@@ -17,7 +17,7 @@ describe Group do
 
     it { is_expected.to have(7).possible_children }
     it { is_expected.to have(3).default_children }
-    it { is_expected.to have(4).role_types }
+    it { is_expected.to have(5).role_types }
     it { is_expected.to be_layer }
 
     its(:possible_children) { should include(Group::SimpleGroup) }
