@@ -11,7 +11,7 @@ application:
     logo_image: logo_jubla.png
     logo_url: http://www.jubla.ch
     links:
-      "Fragen und Anregungen": http://feedback.jubla.ch
+      "Fragen und Anregungen": mailto:datenbank@jubla.ch
       Hilfe: http://jubla.ch/datenbank
   # The languages available in the menu
   languages:
