@@ -84,5 +84,9 @@ class Group::Federation < Group
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles GroupAdmin, Alumnus, External, DispatchAddress
+  class ItSupport < Jubla::Role::Member
+    self.permissions = [:impersonation]
+  end
+
+  roles GroupAdmin, Alumnus, External, DispatchAddress, ItSupport
 end

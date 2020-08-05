@@ -186,6 +186,11 @@ de:
       jubla/role/member: Mitglied
       jubla/role/treasurer: Kassier/in
 
+      group/federation/it_support:
+        one: IT Support
+        other: IT Support
+        long: IT Support Bund
+
       group/state_professional_group/dispatch_address:
         one: Versandadresse
         other: Versandadresse
