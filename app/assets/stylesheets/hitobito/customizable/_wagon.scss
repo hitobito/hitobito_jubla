@@ -147,7 +147,7 @@ html.turbolinks-progress-bar::before {
     .icon,
     [class^="icon-"],
     [class*=" icon-"] {
-      background-image: image-url("glyphicons-halflings-green.png");
+      background-image: url("../../../images/glyphicons-halflings-green.png");
     }
 
     .caret {
@@ -158,7 +158,7 @@ html.turbolinks-progress-bar::before {
   .icon,
   [class^="icon-"],
   [class*=" icon-"] {
-    background-image: image-url("glyphicons-halflings-green-hover.png");
+    background-image: url("../../../images/glyphicons-halflings-green-hover.png");
   }
 
   .caret {
