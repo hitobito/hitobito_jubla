@@ -51,6 +51,8 @@ de:
       statistics: Statistik
 
   people:
+    roles_aside_jubla:
+      set_main_group: Hauptgruppe setzen
     show_left_jubla:
       contactable_by: Kontaktfreigabe
     fields_jubla:
