@@ -7,6 +7,10 @@
 # Overrides settings from the main application
 application:
   name: jubla.db
+  logo:
+    image: logo.svg
+    height: 40
+    width: 230
   footer:
     logo_image: logo_jubla.png
     logo_url: http://www.jubla.ch
