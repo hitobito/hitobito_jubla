@@ -41,7 +41,10 @@ module Jubla::Group
     private
 
     def delete_alumni_groups
-      children.where(type: ALUMNI_GROUPS_CLASSES).delete_all
+      alumni_groups = children.where(type: ALUMNI_GROUPS_CLASSES)
+      # Hard delete alumni roles because the alumni groups are also hard deleted
+      Role.with_deleted.where(group_id: alumni_groups.select(:id)).delete_all
+      alumni_groups.delete_all
     end
 
   end
