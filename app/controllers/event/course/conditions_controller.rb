@@ -10,6 +10,7 @@ class Event::Course::ConditionsController < SimpleCrudController
   self.nesting = Group
 
   self.permitted_attrs = [:content, :label]
+  self.sort_mappings = { content: 'action_text_rich_texts.body' }
 
   helper_method :group
 
@@ -21,7 +22,7 @@ class Event::Course::ConditionsController < SimpleCrudController
   private
 
   def list_entries
-    super.includes(:group).order(:label)
+    super.includes(:group, :rich_text_content).order(:label)
   end
 
   def group

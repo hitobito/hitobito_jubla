@@ -56,7 +56,7 @@ describe CensusMailer do
     context 'without contact address' do
       let(:mail) { CensusMailer.reminder(people(:top_leader), census, leaders, groups(:bern), groups(:no_agency)) }
 
-      its(:body) { should =~ /AST<br\/><br\/>/ }
+      its(:body) { should =~ %r{<br>AST<br>} }
     end
   end
 end

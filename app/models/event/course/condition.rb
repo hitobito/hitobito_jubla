@@ -19,6 +19,7 @@
 class Event::Course::Condition < ActiveRecord::Base
 
   belongs_to :group
+  has_rich_text :content
 
   validates_by_schema
   validates :label, uniqueness: { scope: :group_id, case_sensitive: false }
