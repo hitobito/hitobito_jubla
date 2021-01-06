@@ -7,5 +7,6 @@ class MigrateCourseConditionsToActionText < ActiveRecord::Migration[6.0]
       cct.update_attribute(:content, simple_format(cct.content))
     end
     remove_column :event_conditions, :content_old
+    Event::Course::Condition.reset_column_information
   end
 end
