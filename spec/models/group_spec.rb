@@ -104,7 +104,7 @@ describe Group do
         group = Group::Region.all.first
         group.children.delete_all
         alumnus_group = Group::RegionalAlumnusGroup.create(name: 'test_group', parent_id: group.id)
-        Role.create(group: alumnus_group, person: people(:bottom_member))
+        Role.create(group: alumnus_group)
 
         expect(Role.with_deleted.where.not(group_id: Group.with_deleted.select(:id)).count).to be 0
 
