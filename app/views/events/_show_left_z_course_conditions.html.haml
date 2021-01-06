@@ -5,4 +5,4 @@
 
 - if entry.is_a?(Event::Course) && entry.condition
   = section 'Kursbestimmungen' do
-    = entry.condition.content.html_safe
+    = sanitize_action_text_content(entry.condition.content.body)
