@@ -100,21 +100,21 @@ class ExtractDifferentGroupTypes < ActiveRecord::Migration[4.2]
   private
 
   def update_types(kind, old_type, layer, new_type)
-    key = mysql? ? "#{kind}.type" : 'type'
+    key = mysql? ? "`#{kind}`.type" : 'type'
     send(kind, old_type, layer).update_all("#{key} = '#{new_type}'")
   end
 
   def roles(type, layer)
     Role.with_deleted.
-         joins('LEFT JOIN groups AS groups ON groups.id = roles.group_id ' +
-               'LEFT JOIN groups AS layer ON groups.layer_group_id = layer.id').
+      joins("LEFT JOIN #{Group.quoted_table_name} AS #{Group.quoted_table_name} ON #{Group.quoted_table_name}.id = roles.group_id " +
+            "LEFT JOIN #{Group.quoted_table_name} AS layer ON #{Group.quoted_table_name}.layer_group_id = layer.id").
          where(type: type).
          where('layer.type = ?', layer)
   end
 
   def groups(type, layer)
     Group.with_deleted.
-          joins('LEFT JOIN groups AS layer ON groups.layer_group_id = layer.id').
+      joins("LEFT JOIN #{Group.quoted_table_name} AS layer ON #{Group.quoted_table_name}.layer_group_id = layer.id").
           where(type: type).
           where('layer.type = ?', layer)
   end

@@ -16,20 +16,20 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
   def find_missing_people_sql
     <<-SQL
     SELECT DISTINCT person_id, layer_group_id FROM roles
-    INNER JOIN groups ON roles.group_id = groups.id
+    INNER JOIN #{table('groups')} ON roles.group_id = #{table('groups')}.id
     WHERE roles.type IN (#{quote(role_types)})
     AND roles.deleted_at IS NOT NULL
     AND person_id NOT IN (
       SELECT DISTINCT person_id FROM roles
-      INNER JOIN groups g ON roles.group_id = g.id
-      WHERE g.layer_group_id = groups.layer_group_id
+      INNER JOIN #{table('groups')} g ON roles.group_id = g.id
+      WHERE g.layer_group_id = #{table('groups')}.layer_group_id
       AND roles.deleted_at IS NULL
       AND (
         roles.type IN (#{quote(role_types)}) OR
         roles.type IN ('Group::FlockAlumnusGroup::Member', 'Group::ChildGroup::Child'))
     )
     AND layer_group_id NOT IN (
-      SELECT DISTINCT id from groups
+      SELECT DISTINCT id from #{table('groups')}
       WHERE deleted_at IS NOT NULL
     )
     GROUP BY person_id, layer_group_id
@@ -38,9 +38,9 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
 
   def find_alumni_groups_sql(layer_group_ids)
     <<-SQL
-    SELECT layer_group_id, id FROM groups
+    SELECT layer_group_id, id FROM #{table('groups')}
     WHERE layer_group_id IN (#{quote(layer_group_ids)})
-    AND groups.type = 'Group::FlockAlumnusGroup'
+    AND #{table('groups')}.type = 'Group::FlockAlumnusGroup'
     SQL
   end
 
@@ -78,4 +78,7 @@ class CreateMissingAlumnusMembers < ActiveRecord::Migration[4.2]
     list.collect { |item| ActiveRecord::Base.connection.quote(item) }.join(',')
   end
 
+  def table(name)
+    ActiveRecord::Base.connection.quote_table_name(name)
+  end
 end

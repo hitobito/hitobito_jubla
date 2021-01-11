@@ -18,9 +18,9 @@ class AddRegionalCensus < ActiveRecord::Migration[4.2]
               UPDATE member_counts
               SET region_id = (
                 SELECT regions.id
-                FROM groups
-                INNER JOIN groups AS regions ON ( groups.parent_id = regions.id AND regions.type = 'Group::Region' )
-                WHERE groups.id = member_counts.flock_id
+                FROM #{table('groups')}
+                INNER JOIN #{table('groups')} AS regions ON ( #{table('groups')}.parent_id = regions.id AND regions.type = 'Group::Region' )
+                WHERE #{table('groups')}.id = member_counts.flock_id
               )
             SQL
           end
@@ -29,5 +29,11 @@ class AddRegionalCensus < ActiveRecord::Migration[4.2]
     end
 
     add_index :member_counts, [:region_id, :year]
+  end
+
+  private
+
+  def table(name)
+    ActiveRecord::Base.connection.quote_table_name(name)
   end
 end

@@ -50,8 +50,8 @@ class CreateAlumnusRoles < ActiveRecord::Migration[4.2]
 
   def find_missing_roles_statement
     <<-SQL
-      SELECT roles.person_id, roles.group_id, groups.type, roles.type, roles.deleted_at FROM roles
-      INNER JOIN groups ON roles.group_id = groups.id
+      SELECT roles.person_id, roles.group_id, #{table('groups')}.type, roles.type, roles.deleted_at FROM roles
+      INNER JOIN #{table('groups')} ON roles.group_id = #{table('groups')}.id
       WHERE roles.deleted_at IS NOT NULL
       AND roles.type NOT LIKE '%::External' AND roles.type NOT LIKE '%::DispatchAddress'
       AND roles.person_id NOT IN (
@@ -66,6 +66,10 @@ class CreateAlumnusRoles < ActiveRecord::Migration[4.2]
     rows.group_by do |person_id, group_id|
       [person_id, group_id]
     end.values.collect(&:first)
+  end
+
+  def table(name)
+    ActiveRecord::Base.connection.quote_table_name(name)
   end
 
 end

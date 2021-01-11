@@ -26,12 +26,12 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration[4.2]
     role_types =  existing_alumni_role_types - ["Group::ChildGroup::Alumnus"]
     <<-SQL
     SELECT DISTINCT person_id, layer_group_id FROM roles
-    INNER JOIN groups ON roles.group_id = groups.id
+    INNER JOIN #{table('groups')} ON roles.group_id = #{table('groups')}.id
     WHERE roles.type IN (#{quote(role_types)})
     AND roles.deleted_at IS NULL
     AND person_id NOT IN (
       SELECT DISTINCT person_id FROM roles
-      INNER JOIN groups g ON roles.group_id = g.id
+      INNER JOIN #{table('groups')} g ON roles.group_id = g.id
       WHERE g.layer_group_id = layer_group_id
       AND roles.deleted_at IS NULL
       AND (roles.type NOT IN (#{quote(role_types)}) OR
@@ -43,9 +43,9 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration[4.2]
 
   def find_groups_sql(layer_group_ids)
     <<-SQL
-    SELECT layer_group_id, id, type FROM groups
+    SELECT layer_group_id, id, type FROM #{table('groups')}
     WHERE layer_group_id IN (#{quote(layer_group_ids)})
-    AND groups.type IN (#{quote(new_alumni_group_types)})
+    AND #{table('groups')}.type IN (#{quote(new_alumni_group_types)})
     SQL
   end
 
@@ -74,6 +74,10 @@ class CreateAlumniRolesInAlumniGroups < ActiveRecord::Migration[4.2]
 
   def quote(list)
     list.collect { |item| ActiveRecord::Base.connection.quote(item) }.join(',')
+  end
+
+  def table(name)
+    ActiveRecord::Base.connection.quote_table_name(name)
   end
 
   def new_alumni_group_types
