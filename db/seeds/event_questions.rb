@@ -9,7 +9,7 @@
 Event::Question.where(event_id: nil).destroy_all
 
 # recreate default event questions
-Event::Question.seed(:event_id, :question,
+[
   {question: 'Ich habe während dem Kurs folgendes ÖV Abo',
    choices: 'GA, Halbtax / unter 16, keine Vergünstigung'},
 
@@ -21,4 +21,11 @@ Event::Question.seed(:event_id, :question,
 
   {question: 'Ich habe bereits ein Meisterwerk (das Handbuch der Mindestkenntnisse)',
    choices: 'ja, nein'},
-)
+].each do |attrs|
+  eq = Event::Question.find_or_initialize_by(
+    event_id: attrs.delete(:event_id),
+    question: attrs.delete(:question),
+  )
+  eq.attributes = attrs
+  eq.save!
+end
