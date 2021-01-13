@@ -3,7 +3,6 @@ class MigrateCourseConditionsToActionText < ActiveRecord::Migration[6.0]
 
   def change
     rename_column :event_conditions, :content, :content_old
-    binding.pry
     Event::Course::Condition.find_each do |cct|
       cct.update(content: simple_format(cct.content_old))
     end
