@@ -46,11 +46,9 @@
 #
 
 top_event:
-  name: Top Event
   groups: ch
 
 top_course:
-  name: Top Course
   groups: be
   type: Event::Course
   kind: flock
@@ -61,7 +59,6 @@ top_course:
   state: created
 
 camp:
-  name: Summer camp
   groups: bern
   type: Event::Camp
   kind: house_js
