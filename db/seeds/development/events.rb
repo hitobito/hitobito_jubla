@@ -25,7 +25,11 @@ class JublaEventSeeder < EventSeeder
 
   def seed_camp(values)
     date, number = values[:application_opening_at], values[:number]
-    event = Event::Camp.seed(:name, values.merge(name: "Lager #{number}")).first
+
+    event = Event::Camp.find_or_initialize_by(name: "Lager #{number}")
+    event.attributes = values
+    event.save(validate: false)
+
     seed_dates(event, date + 90.days)
     seed_questions(event) if true?
   end
