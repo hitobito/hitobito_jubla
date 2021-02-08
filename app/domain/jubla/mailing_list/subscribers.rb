@@ -25,7 +25,7 @@ module Jubla::MailingList::Subscribers
   end
 
   def excluded_by_contact_preference
-    Person.alumnus_only.where(:"contactable_by_#{layer_type}" => false).select(:id)
+    Person.alumnus_only.where("contactable_by_#{layer_type}": false).select(:id)
   end
 
   def layer_type
@@ -37,5 +37,4 @@ module Jubla::MailingList::Subscribers
       sql
     end
   end
-
 end
