@@ -5,4 +5,7 @@ rescue LoadError => e
   raise unless e.message.include?('spring')
 end
 require 'bundler/setup'
+
+ENV.delete('RAILS_HOST_NAME')
+
 load Gem.bin_path('rspec-core', 'rspec')
