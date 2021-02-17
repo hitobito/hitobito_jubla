@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2014, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2021, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -36,7 +36,6 @@ de:
       title_event/camp: Lager erstellen
 
   event/participations:
-    success: '%{full_entry_label} wurde erfolgreich erstellt.'
     instructions: 'Für die definitive Anmeldung musst du diese über den Button <i>Drucken</i> ausdrucken, unterzeichnen und innert 14 Tagen per Post oder per E-Mail an die entsprechende Adresse senden.'
 
   event/camp/kinds:
