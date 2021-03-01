@@ -47,7 +47,7 @@ class JublaEventSeeder < EventSeeder
 
   def seed_event_course_conditions(group_id)
     [:tick, :trick, :track].each do |label|
-      data = { group_id: group_id, label: label, content: Faker::Lorem.paragraph(rand(3) + 1) }
+      data = { group_id: group_id, label: label, content: Faker::Lorem.paragraph(sentence_count: rand(3) + 1) }
       condition = Event::Course::Condition.seed(:group_id, :label, data).first
       @@conditions[group_id] ||= []
       @@conditions[group_id] << condition.id
