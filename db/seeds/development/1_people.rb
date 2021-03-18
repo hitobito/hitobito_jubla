@@ -45,3 +45,5 @@ root = Group::FederalBoard.first
 devs.each do |name, email|
   seeder.seed_developer(name, email, root, Group::FederalBoard::Member)
 end
+
+seeder.assign_role_to_root(root, Group::FederalBoard::Member)
