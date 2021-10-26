@@ -13,7 +13,7 @@ module Jubla::GroupSerializer
       map_properties(*item.used_attributes(:parish, :founding_year, :unsexed, :bank_account,
                                            :clairongarde, :jubla_property_insurance,
                                            :jubla_liability_insurance, :jubla_full_coverage,
-                                           :coach_id, :advisor_id))
+                                           :coach_id, :advisor_id, :kind))
     end
   end
 
