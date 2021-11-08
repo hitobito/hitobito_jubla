@@ -1,9 +1,16 @@
+# frozen_string_literal: true
+
+#  Copyright (c) 2021, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla.
+
 module Jubla::Role
   class AlumnusManager
 
     attr_reader :role, :group, :person
 
-    def initialize(role, skip_alumnus_callback = false)
+    def initialize(role, skip_alumnus_callback: false)
       @role = role
       @group = role.group
       @person = role.person
@@ -13,9 +20,9 @@ module Jubla::Role
     def create
       create_alumnus_role if last_in_group?
 
-      if last_in_layer? && person_old_enough?
-        create_alumnus_group_member unless skip_alumnus_callback?
-      end
+      return if skip_alumnus_callback?
+
+      create_alumnus_group_member if last_in_layer? && person_old_enough?
     end
 
     def destroy
@@ -36,9 +43,7 @@ module Jubla::Role
 
       member = group.alumnus_member_class.new(person: person, group: alumnus_group)
 
-      if member.save
-        enqueue_mail_job if person.email.present?
-      end
+      enqueue_mail_job if member.save && person.email.present?
     end
 
     def alumnus_group_member_exists?
@@ -66,6 +71,7 @@ module Jubla::Role
     def person_old_enough?
       return true unless group.is_a?(Group::ChildGroup)
       return false unless person.years
+
       min_age_for_alumni_member <= person.years
     end
 
@@ -79,8 +85,7 @@ module Jubla::Role
     end
 
     def alumnus_member_roles_in_layer
-      role.roles_in_layer.
-        where('roles.type REGEXP "AlumnusGroup::Member"')
+      role.roles_in_layer.where('roles.type REGEXP "AlumnusGroup::Member"')
     end
 
     def last_in_group?
@@ -94,6 +99,5 @@ module Jubla::Role
     def alumnus_group
       group.alumnus_group
     end
-
   end
 end
