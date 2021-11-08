@@ -1,6 +1,6 @@
-# encoding: utf-8
+# frozen_string_literal: true
 
-#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2021, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -120,7 +120,7 @@ module Jubla::Role
   end
 
   def set_person_origins
-    person.update_columns(GroupOriginator.new(person).to_h)
+    person.update_columns(GroupOriginator.new(person).to_h) # rubocop:disable Rails/SkipsModelValidations intentionally, because it's called from an after_save hook
   end
 
   def alumnus_manager_create
@@ -140,7 +140,9 @@ module Jubla::Role
   end
 
   def alumnus_manager
-    @alumnus_manager ||= Jubla::Role::AlumnusManager.new(self, skip_alumnus_callback)
+    @alumnus_manager ||= Jubla::Role::AlumnusManager.new(
+      self, skip_alumnus_callback: skip_alumnus_callback
+    )
   end
 
 end
