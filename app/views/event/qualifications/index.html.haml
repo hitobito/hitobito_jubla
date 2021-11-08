@@ -3,13 +3,20 @@
 -#  or later. See the COPYING file at the top-level directory or at
 -#  https://github.com/hitobito/hitobito.
 
+- title event.to_s
+
 - if event.qualification_possible?
-  - # This renders the file from core with a deprecation warning, not sure how to work around
-  = render file: Rails.root.join('app', 'views', 'event', 'qualifications', 'index')
+  -# copied from [hitobito_core]/app/views/event/qualifications/index.html.haml
+  = form_tag(group_event_qualifications_path(@group, @event), method: :put) do
+
+    = render 'people'
+
+    .btn-group
+      = button_tag(t('event.qualifications.index.save'),
+                   class: 'btn btn-primary',
+                   data: { disable_with: t('event.qualifications.index.save') })
 
 - else
-  - title event.to_s
-
   %p Im aktuellen Kurs Status können die Qualifikationen nicht mehr bearbeitet werden.
 
   = render 'people'
