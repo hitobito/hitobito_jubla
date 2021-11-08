@@ -51,7 +51,7 @@ module Jubla::Role
       person
         .roles
         .joins(:group)
-        .where(group: group, type: group.alumnus_class)
+        .where(group: group, type: group.alumnus_class.name)
         .destroy_all
     end
 
