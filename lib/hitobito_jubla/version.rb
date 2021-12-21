@@ -6,5 +6,5 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 module HitobitoJubla
-  VERSION = '1.26.45'.freeze
+  VERSION = '1.26.48'.freeze
 end
