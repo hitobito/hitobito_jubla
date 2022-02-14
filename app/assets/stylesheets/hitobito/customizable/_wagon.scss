@@ -7,17 +7,17 @@
     li {
 
       &.active a {
-        @include single-text-shadow(white, 0, 1px, 0);
+        text-shadow: 0 1px 0 false white;
         color: $grayDark;
         background-color: white;
       }
 
       a {
-        @include single-text-shadow(white, 0, 1px, 0);
+        text-shadow: 0 1px 0 false white;
         color: $grayDark;
 
         &:hover {
-          @include single-text-shadow($blueDark, 0, -1px, 0);
+          text-shadow: 0 -1px 0 false $blueDark;
           background-color: $blue;
           color: white;
         }
@@ -43,7 +43,7 @@
 
 // _typography.scss
 
-#{headings(all)} {
+h1, h2, h3, h4, h5, h6 {
   font-family: $headingFontFamily;
   margin-top: 0;
 }
@@ -96,7 +96,7 @@ legend {
 
 .sheet.parent {
   background: lighten($grayLighter, 1%);
-  @include single-box-shadow($grayDarker, 0, 2px, 8px);
+  box-shadow: 0 2px 8px $grayDarker;
   .sheet {
     &.parent {
       background: lighten($grayLighter, 3%);
@@ -105,7 +105,7 @@ legend {
 }
 
 #content {
-  @include single-box-shadow($grayDarker, 0, 2px, 8px);
+  box-shadow: 0 2px 8px $grayDarker;
 }
 
 #page-footer {
@@ -113,7 +113,7 @@ legend {
   background: none;
 
   & > .container-fluid {
-    @include single-box-shadow($grayDarker, 0, 2px, 8px, 0, true);
+    box-shadow: inset 0 2px 8px 0 $grayDarker;
     background: $grayDark;
   }
 }
@@ -134,7 +134,7 @@ html.turbolinks-progress-bar::before {
   &:focus,
   &:active {
     color: darken($green, 10%);
-    @include single-text-shadow(none);
+    text-shadow: none;
     background-position: 0 -15px;
     border: 1px solid $btnBorder;
     *border: 0; // Remove the border to prevent IE7's black border on input:focus
