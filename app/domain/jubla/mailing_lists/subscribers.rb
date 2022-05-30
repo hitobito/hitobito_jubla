@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-module Jubla::MailingList::Subscribers
+module Jubla::MailingLists::Subscribers
   extend ActiveSupport::Concern
 
   included do

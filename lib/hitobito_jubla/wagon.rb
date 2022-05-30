@@ -70,7 +70,7 @@ module HitobitoJubla
         person: [:originating_flock, :originating_state]
       ]
 
-      MailingList::Subscribers.include Jubla::MailingList::Subscribers
+      MailingLists::Subscribers.include Jubla::MailingLists::Subscribers
       Person::Filter::List.include Jubla::Person::Filter::List
 
       Import::PersonImporter.include Jubla::Import::PersonImporter
