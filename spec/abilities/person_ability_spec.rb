@@ -469,7 +469,7 @@ describe PersonAbility do
         let(:group) { groups(:bern) }
 
         it 'may not create people filters' do
-          is_expected.not_to be_able_to(:create, group.people_filters.new)
+          is_expected.to be_able_to(:create, group.people_filters.new)
         end
 
         it 'may define new people filters' do

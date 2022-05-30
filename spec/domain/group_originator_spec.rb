@@ -27,12 +27,12 @@ describe GroupOriginator do
 
   context 'flock' do
     it 'deleted are considered' do
-      create([Group::Flock::Leader, groups(:bern), deleted_at: 1.day.ago])
+      create([Group::Flock::Leader, groups(:bern), created_at: 2.days.ago, deleted_at: 1.day.ago])
       assert_originating_groups flock: groups(:bern), state: groups(:be)
     end
 
     it 'active are more important than deleted' do
-      create([Group::Flock::Leader, groups(:bern), deleted_at: 1.day.ago],
+      create([Group::Flock::Leader, groups(:bern), created_at: 2.days.ago, deleted_at: 1.day.ago],
              [Group::Flock::Leader, groups(:innerroden), updated_at: 2.day.ago])
       assert_originating_groups flock: groups(:innerroden), state: groups(:no)
     end
@@ -50,7 +50,7 @@ describe GroupOriginator do
     end
 
     it 'active childgroup overrides deleted flock' do
-      create([Group::Flock::Leader, groups(:innerroden), deleted_at: 5.days.ago],
+      create([Group::Flock::Leader, groups(:innerroden), created_at: 2.weeks.ago, deleted_at: 5.days.ago],
              [Group::ChildGroup::Child, groups(:asterix)])
       assert_originating_groups flock: groups(:bern), state: groups(:be)
     end
@@ -72,12 +72,12 @@ describe GroupOriginator do
 
   context 'without flock' do
     it 'deleted are considered' do
-      create([Group::StateBoard::Leader, groups(:be_board), deleted_at: 1.day.ago])
+      create([Group::StateBoard::Leader, groups(:be_board), created_at: 2.days.ago, deleted_at: 1.day.ago])
       assert_originating_groups state: groups(:be)
     end
 
     it 'active are more important than deleted' do
-      create([Group::StateBoard::Leader, groups(:be_board), deleted_at: 1.day.ago],
+      create([Group::StateBoard::Leader, groups(:be_board), created_at: 2.days.ago, deleted_at: 1.day.ago],
              [Group::StateBoard::Leader, groups(:no_board), updated_at: 2.day.ago])
       assert_originating_groups state: groups(:no)
     end

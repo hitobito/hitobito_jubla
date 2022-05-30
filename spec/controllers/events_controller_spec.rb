@@ -22,10 +22,10 @@ describe EventsController do
     before { sign_in(people(:top_leader)) }
 
     it 'creates new event course with dates, advisor' do
-      post :create, params: { event: event_attrs.merge(contact_id: Person.first, advisor_id: Person.last), group_id: group.id }
+      post :create, params: { event: event_attrs.merge(contact_id: people(:flock_leader), advisor_id: Person.last), group_id: group.id }
       expect(event.dates).to have(1).item
       expect(event.dates.first).to be_persisted
-      expect(event.contact).to eq Person.first
+      expect(event.contact).to eq people(:flock_leader)
       expect(event.advisor).to eq Person.last
     end
 
@@ -63,19 +63,19 @@ describe EventsController do
 
       let(:group) { groups(:innerroden) }
       let(:date)  { { label: 'foo', start_at_date: Date.today, finish_at_date: Date.today } }
-      let(:contact) { Person.first }
+      let(:contact) { people(:flock_leader) }
       let(:coach) { Person.last }
 
       it 'creates new event camp with dates,coach' do
         post :create, params: {
-                                                       event: { group_ids: [group.id],
-                                                        name: 'foo',
-                                                        kind_id: Event::Kind.where(short_name: 'SLK').first.id,
-                                                        dates_attributes: [date],
-                                                        contact_id: contact.id,
-                                                        coach_id: coach.id,
-                                                        type: 'Event::Camp' },
-                                               group_id: group.id
+          event: { group_ids: [group.id],
+                   name: 'foo',
+                   kind_id: Event::Kind.where(short_name: 'SLK').first.id,
+                   dates_attributes: [date],
+                   contact_id: contact.id,
+                   coach_id: coach.id,
+                   type: 'Event::Camp' },
+                   group_id: group.id
         }
 
 
