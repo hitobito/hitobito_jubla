@@ -107,6 +107,7 @@ module HitobitoJubla
       admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
       admin[:active_for] << 'event_camp_kinds'
       Sheet::Group.include Jubla::Sheet::Group
+      EventsHelper.include Jubla::EventsHelper
     end
 
     initializer 'jubla.add_settings' do |_app|

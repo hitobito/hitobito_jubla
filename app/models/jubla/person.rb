@@ -11,6 +11,10 @@ module Jubla::Person
   included do
     belongs_to :originating_flock, class_name: 'Group'
     belongs_to :originating_state, class_name: 'Group'
+
+    def leader_user?
+      roles.map(&:type).any? { |klass| klass.ends_with?('::Leader') }
+    end
   end
 
   module ClassMethods
