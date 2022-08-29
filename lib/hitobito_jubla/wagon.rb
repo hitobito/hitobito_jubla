@@ -72,6 +72,7 @@ module HitobitoJubla
 
       MailingLists::Subscribers.include Jubla::MailingLists::Subscribers
       Person::Filter::List.include Jubla::Person::Filter::List
+      Events::Filter::Groups.include Jubla::Events::Filter::Groups
 
       Import::PersonImporter.include Jubla::Import::PersonImporter
 
