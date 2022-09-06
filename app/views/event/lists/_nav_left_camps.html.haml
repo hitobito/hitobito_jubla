@@ -1,0 +1,7 @@
+%ul.nav-left-list
+  - if can?(:list_all_camps, Event::Camp)
+    = nav t('.all_camps'), list_all_camps_path
+
+  - if can?(:list_state_camps, Event::Camp)
+    - camp_list_permitting_states.each do |group|
+      = nav t('.state_camps', group: group.to_s), list_state_camps_path(group_id: group.id)

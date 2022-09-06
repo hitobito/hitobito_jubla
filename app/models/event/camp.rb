@@ -64,4 +64,8 @@ class Event::Camp < Event
 
   belongs_to :kind, class_name: 'Event::Camp::Kind'
 
+  scope :in_next, -> (duration) {
+    timespan = Time.zone.now.midnight + duration
+    where('event_dates.start_at <= ? OR event_dates.finish_at <= ?', timespan, timespan)
+  }
 end

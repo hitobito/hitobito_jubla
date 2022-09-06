@@ -34,4 +34,8 @@ Rails.application.routes.draw do
     resource :member_counts, only: [:create, :edit, :update, :destroy]
   end
 
+  get 'list_camps' => 'event/lists#camps', as: :list_camps
+  get 'list_all_camps' => 'event/lists#all_camps', as: :list_all_camps
+  get 'list_state_camps' => 'event/lists#state_camps', as: :list_state_camps
+
 end

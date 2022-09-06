@@ -1,0 +1,8 @@
+#main
+  %section
+    = grouped_table(@camps, 4) do |event|
+      %td
+        %strong
+          = event.labeled_link
+      %td= event.dates_full
+      %td= event.description_short

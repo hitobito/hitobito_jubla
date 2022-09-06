@@ -94,6 +94,7 @@ module HitobitoJubla
       Event::QualificationsController.include Jubla::Event::QualificationsController
       Event::RegisterController.include Jubla::Event::RegisterController
       Event::ParticipationsController.include Jubla::Event::ParticipationsController
+      Event::ListsController.include Jubla::Event::ListsController
 
       ### decorators
       Event::ParticipationDecorator.include Jubla::Event::ParticipationDecorator
@@ -106,6 +107,19 @@ module HitobitoJubla
       # add more active_for urls to main navigation
       admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
       admin[:active_for] << 'event_camp_kinds'
+      i = NavigationHelper::MAIN.index { |opts| opts[:label] == :courses }
+      NavigationHelper::MAIN.insert(
+        i + 1,
+        label: :camps,
+        icon_name: :campground,
+        url: :list_camps_path,
+        active_for: %w(list_all_camps
+                       list_state_camps),
+        if: lambda do |_|
+          can?(:list_all_camps, Event::Camp) ||
+            can?(:list_state_camps, Event::Camp)
+        end
+      )
       Sheet::Group.include Jubla::Sheet::Group
     end
 

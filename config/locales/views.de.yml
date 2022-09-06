@@ -6,6 +6,13 @@
 de:
   event:
     lists:
+      nav_left_camps:
+        all_camps: Alle Lager
+        state_camps: Lager von %{group}
+      all_camps:
+        title: Alle Lager
+      state_camps:
+        title: Lager von %{group}
       popover_bsv_export:
         export_only_includes_courses_of_states: Es werden Kurse in jedem Kursstatus exportiert.
       courses:
@@ -59,3 +66,6 @@ de:
       info_alumnus_contactable: "Mit dem Setzen eines Häkchens erlaubst du folgenden Ebenen, dich zu kontaktieren und dir Informationen zu senden:"
     show_event_jubla:
       coached: Meine Betreuungen
+
+  navigation:
+    camps: Lager
