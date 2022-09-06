@@ -13,4 +13,11 @@ module Event::CampHelper
   def format_event_coach_id(_event)
     person_link(entry.coach)
   end
+
+  def camp_list_permitting_states
+    roles = current_user.roles.select do |role|
+      EventAbility::STATE_CAMP_LIST_ROLES.any? { |t| role.is_a?(t) }
+    end
+    roles.collect { |r| r.group.layer_group }.uniq.sort_by(&:to_s)
+  end
 end
