@@ -51,17 +51,19 @@ describe Event::ListsController do
       past
     end
 
-    context 'with Group::Federation::ItSupport role' do
-      let(:user) { Fabricate(Group::Federation::ItSupport.name.to_sym, group: groups(:ch)).person }
+    [[Group::Federation::ItSupport, :ch], [Group::FederalBoard::Member, :federal_board]].each do |role, group|
+      context "with #{role.sti_name} role" do
+        let(:user) { Fabricate(role.name.to_sym, group: groups(group)).person }
 
-      it 'contains only current and upcoming camps' do
-        get :all_camps
-        is_expected.to eq([current, upcoming_in_range])
-        is_expected.to_not include(upcoming_outside_range, past)
-      end
+        it 'contains only current and upcoming camps' do
+          get :all_camps
+          is_expected.to eq([current, upcoming_in_range])
+          is_expected.to_not include(upcoming_outside_range, past)
+        end
 
-      it 'via list_camps' do
-        expect(get :camps).to redirect_to(list_all_camps_path)
+        it 'via list_camps' do
+          expect(get :camps).to redirect_to(list_all_camps_path)
+        end
       end
     end
 
@@ -121,19 +123,24 @@ describe Event::ListsController do
       past
     end
 
-    context 'with Group::State::Coach role' do
-      let(:user) { Fabricate(Group::State::Coach.name.to_sym, group: state).person }
+    [[Group::State::Coach, :be],
+     [Group::State::GroupAdmin, :be],
+     [Group::StateAgency::Leader, :be_agency],
+     [Group::StateAgency::GroupAdmin, :be_agency]].each do |role, group|
+       context "with #{role.sti_name} role" do
+         let(:user) { Fabricate(role.name.to_sym, group: groups(group)).person }
 
-      it 'contains only current and upcoming camps' do
-        get :state_camps, params: { group_id: state.id }
-        is_expected.to contain_exactly(current, upcoming_in_year, past_in_year)
-        is_expected.to_not include(upcoming_outside_year, past_outside_year, outside_state)
-      end
+         it 'contains only current and upcoming camps' do
+           get :state_camps, params: { group_id: state.id }
+           is_expected.to contain_exactly(current, upcoming_in_year, past_in_year)
+           is_expected.to_not include(upcoming_outside_year, past_outside_year, outside_state)
+         end
 
-      it 'via list_camps' do
-        expect(get :camps).to redirect_to(list_state_camps_path(group_id: state.id))
-      end
-    end
+         it 'via list_camps' do
+           expect(get :camps).to redirect_to(list_state_camps_path(group_id: groups(group).id))
+         end
+       end
+     end
 
     context 'with other role' do
       let(:user) { people(:child) }
