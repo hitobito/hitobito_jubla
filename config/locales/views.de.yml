@@ -5,7 +5,7 @@
 
 de:
   event:
-    lists:
+    camps:
       nav_left_camps:
         all_camps: Alle Lager
         state_camps: Lager von %{group}
