@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## Version 1.28
+
+* Neue Lagerübersicht "Lager" in der Hauptnavigation. IT Support & Mitglieder in der Bundesleitung sehen alle Lager von heute bis in vier Wochen. Coaches und Leiter der Addressverwaltung oder eines Kantons sehen alle Lager des aktuellen Jahres in ihrem Kanton. (#1758)
+
 ## Version 1.18
 
 * Neuer Gruppentyp Ehemalige
