@@ -1,14 +1,12 @@
-# frozen_string_literal: true
 
 
-module Jubla::Event::ListsController
-  extend ActiveSupport::Concern
+class Event::CampsController < ApplicationController
+  include YearBasedPaging
+  include Events::EventListing
 
-  included do
-    skip_authorization_check only: :camps
-  end
+  skip_authorization_check only: :index
 
-  def camps
+  def index
     if can?(:list_all_camps, Event::Camp)
       redirect_to list_all_camps_path
     elsif can?(:list_state_camps, Event::Camp)
@@ -54,15 +52,15 @@ module Jubla::Event::ListsController
   def render_camp_csv(camps)
     send_data Export::Tabular::Events::List.csv(camps), type: :csv
   end
-  
+
   def all_state_camps
     base_camp_query.joins(:groups)
-                   .where('groups.lft >= ? AND groups.rgt <= ?', @group.lft, @group.rgt)
-                   .in_year(year)
+      .where('groups.lft >= ? AND groups.rgt <= ?', @group.lft, @group.rgt)
+      .in_year(year)
   end
 
   def base_camp_query
     Event::Camp.includes(:groups)
-               .list
+      .list
   end
 end

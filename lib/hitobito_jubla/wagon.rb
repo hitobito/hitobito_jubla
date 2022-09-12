@@ -94,7 +94,6 @@ module HitobitoJubla
       Event::QualificationsController.include Jubla::Event::QualificationsController
       Event::RegisterController.include Jubla::Event::RegisterController
       Event::ParticipationsController.include Jubla::Event::ParticipationsController
-      Event::ListsController.include Jubla::Event::ListsController
 
       ### decorators
       Event::ParticipationDecorator.include Jubla::Event::ParticipationDecorator

@@ -7,7 +7,7 @@
 
 module Sheet
   class Event < Base
-    module Camp
+    class Camp
       class Kind < Sheet::Admin
 
       end
