@@ -1,5 +1,8 @@
 # Hitobito Jubla Changelog
 
+## unreleased
+* Coaches auf Lager haben neu die Berechtigung um den Sportdb Export für die Teilnehmer zu erstellen
+
 ## Version 1.28
 
 * Neue Lagerübersicht "Lager" in der Hauptnavigation. IT Support & Mitglieder in der Bundesleitung sehen alle Lager von heute bis in vier Wochen. Coaches und Leiter der Addressverwaltung oder eines Kantons sehen alle Lager des aktuellen Jahres in ihrem Kanton. (#1758)
