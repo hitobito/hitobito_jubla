@@ -12,34 +12,25 @@ describe Event::CampsController do
   before { sign_in(user) }
 
   let(:user) { people(:top_leader) }
-  let(:now) { Time.zone.now }
   subject { assigns(:camps).values.flatten }
 
   describe 'GET all_camps' do
     let!(:current) do
-      current = Fabricate(:camp)
-      current.dates = [Fabricate(:event_date, start_at: now - 15.days, finish_at: now - 10.days),
-                       Fabricate(:event_date, start_at: now - 5.days, finish_at: now + 5.days)]
-      current
+      Fabricate(:camp, dates: [Fabricate(:event_date, start_at: 15.days.ago, finish_at: 10.days.ago),
+                               Fabricate(:event_date, start_at: 5.days.ago, finish_at: 5.days.from_now)])
     end
 
     let!(:upcoming_in_range) do
-      upcoming_in_range = Fabricate(:camp)
-      upcoming_in_range.dates = [Fabricate(:event_date, start_at: now + 10.days, finish_at: nil),
-                                 Fabricate(:event_date, start_at: now + 12.days, finish_at: nil)]
-      upcoming_in_range
+      Fabricate(:camp, dates: [Fabricate(:event_date, start_at: 10.days.from_now, finish_at: nil),
+                               Fabricate(:event_date, start_at: 12.days.from_now, finish_at: nil)])
     end
 
     let!(:upcoming_outside_range) do
-      upcoming_outside_range = Fabricate(:camp)
-      upcoming_outside_range.dates = [Fabricate(:event_date, start_at: now + 50.days, finish_at: now + 55.days)]
-      upcoming_outside_range
+      Fabricate(:camp, dates: [Fabricate(:event_date, start_at: 50.days.from_now, finish_at: 55.days.from_now)])
     end
 
     let!(:past) do
-      past = Fabricate(:camp)
-      past.dates = [Fabricate(:event_date, start_at: now - 5.days, finish_at: nil)]
-      past
+      Fabricate(:camp, dates: [Fabricate(:event_date, start_at: 5.days.ago, finish_at: nil)])
     end
 
     [[Group::Federation::ItSupport, :ch], [Group::FederalBoard::Member, :federal_board]].each do |role, group|
@@ -77,41 +68,41 @@ describe Event::CampsController do
     let(:flock_outside_state) { groups(:ausserroden) }
 
     let!(:current) do
-      current = Fabricate(:camp, groups: [flock_in_state])
-      current.dates = [Fabricate(:event_date, start_at: now - 15.days, finish_at: now - 10.days),
-                       Fabricate(:event_date, start_at: now - 5.days, finish_at: now + 5.days)]
-      current
+      Fabricate(:camp,
+                groups: [flock_in_state],
+                dates: [Fabricate(:event_date, start_at: 15.days.ago, finish_at: 10.days.ago),
+                        Fabricate(:event_date, start_at: 5.days.ago, finish_at: 5.days.from_now)])
     end
 
     let!(:outside_state) do
-      outside_state = Fabricate(:camp, groups: [flock_outside_state])
-      outside_state.dates = [Fabricate(:event_date, start_at: now - 15.days, finish_at: now - 10.days),
-                       Fabricate(:event_date, start_at: now - 5.days, finish_at: now + 5.days)]
-      outside_state
+      Fabricate(:camp,
+                groups: [flock_outside_state],
+                dates: [Fabricate(:event_date, start_at: 15.days.ago, finish_at: 10.days.ago),
+                        Fabricate(:event_date, start_at: 5.days.ago, finish_at: 5.days.from_now)])
     end
 
     let!(:upcoming_in_year) do
-      upcoming_in_range = Fabricate(:camp, groups: [flock_in_state])
-      upcoming_in_range.dates = [Fabricate(:event_date, start_at: now.end_of_year, finish_at: nil)]
-      upcoming_in_range
+      Fabricate(:camp,
+                groups: [flock_in_state],
+                dates: [Fabricate(:event_date, start_at: Time.zone.now.end_of_year, finish_at: nil)])
     end
 
     let!(:upcoming_outside_year) do
-      upcoming_outside_range = Fabricate(:camp, groups: [flock_in_state])
-      upcoming_outside_range.dates = [Fabricate(:event_date, start_at: now + 1.year, finish_at: nil)]
-      upcoming_outside_range
+      Fabricate(:camp,
+                groups: [flock_in_state],
+                dates: [Fabricate(:event_date, start_at: 1.year.from_now, finish_at: nil)])
     end
 
     let!(:past_in_year) do
-      past = Fabricate(:camp, groups: [flock_in_state])
-      past.dates = [Fabricate(:event_date, start_at: now.beginning_of_year, finish_at: nil)]
-      past
+      Fabricate(:camp,
+                groups: [flock_in_state],
+                dates: [Fabricate(:event_date, start_at: Time.zone.now.beginning_of_year, finish_at: nil)])
     end
 
     let!(:past_outside_year) do
-      past = Fabricate(:camp, groups: [flock_in_state])
-      past.dates = [Fabricate(:event_date, start_at: now - 1.year, finish_at: nil)]
-      past
+      Fabricate(:camp,
+                groups: [flock_in_state],
+                dates: [Fabricate(:event_date, start_at: 1.year.ago, finish_at: nil)])
     end
 
     [[Group::State::Coach, :be],
