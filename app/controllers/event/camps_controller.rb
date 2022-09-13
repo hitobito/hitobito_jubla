@@ -13,7 +13,7 @@ class Event::CampsController < ApplicationController
       role = current_user.roles.find do |role|
         EventAbility::STATE_CAMP_LIST_ROLES.any? { |t| role.is_a?(t) }
       end
-      redirect_to list_state_camps_path(group_id: role.group_id)
+      redirect_to list_state_camps_path(group_id: role.group.layer_group.id)
     else
       raise(CanCan::AccessDenied)
     end

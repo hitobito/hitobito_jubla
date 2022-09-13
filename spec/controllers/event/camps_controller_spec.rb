@@ -119,7 +119,7 @@ describe Event::CampsController do
          end
 
          it 'via list_camps' do
-           expect(get :index).to redirect_to(list_state_camps_path(group_id: groups(group).id))
+           expect(get :index).to redirect_to(list_state_camps_path(group_id: groups(:be).id))
          end
        end
      end
