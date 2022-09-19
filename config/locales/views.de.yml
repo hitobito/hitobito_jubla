@@ -11,8 +11,10 @@ de:
         state_camps: Lager von %{group}
       all_camps:
         title: Alle Lager
+        explanation: Alle Lager, welche aktuell oder in den nächsten vier Wochen durchgeführt werden.
       state_camps:
         title: Lager von %{group}
+        explanation: Alle Lager, welche innerhalb des Kantonalverbands in diesem Kalenderjahr durchgeführt werden.
       popover_bsv_export:
         export_only_includes_courses_of_states: Es werden Kurse in jedem Kursstatus exportiert.
       courses:
