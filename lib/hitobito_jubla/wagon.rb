@@ -30,6 +30,7 @@ module HitobitoJubla
       Event.include Jubla::Event
       Event::Course.include Jubla::Event::Course
       Event::Application.include Jubla::Event::Application
+      Event::Role::Helper.qualifiable = true # According to https://github.com/hitobito/hitobito_jubla/issues/33
 
       ### abilities
       EventAbility.include Jubla::EventAbility
