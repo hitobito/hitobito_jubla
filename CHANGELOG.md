@@ -3,6 +3,7 @@
 ## unreleased
 * Coaches auf Lager haben neu die Berechtigung um den Sportdb Export für die Teilnehmer zu erstellen
 * Helfer/-innen eines Kurses werden neu nach Abschluss des Kurses im Tab "Qualifikationen" angezeigt. Dort können ihnen dann die Qualifikation ausgestellt werden (hitobito_jubla#33)
+* Kursrollen sind neu mittels Genderstern geschrieben (#1896)
 
 ## Version 1.28
 

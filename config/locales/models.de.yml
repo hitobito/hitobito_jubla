@@ -238,6 +238,18 @@ de:
         one: Kursbestimmung
         other: Kursbestimmungen
 
+      event/role/helper:
+        one: Helfer*in
+        other: Helfer*innen
+
+      event/role/speaker:
+        one: Referent*in
+        other: Referent*innen
+
+      event/role/participant:
+        one: Teilnehmer*in
+        other: Teilnehmer*innen
+
       jubla/event/course/advisor: Betreuung
 
 
