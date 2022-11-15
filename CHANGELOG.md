@@ -1,12 +1,10 @@
 # Hitobito Jubla Changelog
 
-## unreleased
+## Version 1.28
+
 * Coaches auf Lager haben neu die Berechtigung um den Sportdb Export für die Teilnehmer zu erstellen
 * Helfer/-innen eines Kurses werden neu nach Abschluss des Kurses im Tab "Qualifikationen" angezeigt. Dort können ihnen dann die Qualifikation ausgestellt werden (hitobito_jubla#33)
 * Kursrollen sind neu mittels Genderstern geschrieben (#1896)
-
-## Version 1.28
-
 * Neue Lagerübersicht "Lager" in der Hauptnavigation. IT Support & Mitglieder in der Bundesleitung sehen alle Lager von heute bis in vier Wochen. Coaches und Leiter der Addressverwaltung oder eines Kantons sehen alle Lager des aktuellen Jahres in ihrem Kanton. (#1758)
 
 ## Version 1.18
