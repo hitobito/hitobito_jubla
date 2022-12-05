@@ -13,6 +13,7 @@ module Jubla::Event::Course
     restricted_role :advisor, Event::Course::Role::Advisor
 
     self.used_attributes += [:advisor_id, :application_contact_id, :condition_id]
+    self.used_attributes -= [:supports_applications]
 
     ### ASSOCIATIONS
 
@@ -34,6 +35,10 @@ module Jubla::Event::Course
         contact_groups.concat(children)
       end
     end
+  end
+
+  def supports_applications
+    true
   end
 
   private
