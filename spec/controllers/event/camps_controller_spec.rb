@@ -71,14 +71,14 @@ describe Event::CampsController do
       Fabricate(:camp,
                 groups: [flock_in_state],
                 dates: [Fabricate(:event_date, start_at: 15.days.ago, finish_at: 10.days.ago),
-                        Fabricate(:event_date, start_at: 5.days.ago, finish_at: 5.days.from_now)])
+                        Fabricate(:event_date, start_at: Time.zone.today, finish_at: 5.days.from_now)])
     end
 
     let!(:outside_state) do
       Fabricate(:camp,
                 groups: [flock_outside_state],
                 dates: [Fabricate(:event_date, start_at: 15.days.ago, finish_at: 10.days.ago),
-                        Fabricate(:event_date, start_at: 5.days.ago, finish_at: 5.days.from_now)])
+                        Fabricate(:event_date, start_at: Time.zone.today, finish_at: 5.days.from_now)])
     end
 
     let!(:upcoming_in_year) do
