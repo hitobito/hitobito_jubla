@@ -32,6 +32,11 @@ module HitobitoJubla
       Event::Application.include Jubla::Event::Application
       Event::Role::Helper.qualifiable = true # According to https://github.com/hitobito/hitobito_jubla/issues/33
 
+      TableDisplay.register_column(Event::Participation,
+                                   TableDisplays::ShowFullColumn,
+                                   [:ahv_number, :j_s_number, :canton].
+                                     map { |col| "person.#{col}" })
+
       ### abilities
       EventAbility.include Jubla::EventAbility
       Event::ParticipationAbility.include Jubla::Event::ParticipationAbility
