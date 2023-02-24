@@ -6,6 +6,7 @@ describe 'people/_form.html.haml' do
 
   subject do
     allow(controller).to receive_messages(current_user: top_leader)
+    allow(view).to receive_messages(current_user: top_leader)
     allow(view).to receive_messages(path_args: [group, top_leader])
     allow(view).to receive_messages(model_class: Person)
     allow(view).to receive(:entry).and_return(top_leader)
