@@ -67,6 +67,22 @@ describe PersonAbility do
       is_expected.to be_able_to(:index_full_people, groups(:ch))
       is_expected.to be_able_to(:index_local_people, groups(:ch))
     end
+
+    it 'may change managers in same layer' do
+      other = Fabricate(Group::Federation::External.name.to_sym, group: groups(:ch))
+
+      is_expected.to be_able_to(:change_managers, other.person.reload)
+    end
+
+    it 'may change managers in lower layers' do
+      other = Fabricate(Group::Flock::CampLeader.name.to_sym, group: groups(:bern))
+      
+      is_expected.to be_able_to(:change_managers, other.person.reload)
+    end
+
+    it 'may not change managers on self' do
+      is_expected.to_not be_able_to(:change_managers, role.person.reload)
+    end
   end
 
 
@@ -638,6 +654,11 @@ describe PersonAbility do
         person = Fabricate(role_type.name, group: groups(:bern_ehemalige)).person
         is_expected.to be_able_to(:update, person)
       end
+
+      it 'may change if person is in alumnus below' do
+        person = Fabricate(role_type.name, group: groups(:bern_ehemalige)).person
+        is_expected.to be_able_to(:change_managers, person)
+      end
     end
 
     it 'cannot access if person is not in alumnus group below' do
@@ -646,6 +667,10 @@ describe PersonAbility do
       is_expected.not_to be_able_to(:show, person)
       is_expected.not_to be_able_to(:show_full, person)
       is_expected.not_to be_able_to(:show_details, person)
+    end
+
+    it 'may not change managers on self' do
+      is_expected.to_not be_able_to(:change_managers, role.person.reload)
     end
   end
 
