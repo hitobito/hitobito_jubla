@@ -92,7 +92,7 @@ module Jubla::Export::Pdf
 
       def render_condition
         with_header(Event::Course::Condition.model_name.human) do
-          text event.condition.content, inline_format: true
+          text event.condition.content.to_plain_text, inline_format: true
         end
       end
 
