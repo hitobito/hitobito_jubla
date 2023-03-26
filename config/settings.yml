@@ -78,3 +78,5 @@ alumni_administrations:
 groups:
   statistics:
     enabled: false
+  nextcloud:
+    enabled: true
