@@ -82,8 +82,7 @@ describe Export::Tabular::CensusFlock do
     subject { Export::Csv::Generator.new(census_flock).call.split("\n") }
 
     its(:first) do
-      should eq 'Name;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Sachversicherung;' \
-                'Jubla Haftpflicht;Jubla Vollkasko;Leitende;Kinder'
+      should match /Name;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Sachversicherung;Jubla Haftpflicht;Jubla Vollkasko;Leitende;Kinder/
     end
     its(:second) { should eq 'Ausserroden;;;;;;nein;nein;nein;;' }
   end

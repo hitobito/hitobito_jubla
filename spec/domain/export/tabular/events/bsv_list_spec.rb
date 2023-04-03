@@ -11,7 +11,7 @@ describe Export::Tabular::Events::BsvList do
   let(:course) { events(:top_course) }
 
   context 'export' do
-    let(:lines) { Export::Tabular::Events::BsvList.csv([course, course]).split("\r\n") }
+    let(:lines) { Export::Tabular::Events::BsvList.csv([course, course]).gsub(Regexp.new("^#{Export::Csv::UTF8_BOM}"), '').split("\r\n") }
     let(:headers) {  lines.first.encode('UTF-8').split(';') }
 
     it 'exports headers' do
