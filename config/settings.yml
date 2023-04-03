@@ -55,12 +55,6 @@ social_account:
     - Webseite
     - Andere
 
-# Presets for CSV export
-csv:
-  # optimized for M$ Excel
-  separator: ;
-  encoding: ISO-8859-1
-
 role:
   # If a role last less than this number of days, it is not archived
   minimum_days_to_archive: 7
