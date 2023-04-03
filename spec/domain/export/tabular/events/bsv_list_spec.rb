@@ -16,7 +16,7 @@ describe Export::Tabular::Events::BsvList do
 
     it 'exports headers' do
       expect(headers).to eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Ausbildungstage",
-                         "Teilnehmende (17-30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
+                         "Teilnehmende (bis 30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
                          "Teilnehmende Total", "Leitungsteam Total", "Küchenteam", "Referenten"]
     end
 
