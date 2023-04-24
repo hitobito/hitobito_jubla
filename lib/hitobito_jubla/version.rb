@@ -6,5 +6,5 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 module HitobitoJubla
-  VERSION = '1.28.30.1'
+  VERSION = '1.28.30.2'
 end
