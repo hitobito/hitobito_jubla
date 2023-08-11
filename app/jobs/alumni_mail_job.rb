@@ -15,8 +15,7 @@ class AlumniMailJob < BaseJob
   end
 
   def perform
-    alumni_roles = Group::ALUMNI_GROUPS_CLASSES.map { |c| "#{c}::Member".constantize }
-    return if person.roles.where.not(type: alumni_roles).any?
+    return if person.roles.without_alumnus.any?
 
     if group.is_a?(Group::Flock)
       AlumniMailer.new_member_flock(person).deliver_now
