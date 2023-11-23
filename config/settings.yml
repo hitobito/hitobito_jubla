@@ -65,6 +65,9 @@ census:
 
 people:
   default_sort: role
+  people_managers:
+    self_service_managed_creation:
+      enabled: false
 
 alumni_administrations:
   min_age_for_alumni_member: 15
