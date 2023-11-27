@@ -2,22 +2,22 @@
 
 #page-navigation {
   .nav {
-    font-family: $headingFontFamily;
+    font-family: $heading-font-family;
 
     li {
 
       &.active a {
         text-shadow: 0 1px 0 false white;
-        color: $grayDark;
+        color: $gray-dark;
         background-color: white;
       }
 
       a {
         text-shadow: 0 1px 0 false white;
-        color: $grayDark;
+        color: $gray-dark;
 
         &:hover {
-          text-shadow: 0 -1px 0 false $blueDark;
+          text-shadow: 0 -1px 0 false $blue-dark;
           background-color: $blue;
           color: white;
         }
@@ -33,18 +33,18 @@
 }
 
 .nav-pills > .active > a {
-  border-color: $grayLight;
+  border-color: $gray-light;
 }
 .nav-pills > .active > a:hover,
 .nav-pills > .active > a:focus {
-  border-color: $grayLight;
+  border-color: $gray-light;
 }
 
 
 // _typography.scss
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $headingFontFamily;
+  font-family: $heading-font-family;
   margin-top: 0;
 }
 
@@ -73,7 +73,7 @@ legend {
   & > a { // header links on the right side
     color: $blue;
     &:hover {
-     color: $blueDark;
+     color: $blue-dark;
     }
   }
 }
@@ -95,31 +95,31 @@ legend {
 }
 
 .sheet.parent {
-  background: lighten($grayLighter, 1%);
-  box-shadow: 0 2px 8px $grayDarker;
+  background: lighten($gray-lighter, 1%);
+  box-shadow: 0 2px 8px $gray-darker;
   .sheet {
     &.parent {
-      background: lighten($grayLighter, 3%);
+      background: lighten($gray-lighter, 3%);
     }
   }
 }
 
 #content {
-  box-shadow: 0 2px 8px $grayDarker;
+  box-shadow: 0 2px 8px $gray-darker;
 }
 
 #page-footer {
-  padding-top: $vSpace*2;
+  padding-top: $v-space*2;
   background: none;
 
   & > .container-fluid {
-    box-shadow: inset 0 2px 8px 0 $grayDarker;
-    background: $grayDark;
+    box-shadow: inset 0 2px 8px 0 $gray-darker;
+    background: $gray-dark;
   }
 }
 
 html.turbolinks-progress-bar::before {
-  background-color: $grayDark !important;
+  background-color: $gray-dark !important;
   height: 1px !important;
 }
 
@@ -127,7 +127,7 @@ html.turbolinks-progress-bar::before {
 
 
 .btn {
-  @include buttonBackground($btnBackground, $btnBackgroundHighlight, $green, 0 1px 1px rgba(255,255,255,.75));
+  @include buttonBackground($btn-background, $btn-background-highlight, $green, 0 1px 1px rgba(255,255,255,.75));
   color: $green;
 
   &:hover,
@@ -136,9 +136,9 @@ html.turbolinks-progress-bar::before {
     color: darken($green, 10%);
     text-shadow: none;
     background-position: 0 -15px;
-    border: 1px solid $btnBorder;
+    border: 1px solid $btn-border;
     *border: 0; // Remove the border to prevent IE7's black border on input:focus
-    border-bottom-color: darken($btnBorder, 10%);
+    border-bottom-color: darken($btn-border, 10%);
 
     // transition is only when going to hover/focus, otherwise the background
     // behind the gradient (there for IE<=9 fallback) gets mismatched
@@ -167,7 +167,7 @@ html.turbolinks-progress-bar::before {
 }
 
 .btn-danger {
-  @include buttonBackground($btnDangerBackground, $btnDangerBackgroundHighlight);
+  @include buttonBackground($btn-danger-background, $btn-danger-background-highlight);
 }
 
 .btn-primary {
@@ -175,9 +175,9 @@ html.turbolinks-progress-bar::before {
 }
 
 .btn-group.open .btn.dropdown-toggle {
-  background: $btnBackgroundHighlight;
+  background: $btn-background-highlight;
   color: darken($green, 10%);
-  border-color: $btnBackgroundHighlight;
+  border-color: $btn-background-highlight;
 }
 
 select,
@@ -197,7 +197,7 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  color: $grayDark;
+  color: $gray-dark;
 }
 
 .well {
