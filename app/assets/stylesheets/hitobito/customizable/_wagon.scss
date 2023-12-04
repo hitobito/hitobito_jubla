@@ -127,7 +127,7 @@ html.turbolinks-progress-bar::before {
 
 
 .btn {
-  @include buttonBackground($btn-background, $btn-background-highlight, $green, 0 1px 1px rgba(255,255,255,.75));
+  background-color: $btn-bg;
   color: $green;
 
   &:hover,
@@ -167,17 +167,15 @@ html.turbolinks-progress-bar::before {
 }
 
 .btn-danger {
-  @include buttonBackground($btn-danger-background, $btn-danger-background-highlight);
+  background-color: $btn-danger-bg;
 }
 
 .btn-primary {
-  @include buttonBackground($btnPrimaryBackground, $btnPrimaryBackgroundHighlight);
+  background-color: $btn-primary-bg;
 }
 
 .btn-group.open .btn.dropdown-toggle {
-  background: $btn-background-highlight;
   color: darken($green, 10%);
-  border-color: $btn-background-highlight;
 }
 
 select,
