@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2023, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -255,7 +255,7 @@ describe PersonAbility do
   end
 
   describe :contact_data do
-    let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
+    let(:role) { Fabricate(Group::StateBoard::Leader.name.to_sym, group: groups(:be_board)) }
 
     it 'may view details of himself' do
       is_expected.to be_able_to(:show_full, role.person.reload)
@@ -294,7 +294,7 @@ describe PersonAbility do
     end
 
     it 'may show any public role in same layer' do
-      other = Fabricate(Group::StateProfessionalGroup::Member.name.to_sym, group: groups(:be_security))
+      other = Fabricate(Group::StateProfessionalGroup::Leader.name.to_sym, group: groups(:be_security))
       is_expected.to be_able_to(:show, other.person.reload)
     end
 
