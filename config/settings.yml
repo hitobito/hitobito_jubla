@@ -55,12 +55,6 @@ social_account:
     - Webseite
     - Andere
 
-# Presets for CSV export
-csv:
-  # optimized for M$ Excel
-  separator: ;
-  encoding: ISO-8859-1
-
 role:
   # If a role last less than this number of days, it is not archived
   minimum_days_to_archive: 7
@@ -71,6 +65,9 @@ census:
 
 people:
   default_sort: role
+  people_managers:
+    self_service_managed_creation:
+      enabled: false
 
 alumni_administrations:
   min_age_for_alumni_member: 15

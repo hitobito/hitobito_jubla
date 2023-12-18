@@ -21,9 +21,9 @@ describe CensusMailer do
 
   describe '#invitation' do
     let(:recipients) do
-      [Fabricate.build(:person, email: 'test@example.com', first_name: 'firsty'),
-       Fabricate.build(:person, email: 'test2@example.com', first_name: 'lasty'),
-       Fabricate.build(:person, email: ' ', first_name: 'blanky')]
+      [Fabricate(:person, email: 'test@example.com', first_name: 'firsty'),
+       Fabricate(:person, email: 'test2@example.com', first_name: 'lasty'),
+       Fabricate(:person, email: ' ', first_name: 'blanky')]
     end
     let(:mail) { CensusMailer.invitation(census, recipients) }
 
@@ -37,8 +37,8 @@ describe CensusMailer do
 
   describe '#reminder' do
     let(:leaders) do
-      [Fabricate.build(:person, email: 'test@example.com', first_name: 'firsty'),
-       Fabricate.build(:person, email: 'test2@example.com', first_name: 'lasty')]
+      [Fabricate(:person, email: 'test@example.com', first_name: 'firsty'),
+       Fabricate(:person, email: 'test2@example.com', first_name: 'lasty')]
     end
 
     context 'with contact address' do

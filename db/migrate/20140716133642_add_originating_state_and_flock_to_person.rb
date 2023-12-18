@@ -14,6 +14,8 @@ class AddOriginatingStateAndFlockToPerson < ActiveRecord::Migration[4.2]
 
     Person.reset_column_information
 
+    return true if Person.none?
+
     say_with_time("loading people") { load_people }
 
     say_with_time("compute origins") { compute_origins }

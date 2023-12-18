@@ -11,12 +11,12 @@ describe Export::Tabular::Events::BsvList do
   let(:course) { events(:top_course) }
 
   context 'export' do
-    let(:lines) { Export::Tabular::Events::BsvList.csv([course, course]).split("\r\n") }
+    let(:lines) { Export::Tabular::Events::BsvList.csv([course, course]).gsub(Regexp.new("^#{Export::Csv::UTF8_BOM}"), '').split("\r\n") }
     let(:headers) {  lines.first.encode('UTF-8').split(';') }
 
     it 'exports headers' do
       expect(headers).to eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Ausbildungstage",
-                         "Teilnehmende (17-30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
+                         "Teilnehmende (bis 30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
                          "Teilnehmende Total", "Leitungsteam Total", "Küchenteam", "Referenten"]
     end
 

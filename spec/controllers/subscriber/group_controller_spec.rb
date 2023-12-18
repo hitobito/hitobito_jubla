@@ -18,8 +18,8 @@ describe Subscriber::GroupController do
 
     it 'does  include sister group or their descendants' do
       is_expected.to match(/Nordostschweiz/)
-      is_expected.to match(/Nordostschweiz \\u0026gt; AST/)
-      is_expected.to match(/Nordostschweiz \\u0026gt; Kalei/)
+      is_expected.to match(/Nordostschweiz → AST/)
+      is_expected.to match(/Nordostschweiz → Kalei/)
     end
 
   end

@@ -81,9 +81,9 @@ describe Export::Tabular::Events::BsvRow do
     end
 
     context '#participant_count' do
-      it 'does not count participant_count born 16 years before course year' do
+      it 'counts participant_count born 16 years before course year' do
         participant.update_attribute(:birthday, '01.01.1996')
-        expect(info.participant_count).to eq 0
+        expect(info.participant_count).to eq 1
       end
 
       it 'counts participant born 17 years before course year' do

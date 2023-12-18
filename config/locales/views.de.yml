@@ -23,6 +23,8 @@ de:
       events:
         explanation: Angezeigt werden hier Anlässe deiner Schar, deiner Regions- und Kantonsleitung, der Bundesebene, sowie von Gruppen bei welchen du Mitglied bist.
     participations:
+      application_fields:
+        alternative_dates_info: 'Wenn du möchtest, kannst du hier ein bis zwei Alternativkurse vermerken.'
       print:
         heading_event/camp: Lageranmeldung
         requirements_for_event_camp: Voraussetzungen für das Lager

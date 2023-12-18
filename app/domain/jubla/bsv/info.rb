@@ -10,7 +10,7 @@ module Jubla
     extend ActiveSupport::Concern
 
     included do
-      alias_method :participant_count, :participant_aged_17_to_30_count
+      alias_method :participant_count, :participant_aged_under_30_count
       alias_method :location, :max_date_location_or_location
     end
 
@@ -26,8 +26,8 @@ module Jubla
       participations_for([::Event::Role::Speaker]).count
     end
 
-    def participant_aged_17_to_30_count
-      participants_aged_17_to_30.count
+    def participant_aged_under_30_count
+      participants_aged_under_30.count
     end
 
     def total_participant_count
