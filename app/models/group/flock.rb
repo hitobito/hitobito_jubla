@@ -119,7 +119,6 @@ class Group::Flock < Group
   # Scharleitung
   class Leader < Jubla::Role::Leader
     self.permissions = [:layer_and_below_full, :contact_data, :approve_applications]
-    include Group::UniqueNextcloudGroup
   end
 
   # Lagerleitung
@@ -131,6 +130,7 @@ class Group::Flock < Group
   # Präses
   class President < ::Role
     self.permissions = [:layer_and_below_read, :contact_data]
+    include Group::UniqueNextcloudGroup
 
     self.used_attributes += [:employment_percent, :honorary]
   end
@@ -144,12 +144,12 @@ class Group::Flock < Group
   # Kassier
   class Treasurer < Jubla::Role::Treasurer
     self.permissions = [:layer_and_below_read, :contact_data]
-    include Group::UniqueNextcloudGroup
   end
 
   # Coach
   class Coach < ::Role
     self.permissions = [:layer_and_below_read]
+    include Group::UniqueNextcloudGroup
     self.kind = nil
     self.visible_from_above = false
   end
@@ -157,13 +157,13 @@ class Group::Flock < Group
   # Betreuer
   class Advisor < ::Role
     self.permissions = [:layer_and_below_read]
+    include Group::UniqueNextcloudGroup
     self.kind = nil
     self.visible_from_above = false
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin
     self.permissions = [:layer_and_below_full]
-    include Group::UniqueNextcloudGroup
   end
 
   class Alumnus < Jubla::Role::Alumnus
