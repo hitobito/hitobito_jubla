@@ -86,6 +86,7 @@ class Group::Federation < Group
 
   class ItSupport < Jubla::Role::Member
     self.permissions = [:impersonation]
+    include Group::UniqueNextcloudGroup
   end
 
   roles GroupAdmin, Alumnus, External, DispatchAddress, ItSupport
