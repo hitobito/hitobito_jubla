@@ -1,11 +1,10 @@
-#!/usr/bin/env ruby
-begin
-  load File.expand_path('../spring', __FILE__)
-rescue LoadError => e
-  raise unless e.message.include?('spring')
-end
-require 'bundler/setup'
+#!/usr/bin/env bash
 
-ENV.delete('RAILS_HOST_NAME')
+# shellcheck disable=SC2068
+# SC2068: Double quote array expansions to avoid re-splitting elements.
 
-load Gem.bin_path('rspec-core', 'rspec')
+if [[ $DISABLE_SPRING ]]; then
+  bundle exec rspec $@
+else
+  bundle exec spring rspec $@
+fi
