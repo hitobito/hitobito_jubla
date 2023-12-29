@@ -6,13 +6,16 @@
 #  https://github.com/hitobito/hitobito.
 
 module Group::UniqueNextcloudGroup
-    extend ActiveSupport::Concern
+  extend ActiveSupport::Concern
     
-    included do
-        self.nextcloud_group = :calculate_nextcloud_group
-    end
-    
-    def calculate_nextcloud_group
-        { "gid" => "#{group_id.to_s}_#{self.type}", "displayName" => "#{group.name} - #{self.class.model_name.human(count:2)}" }
-    end
+  included do
+    self.nextcloud_group = :calculate_nextcloud_group
+  end
+
+  def calculate_nextcloud_group
+    {
+      "gid" => "#{group_id.to_s}_#{self.type}",
+      "displayName" => "#{group.name} - #{self.class.model_name.human(count:2)}"
+    }
+  end
 end
