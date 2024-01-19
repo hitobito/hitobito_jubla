@@ -29,7 +29,7 @@ module Jubla::EventDecorator
   end
 
   def warning(key)
-    content_tag(:i, '', class: 'icon icon-warning-sign', title: bsv_info.error(key))
+    content_tag(:i, '', class: 'fas fa-exclamation-triangle', title: bsv_info.error(key))
   end
 
   def bsv_info
