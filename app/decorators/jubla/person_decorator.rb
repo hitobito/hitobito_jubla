@@ -9,11 +9,17 @@ module Jubla::PersonDecorator
   extend ActiveSupport::Concern
 
   def active_roles_grouped
-    build_memo(roles.includes(:group).without_alumnus)
+    @active_roles_grouped ||= begin
+                                roles_scope = Role.where(id: roles.map(&:id))
+                                build_memo(roles_scope.without_alumnus)
+                              end
   end
 
   def inactive_roles_grouped
-    build_memo(roles.includes(:group).alumnus_members)
+    @inactive_roles_grouped ||= begin
+                                  roles_scope = Role.where(id: roles.map(&:id))
+                                  build_memo(roles_scope.includes(:group).alumnus_members)
+                                end
   end
 
   def coached_events
