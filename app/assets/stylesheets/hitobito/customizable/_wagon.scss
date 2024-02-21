@@ -118,7 +118,7 @@ legend {
   }
 }
 
-html.turbolinks-progress-bar::before {
+.turbo-progress-bar {
   background-color: $gray-dark !important;
   height: 1px !important;
 }
