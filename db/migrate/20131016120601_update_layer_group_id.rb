@@ -7,6 +7,8 @@
 
 class UpdateLayerGroupId < ActiveRecord::Migration[4.2]
   def up
+    Group.reset_column_information
+
     groups_with_bad_layer_group_id = []
 
     say_with_time("loading all groups") do

@@ -8,6 +8,8 @@
 class GenerateAlumniGroups < ActiveRecord::Migration[4.2]
 
   def up
+    Group.reset_column_information
+
     say_with_time 'Generating Alumni-Groups' do
       generate_groups
     end
