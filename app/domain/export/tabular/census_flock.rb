@@ -48,7 +48,9 @@ module Export::Tabular
     end
 
     def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
-      { name: flock.name,
+      { state: flock.parent.parent.type == 'Group::State' ? flock.parent.parent.name : flock.parent.name ,
+        region: flock.parent.type == 'Group::Region' ? flock.parent.name : '' ,
+        name: flock.name,
         contact_first_name: flock.contact ? flock.contact.first_name : nil,
         contact_last_name: flock.contact ? flock.contact.last_name : nil,
         address: flock.address,
@@ -62,7 +64,9 @@ module Export::Tabular
     end
 
     def build_attribute_labels # rubocop:disable Metrics/MethodLength
-      { name: human_attribute(:name),
+      { state: 'Kanton',
+        region: 'Region',
+        name: 'Schar',
         contact_first_name: 'Kontakt Vorname',
         contact_last_name: 'Kontakt Nachname',
         address: human_attribute(:address),
