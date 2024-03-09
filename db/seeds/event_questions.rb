@@ -25,6 +25,7 @@ Event::Question.where(event_id: nil).destroy_all
   eq = Event::Question.find_or_initialize_by(
     event_id: attrs.delete(:event_id),
     question: attrs.delete(:question),
+    required: true,
   )
   eq.attributes = attrs
   eq.save!
