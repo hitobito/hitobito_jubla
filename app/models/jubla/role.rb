@@ -51,6 +51,7 @@ module Jubla::Role
   # Adressverwaltung
   class GroupAdmin < ::Role
     self.permissions = [:group_full]
+    include Group::UniqueNextcloudGroup
   end
 
   # Versandadresse. Intended to be used with mailing lists
@@ -73,20 +74,24 @@ module Jubla::Role
   # Common superclass for all J+S Coach roles
   class Coach < ::Role
     self.permissions = [:contact_data, :group_read]
+    include Group::UniqueNextcloudGroup
   end
 
   # Common superclass for all leader roles
   # Primarly used for common naming
   class Leader < ::Role
+    include Group::UniqueNextcloudGroup
   end
 
   # Common superclass for all member roles
   # Primarly used for common naming
   class Member < ::Role
+    include Group::UniqueNextcloudGroup
   end
 
   # Common superclass for all treasurer roles
   class Treasurer < ::Role
+    include Group::UniqueNextcloudGroup
   end
 
   def alumnus_group_member?

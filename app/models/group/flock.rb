@@ -116,17 +116,21 @@ class Group::Flock < Group
     current_census && !MemberCounter.new(current_census.year, self).exists?
   end
 
+  # Scharleitung
   class Leader < Jubla::Role::Leader
     self.permissions = [:layer_and_below_full, :contact_data, :approve_applications]
   end
 
+  # Lagerleitung
   class CampLeader < ::Role
     self.permissions = [:layer_and_below_full, :contact_data]
+    include Group::UniqueNextcloudGroup
   end
 
   # Präses
   class President < ::Role
     self.permissions = [:layer_and_below_read, :contact_data]
+    include Group::UniqueNextcloudGroup
 
     self.used_attributes += [:employment_percent, :honorary]
   end
@@ -134,6 +138,7 @@ class Group::Flock < Group
   # Leiter
   class Guide < ::Role
     self.permissions = [:layer_and_below_read]
+    include Group::UniqueNextcloudGroup
   end
 
   # Kassier
@@ -144,6 +149,7 @@ class Group::Flock < Group
   # Coach
   class Coach < ::Role
     self.permissions = [:layer_and_below_read]
+    include Group::UniqueNextcloudGroup
     self.kind = nil
     self.visible_from_above = false
   end
@@ -151,6 +157,7 @@ class Group::Flock < Group
   # Betreuer
   class Advisor < ::Role
     self.permissions = [:layer_and_below_read]
+    include Group::UniqueNextcloudGroup
     self.kind = nil
     self.visible_from_above = false
   end
