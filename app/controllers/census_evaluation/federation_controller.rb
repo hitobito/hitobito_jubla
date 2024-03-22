@@ -17,8 +17,13 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
         @flocks = flock_confirmation_ratios if evaluation.current_census_year?
       end
       format.csv do
-        authorize!(:create, Census)
-        send_data Export::Tabular::CensusFlock.csv(year), type: :csv
+        if params[:type] == 'kantone'
+            authorize!(:create, Census)
+            send_data Export::Tabular::CensusFlockFederation.csv(year), type: :csv
+        else
+            authorize!(:create, Census)
+            send_data Export::Tabular::CensusFlock.csv(year), type: :csv
+        end
       end
     end
   end
