@@ -272,7 +272,7 @@ de:
         contactable_by_region: regionale Ebene
         contactable_by_flock: lokale Ebene
         genders:
-          _nil: divers
+          _nil: weitere/kein
 
       group:
         bank_account: Bankverbindung
