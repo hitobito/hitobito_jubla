@@ -47,6 +47,7 @@ module HitobitoJubla
       RoleAbility.include Jubla::RoleAbility
       PersonReadables.include Jubla::PersonReadables
       PersonFetchables.include Jubla::PersonFetchables
+      FutureRole.include Jubla::FutureRole
 
       # load this class after all abilities have been defined
       Ability.store.register Event::Course::ConditionAbility
