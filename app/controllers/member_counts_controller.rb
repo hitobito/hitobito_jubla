@@ -14,6 +14,20 @@ class MemberCountsController < ApplicationController
     member_counts
   end
 
+  def create
+    authorize!(:create_member_counts, flock)
+
+    year = MemberCounter.create_counts_for(flock)
+    if year
+      total = MemberCount.total_for_flock(year, flock).try(:total) || 0
+      flash[:notice] = "Die Zahlen von Total #{total} Mitgliedern wurden " \
+                       "für #{year} erfolgreich erzeugt."
+    end
+
+    year ||= Time.zone.today.year
+    redirect_to census_flock_group_path(flock, year: year)
+  end
+
   def update
     authorize!(:update_member_counts, flock)
 
@@ -31,22 +45,8 @@ class MemberCountsController < ApplicationController
       messages = with_errors.collect { |e| "#{e.born_in}: #{e.errors.full_messages.join(', ')}" }
       flash.now[:alert] = 'Nicht alle Jahrgänge konnten gespeichert werden. ' \
                           "Bitte überprüfen Sie Ihre Angaben. (#{messages.join('; ')})"
-      render 'edit'
+      render 'edit', status: :unprocessable_entity
     end
-  end
-
-  def create
-    authorize!(:create_member_counts, flock)
-
-    year = MemberCounter.create_counts_for(flock)
-    if year
-      total = MemberCount.total_for_flock(year, flock).try(:total) || 0
-      flash[:notice] = "Die Zahlen von Total #{total} Mitgliedern wurden " \
-                       "für #{year} erfolgreich erzeugt."
-    end
-
-    year ||= Time.zone.today.year
-    redirect_to census_flock_group_path(flock, year: year)
   end
 
   def destroy
