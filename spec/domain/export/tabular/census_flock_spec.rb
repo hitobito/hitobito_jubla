@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -49,9 +49,11 @@ describe Export::Tabular::CensusFlock do
     end
 
     describe 'address, zip code and town' do
-      before { flock.update(address: 'bar', zip_code: 1234, town: 'foo') }
+      before { flock.update(street: 'bar', housenumber: '23', zip_code: 1234, town: 'foo') }
 
-      its(:values) { should eq ['Bern', nil, nil, 'bar', 1234, 'foo', false, false, false, 5, 7] }
+      its(:values) do
+        should eq ['Bern', nil, nil, 'bar 23', 1234, 'foo', false, false, false, 5, 7]
+      end
     end
 
     describe 'contact person' do
@@ -82,7 +84,7 @@ describe Export::Tabular::CensusFlock do
     subject { Export::Csv::Generator.new(census_flock).call.split("\n") }
 
     its(:first) do
-      should match /Name;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Sachversicherung;Jubla Haftpflicht;Jubla Vollkasko;Leitende;Kinder/
+      should match(/Name;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Sachversicherung;Jubla Haftpflicht;Jubla Vollkasko;Leitende;Kinder/)
     end
     its(:second) { should eq 'Ausserroden;;;;;;nein;nein;nein;;' }
   end
