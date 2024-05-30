@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -74,6 +74,66 @@ describe Group::Flock do
       expect { subject.save! }.not_to change { Role.count }
       expect(Group.find(subject.id).coach_id).to eq(new_coach.id)
       expect(subject.roles.where(person_id: state_coach.person_id)).not_to be_exists
+    end
+  end
+
+  context 'nextcloud' do
+    describe 'CampLeader' do
+      let(:role_name) { 'Group::Flock::CampLeader' }
+      let(:role) { Fabricate(role_name, group: subject) }
+      let(:nextcloud_group) { role.nextcloud_group }
+
+      it 'has a nextcloud-group' do
+        expect(nextcloud_group).to be_present
+      end
+
+      it 'has a nextcloud-group with a displayName' do
+        expect(nextcloud_group.displayName).to eql "Bern - Lagerleitungen"
+      end
+
+      it 'has a nextcloud-group with a gid' do
+        expect(nextcloud_group.gid).to eql "#{subject.id}_#{role.type}"
+      end
+    end
+
+    describe 'President' do
+      let(:role_name) { 'Group::Flock::President' }
+      let(:role) { Fabricate(role_name, group: subject) }
+      let(:nextcloud_group) { role.nextcloud_group }
+
+      it 'has a nextcloud-group with a displayName' do
+        expect(nextcloud_group.displayName).to eql "Bern - Präses"
+      end
+    end
+
+    describe 'Guide' do
+      let(:role_name) { 'Group::Flock::Guide' }
+      let(:role) { Fabricate(role_name, group: subject) }
+      let(:nextcloud_group) { role.nextcloud_group }
+
+      it 'has a nextcloud-group with a displayName' do
+        expect(nextcloud_group.displayName).to eql "Bern - Leiter/innen"
+      end
+    end
+
+    describe 'Coach' do
+      let(:role_name) { 'Group::Flock::Coach' }
+      let(:role) { Fabricate(role_name, group: subject) }
+      let(:nextcloud_group) { role.nextcloud_group }
+
+      it 'has a nextcloud-group with a displayName' do
+        expect(nextcloud_group.displayName).to eql "Bern - Coaches"
+      end
+    end
+
+    describe 'Advisor' do
+      let(:role_name) { 'Group::Flock::Advisor' }
+      let(:role) { Fabricate(role_name, group: subject) }
+      let(:nextcloud_group) { role.nextcloud_group }
+
+      it 'has a nextcloud-group with a displayName' do
+        expect(nextcloud_group.displayName).to eql "Bern - Scharbegleitungen"
+      end
     end
   end
 end
