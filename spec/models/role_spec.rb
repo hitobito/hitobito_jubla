@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -245,6 +245,22 @@ describe Role do
 
         it 'can be destroyed, does not creates new alumnus role' do
           expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+        end
+      end
+    end
+  end
+
+  context 'nextcloud' do
+    [
+      Jubla::Role::GroupAdmin,
+      Jubla::Role::Coach,
+      Jubla::Role::Leader,
+      Jubla::Role::Member,
+      Jubla::Role::Treasurer,
+    ].each do |role_class|
+      describe role_class.to_s do
+        it 'has a unique nextcloud-group' do
+          expect(role_class).to include Group::UniqueNextcloudGroup
         end
       end
     end
