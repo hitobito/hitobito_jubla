@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## unreleased
+
+* Unnötige Rechte der Fachgruppenmitglieder entfernt (hitobito_jubla#89)
+
 ## Version 1.28
 
 * Coaches auf Lager haben neu die Berechtigung um den Sportdb Export für die Teilnehmer zu erstellen

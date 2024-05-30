@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -76,7 +76,7 @@ describe PersonAbility do
 
     it 'may change managers in lower layers' do
       other = Fabricate(Group::Flock::CampLeader.name.to_sym, group: groups(:bern))
-      
+
       is_expected.to be_able_to(:change_managers, other.person.reload)
     end
 
@@ -257,6 +257,26 @@ describe PersonAbility do
   describe :contact_data do
     let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
 
+    it 'is in the permission-list of Group::StateBoard::Member' do
+      expect(role.class.permissions).to include(:contact_data)
+    end
+
+    it 'is in the permission-list of Group::FederalProfessionalGroup::Member' do
+      expect(Group::FederalProfessionalGroup::Member.permissions).to include(:contact_data)
+    end
+
+    it 'is not in the permission-list of Group::StateProfessionalGroup::Member' do
+      expect(Group::StateProfessionalGroup::Member.permissions).to_not include(:contact_data)
+    end
+
+    it 'is not in the permission-list of Group::RegionalProfessionalGroup::Member' do
+      expect(Group::RegionalProfessionalGroup::Member.permissions).to_not include(:contact_data)
+    end
+
+    it 'is not in the permission-list of Group::ProfessionalGroup::Member' do
+      expect(Group::ProfessionalGroup::Member.permissions).to_not include(:contact_data)
+    end
+
     it 'may view details of himself' do
       is_expected.to be_able_to(:show_full, role.person.reload)
     end
@@ -294,7 +314,7 @@ describe PersonAbility do
     end
 
     it 'may show any public role in same layer' do
-      other = Fabricate(Group::StateProfessionalGroup::Member.name.to_sym, group: groups(:be_security))
+      other = Fabricate(Group::StateProfessionalGroup::Leader.name.to_sym, group: groups(:be_security))
       is_expected.to be_able_to(:show, other.person.reload)
     end
 
