@@ -32,7 +32,7 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []
       * Fachgruppe
         * Leitung: [:group_full, :contact_data]
-        * Mitglied: [:contact_data, :group_read]
+        * Mitglied: [:group_read, :contact_data]
         * Adressverwaltung: [:group_full]
         * Ehemalig: [:group_read]
         * Extern: []
@@ -75,7 +75,7 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []
       * Fachgruppe
         * Leitung: [:group_full, :contact_data]
-        * Mitglied: [:contact_data, :group_read]
+        * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
         * Ehemalig: [:group_read]
         * Extern: []
@@ -111,7 +111,7 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []
       * Fachgruppe
         * Leitung: [:group_full, :contact_data]
-        * Mitglied: [:contact_data, :group_read]
+        * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
         * Ehemalig: [:group_read]
         * Extern: []
