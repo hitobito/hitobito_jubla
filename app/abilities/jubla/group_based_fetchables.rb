@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-module Jubla::PersonFetchables
+module Jubla::GroupBasedFetchables
   extend ActiveSupport::Concern
 
   included do

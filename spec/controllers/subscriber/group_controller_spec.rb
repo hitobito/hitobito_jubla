@@ -1,3 +1,9 @@
+# frozen_string_literal: true
+
+#  Copyright (c) 2024-2024, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla.
 
 require 'spec_helper'
 
@@ -16,10 +22,10 @@ describe Subscriber::GroupController do
 
   context 'GET query' do
 
-    it 'does  include sister group or their descendants' do
-      is_expected.to match(/Nordostschweiz/)
-      is_expected.to match(/Nordostschweiz → AST/)
-      is_expected.to match(/Nordostschweiz → Kalei/)
+    it 'does not include sister group or their descendants' do
+      is_expected.to_not match(/Nordostschweiz/)
+      is_expected.to_not match(/Nordostschweiz → AST/)
+      is_expected.to_not match(/Nordostschweiz → Kalei/)
     end
 
   end

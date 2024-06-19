@@ -37,6 +37,11 @@ describe PeopleController do
       get :show, params: { group_id: flock.id, id: person.id }
       expect(response.body).to match(/Kontaktfreigabe/)
     end
+
+    it 'GET#show shows primary group link' do
+      get :show, params: { group_id: flock.id, id: person.id }
+      expect(Capybara::Node::Simple.new(response.body)).to have_link 'Hauptgruppe setzen'
+    end
   end
 
   context 'GET#edit' do

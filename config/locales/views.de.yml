@@ -70,6 +70,11 @@ de:
       info_alumnus_contactable: "Mit dem Setzen eines Häkchens erlaubst du folgenden Ebenen, dich zu kontaktieren und dir Informationen zu senden:"
     show_event_jubla:
       coached: Meine Betreuungen
+    privacy_policy_acceptance_field:
+      acceptance_caption:
+        for_self: 'Dokumente zur Erfüllung der Informationspflicht:'
+        for_someone_else: 'Ich habe diesen Menschen oder deren Verwalter*in/Erziehungsberichtigten über folgende Dokumente Informiert:'
+
 
   navigation:
     camps: Lager

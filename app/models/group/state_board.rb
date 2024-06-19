@@ -58,6 +58,7 @@ class Group::StateBoard < Group
   # Stellenbegleitung
   class Supervisor < ::Role
     self.permissions = [:layer_and_below_read]
+    include Group::UniqueNextcloudGroup
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin
