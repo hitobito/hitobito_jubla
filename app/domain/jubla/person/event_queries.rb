@@ -27,8 +27,8 @@ module Jubla
     def upcoming_events_with_coached
       upcoming_events_without_coached
         .joins("INNER JOIN event_roles ON event_roles.participation_id = event_participations.id")
-        .where.not(event_roles: { type: [::Event::Camp::Role::Coach.sti_name,
-                                        ::Event::Course::Role::Advisor.sti_name].map(&:sti_name) })
+        .where.not(event_roles: { type: [::Event::Camp::Role::Coach,
+                                        ::Event::Course::Role::Advisor].map(&:sti_name) })
     end
   end
 end
