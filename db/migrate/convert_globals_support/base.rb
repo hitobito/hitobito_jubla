@@ -24,11 +24,12 @@ class RelationMigrator
 
   def current_relations
     @current_relations ||= relation_class
-      .joins(<<-SQL.strip_heredoc).where('`related_role_types`.`role_type` = ?', role_type)
-        INNER JOIN `related_role_types`
-          ON (`related_role_types`.`relation_id` = `#{relation_class.name.tableize}`.`id`
-          AND `related_role_types`.`relation_type` = '#{relation_class.name}')
+      .joins(<<-SQL.strip_heredoc)
+        INNER JOIN related_role_types
+          ON (related_role_types.relation_id = #{relation_class.name.tableize}.id
+          AND related_role_types.relation_type = '#{relation_class.name}')
       SQL
+      .where('related_role_types.role_type = ?', role_type)
   end
 
   private
