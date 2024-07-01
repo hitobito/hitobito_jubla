@@ -7,10 +7,10 @@ module Jubla::Group
   extend ActiveSupport::Concern
 
   ALUMNI_GROUPS_CLASSES = [Group::AlumnusGroup,
-    Group::StateAlumnusGroup,
-    Group::FederalAlumnusGroup,
-    Group::FlockAlumnusGroup,
-    Group::RegionalAlumnusGroup].freeze
+                           Group::StateAlumnusGroup,
+                           Group::FederalAlumnusGroup,
+                           Group::FlockAlumnusGroup,
+                           Group::RegionalAlumnusGroup].map(&:sti_name)
 
   included do
     class_attribute :contact_group_type
