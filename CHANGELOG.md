@@ -1,6 +1,6 @@
 # Hitobito Jubla Changelog
 
-## unreleased
+## Version 2.2
 
 * Unnötige Rechte der Fachgruppenmitglieder entfernt (hitobito_jubla#89)
 * Sichtbarkeit von Schwestergruppen deaktivieren (hitobito_jubla#90)
