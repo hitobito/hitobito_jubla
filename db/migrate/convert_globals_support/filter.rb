@@ -8,11 +8,12 @@
 class FilterMigrator < RelationMigrator
   def current_relations
     PeopleFilter
-      .joins(<<-SQL.strip_heredoc).where('`related_role_types`.`role_type` = ?', role_type)
-        INNER JOIN `related_role_types`
-          ON (`related_role_types`.`relation_id` = `people_filters`.`id`
-          AND `related_role_types`.`relation_type` = 'PeopleFilter')
+      .joins(<<-SQL.strip_heredoc)
+        INNER JOIN related_role_types
+            ON (related_role_types.relation_id = people_filters.id
+            AND related_role_types.relation_type = 'PeopleFilter')
       SQL
+      .where('related_role_types.role_type = ?', role_type)
   end
 
   def handle(filter)
