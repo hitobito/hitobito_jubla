@@ -22,8 +22,7 @@ module Jubla
                                     ::Event::Course::Role::Advisor.sti_name] }).
         distinct.
         includes(:groups).
-        preload_all_dates.
-        order_by_date
+        preload_all_dates
     end
 
     def unordered_upcoming_events_with_coached
