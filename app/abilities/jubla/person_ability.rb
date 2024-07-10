@@ -42,7 +42,7 @@ module Jubla::PersonAbility
 
   def in_child_alumnus_group
     roles = Role.joins(:group).where(person_id: person.id,
-      groups: {type: Group::AlumnusGroup.descendants})
+                                     groups: {type: Group::AlumnusGroup.descendants.map(&:sti_name) })
 
     if alumnus_leader_layer_ids.present?
       layer_hierarchy_ids = roles.collect { |r| r.group.layer_hierarchy.collect(&:id) }.flatten
