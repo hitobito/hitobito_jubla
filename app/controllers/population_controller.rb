@@ -29,7 +29,7 @@ class PopulationController < ApplicationController
     flock.self_and_descendants
          .without_deleted
          .where('type != ?', Group::SimpleGroup.sti_name)
-         .order_by_type(flock)
+         .order_by_type
   end
 
   def load_people_by_group
