@@ -20,8 +20,8 @@ class MemberCounter
                Group::Flock::President,
                Group::Flock::Treasurer,
                Group::Flock::Guide,
-               Group::ChildGroup::Leader],
-      child:  [Group::ChildGroup::Child] }.freeze
+               Group::ChildGroup::Leader].map(&:sti_name),
+      child:  [Group::ChildGroup::Child].map(&:sti_name) }.freeze
 
   attr_reader :year, :flock
 
@@ -78,7 +78,7 @@ class MemberCounter
   def members
     Person.joins(:roles).
       where(roles: { group_id: flock.self_and_descendants,
-                     type: self.class.counted_roles.collect(&:sti_name),
+                     type: self.class.counted_roles,
                      deleted_at: nil }).
       distinct
   end
