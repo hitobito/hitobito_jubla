@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,14 +41,13 @@
 
 # Ebene Region
 class Group::Region < Group
-
   self.layer = true
   self.default_children = [Group::RegionalBoard, Group::RegionalAlumnusGroup]
 
   self.used_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                           :jubla_full_coverage]
+    :jubla_full_coverage]
   self.superior_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                               :jubla_full_coverage]
+    :jubla_full_coverage]
 
   has_many :member_counts
 
@@ -71,11 +69,10 @@ class Group::Region < Group
   roles Coach, GroupAdmin, Alumnus, External, DispatchAddress
 
   children Group::RegionalBoard,
-           Group::RegionalProfessionalGroup,
-           Group::RegionalWorkGroup,
-           Group::Flock,
-           Group::RegionalAlumnusGroup
-
+    Group::RegionalProfessionalGroup,
+    Group::RegionalWorkGroup,
+    Group::Flock,
+    Group::RegionalAlumnusGroup
 
   def census_total(year)
     MemberCount.total_by_regions(year).find_by(region_id: id)
@@ -88,5 +85,4 @@ class Group::Region < Group
   def census_details(year)
     MemberCount.details_for_region(year, self)
   end
-
 end

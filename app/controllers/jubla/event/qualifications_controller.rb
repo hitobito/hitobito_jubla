@@ -6,7 +6,6 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 module Jubla::Event::QualificationsController
-
   extend ActiveSupport::Concern
 
   included do
@@ -20,5 +19,4 @@ module Jubla::Event::QualificationsController
       redirect_to group_event_qualifications_path(group, event)
     end
   end
-
 end

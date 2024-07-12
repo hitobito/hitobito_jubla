@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2015, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -39,13 +37,13 @@ module Jubla
     end
 
     def warnings
-      { participant_count: participants.any? { |p| p.person.birthday.blank? },
-        canton_count: participants.any? { |p| !ch_resident?(p.person) } }
+      {participant_count: participants.any? { |p| p.person.birthday.blank? },
+       canton_count: participants.any? { |p| !ch_resident?(p.person) }}
     end
 
     def error(key)
-      { participant_count: 'Nicht alle Teilnehmer haben den Geburtstag gestetzt.',
-        canton_count: 'Nicht alle Teilnehmer haben einen gültigen Kanton gesetzt.' }.fetch(key)
+      {participant_count: "Nicht alle Teilnehmer haben den Geburtstag gestetzt.",
+       canton_count: "Nicht alle Teilnehmer haben einen gültigen Kanton gesetzt."}.fetch(key)
     end
 
     def max_date_location_or_location
@@ -59,9 +57,9 @@ module Jubla
     end
 
     def max_duration_date
-      @max_duration_date ||= course.dates.
-                             select { |date| date.location.present? }.
-                             max { |a, b| a.duration.days <=> b.duration.days }
+      @max_duration_date ||= course.dates
+        .select { |date| date.location.present? }
+        .max { |a, b| a.duration.days <=> b.duration.days }
     end
   end
 end

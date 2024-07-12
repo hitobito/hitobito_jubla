@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Verbandsleitung
 class Group::OrganizationBoard < Group
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full, :contact_data]
   end
@@ -68,5 +66,4 @@ class Group::OrganizationBoard < Group
   end
 
   roles Leader, Treasurer, Member, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

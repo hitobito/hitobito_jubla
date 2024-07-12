@@ -10,19 +10,19 @@ module Jubla::PersonAbility
 
   include Jubla::RoleAbility
 
+  STATES = %w[application_open application_closed assignment_closed completed].freeze
+
   included do
-    STATES = %w(application_open application_closed assignment_closed completed).freeze
-
     on(Person) do
-      permission(:layer_and_below_full).may(:update).
-        non_restricted_in_same_layer_or_visible_below_or_accessible_participations
-      permission(:alumnus_below_full).may(:show, :show_full, :show_details, :update).
-        in_child_alumnus_group
+      permission(:layer_and_below_full).may(:update)
+        .non_restricted_in_same_layer_or_visible_below_or_accessible_participations
+      permission(:alumnus_below_full).may(:show, :show_full, :show_details, :update)
+        .in_child_alumnus_group
 
-      permission(:layer_and_below_full).may(:change_managers).
-        non_restricted_in_same_layer_or_visible_below_or_accessible_participations_except_self
-      permission(:alumnus_below_full).may(:change_managers).
-        in_child_alumnus_group_except_self
+      permission(:layer_and_below_full).may(:change_managers)
+        .non_restricted_in_same_layer_or_visible_below_or_accessible_participations_except_self
+      permission(:alumnus_below_full).may(:change_managers)
+        .in_child_alumnus_group_except_self
     end
   end
 
@@ -42,7 +42,7 @@ module Jubla::PersonAbility
 
   def in_child_alumnus_group
     roles = Role.joins(:group).where(person_id: person.id,
-                                     groups: { type: Group::AlumnusGroup.descendants })
+      groups: {type: Group::AlumnusGroup.descendants})
 
     if alumnus_leader_layer_ids.present?
       layer_hierarchy_ids = roles.collect { |r| r.group.layer_hierarchy.collect(&:id) }.flatten
@@ -57,10 +57,10 @@ module Jubla::PersonAbility
   private
 
   def events_with_valid_states
-    subject.
-      event_participations.
-      includes(:event).
-      collect(&:event).
-      select { |event| STATES.include?(event.state) }
+    subject
+      .event_participations
+      .includes(:event)
+      .collect(&:event)
+      .select { |event| STATES.include?(event.state) }
   end
 end

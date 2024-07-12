@@ -50,5 +50,4 @@ class Group::ProfessionalGroup < Group
   class Member < Jubla::Role::Member
     self.permissions = [:group_read]
   end
-
 end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: event_conditions
@@ -17,14 +16,12 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class Event::Course::Condition < ActiveRecord::Base
-
   belongs_to :group
   has_rich_text :content
 
   validates_by_schema
-  validates :label, uniqueness: { scope: :group_id, case_sensitive: false }
+  validates :label, uniqueness: {scope: :group_id, case_sensitive: false}
   validate :assert_group_can_have_courses
-
 
   def to_s
     label
@@ -34,7 +31,7 @@ class Event::Course::Condition < ActiveRecord::Base
 
   def assert_group_can_have_courses
     if group && !group.event_types.include?(Event::Course)
-      errors.add(:group_id, 'muss Kurse anbieten können')
+      errors.add(:group_id, "muss Kurse anbieten können")
     end
   end
 end

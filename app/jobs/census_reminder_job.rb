@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusReminderJob < BaseJob
-
   self.parameters = [:census, :sender_id, :flock_id]
 
   attr_reader :census, :sender_id
@@ -23,10 +20,10 @@ class CensusReminderJob < BaseJob
   end
 
   def recipients
-    flock.people.only_public_data.
-      where(roles: { type: Group::Flock::Leader.sti_name }).
-      where("email IS NOT NULL OR email <> ''").
-      distinct
+    flock.people.only_public_data
+      .where(roles: {type: Group::Flock::Leader.sti_name})
+      .where("email IS NOT NULL OR email <> ''")
+      .distinct
   end
 
   def flock
@@ -39,8 +36,8 @@ class CensusReminderJob < BaseJob
 
   def state_agency
     state = flock.state
-    state.children.where(type: state.contact_group_type.sti_name).
-      without_deleted.
-      first
+    state.children.where(type: state.contact_group_type.sti_name)
+      .without_deleted
+      .first
   end
 end

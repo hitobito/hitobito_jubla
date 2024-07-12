@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Ehemalige
 class Group::AlumnusGroup < Group
-
   children Group::AlumnusGroup
 
   # Duplicate class attribute to customize it just for AlumnusGroups
@@ -77,5 +75,4 @@ class Group::AlumnusGroup < Group
   def last_alumnus_group_in_layer?
     parent.layer? && siblings.without_deleted.alumni_groups.empty?
   end
-
 end

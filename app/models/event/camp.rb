@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: events
@@ -48,12 +47,10 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class Event::Camp < Event
-
   # This statement is required because this class would not be loaded otherwise.
-  require_dependency 'event/camp/role/coach'
-  require_dependency 'event/camp/kind'
-  require_dependency 'event/camp/kinds_controller'
-
+  require_dependency "event/camp/role/coach"
+  require_dependency "event/camp/kind"
+  require_dependency "event/camp/kinds_controller"
 
   self.used_attributes += [:number, :coach_id, :kind_id]
 
@@ -62,10 +59,10 @@ class Event::Camp < Event
   include Event::RestrictedRole
   restricted_role :coach, Event::Camp::Role::Coach
 
-  belongs_to :kind, class_name: 'Event::Camp::Kind'
+  belongs_to :kind, class_name: "Event::Camp::Kind"
 
-  scope :in_next, -> (duration) {
+  scope :in_next, ->(duration) {
     timespan = duration.from_now.to_date
-    where('event_dates.start_at <= ? OR event_dates.finish_at <= ?', timespan, timespan)
+    where("event_dates.start_at <= ? OR event_dates.finish_at <= ?", timespan, timespan)
   }
 end

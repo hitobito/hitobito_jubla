@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Ebene Schar
 class Group::Flock < Group
-
   include RestrictedRole
 
   self.layer = true
@@ -50,41 +48,37 @@ class Group::Flock < Group
   self.event_types = [Event, Event::Camp]
 
   children Group::ChildGroup,
-           Group::FlockAlumnusGroup
+    Group::FlockAlumnusGroup
 
-  AVAILABLE_KINDS = %w(Jungwacht Blauring Jubla).freeze
-
+  AVAILABLE_KINDS = %w[Jungwacht Blauring Jubla].freeze
 
   self.used_attributes += [:bank_account, :parish, :kind, :unsexed, :clairongarde, :founding_year,
-                           :jubla_property_insurance, :jubla_liability_insurance,
-                           :jubla_full_coverage, :coach_id, :advisor_id]
+    :jubla_property_insurance, :jubla_liability_insurance,
+    :jubla_full_coverage, :coach_id, :advisor_id]
   self.superior_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                               :jubla_full_coverage, :coach_id, :advisor_id]
-
+    :jubla_full_coverage, :coach_id, :advisor_id]
 
   has_many :member_counts
 
-
   validates :kind, inclusion: AVAILABLE_KINDS, allow_blank: true
-
 
   def available_coaches
     coach_role_types = [Group::State::Coach, Group::Region::Coach].collect(&:sti_name)
     Person.in_layer(*layer_hierarchy)
-          .where(roles: { type: coach_role_types })
+      .where(roles: {type: coach_role_types})
   end
 
   def available_advisors
     advisor_group_types = [Group::StateBoard, Group::RegionalBoard]
     advisor_role_types = advisor_group_types.collect(&:role_types).flatten.select(&:member?)
     Person.in_layer(*layer_hierarchy)
-          .where(groups: { type: advisor_group_types.collect(&:sti_name) })
-          .where(roles: { type: advisor_role_types.collect(&:sti_name) })
+      .where(groups: {type: advisor_group_types.collect(&:sti_name)})
+      .where(roles: {type: advisor_role_types.collect(&:sti_name)})
   end
 
   def to_s(format = :default)
-    if attributes.include?('kind')
-      [kind, super].compact.join(' ')
+    if attributes.include?("kind")
+      [kind, super].compact.join(" ")
     else
       # if kind is not selected from the database, we end up here
       super
@@ -176,16 +170,15 @@ class Group::Flock < Group
   end
 
   roles Leader,
-        CampLeader,
-        President,
-        Treasurer,
-        Guide,
-        GroupAdmin,
-        Alumnus,
-        External,
-        DispatchAddress
+    CampLeader,
+    President,
+    Treasurer,
+    Guide,
+    GroupAdmin,
+    Alumnus,
+    External,
+    DispatchAddress
 
   restricted_role :coach, Coach
   restricted_role :advisor, Advisor
-
 end

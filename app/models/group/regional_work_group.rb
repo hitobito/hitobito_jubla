@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -41,7 +40,6 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class Group::RegionalWorkGroup < Group::WorkGroup
-
   class Leader < Group::WorkGroup::Leader
   end
 
@@ -61,5 +59,4 @@ class Group::RegionalWorkGroup < Group::WorkGroup
   end
 
   roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

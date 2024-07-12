@@ -1,20 +1,16 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
 class GroupOriginator
-
   FLOCK_ROLES = Group::Flock.roles - [Group::Flock::External,
-                                      Group::Flock::Coach,
-                                      Group::Flock::Advisor]
+    Group::Flock::Coach,
+    Group::Flock::Advisor]
 
   STATE_ROLES = Group::StateBoard.roles - [Group::StateBoard::External,
-                                           Group::StateBoard::DispatchAddress] +
-                                           [Group::StateAgency::Leader]
-
+    Group::StateBoard::DispatchAddress] +
+    [Group::StateAgency::Leader]
 
   attr_reader :person, :flock, :state
 
@@ -24,15 +20,15 @@ class GroupOriginator
     @flock = find_with_deleted { |roles| find_flock(roles) || find_flock_via_childgroups(roles) }
     @state = find_with_deleted { |roles| find_state(roles) }
 
-    @state ||= flock.ancestors.where(type: 'Group::State').first if flock
+    @state ||= flock.ancestors.where(type: "Group::State").first if flock
   end
 
   def to_s
-    [flock, state].join(', ')
+    [flock, state].join(", ")
   end
 
   def to_h
-    { originating_flock_id: flock.try(:id), originating_state_id: state.try(:id) }
+    {originating_flock_id: flock.try(:id), originating_state_id: state.try(:id)}
   end
 
   private
@@ -56,5 +52,4 @@ class GroupOriginator
   def find_state(roles)
     roles.where(type: STATE_ROLES).last.try(:group).try(:parent)
   end
-
 end

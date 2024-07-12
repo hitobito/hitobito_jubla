@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Abstract Work Group
 class Group::WorkGroup < Group
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full, :contact_data]
   end
@@ -50,5 +48,4 @@ class Group::WorkGroup < Group
   class Member < Jubla::Role::Member
     self.permissions = [:group_read]
   end
-
 end

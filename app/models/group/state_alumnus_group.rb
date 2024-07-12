@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Ehemalige
 class Group::StateAlumnusGroup < Group::AlumnusGroup
-
   class Leader < Group::AlumnusGroup::Leader
   end
 
@@ -61,7 +59,5 @@ class Group::StateAlumnusGroup < Group::AlumnusGroup
   class DispatchAddress < Group::AlumnusGroup::DispatchAddress
   end
 
-
   roles Leader, GroupAdmin, Treasurer, Member, External, DispatchAddress
-
 end

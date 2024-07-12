@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2014, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
 class CensusEvaluation
-
   attr_reader :year, :group, :sub_group_type
 
   # Group may be one of the referenced group types in MemberCount.
@@ -73,14 +70,14 @@ class CensusEvaluation
   end
 
   def sub_groups_with_counts
-    Group.where(id: group.member_counts.where(year: year).
-                                        select(sub_group_id_col).
-                                        distinct)
+    Group.where(id: group.member_counts.where(year: year)
+                                        .select(sub_group_id_col)
+                                        .distinct)
   end
 
   def current_census_sub_groups
     sub_group_ids = current_sub_groups.pluck(:id)
-    unless group.class == Group::Federation
+    unless group.instance_of?(Group::Federation)
       sub_group_ids -= sub_group_ids_with_other_group_count(sub_group_ids)
     end
     sub_group_ids += sub_groups_with_counts.pluck(:id)
@@ -93,9 +90,9 @@ class CensusEvaluation
 
   def sub_group_ids_with_other_group_count(sub_group_ids)
     MemberCount.where(sub_group_id_col => sub_group_ids,
-                      :year => year).
-      where("#{group_id_col} <> ?", group.id).
-      pluck(sub_group_id_col)
+      :year => year)
+      .where("#{group_id_col} <> ?", group.id)
+      .pluck(sub_group_id_col)
   end
 
   def sub_group_id_col
@@ -105,5 +102,4 @@ class CensusEvaluation
   def group_id_col
     "#{group.class.model_name.element}_id"
   end
-
 end

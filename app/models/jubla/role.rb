@@ -40,9 +40,9 @@ module Jubla::Role
     end
 
     def roles_in_layer(person_id, layer_group_id)
-      Role.joins(:group).
-        where(person: person_id,
-              groups: { layer_group_id: layer_group_id })
+      Role.joins(:group)
+        .where(person: person_id,
+          groups: {layer_group_id: layer_group_id})
     end
   end
 
@@ -104,8 +104,8 @@ module Jubla::Role
 
   def alumnus_applicable?
     [Jubla::Role::External,
-     Jubla::Role::DispatchAddress,
-     Jubla::Role::Alumnus].none? { |r| is_a?(r) } && !group.alumnus?
+      Jubla::Role::DispatchAddress,
+      Jubla::Role::Alumnus].none? { |r| is_a?(r) } && !group.alumnus?
   end
 
   def roles_in_layer
@@ -120,7 +120,7 @@ module Jubla::Role
 
   def assert_no_active_roles
     if active_roles_in_layer.exists?
-      errors.add(:base, I18n.t('activerecord.errors.messages.other_roles_exists'))
+      errors.add(:base, I18n.t("activerecord.errors.messages.other_roles_exists"))
     end
   end
 
@@ -149,5 +149,4 @@ module Jubla::Role
       self, skip_alumnus_callback: skip_alumnus_callback
     )
   end
-
 end

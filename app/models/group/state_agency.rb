@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Arbeitsstelle AST
 class Group::StateAgency < Group
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:layer_and_below_full, :contact_data]
   end
@@ -60,5 +58,4 @@ class Group::StateAgency < Group
   end
 
   roles Leader, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

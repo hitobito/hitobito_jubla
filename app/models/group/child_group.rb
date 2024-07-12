@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Kindergruppe
 class Group::ChildGroup < Group
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full]
   end
@@ -65,5 +63,4 @@ class Group::ChildGroup < Group
   end
 
   roles Leader, Child, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

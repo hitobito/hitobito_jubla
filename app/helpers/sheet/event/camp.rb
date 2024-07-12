@@ -1,7 +1,6 @@
 module Sheet
   class Event
     class Camp < Sheet::Base
-
       def left_nav?
         true
       end

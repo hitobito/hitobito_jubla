@@ -1,5 +1,3 @@
-
-
 class Event::CampsController < ApplicationController
   include YearBasedPaging
   include Events::EventListing
@@ -22,7 +20,7 @@ class Event::CampsController < ApplicationController
   def all_camps
     authorize!(:list_all_camps, Event::Camp)
 
-    @nav_left = 'camps'
+    @nav_left = "camps"
 
     render_camp_list(all_upcoming_camps)
   end
@@ -30,7 +28,7 @@ class Event::CampsController < ApplicationController
   def state_camps
     authorize!(:list_state_camps, Event::Camp)
 
-    @nav_left = 'camps'
+    @nav_left = "camps"
 
     @group = Group::State.find(params[:group_id])
     render_camp_list(all_state_camps)
@@ -44,8 +42,8 @@ class Event::CampsController < ApplicationController
 
   def render_camp_list(camps)
     respond_to do |format|
-      format.html  { @camps = grouped(camps) }
-      format.csv   { render_camp_csv(camps) }
+      format.html { @camps = grouped(camps) }
+      format.csv { render_camp_csv(camps) }
     end
   end
 
@@ -55,7 +53,7 @@ class Event::CampsController < ApplicationController
 
   def all_state_camps
     base_camp_query.joins(:groups)
-      .where('groups.lft >= ? AND groups.rgt <= ?', @group.lft, @group.rgt)
+      .where("groups.lft >= ? AND groups.rgt <= ?", @group.lft, @group.rgt)
       .in_year(year)
   end
 

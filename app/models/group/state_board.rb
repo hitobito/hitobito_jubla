@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Kantonsvorstand
 class Group::StateBoard < Group
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full, :layer_and_below_read, :contact_data]
   end
@@ -74,5 +72,4 @@ class Group::StateBoard < Group
   end
 
   roles Leader, Member, Supervisor, President, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

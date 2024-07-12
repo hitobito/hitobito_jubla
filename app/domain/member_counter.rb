@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
 class MemberCounter
-
   # Ordered mapping of which roles count in which field.
   # If a role from a field appearing first exists, this
   # one is counted, even if other roles exist as well.
@@ -15,13 +12,13 @@ class MemberCounter
   #
   # Roles not appearing here are not counted at all.
   ROLE_MAPPING =
-    { leader: [Group::Flock::Leader,
-               Group::Flock::CampLeader,
-               Group::Flock::President,
-               Group::Flock::Treasurer,
-               Group::Flock::Guide,
-               Group::ChildGroup::Leader],
-      child:  [Group::ChildGroup::Child] }.freeze
+    {leader: [Group::Flock::Leader,
+      Group::Flock::CampLeader,
+      Group::Flock::President,
+      Group::Flock::Treasurer,
+      Group::Flock::Guide,
+      Group::ChildGroup::Leader],
+     child: [Group::ChildGroup::Child]}.freeze
 
   attr_reader :year, :flock
 
@@ -76,11 +73,11 @@ class MemberCounter
   end
 
   def members
-    Person.joins(:roles).
-      where(roles: { group_id: flock.self_and_descendants,
+    Person.joins(:roles)
+      .where(roles: {group_id: flock.self_and_descendants,
                      type: self.class.counted_roles.collect(&:sti_name),
-                     deleted_at: nil }).
-      distinct
+                     deleted_at: nil})
+      .distinct
   end
 
   private
@@ -108,7 +105,7 @@ class MemberCounter
   def count_field(person)
     ROLE_MAPPING.each do |field, roles|
       if (person.roles.collect(&:class) & roles).present?
-        return person.gender == 'm' ? :"#{field}_m" : :"#{field}_f"
+        return (person.gender == "m") ? :"#{field}_m" : :"#{field}_f"
       end
     end
     nil
@@ -117,7 +114,6 @@ class MemberCounter
   def increment(count, field)
     return unless field
     val = count.send(field)
-    count.send("#{field}=", val ? val + 1 : 1)
+    count.send(:"#{field}=", val ? val + 1 : 1)
   end
-
 end

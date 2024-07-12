@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -43,19 +41,17 @@
 
 # Ebene Kanton
 class Group::State < Group
-
   self.layer = true
   self.default_children = [Group::StateAgency, Group::StateBoard, Group::StateAlumnusGroup]
   self.contact_group_type = Group::StateAgency
   self.event_types = [Event, Event::Course]
 
   self.used_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                           :jubla_full_coverage]
+    :jubla_full_coverage]
   self.superior_attributes += [:jubla_property_insurance, :jubla_liability_insurance,
-                               :jubla_full_coverage]
+    :jubla_full_coverage]
 
   has_many :member_counts
-
 
   class Coach < Jubla::Role::Coach
   end
@@ -72,17 +68,15 @@ class Group::State < Group
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-
   roles Coach, GroupAdmin, Alumnus, External, DispatchAddress
 
   children Group::StateAgency,
-           Group::StateBoard,
-           Group::StateProfessionalGroup,
-           Group::StateWorkGroup,
-           Group::Region,
-           Group::Flock,
-           Group::StateAlumnusGroup
-
+    Group::StateBoard,
+    Group::StateProfessionalGroup,
+    Group::StateWorkGroup,
+    Group::Region,
+    Group::Flock,
+    Group::StateAlumnusGroup
 
   def census_total(year)
     MemberCount.total_by_states(year).find_by(state_id: id)
@@ -95,5 +89,4 @@ class Group::State < Group
   def census_details(year)
     MemberCount.details_for_state(year, self)
   end
-
 end

@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusesController < CrudController
-
   self.permitted_attrs = [:year, :start_at, :finish_at]
 
   before_action :group
@@ -28,5 +25,4 @@ class CensusesController < CrudController
   def group
     @group ||= Group.root
   end
-
 end

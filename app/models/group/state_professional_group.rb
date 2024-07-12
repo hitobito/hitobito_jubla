@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Fachgruppe
 class Group::StateProfessionalGroup < Group::ProfessionalGroup
-
   class Leader < Group::ProfessionalGroup::Leader
   end
 
@@ -62,5 +60,4 @@ class Group::StateProfessionalGroup < Group::ProfessionalGroup
   end
 
   roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

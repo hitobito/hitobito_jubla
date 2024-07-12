@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,8 +41,6 @@
 
 # Einfache Gruppe, kann überall angehängt werden.
 class Group::SimpleGroup < Group
-
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full]
   end

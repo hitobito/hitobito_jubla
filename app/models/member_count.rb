@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: member_counts
@@ -21,16 +20,14 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class MemberCount < ActiveRecord::Base
-
-  belongs_to :flock, class_name: 'Group::Flock'
-  belongs_to :state, class_name: 'Group::State'
-  belongs_to :region, class_name: 'Group::Region'
+  belongs_to :flock, class_name: "Group::Flock"
+  belongs_to :state, class_name: "Group::State"
+  belongs_to :region, class_name: "Group::Region"
 
   validates_by_schema
-  validates :born_in, uniqueness: { scope: [:flock_id, :year] }
+  validates :born_in, uniqueness: {scope: [:flock_id, :year]}
   validates :leader_f, :leader_m, :child_f, :child_m,
-            numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-
+    numericality: {greater_than_or_equal_to: 0, allow_nil: true}
 
   def total
     leader + child
@@ -53,7 +50,6 @@ class MemberCount < ActiveRecord::Base
   end
 
   class << self
-
     def total_by_states(year)
       totals(year).group(:state_id)
     end
@@ -64,12 +60,12 @@ class MemberCount < ActiveRecord::Base
 
     def total_by_flocks(year, group)
       condition = case group
-                  when Group::State  then { state_id: group.id }
-                  when Group::Region then { region_id: group.id }
-                  end
-      totals(year).
-        where(condition).
-        group(:flock_id)
+      when Group::State then {state_id: group.id}
+      when Group::Region then {region_id: group.id}
+      end
+      totals(year)
+        .where(condition)
+        .group(:flock_id)
     end
 
     def total_for_federation(year)
@@ -77,10 +73,10 @@ class MemberCount < ActiveRecord::Base
     end
 
     def total_for_flock(year, flock)
-      totals(year).
-        where(flock_id: flock.id).
-        group(:flock_id).
-        first
+      totals(year)
+        .where(flock_id: flock.id)
+        .group(:flock_id)
+        .first
     end
 
     def details_for_federation(year)
@@ -100,24 +96,23 @@ class MemberCount < ActiveRecord::Base
     end
 
     def totals(year)
-      select('state_id, ' \
-             'flock_id, ' \
-             'region_id, ' \
-             'born_in, ' \
-             'SUM(leader_f) AS leader_f, ' \
-             'SUM(leader_m) AS leader_m, ' \
-             'SUM(child_f) AS child_f, ' \
-             'SUM(child_m) AS child_m').
-        where(year: year)
+      select("state_id, " \
+             "flock_id, " \
+             "region_id, " \
+             "born_in, " \
+             "SUM(leader_f) AS leader_f, " \
+             "SUM(leader_m) AS leader_m, " \
+             "SUM(child_f) AS child_f, " \
+             "SUM(child_m) AS child_m")
+        .where(year: year)
     end
 
     private
 
     def details(year)
-      totals(year).
-        group(:born_in).
-        order(:born_in)
+      totals(year)
+        .group(:born_in)
+        .order(:born_in)
     end
   end
-
 end

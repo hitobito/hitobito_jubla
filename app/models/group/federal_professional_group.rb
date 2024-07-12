@@ -43,7 +43,6 @@
 
 # Fachgruppe
 class Group::FederalProfessionalGroup < Group::ProfessionalGroup
-
   class Leader < Group::ProfessionalGroup::Leader
   end
 
@@ -64,5 +63,4 @@ class Group::FederalProfessionalGroup < Group::ProfessionalGroup
   end
 
   roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

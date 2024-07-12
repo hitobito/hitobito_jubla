@@ -7,7 +7,6 @@
 
 module Jubla::Role
   class AlumnusManager
-
     attr_reader :role, :group, :person
 
     def initialize(role, skip_alumnus_callback: false)
@@ -48,8 +47,8 @@ module Jubla::Role
 
     def alumnus_group_member_exists?
       Role.where("type like '%::Member'")
-          .where(person: person, group: alumnus_group)
-          .present?
+        .where(person: person, group: alumnus_group)
+        .present?
     end
 
     def destroy_alumnus_role
@@ -61,7 +60,7 @@ module Jubla::Role
     end
 
     def destroy_alumnus_group_member
-      alumnus_member_roles_in_layer.where.not(roles: { id: role.id }).destroy_all
+      alumnus_member_roles_in_layer.where.not(roles: {id: role.id}).destroy_all
     end
 
     def skip_alumnus_callback?

@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -9,7 +7,7 @@ module Jubla::EventDecorator
   extend ActiveSupport::Concern
 
   def multiple_contact_groups?
-    possible_contact_groups.count > 1 ? true : false
+    possible_contact_groups.count > 1
   end
 
   def labeled_bsv_attr(key)
@@ -29,11 +27,10 @@ module Jubla::EventDecorator
   end
 
   def warning(key)
-    content_tag(:i, '', class: 'fas fa-exclamation-triangle', title: bsv_info.error(key))
+    content_tag(:i, "", class: "fas fa-exclamation-triangle", title: bsv_info.error(key))
   end
 
   def bsv_info
     @bsv_info ||= Bsv::Info.new(model)
   end
-
 end

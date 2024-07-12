@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Bundesleitung
 class Group::FederalBoard < Group
-
   class Member < Jubla::Role::Member
     self.permissions = [:admin, :layer_and_below_full, :contact_data]
 
@@ -66,5 +64,4 @@ class Group::FederalBoard < Group
   end
 
   roles Member, President, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

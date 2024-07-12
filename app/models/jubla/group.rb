@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -9,10 +7,10 @@ module Jubla::Group
   extend ActiveSupport::Concern
 
   ALUMNI_GROUPS_CLASSES = [Group::AlumnusGroup,
-                           Group::StateAlumnusGroup,
-                           Group::FederalAlumnusGroup,
-                           Group::FlockAlumnusGroup,
-                           Group::RegionalAlumnusGroup].freeze
+    Group::StateAlumnusGroup,
+    Group::FederalAlumnusGroup,
+    Group::FlockAlumnusGroup,
+    Group::RegionalAlumnusGroup].freeze
 
   included do
     class_attribute :contact_group_type
@@ -31,7 +29,7 @@ module Jubla::Group
 
     self.used_attributes += [:bank_account]
 
-    has_many :course_conditions, class_name: '::Event::Course::Condition', dependent: :destroy
+    has_many :course_conditions, class_name: "::Event::Course::Condition", dependent: :destroy
 
     # define global children
     children Group::SimpleGroup
@@ -46,7 +44,6 @@ module Jubla::Group
       Role.with_deleted.where(group_id: alumni_groups.select(:id)).delete_all
       alumni_groups.delete_all
     end
-
   end
 
   def alumnus_class
@@ -78,17 +75,17 @@ module Jubla::Group
   end
 
   def create_alumni_filter
-    people_filters.create!(name: 'Ehemalige',
-                           group_id: id,
-                           range: :group,
-                           filter_chain: alumni_filter_chain)
+    people_filters.create!(name: "Ehemalige",
+      group_id: id,
+      range: :group,
+      filter_chain: alumni_filter_chain)
   end
 
   def alumni_filter_chain
-    { role: {
-      kind: 'deleted',
+    {role: {
+      kind: "deleted",
       start_at: Time.zone.at(0).to_s,
       role_types: self.class.roles.collect(&:sti_name)
-    } }
+    }}
   end
 end

@@ -43,19 +43,18 @@
 
 # Ebene Bund
 class Group::Federation < Group
-
   self.layer = true
   self.default_children = [Group::FederalBoard, Group::OrganizationBoard,
-                           Group::FederalAlumnusGroup]
+    Group::FederalAlumnusGroup]
   self.contact_group_type = Group::FederalBoard
   self.event_types = [Event, Event::Course]
 
   children Group::FederalBoard,
-           Group::OrganizationBoard,
-           Group::FederalProfessionalGroup,
-           Group::FederalWorkGroup,
-           Group::State,
-           Group::FederalAlumnusGroup
+    Group::OrganizationBoard,
+    Group::FederalProfessionalGroup,
+    Group::FederalWorkGroup,
+    Group::State,
+    Group::FederalAlumnusGroup
 
   def census_total(year)
     MemberCount.total_for_federation(year)

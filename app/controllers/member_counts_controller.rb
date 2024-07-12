@@ -1,12 +1,9 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
 class MemberCountsController < ApplicationController
-
   decorates :group
 
   def edit
@@ -42,10 +39,10 @@ class MemberCountsController < ApplicationController
       flash[:notice] = "Die Mitgliederzahlen für #{year} wurden erfolgreich gespeichert."
       redirect_to census_flock_group_path(flock, year: year)
     else
-      messages = with_errors.collect { |e| "#{e.born_in}: #{e.errors.full_messages.join(', ')}" }
-      flash.now[:alert] = 'Nicht alle Jahrgänge konnten gespeichert werden. ' \
-                          "Bitte überprüfen Sie Ihre Angaben. (#{messages.join('; ')})"
-      render 'edit', status: :unprocessable_entity
+      messages = with_errors.collect { |e| "#{e.born_in}: #{e.errors.full_messages.join(", ")}" }
+      flash.now[:alert] = "Nicht alle Jahrgänge konnten gespeichert werden. " \
+                          "Bitte überprüfen Sie Ihre Angaben. (#{messages.join("; ")})"
+      render "edit", status: :unprocessable_entity
     end
   end
 
@@ -54,7 +51,7 @@ class MemberCountsController < ApplicationController
 
     member_counts.destroy_all
     redirect_to census_flock_group_path(flock, year: year),
-                notice: "Die Mitgliederzahlen für #{year} wurde erfolgreich gelöscht."
+      notice: "Die Mitgliederzahlen für #{year} wurde erfolgreich gelöscht."
   end
 
   private
@@ -69,9 +66,9 @@ class MemberCountsController < ApplicationController
 
   def year
     @year ||= if params[:year]
-                params[:year].to_i
-              else
-                raise(ActiveRecord::RecordNotFound, 'year required')
-              end
+      params[:year].to_i
+    else
+      raise(ActiveRecord::RecordNotFound, "year required")
+    end
   end
 end

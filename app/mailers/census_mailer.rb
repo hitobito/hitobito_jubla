@@ -6,16 +6,15 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusMailer < ApplicationMailer
-
-  CONTENT_INVITATION = 'census_invitation'
-  CONTENT_REMINDER   = 'census_reminder'
+  CONTENT_INVITATION = "census_invitation"
+  CONTENT_REMINDER = "census_reminder"
 
   def reminder(sender, census, recipients, flock, state_agency)
     values = {
-      'due-date' => due_date(census),
-      'recipient-names' => recipients.collect(&:first_name).join(', '),
-      'contact-address' => contact_address(state_agency),
-      'census-url' => link_to(census_url(flock))
+      "due-date" => due_date(census),
+      "recipient-names" => recipients.collect(&:first_name).join(", "),
+      "contact-address" => contact_address(state_agency),
+      "census-url" => link_to(census_url(flock))
     }
     custom_content_mail(recipients, CONTENT_REMINDER, values, with_personal_sender(sender))
   end
@@ -24,7 +23,7 @@ class CensusMailer < ApplicationMailer
     custom_content_mail(
       Settings.email.mass_recipient,
       CONTENT_INVITATION,
-      { 'due-date' => due_date(census) },
+      {"due-date" => due_date(census)},
       bcc: Person.mailing_emails_for(recipients)
     )
   end
@@ -40,14 +39,14 @@ class CensusMailer < ApplicationMailer
   end
 
   def contact_address(group)
-    return '' if group.nil?
+    return "" if group.nil?
 
     [
       group.to_s,
-      group.address.to_s.gsub("\n", '<br/>').presence,
-      [group.zip_code, group.town].compact.join(' ').presence,
-      group.phone_numbers.where(public: true).collect(&:to_s).join('<br/>').presence,
+      group.address.to_s.gsub("\n", "<br/>").presence,
+      [group.zip_code, group.town].compact.join(" ").presence,
+      group.phone_numbers.where(public: true).collect(&:to_s).join("<br/>").presence,
       group.email
-    ].compact.join('<br/>')
+    ].compact.join("<br/>")
   end
 end

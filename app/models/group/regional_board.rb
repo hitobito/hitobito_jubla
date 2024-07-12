@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: groups
@@ -42,7 +41,6 @@
 
 # Regionalleitung
 class Group::RegionalBoard < Group
-
   class Leader < Jubla::Role::Leader
     self.permissions = [:layer_and_below_full, :contact_data]
   end
@@ -68,5 +66,4 @@ class Group::RegionalBoard < Group
   end
 
   roles Leader, Member, President, GroupAdmin, Alumnus, External, DispatchAddress
-
 end

@@ -14,8 +14,8 @@ module Group::UniqueNextcloudGroup
 
   def calculate_nextcloud_group
     {
-      'gid' => "#{group_id}_#{type}",
-      'displayName' => "#{group.name} - #{self.class.model_name.human(count: 2)}"
+      "gid" => "#{group_id}_#{type}",
+      "displayName" => "#{group.name} - #{self.class.model_name.human(count: 2)}"
     }
   end
 end
