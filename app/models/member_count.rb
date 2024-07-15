@@ -55,11 +55,11 @@ class MemberCount < ActiveRecord::Base
   class << self
 
     def total_by_states(year)
-      totals(year).group(:state_id)
+      totals(year, {state_id: nil})
     end
 
     def total_by_regions(year)
-      totals(year).group(:region_id)
+      totals(year, {region_id: nil})
     end
 
     def total_by_flocks(year, group)
@@ -67,19 +67,16 @@ class MemberCount < ActiveRecord::Base
                   when Group::State  then { state_id: group.id }
                   when Group::Region then { region_id: group.id }
                   end
-      totals(year).
-        where(condition).
-        group(:flock_id)
+      condition[:flock_id] = nil
+      totals(year, condition)
     end
 
     def total_for_federation(year)
-      totals(year).group(:year)[0]
+      totals(year, {year: nil})[0]
     end
 
     def total_for_flock(year, flock)
-      totals(year).
-        where(flock_id: flock.id).
-        group(:flock_id)[0]
+      totals(year, {flock_id: flock.id})[0]
     end
 
     def details_for_federation(year)
@@ -98,24 +95,23 @@ class MemberCount < ActiveRecord::Base
       details(year).where(flock_id: flock.id)
     end
 
-    def totals(year)
-      select('MIN(state_id) AS state_id,
-              MIN(flock_id) AS flock_id,
-              MIN(region_id) AS region_id,
-              MIN(born_in) AS born_in,
-              SUM(leader_f) AS leader_f,
-              SUM(leader_m) AS leader_m,
-              SUM(child_f) AS child_f,
-              SUM(child_m) AS child_m')
+    def totals(year, criteria)
+      selections = criteria.keys + [
+        'SUM(leader_f) AS leader_f',
+        'SUM(leader_m) AS leader_m',
+        'SUM(child_f) AS child_f',
+        'SUM(child_m) AS child_m'
+      ]
+      select(selections.compact.join(', '))
         .where(year: year)
+        .where(criteria.compact)
+        .group(criteria.keys)
     end
 
     private
 
     def details(year)
-      totals(year).
-        group(:born_in).
-        order(:born_in)
+      totals(year, {born_in: nil}).order(:born_in)
     end
   end
 
