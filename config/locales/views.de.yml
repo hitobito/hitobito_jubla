@@ -78,3 +78,14 @@ de:
 
   navigation:
     camps: Lager
+
+  history:
+      events:
+        event_label: "Name / Gruppe"
+      index:
+        inactive_roles_title: "Ehemalige Rollen (Inaktiv)"
+        qualified: "Qualifiziert"
+        not_qualified: "Beteiligt"
+        training_days:
+          one: "%{count} Ausbildungstag"
+          other: "%{count} Ausbildungstage"
