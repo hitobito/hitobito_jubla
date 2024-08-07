@@ -575,7 +575,7 @@ describe EventAbility do
   context 'Coach' do
 
     let(:person)  { Fabricate(:person) }
-    let(:event)   { Fabricate(:camp, coach_id: person.id).reload }
+    let!(:event)   { Fabricate(:camp, coach_id: person.id).reload }
 
     subject { Ability.new(person.reload) }
 
