@@ -62,7 +62,7 @@ class MemberCount < ActiveRecord::Base
       condition = case group
       when Group::State then {state_id: group.id, flock_id: nil}
       when Group::Region then {region_id: group.id, flock_id: nil}
-                  end
+      end
       totals(year, condition)
     end
 
@@ -92,12 +92,12 @@ class MemberCount < ActiveRecord::Base
 
     def totals(year, criteria)
       selections = criteria.keys + [
-        'SUM(leader_f) AS leader_f',
-        'SUM(leader_m) AS leader_m',
-        'SUM(child_f) AS child_f',
-        'SUM(child_m) AS child_m'
+        "SUM(leader_f) AS leader_f",
+        "SUM(leader_m) AS leader_m",
+        "SUM(child_f) AS child_f",
+        "SUM(child_m) AS child_m"
       ]
-      select(selections.compact.join(', '))
+      select(selections.compact.join(", "))
         .where(year: year)
         .where(criteria.compact)
         .group(criteria.keys)

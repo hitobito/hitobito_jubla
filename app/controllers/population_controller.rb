@@ -23,9 +23,9 @@ class PopulationController < ApplicationController
 
   def load_groups
     flock.self_and_descendants
-         .without_deleted
-         .where.not(type: Group::SimpleGroup.sti_name)
-         .order_by_type
+      .without_deleted
+      .where.not(type: Group::SimpleGroup.sti_name)
+      .order_by_type
   end
 
   def load_people_by_group

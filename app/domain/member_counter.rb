@@ -13,12 +13,12 @@ class MemberCounter
   # Roles not appearing here are not counted at all.
   ROLE_MAPPING =
     {leader: [Group::Flock::Leader,
-               Group::Flock::CampLeader,
-               Group::Flock::President,
-               Group::Flock::Treasurer,
-               Group::Flock::Guide,
-               Group::ChildGroup::Leader].map(&:sti_name),
-      child: [Group::ChildGroup::Child].map(&:sti_name)}.freeze
+      Group::Flock::CampLeader,
+      Group::Flock::President,
+      Group::Flock::Treasurer,
+      Group::Flock::Guide,
+      Group::ChildGroup::Leader].map(&:sti_name),
+     child: [Group::ChildGroup::Child].map(&:sti_name)}.freeze
 
   attr_reader :year, :flock
 
@@ -74,10 +74,10 @@ class MemberCounter
 
   def members
     Person.joins(:roles)
-          .where(roles: {group_id: flock.self_and_descendants,
+      .where(roles: {group_id: flock.self_and_descendants,
                      type: self.class.counted_roles,
                      deleted_at: nil})
-          .distinct
+      .distinct
   end
 
   private

@@ -84,7 +84,7 @@ module Jubla::Role
     end
 
     def alumnus_member_roles_in_layer
-      role.roles_in_layer.where('roles.type ~ ?', 'AlumnusGroup::Member')
+      role.roles_in_layer.where("roles.type ~ ?", "AlumnusGroup::Member")
     end
 
     def last_in_group?

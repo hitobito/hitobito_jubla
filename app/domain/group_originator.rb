@@ -4,13 +4,12 @@
 #  https://github.com/hitobito/hitobito.
 
 class GroupOriginator
-
   FLOCK_ROLES = (Group::Flock.roles - [Group::Flock::External,
-                                      Group::Flock::Coach,
-                                      Group::Flock::Advisor]).map(&:sti_name)
+    Group::Flock::Coach,
+    Group::Flock::Advisor]).map(&:sti_name)
 
   STATE_ROLES = (Group::StateBoard.roles - [Group::StateBoard::External,
-                                           Group::StateBoard::DispatchAddress] +
+    Group::StateBoard::DispatchAddress] +
                                            [Group::StateAgency::Leader]).map(&:sti_name)
 
   attr_reader :person, :flock, :state
