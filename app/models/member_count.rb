@@ -60,12 +60,10 @@ class MemberCount < ActiveRecord::Base
 
     def total_by_flocks(year, group)
       condition = case group
-      when Group::State then {state_id: group.id}
-      when Group::Region then {region_id: group.id}
-      end
-      totals(year)
-        .where(condition)
-        .group(:flock_id)
+      when Group::State then {state_id: group.id, flock_id: nil}
+      when Group::Region then {region_id: group.id, flock_id: nil}
+                  end
+      totals(year, condition)
     end
 
     def total_for_federation(year)
@@ -73,10 +71,7 @@ class MemberCount < ActiveRecord::Base
     end
 
     def total_for_flock(year, flock)
-      totals(year)
-        .where(flock_id: flock.id)
-        .group(:flock_id)
-        .first
+      totals(year, {flock_id: flock.id})[0]
     end
 
     def details_for_federation(year)
