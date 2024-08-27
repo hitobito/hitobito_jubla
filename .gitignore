@@ -15,6 +15,7 @@ Gemfile.lock
 # reports
 spec/reports
 spec/coverage
+coverage
 brakeman-output.tabs
 rubocop-results.xml
 .envrc
