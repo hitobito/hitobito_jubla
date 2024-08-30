@@ -9,6 +9,10 @@ module Jubla::Person
   included do
     belongs_to :originating_flock, class_name: "Group"
     belongs_to :originating_state, class_name: "Group"
+
+    Person::SEARCHABLE_ATTRS << :name_mother << :name_father << :nationality << :profession << :bank_account <<
+      :ahv_number_old << :insurance_company << :insurance_number
+    include PgSearchable
   end
 
   module ClassMethods

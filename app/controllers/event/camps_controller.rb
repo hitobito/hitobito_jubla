@@ -35,7 +35,7 @@ class Event::CampsController < ApplicationController
   end
 
   def all_upcoming_camps
-    base_camp_query.upcoming.in_next(4.weeks)
+    base_camp_query.upcoming.in_next(4.weeks).list
   end
 
   private
@@ -54,11 +54,10 @@ class Event::CampsController < ApplicationController
   def all_state_camps
     base_camp_query.joins(:groups)
       .where("groups.lft >= ? AND groups.rgt <= ?", @group.lft, @group.rgt)
-      .in_year(year)
+      .in_year(year).list
   end
 
   def base_camp_query
     Event::Camp.includes(:groups)
-      .list
   end
 end

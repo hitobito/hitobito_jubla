@@ -8,7 +8,7 @@ module Jubla
     extend ActiveSupport::Concern
 
     included do
-      alias_method_chain :upcoming_events, :coached
+      alias_method_chain :unordered_upcoming_events, :coached
     end
 
     def coached_events
@@ -21,14 +21,14 @@ module Jubla
         .distinct
         .includes(:groups)
         .preload_all_dates
-        .order_by_date
     end
 
-    def upcoming_events_with_coached
-      upcoming_events_without_coached
+    def unordered_upcoming_events_with_coached
+      unordered_upcoming_events_without_coached
         .joins("INNER JOIN event_roles ON event_roles.participation_id = event_participations.id")
-        .where.not(event_roles: {type: [::Event::Camp::Role::Coach.sti_name,
-          ::Event::Course::Role::Advisor.sti_name]})
+        .where.not(event_roles: {type: [::Event::Camp::Role::Coach,
+          ::Event::Course::Role::Advisor].map(&:sti_name)})
+        .order(:start_at)
     end
   end
 end

@@ -51,32 +51,27 @@ class MemberCount < ActiveRecord::Base
 
   class << self
     def total_by_states(year)
-      totals(year).group(:state_id)
+      totals(year, {state_id: nil})
     end
 
     def total_by_regions(year)
-      totals(year).group(:region_id)
+      totals(year, {region_id: nil})
     end
 
     def total_by_flocks(year, group)
       condition = case group
-      when Group::State then {state_id: group.id}
-      when Group::Region then {region_id: group.id}
+      when Group::State then {state_id: group.id, flock_id: nil}
+      when Group::Region then {region_id: group.id, flock_id: nil}
       end
-      totals(year)
-        .where(condition)
-        .group(:flock_id)
+      totals(year, condition)
     end
 
     def total_for_federation(year)
-      totals(year).group(:year).first
+      totals(year, {year: nil})[0]
     end
 
     def total_for_flock(year, flock)
-      totals(year)
-        .where(flock_id: flock.id)
-        .group(:flock_id)
-        .first
+      totals(year, {flock_id: flock.id})[0]
     end
 
     def details_for_federation(year)
@@ -95,24 +90,23 @@ class MemberCount < ActiveRecord::Base
       details(year).where(flock_id: flock.id)
     end
 
-    def totals(year)
-      select("state_id, " \
-             "flock_id, " \
-             "region_id, " \
-             "born_in, " \
-             "SUM(leader_f) AS leader_f, " \
-             "SUM(leader_m) AS leader_m, " \
-             "SUM(child_f) AS child_f, " \
-             "SUM(child_m) AS child_m")
+    def totals(year, criteria)
+      selections = criteria.keys + [
+        "SUM(leader_f) AS leader_f",
+        "SUM(leader_m) AS leader_m",
+        "SUM(child_f) AS child_f",
+        "SUM(child_m) AS child_m"
+      ]
+      select(selections.compact.join(", "))
         .where(year: year)
+        .where(criteria.compact)
+        .group(criteria.keys)
     end
 
     private
 
     def details(year)
-      totals(year)
-        .group(:born_in)
-        .order(:born_in)
+      totals(year, {born_in: nil}).order(:born_in)
     end
   end
 end

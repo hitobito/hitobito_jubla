@@ -40,7 +40,7 @@ module Export::Tabular
     end
 
     def query_member_counts
-      ::MemberCount.totals(@year).group(:flock_id)
+      ::MemberCount.totals(@year, {flock_id: nil})
     end
 
     def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength

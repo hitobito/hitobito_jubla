@@ -83,10 +83,10 @@ describe MemberCountsController do
       counts = MemberCount.where(flock_id: flock.id, year: 2011).order(:born_in).to_a
       expect(counts).to have(4).items
 
-      assert_member_counts(counts[0], 1, nil, 1, nil)
-      assert_member_counts(counts[1], nil, 1, nil, nil)
-      assert_member_counts(counts[2], 1, nil, nil, nil)
-      assert_member_counts(counts[3], nil, nil, nil, 1)
+      assert_member_counts(counts[0], nil, 1, nil, nil)
+      assert_member_counts(counts[1], 1, nil, nil, nil)
+      assert_member_counts(counts[2], nil, nil, nil, 1)
+      assert_member_counts(counts[3], 1, nil, 1, nil)
     end
 
     context 'as flock leader' do

@@ -4,13 +4,13 @@
 #  https://github.com/hitobito/hitobito.
 
 class GroupOriginator
-  FLOCK_ROLES = Group::Flock.roles - [Group::Flock::External,
+  FLOCK_ROLES = (Group::Flock.roles - [Group::Flock::External,
     Group::Flock::Coach,
-    Group::Flock::Advisor]
+    Group::Flock::Advisor]).map(&:sti_name)
 
-  STATE_ROLES = Group::StateBoard.roles - [Group::StateBoard::External,
+  STATE_ROLES = (Group::StateBoard.roles - [Group::StateBoard::External,
     Group::StateBoard::DispatchAddress] +
-    [Group::StateAgency::Leader]
+                                           [Group::StateAgency::Leader]).map(&:sti_name)
 
   attr_reader :person, :flock, :state
 
@@ -46,7 +46,7 @@ class GroupOriginator
   end
 
   def find_flock_via_childgroups(roles)
-    roles.where(type: Group::ChildGroup.roles).last.try(:group).try(:parent)
+    roles.where(type: Group::ChildGroup.roles.map(&:sti_name)).last.try(:group).try(:parent)
   end
 
   def find_state(roles)

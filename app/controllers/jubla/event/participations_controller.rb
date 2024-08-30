@@ -13,7 +13,7 @@ module Jubla::Event::ParticipationsController
   # and aliases the table name for the second association (states)
   included do
     sort_mappings_with_indifferent_access
-      .merge!(originating_state: null_safe_sort("originating_states_people.name"),
-        originating_flock: null_safe_sort("groups.name"))
+      .merge!(originating_state: "originating_states_people.name NULLS LAST",
+        originating_flock: "groups.name NULLS LAST")
   end
 end

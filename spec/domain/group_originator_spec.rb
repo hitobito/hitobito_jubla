@@ -55,7 +55,7 @@ describe GroupOriginator do
       assert_originating_groups flock: groups(:bern), state: groups(:be)
     end
 
-    GroupOriginator::FLOCK_ROLES.each do |role|
+    GroupOriginator::FLOCK_ROLES.map(&:constantize).each do |role|
       it "sets originating groups for #{role}" do
         create([role, groups(:bern)])
         assert_originating_groups flock: groups(:bern), state: groups(:be)
@@ -94,7 +94,7 @@ describe GroupOriginator do
       assert_originating_groups state: groups(:be)
     end
 
-    (GroupOriginator::STATE_ROLES - [Group::StateAgency::Leader]).each do |role|
+    (GroupOriginator::STATE_ROLES.map(&:constantize) - [Group::StateAgency::Leader]).each do |role|
       it "sets originating groups for #{role}" do
         create([role, groups(:be_board)])
         assert_originating_groups state: groups(:be)
@@ -107,14 +107,14 @@ describe GroupOriginator do
   end
 
   context 'ignored' do
-    (Group::Flock.roles - GroupOriginator::FLOCK_ROLES).each do |role|
+    (Group::Flock.roles - GroupOriginator::FLOCK_ROLES.map(&:constantize)).each do |role|
       it "ignores #{role}" do
         create([role, groups(:bern)])
         assert_originating_groups flock: nil, state: nil
       end
     end
 
-    (Group::StateBoard.roles - GroupOriginator::STATE_ROLES).each do |role|
+    (Group::StateBoard.roles - GroupOriginator::STATE_ROLES.map(&:constantize)).each do |role|
       it "ignores #{role}" do
         create([role, groups(:be_board)])
         assert_originating_groups flock: nil, state: nil

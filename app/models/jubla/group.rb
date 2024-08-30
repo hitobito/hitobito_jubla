@@ -10,7 +10,7 @@ module Jubla::Group
     Group::StateAlumnusGroup,
     Group::FederalAlumnusGroup,
     Group::FlockAlumnusGroup,
-    Group::RegionalAlumnusGroup].freeze
+    Group::RegionalAlumnusGroup].map(&:sti_name)
 
   included do
     class_attribute :contact_group_type
