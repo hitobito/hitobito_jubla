@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -7,10 +5,10 @@
 
 class ResetPrimaryGroups < ActiveRecord::Migration[4.2]
   def up
-    people_ids = select_all(people_with_wrong_assigned_primary_group).rows.join(',')
+    people_ids = select_all(people_with_wrong_assigned_primary_group).rows.join(",")
     execute(set_primary_group_to_active_role_group(people_ids))
 
-    reloaded_people_ids = select_all(people_with_wrong_assigned_primary_group).rows.join(',')
+    reloaded_people_ids = select_all(people_with_wrong_assigned_primary_group).rows.join(",")
     execute(set_primary_group_to_alumnus_role_group(reloaded_people_ids))
   end
 
@@ -23,7 +21,7 @@ class ResetPrimaryGroups < ActiveRecord::Migration[4.2]
       SELECT group_id from roles
       WHERE roles.person_id = people.id
       AND roles.type not in (#{alumni_role_types})
-      AND roles.deleted_at is NULL
+      AND (roles.end_on IS NULL OR roles.end_on > CURRENT_DATE)
       LIMIT 1
     )
     SQL
@@ -37,7 +35,7 @@ class ResetPrimaryGroups < ActiveRecord::Migration[4.2]
     SET primary_group_id = (
       SELECT group_id from roles
       WHERE roles.person_id = people.id
-      AND roles.deleted_at is NULL
+      AND (roles.end_on IS NULL OR roles.end_on > CURRENT_DATE)
       LIMIT 1
     )
     SQL
@@ -50,14 +48,14 @@ class ResetPrimaryGroups < ActiveRecord::Migration[4.2]
     SELECT DISTINCT people.id from people
     LEFT JOIN roles ON roles.person_id = people.id
     WHERE roles.group_id = people.primary_group_id
-    AND roles.deleted_at IS NULL
+    AND (roles.end_on IS NULL OR roles.end_on > CURRENT_DATE)
     SQL
   end
 
   def alumni_role_types
-    Group::AlumnusGroup.subclasses.
-      flat_map(&:roles).
-      collect(&:sti_name).
-      collect { |x| "'#{x}'" }.join(",")
+    Group::AlumnusGroup.subclasses
+      .flat_map(&:roles)
+      .collect(&:sti_name)
+      .collect { |x| "'#{x}'" }.join(",")
   end
 end
