@@ -5,3 +5,5 @@
 
 = render 'roles_aside', title: 'Aktive Rollen', grouped_roles: entry.active_roles_grouped, primary_group_link: true
 = render 'roles_aside_jubla', title: 'Ehemalige Rollen', grouped_roles: entry.inactive_roles_grouped
+- if entry.future_roles_grouped.any?
+  = render 'roles_aside', title: t('.convertable_title'), grouped_roles: entry.future_roles_grouped
