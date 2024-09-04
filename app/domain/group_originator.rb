@@ -38,7 +38,7 @@ class GroupOriginator
   end
 
   def find_with_deleted
-    yield(roles) || yield(roles.with_deleted)
+    yield(roles) || yield(roles.with_inactive)
   end
 
   def find_flock(roles)
