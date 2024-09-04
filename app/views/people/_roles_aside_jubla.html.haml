@@ -12,7 +12,7 @@
         - grouped_roles.each do |group, roles|
           %tr
             %td
-              - if can?(:primary_group, entry) && !roles.any? { |role|role.deleted_at }
+              - if can?(:primary_group, entry) && !roles.any? { |role| role.end_on }
                 = link_to(icon('star', filled: (entry.primary_group_id == group.id)),
                           primary_group_group_person_path(@group, entry, primary_group_id: group.id),
                           title: t('.set_main_group'),
@@ -30,11 +30,11 @@
                       %td
                         %strong
                           = role.to_s
-                      - unless role.deleted_at
+                      - unless role.end_on
                         %td= link_action_edit(edit_group_role_path(role.group, role)) if can?(:edit, role)
                         %td= link_action_destroy(group_role_path(role.group, role)) if can?(:destroy, role)
                       - else
                         %td{colspan: 2, class: "nowrap"}
                           = role.created_at.year
                           = "-"
-                          = role.deleted_at.year
+                          = role.end_on.year
