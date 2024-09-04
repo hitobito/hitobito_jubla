@@ -219,12 +219,12 @@ describe Role do
       it "older role is flagged as deleted without creating alumnus role when another active role exists" do
         Fabricate(role_class.name.to_s, group: groups(:bern), person: role.person)
         expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-        expect(Role.only_deleted.find(role.id)).to be_present
+        expect(Role.ended.find(role.id)).to be_present
       end
 
       it "older role is flagged as deleted and alumnus role is created" do
         expect { role.destroy }.to change { Group::Flock::Alumnus.count }.by(1)
-        expect(Role.only_deleted.find(role.id)).to be_present
+        expect(Role.ended.find(role.id)).to be_present
         expect(Group::Flock::Alumnus.find_by(person_id: role.person_id).label).to eq "Scharleitung"
       end
 
@@ -233,7 +233,7 @@ describe Role do
 
         it "flags as deleted, does not create alumnus role" do
           expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
-          expect(Role.only_deleted.find(role.id)).to be_present
+          expect(Role.ended.find(role.id)).to be_present
         end
       end
 
