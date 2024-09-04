@@ -5,7 +5,6 @@
 
 de:
   activerecord:
-
     models:
       group/child_group: Kindergruppe
       group/federal_board: Bundesleitung
@@ -221,7 +220,6 @@ de:
         other: Versandadresse
         long: Versandadresse Einfache Gruppe
 
-
       census:
         one: Bestandesmeldungsperiode
         other: Bestandesmeldungsperioden
@@ -251,7 +249,6 @@ de:
         other: Teilnehmer*innen
 
       jubla/event/course/advisor: Betreuung
-
 
     attributes:
       person:
@@ -293,6 +290,9 @@ de:
         employment_percent: Stellenprozente
         honorary: Ehrenamt
         class:
+          permission:
+            description:
+              alumnus_below_full: Lesen und Schreiben auf dieser Gruppe und allen darunter liegenden Alumnus Gruppen.
           kind:
             alumnus:
               one: Ehemalig
@@ -340,4 +340,4 @@ de:
       messages:
         must_be_multiple_of: muss ein vielfaches von %{multiple} sein.
         other_roles_exists: Es befinden sich noch andere aktive Rollen in diesem Layer
-        cannot_import_alumnus: '%{name} wird nicht als Ehemaligenmitglied hinzugefügt, da er/sie noch eine aktive Rolle hat'
+        cannot_import_alumnus: "%{name} wird nicht als Ehemaligenmitglied hinzugefügt, da er/sie noch eine aktive Rolle hat"
