@@ -7,12 +7,12 @@
 
 # connection configuration for the legacy jubla ost database
 database:
-  adapter: mysql2
+  adapter: postgresql
   host: localhost
   database: jublaost
   username: root
   password: root
-  socket: /var/run/mysqld/mysqld.sock
+  socket: /var/run/postgresql/.s.PGSQL.5432
   encoding: latin1
 
 
