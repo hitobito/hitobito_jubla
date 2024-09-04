@@ -75,6 +75,10 @@ module HitobitoJubla
         person: [:originating_flock, :originating_state]
       ]
 
+      JobManager.wagon_jobs += [
+        AlumniManagerJob
+      ]
+
       MailingLists::Subscribers.include Jubla::MailingLists::Subscribers
       Person::Filter::List.include Jubla::Person::Filter::List
 

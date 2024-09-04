@@ -103,9 +103,7 @@ module Jubla::Role
   end
 
   def alumnus_applicable?
-    [Jubla::Role::External,
-      Jubla::Role::DispatchAddress,
-      Jubla::Role::Alumnus].none? { |r| is_a?(r) } && !group.alumnus?
+    !group.alumnus? && Alumni::EXCLUDED_ROLE_TYPES.none? { |type| is_a?(type) }
   end
 
   def roles_in_layer
