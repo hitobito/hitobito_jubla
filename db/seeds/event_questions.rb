@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-Event::Question.seed_global([
+Event::Question.create_with_translations([
 
   { question: 'Ich habe während dem Kurs folgendes ÖV Abo',
     choices: 'GA, Halbtax / unter 16, keine Vergünstigung',
