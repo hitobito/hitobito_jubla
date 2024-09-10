@@ -28,7 +28,6 @@ module Jubla
         .joins("INNER JOIN event_roles ON event_roles.participation_id = event_participations.id")
         .where.not(event_roles: {type: [::Event::Camp::Role::Coach,
           ::Event::Course::Role::Advisor].map(&:sti_name)})
-        .order(:start_at)
     end
   end
 end
