@@ -12,6 +12,8 @@ module Jubla::Role
     Role::Kinds << :alumnus
     Role::Types::Permissions << :alumnus_below_full
 
+    self.allowed_permissions_for_self_registration += [:group_read]
+
     attr_accessor :skip_alumnus_callback
 
     validate :assert_no_active_roles, if: :alumnus_group_member?
@@ -27,6 +29,7 @@ module Jubla::Role
   end
 
   module ClassMethods
+
     def alumnus
       where("roles.type ~ ?", "AlumnusGroup::Member|::Alumnus")
     end
