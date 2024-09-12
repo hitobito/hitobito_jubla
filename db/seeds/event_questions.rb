@@ -5,37 +5,29 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-# delete all default event questions first
-Event::Question.where(event_id: nil).destroy_all
+Event::Question.create_with_translations([
 
-# recreate default event questions
-questions_data = [
   { question: 'Ich habe während dem Kurs folgendes ÖV Abo',
     choices: 'GA, Halbtax / unter 16, keine Vergünstigung',
-    required: true,
+    disclosure: :optional,
+    event_type: Event::Course.sti_name,
     multiple_choices: false },
 
   { question: 'Ich habe folgende Essgewohnheiten/Allergien',
     choices: 'Nichts Spezielles, Vegetarisch, Vegan, Glutenfrei, Laktosefrei',
-    required: false,
+    disclosure: :optional,
+    event_type: Event::Course.sti_name,
     multiple_choices: true },
 
   { question: 'Den schub (Ordner mit fünf schub-Broschüren, digital unter www.jubla.ch/schub)...',
     choices: 'besitze ich und nehme ich mit, leihe ich von jemandem aus, habe ich nicht/kann ich nicht ausleihen/möchte ich als eigenen analogen Ordner',
-    required: true,
+    disclosure: :optional,
+    event_type: Event::Course.sti_name,
     multiple_choices: false },
 
   { question: 'Das meisterwerk (Handbuch der Mindestkenntnisse Jubla-Technik, digital unter www.jubla.ch/jublatechnik)...',
     choices: 'besitze ich und nehme ich mit, leihe ich von jemandem aus, habe ich nicht/kann ich nicht ausleihen/möchte ich als eigenes analoges Handbuch',
-    required: true,
+    disclosure: :optional,
+    event_type: Event::Course.sti_name,
     multiple_choices: false },
-]
-
-questions_data.each do |attrs|
-  eq = Event::Question.find_or_initialize_by(
-    event_id: attrs.delete(:event_id),
-    question: attrs.delete(:question)
-  )
-  eq.attributes = attrs
-  eq.save!
-end
+])
