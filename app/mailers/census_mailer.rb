@@ -41,12 +41,12 @@ class CensusMailer < ApplicationMailer
   def contact_address(group)
     return "" if group.nil?
 
-    [
+    join_lines([
       group.to_s,
-      group.address.to_s.gsub("\n", "<br/>").presence,
+      convert_newlines_to_breaks(group.address.to_s).presence,
       [group.zip_code, group.town].compact.join(" ").presence,
-      group.phone_numbers.where(public: true).collect(&:to_s).join("<br/>").presence,
+      join_lines(group.phone_numbers.where(public: true).collect(&:to_s)).presence,
       group.email
-    ].compact.join("<br/>")
+    ].compact)
   end
 end
