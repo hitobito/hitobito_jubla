@@ -77,3 +77,7 @@ groups:
     enabled: false
   nextcloud:
     enabled: true
+
+event:
+  participations:
+    delete_answers_after_months: 5
