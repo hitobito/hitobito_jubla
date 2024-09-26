@@ -55,7 +55,7 @@ class JublaEventSeeder < EventSeeder
   end
 
   def camp_group_ids
-    Group.where(type: Group::Flock).pluck(:id)
+    Group.where(type: Group::Flock.sti_name).pluck(:id)
   end
 
 end
@@ -63,20 +63,24 @@ end
 seeder = JublaEventSeeder.new
 srand(42)
 
-
-seeder.course_group_ids.each do |group_id|
-  seeder.seed_event_course_conditions(group_id)
-  20.times do
-    seeder.seed_event(group_id, :course)
-    seeder.seed_event(group_id, :base)
+begin
+  seeder.course_group_ids.each do |group_id|
+    seeder.seed_event_course_conditions(group_id)
+    20.times do
+      seeder.seed_event(group_id, :course)
+      seeder.seed_event(group_id, :base)
+    end
   end
-end
 
-seeder.camp_group_ids.each do |group_id|
-  10.times do
-    seeder.seed_event(group_id, :base)
-    seeder.seed_event(group_id, :camp)
+  seeder.camp_group_ids.each do |group_id|
+    10.times do
+      seeder.seed_event(group_id, :base)
+      seeder.seed_event(group_id, :camp)
+    end
   end
-end
 
-Event::Participation.update_all(state: 'assigned', active: true)
+  Event::Participation.update_all(state: 'assigned', active: true)
+
+rescue TypeError => e
+  binding.pry
+end
