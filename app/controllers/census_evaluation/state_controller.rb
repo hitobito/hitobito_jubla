@@ -4,6 +4,8 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusEvaluation::StateController < CensusEvaluation::BaseController
+  include AsyncDownload
+
   self.sub_group_type = Group::Flock
 
   before_action :check_authorization, only: [:remind]
@@ -20,31 +22,39 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
   end
 
   def index
-    super
+    authorize!(:create, Census)
 
     respond_to do |format|
       format.html do
-        @flocks = flock_confirmation_ratios if evaluation.current_census_year?
+        super
       end
       format.csv do
-        authorize!(:create, Census)
-        send_data Export::Tabular::CensusFlockState.csv(year), type: :csv
+        render_tabular_in_background(:csv, "state")
       end
     end
   end
 
   private
 
+  def render_tabular_in_background(format, type = nil, file = :census_flock_export)
+    with_async_download_cookie(format, file) do |filename|
+      Export::CensusFlockExportJob.new(format,
+        current_person.id,
+        year,
+        {type: type, filename: filename}).enqueue!
+    end
+  end
+
   def flock_confirmation_ratios
     @sub_groups.each_with_object({}) do |state, hash|
-      hash[state.id] = { confirmed: number_of_confirmations(state), total: number_of_flocks(state) }
+      hash[state.id] = {confirmed: number_of_confirmations(state), total: number_of_flocks(state)}
     end
   end
 
   def number_of_confirmations(state)
-    MemberCount.where(state_id: state.id, year: year).
-      distinct.
-      count(:flock_id)
+    MemberCount.where(state_id: state.id, year: year)
+      .distinct
+      .count(:flock_id)
   end
 
   def number_of_flocks(state)
