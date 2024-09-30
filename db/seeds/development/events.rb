@@ -55,14 +55,13 @@ class JublaEventSeeder < EventSeeder
   end
 
   def camp_group_ids
-    Group.where(type: Group::Flock).pluck(:id)
+    Group.where(type: Group::Flock.sti_name).pluck(:id)
   end
 
 end
 
 seeder = JublaEventSeeder.new
 srand(42)
-
 
 seeder.course_group_ids.each do |group_id|
   seeder.seed_event_course_conditions(group_id)
