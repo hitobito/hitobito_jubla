@@ -63,24 +63,19 @@ end
 seeder = JublaEventSeeder.new
 srand(42)
 
-begin
-  seeder.course_group_ids.each do |group_id|
-    seeder.seed_event_course_conditions(group_id)
-    20.times do
-      seeder.seed_event(group_id, :course)
-      seeder.seed_event(group_id, :base)
-    end
+seeder.course_group_ids.each do |group_id|
+  seeder.seed_event_course_conditions(group_id)
+  20.times do
+    seeder.seed_event(group_id, :course)
+    seeder.seed_event(group_id, :base)
   end
-
-  seeder.camp_group_ids.each do |group_id|
-    10.times do
-      seeder.seed_event(group_id, :base)
-      seeder.seed_event(group_id, :camp)
-    end
-  end
-
-  Event::Participation.update_all(state: 'assigned', active: true)
-
-rescue TypeError => e
-  binding.pry
 end
+
+seeder.camp_group_ids.each do |group_id|
+  10.times do
+    seeder.seed_event(group_id, :base)
+    seeder.seed_event(group_id, :camp)
+  end
+end
+
+Event::Participation.update_all(state: 'assigned', active: true)
