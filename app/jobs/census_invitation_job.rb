@@ -19,7 +19,7 @@ class CensusInvitationJob < BaseJob
 
   def recipients
     Person.joins(:roles)
-      .where(roles: {type: RECIPIENT_ROLES.collect(&:sti_name), deleted_at: nil})
+      .where(roles: {type: RECIPIENT_ROLES.collect(&:sti_name), end_on: [nil, ..Time.zone.today]})
       .distinct
   end
 
