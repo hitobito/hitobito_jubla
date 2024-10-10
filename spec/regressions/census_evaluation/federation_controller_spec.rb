@@ -48,10 +48,8 @@ describe CensusEvaluation::FederationController, type: :controller do
       before { get :index, params: { id: ch.id }, format: :csv }
       let(:csv) { CSV.parse(response.body, headers: true, col_sep: ';') }
 
-      it 'renders correct templates' do
-        expect(response).to be_successful
-        expect(csv).to have(5).items
-        expect(csv.headers).to have(11).items
+      it 'redirectsafter job enqueue' do
+        expect(response).to have_http_status(302)
       end
     end
 
