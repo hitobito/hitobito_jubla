@@ -5,6 +5,8 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 #
+# After this creation of Alumni-Groups, one such group is a default-child and
+# therefore created with every new group in the respective layers.
 class GenerateAlumniGroups < ActiveRecord::Migration[4.2]
 
   def up
