@@ -42,7 +42,7 @@ module Jubla::Export::Pdf
             move_down_line
             text PeopleManager.model_name.human(count: person.people_managers.count), style: :bold
             person.people_managers&.each do |manager|
-              text "#{manager.manager}: #{[manager.email, manager.phone_number&.number].compact_blank.join(', ')}"
+              text "#{manager.manager}: #{[manager.email, manager.phone_number&.number].compact_blank.join(", ")}"
             end
           end
         end
