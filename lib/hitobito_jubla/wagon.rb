@@ -108,6 +108,8 @@ module HitobitoJubla
       PersonDecorator.include Jubla::PersonDecorator
 
       ### helpers
+      EventParticipationsHelper.prepend Jubla::EventParticipationsHelper
+
       # add more active_for urls to main navigation
       admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
       admin[:active_for] << "event_camp_kinds"
