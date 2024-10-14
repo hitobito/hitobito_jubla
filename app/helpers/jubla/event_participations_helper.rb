@@ -4,7 +4,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 module Jubla::EventParticipationsHelper
-  def event_participation_table_options(t, event)
+  def event_participation_table_options(t, event:, group:)
     if can?(:index_participations_details, event)
       t.col(t.sort_header(:originating_state, Person.human_attribute_name(:originating_state))) { |p| p.model.person.originating_state.to_s }
       t.col(t.sort_header(:originating_flock, Person.human_attribute_name(:originating_flock))) { |p| p.model.person.originating_flock.to_s }
