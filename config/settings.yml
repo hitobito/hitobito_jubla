@@ -77,6 +77,8 @@ groups:
     enabled: false
   nextcloud:
     enabled: true
+  nejb:
+    enabled: false
 
 event:
   participations:

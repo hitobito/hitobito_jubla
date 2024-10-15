@@ -129,6 +129,7 @@ module HitobitoJubla
 
     initializer "jubla.add_settings" do |_app|
       Settings.add_source!(File.join(paths["config"].existent, "settings.yml"))
+      Settings.add_source!(File.join(paths["config"].existent, "settings.local.yml"))
       Settings.reload!
     end
 
