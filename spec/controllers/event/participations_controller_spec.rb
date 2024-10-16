@@ -52,6 +52,18 @@ describe Event::ParticipationsController do
       expect(assigns(:participations)).to eq [@participant]
     end
 
+    it "shows the correct timestamps on the participation instances" do
+      created_at = 2.days.ago.change(usec: 0)
+      updated_at = 1.day.ago.change(usec: 0)
+      Event::Participation.update_all(created_at:, updated_at:)
+
+      get :index, params: {group_id: group.id, event_id: course.id}
+
+      expect(assigns(:participations)).to eq [@leader, @participant]
+      expect(assigns(:participations).map(&:created_at)).to eq [created_at, created_at]
+      expect(assigns(:participations).map(&:updated_at)).to eq [updated_at, updated_at]
+    end
+
     def create(*roles)
       roles.map do |role_class|
         role = Fabricate(:event_role, type: role_class.sti_name)
