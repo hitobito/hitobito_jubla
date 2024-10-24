@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -34,7 +34,7 @@ module Jubla::Group
     # define global children
     children Group::SimpleGroup
 
-    root_types Group::Federation
+    root_types Group::Root, Group::Federation, Group::Nejb
 
     private
 
