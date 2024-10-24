@@ -4,6 +4,4 @@
 -#  https://github.com/hitobito/hitobito_jubla.
 
 - if can?(:create, Census.new)
-  = action_button('Neue Bestandesmeldungen einfordern', new_census_path, :bullhorn)
-  = action_button('Export CSV Versicherungen', params.merge(format: :csv, type: 'versicherung'), :download)
-  = action_button('Export CSV Kantone', params.merge(format: :csv, type: 'federation'), :download)
+  = action_button('Export CSV Scharen', params.merge(format: :csv), :download)
