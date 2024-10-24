@@ -8,6 +8,9 @@ Additional features include member census, camps and course conditions.
 # Jubla Organization Hierarchy
 
 <!-- roles:start -->
+    * Organisation
+      * Organisation
+        * Administrator: 2FA [:layer_and_below_full, :admin]
     * Bund
       * Bund
         * Adressverwaltung: [:group_full]
@@ -153,6 +156,54 @@ Additional features include member census, camps and course conditions.
         * Adressverwaltung: [:group_and_below_full]
         * Kassier/in: [:group_and_below_read]
         * Mitglied: [:group_read]
+        * Extern: []
+        * Versandadresse: []
+    * NEJB
+      * NEJB
+        * Adressverwaltung: [:group_full]
+        * Versandadresse: []
+        * IT Support: [:admin, :impersonation]
+      * NEJB Bundesleitung
+        * Adressverwaltung: [:admin, :layer_and_below_full, :contact_data]
+      * Netzwerk Ehemalige Jungwacht Blauring
+        * Leitung: [:group_and_below_full, :contact_data]
+        * Adressverwaltung: [:group_and_below_full]
+        * Kassier*in: [:group_and_below_read]
+        * Aktivmitglied: [:group_read]
+        * Passivmitglied: [:group_read]
+        * Kollektivmitglied: [:group_read]
+        * Neumitglied: []
+        * Extern: []
+        * Versandadresse: []
+    * Kanton (Ehemalige)
+      * Kanton (Ehemalige)
+        * Adressverwaltung: [:admin, :layer_and_below_full, :contact_data]
+      * Kantonaler Ehemaligenverein
+        * Leitung: [:group_and_below_full, :contact_data]
+        * Adressverwaltung: [:group_and_below_full]
+        * Kassier*in: [:group_and_below_read]
+        * Mitglied Ehemalige: [:group_read]
+        * Neumitglied: []
+        * Extern: []
+        * Versandadresse: []
+    * Region (Ehemalige)
+      * Region (Ehemalige)
+        * Adressverwaltung: [:admin, :layer_and_below_full, :contact_data]
+      * Regionaler Ehemaligenverein
+        * Leitung: [:group_and_below_full, :contact_data]
+        * Adressverwaltung: [:group_and_below_full]
+        * Kassier*in: [:group_and_below_read]
+        * Mitglied Ehemalige: [:group_read]
+        * Neumitglied: []
+        * Extern: []
+        * Versandadresse: []
+    * Ehemaligenschar
+      * Ehemaligenschar
+        * Leitung: [:group_and_below_full, :contact_data]
+        * Adressverwaltung: [:group_and_below_full]
+        * Kassier*in: [:group_and_below_read]
+        * Mitglied Ehemalige: [:group_read]
+        * Neumitglied: []
         * Extern: []
         * Versandadresse: []
     * Global

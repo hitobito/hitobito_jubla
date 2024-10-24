@@ -186,13 +186,13 @@ de:
       group/nejb_bundesleitung: NEJB Bundesleitung
       group/netzwerk_ehemalige_jungwacht_blauring: Netzwerk Ehemalige Jungwacht Blauring
       group/nejb_kanton:
-        one: Kanton
+        one: Kanton (Ehemalige)
         other: Kantone
       group/kanton_ehemaligenverein:
         one: Kantonaler Ehemaligenverein
         other: Kantonale Ehemaligenvereine
       group/nejb_region:
-        one: Region
+        one: Region (Ehemalige)
         other: Regionen
       group/region_ehemaligenverein:
         one: Regionaler Ehemaligenverein
