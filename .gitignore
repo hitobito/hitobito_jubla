@@ -12,6 +12,8 @@ Gemfile.lock
 .sass-cache
 .project
 
+config/settings.local.yml
+
 # reports
 spec/reports
 spec/coverage
