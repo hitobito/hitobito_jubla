@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2017-2021, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2017-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
@@ -25,7 +25,10 @@ module Jubla::MailingLists::Subscribers
   end
 
   def excluded_by_contact_preference
-    Person.alumnus_only.where("contactable_by_#{layer_type}": false).select(:id)
+    preference_column = "contactable_by_#{layer_type}"
+    return Person.none unless Person.column_names.include?(preference_column)
+
+    Person.alumnus_only.where("#{preference_column}": false).select(:id)
   end
 
   def layer_type
