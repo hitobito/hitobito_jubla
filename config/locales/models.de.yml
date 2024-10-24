@@ -182,6 +182,69 @@ de:
         one: Kind
         other: Kinder
 
+      group/nejb: NEJB
+      group/nejb_bundesleitung: NEJB Bundesleitung
+      group/netzwerk_ehemalige_jungwacht_blauring: Netzwerk Ehemalige Jungwacht Blauring
+      group/nejb_kanton:
+        one: Kanton (Ehemalige)
+        other: Kantone
+      group/kanton_ehemaligenverein:
+        one: Kantonaler Ehemaligenverein
+        other: Kantonale Ehemaligenvereine
+      group/nejb_region:
+        one: Region (Ehemalige)
+        other: Regionen
+      group/region_ehemaligenverein:
+        one: Regionaler Ehemaligenverein
+        other: Regionale Ehemaligenvereine
+      group/nejb_schar:
+        one: Ehemaligenschar
+        other: Ehemaligenscharen
+
+      group/nejb/group_admin: Adressverwaltung
+      group/nejb/dispatch_address: Versandadresse
+      group/nejb/it_support: IT Support
+
+      group/nejb_bundesleitung/group_admin: Adressverwaltung
+
+      group/netzwerk_ehemalige_jungwacht_blauring/leader: Leitung
+      group/netzwerk_ehemalige_jungwacht_blauring/group_admin: Adressverwaltung
+      group/netzwerk_ehemalige_jungwacht_blauring/treasurer: Kassier*in
+      group/netzwerk_ehemalige_jungwacht_blauring/active_member: Aktivmitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/passive_member: Passivmitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/collective_member: Kollektivmitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/nejb_joiner: Neumitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/external: Extern
+      group/netzwerk_ehemalige_jungwacht_blauring/dispatch_address: Versandadresse
+
+      group/nejb_kanton/group_admin: Adressverwaltung
+
+      group/kanton_ehemaligenverein/leader: Leitung
+      group/kanton_ehemaligenverein/group_admin: Adressverwaltung
+      group/kanton_ehemaligenverein/treasurer: Kassier*in
+      group/kanton_ehemaligenverein/nejb_member: Mitglied Ehemalige
+      group/kanton_ehemaligenverein/nejb_joiner: Neumitglied
+      group/kanton_ehemaligenverein/external: Extern
+      group/kanton_ehemaligenverein/dispatch_address: Versandadresse
+
+      group/nejb_region/group_admin: Adressverwaltung
+
+      group/region_ehemaligenverein/leader: Leitung
+      group/region_ehemaligenverein/group_admin: Adressverwaltung
+      group/region_ehemaligenverein/treasurer: Kassier*in
+      group/region_ehemaligenverein/nejb_member: Mitglied Ehemalige
+      group/region_ehemaligenverein/nejb_joiner: Neumitglied
+      group/region_ehemaligenverein/external: Extern
+      group/region_ehemaligenverein/dispatch_address: Versandadresse
+
+      group/nejb_schar/leader: Leitung
+      group/nejb_schar/group_admin: Adressverwaltung
+      group/nejb_schar/treasurer: Kassier*in
+      group/nejb_schar/nejb_member: Mitglied Ehemalige
+      group/nejb_schar/nejb_joiner: Neumitglied
+      group/nejb_schar/external: Extern
+      group/nejb_schar/dispatch_address: Versandadresse
+
       jubla/role/external: Extern
       jubla/role/alumnus: Ehemalig
       jubla/role/coach: Coach

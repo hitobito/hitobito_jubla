@@ -30,5 +30,5 @@ class Group::Root < ::Group
 
   roles Admin
 
-  children Group::Federation
+  children Group::Federation, Group::Nejb
 end

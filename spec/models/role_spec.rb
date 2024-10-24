@@ -49,7 +49,7 @@ describe Role do
     subject { Role.all_types }
 
     it 'starts with top most role' do
-      expect(subject.first).to eq(Group::Federation::GroupAdmin)
+      expect(subject.first).to eq(Group::Root::Admin)
     end
 
     it 'finishes with bottom most role' do

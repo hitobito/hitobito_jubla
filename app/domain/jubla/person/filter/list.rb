@@ -19,8 +19,9 @@ module Jubla::Person::Filter::List
   def excluded_people_ids
     layer_type = group.layer_group.type.demodulize.underscore
 
-    return [] if layer_type == "root"
+    preference_column = "contactable_by_#{layer_type}"
+    return Person.none unless Person.column_names.include?(preference_column)
 
-    Person.alumnus_only.where("contactable_by_#{layer_type}": false).pluck(:id)
+    Person.alumnus_only.where("#{preference_column}": false).pluck(:id)
   end
 end
