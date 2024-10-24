@@ -56,5 +56,10 @@ namespace :nejb do
       Group.rebuild!(false)
       Group.archival_validation = true
     end
+
+    say_with_time "Regenerating ordering tables" do
+      require Rails.root.join("db", "seeds", "support", "order_table_seeder")
+      OrderTableSeeder.new.seed
+    end
   end
 end
