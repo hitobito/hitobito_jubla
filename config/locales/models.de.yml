@@ -207,17 +207,17 @@ de:
 
       group/nejb_bundesleitung/group_admin: Adressverwaltung
 
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/leader: Leitung
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/group_admin: Adressverwaltung
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/treasurer: Kassier*in
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/active_member: Aktivmitglied
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/passive_member: Passivmitglied
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/colletive_member: Kollektivmitglied
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/nejb_joiner: Neumitglied
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/external: Extern
-      group/nejb_netzwerk_ehemalige_jungwacht_blauring/dispatch_address: Versandadresse
+      group/netzwerk_ehemalige_jungwacht_blauring/leader: Leitung
+      group/netzwerk_ehemalige_jungwacht_blauring/group_admin: Adressverwaltung
+      group/netzwerk_ehemalige_jungwacht_blauring/treasurer: Kassier*in
+      group/netzwerk_ehemalige_jungwacht_blauring/active_member: Aktivmitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/passive_member: Passivmitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/collective_member: Kollektivmitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/nejb_joiner: Neumitglied
+      group/netzwerk_ehemalige_jungwacht_blauring/external: Extern
+      group/netzwerk_ehemalige_jungwacht_blauring/dispatch_address: Versandadresse
 
-      group/nejb_kanton/dispatch_address: Adressverwaltung
+      group/nejb_kanton/group_admin: Adressverwaltung
 
       group/kanton_ehemaligenverein/leader: Leitung
       group/kanton_ehemaligenverein/group_admin: Adressverwaltung
@@ -227,7 +227,7 @@ de:
       group/kanton_ehemaligenverein/external: Extern
       group/kanton_ehemaligenverein/dispatch_address: Versandadresse
 
-      group/nejb_region/dispatch_address: Adressverwaltung
+      group/nejb_region/group_admin: Adressverwaltung
 
       group/region_ehemaligenverein/leader: Leitung
       group/region_ehemaligenverein/group_admin: Adressverwaltung
