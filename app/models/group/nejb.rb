@@ -13,15 +13,15 @@ class Group::Nejb < ::Group
 
   ### ROLES
 
-  class GroupAdmin < ::Role
+  class GroupAdmin < ::NejbRole
     self.permissions = [:group_full]
   end
 
-  class DispatchAddress < ::Role
+  class DispatchAddress < ::NejbRole
     self.permissions = []
   end
 
-  class ITSupport < ::Role
+  class ITSupport < ::NejbRole
     self.permissions = [:admin, :impersonation]
   end
 

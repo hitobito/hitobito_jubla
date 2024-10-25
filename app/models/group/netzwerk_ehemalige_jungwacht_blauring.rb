@@ -8,39 +8,39 @@
 class Group::NetzwerkEhemaligeJungwachtBlauring < ::Group
   ### ROLES
 
-  class Leader < ::Role
+  class Leader < ::NejbRole
     self.permissions = [:group_and_below_full, :contact_data]
   end
 
-  class GroupAdmin < ::Role
+  class GroupAdmin < ::NejbRole
     self.permissions = [:group_and_below_full]
   end
 
-  class Treasurer < ::Role
+  class Treasurer < ::NejbRole
     self.permissions = [:group_and_below_read]
   end
 
-  class ActiveMember < ::Role
+  class ActiveMember < ::NejbRole
     self.permissions = [:group_read]
   end
 
-  class PassiveMember < ::Role
+  class PassiveMember < ::NejbRole
     self.permissions = [:group_read]
   end
 
-  class CollectiveMember < ::Role
+  class CollectiveMember < ::NejbRole
     self.permissions = [:group_read]
   end
 
-  class NejbJoiner < ::Role
+  class NejbJoiner < ::NejbRole
     self.permissions = []
   end
 
-  class External < ::Role
+  class External < ::NejbRole
     self.permissions = []
   end
 
-  class DispatchAddress < ::Role
+  class DispatchAddress < ::NejbRole
     self.permissions = []
   end
 

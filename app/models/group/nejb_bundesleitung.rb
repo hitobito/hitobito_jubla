@@ -6,7 +6,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class Group::NejbBundesleitung < ::Group
-  class GroupAdmin < ::Role
+  class GroupAdmin < ::NejbRole
     self.permissions = [:admin, :layer_and_below_full, :contact_data]
   end
 
