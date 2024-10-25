@@ -9,12 +9,6 @@ class Group::Root < ::Group
   self.layer = true
   self.event_types = []
 
-  class NullAlumnusManager
-    def create = true
-
-    def destroy = true
-  end
-
   class Admin < ::Role
     self.permissions = [:layer_and_below_full, :admin]
     self.two_factor_authentication_enforced = true
@@ -24,7 +18,7 @@ class Group::Root < ::Group
     end
 
     def alumnus_manager
-      @alumnus_manager ||= NullAlumnusManager.new
+      @alumnus_manager ||= Jubla::Role::NullAlumnusManager.new
     end
   end
 
