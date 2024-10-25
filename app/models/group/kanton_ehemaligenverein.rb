@@ -8,31 +8,31 @@
 class Group::KantonEhemaligenverein < ::Group
   ### ROLES
 
-  class Leader < ::Role
+  class Leader < ::NejbRole
     self.permissions = [:group_and_below_full, :contact_data]
   end
 
-  class GroupAdmin < ::Role
+  class GroupAdmin < ::NejbRole
     self.permissions = [:group_and_below_full]
   end
 
-  class Treasurer < ::Role
+  class Treasurer < ::NejbRole
     self.permissions = [:group_and_below_read]
   end
 
-  class NejbMember < ::Role
+  class NejbMember < ::NejbRole
     self.permissions = [:group_read]
   end
 
-  class NejbJoiner < ::Role
+  class NejbJoiner < ::NejbRole
     self.permissions = []
   end
 
-  class External < ::Role
+  class External < ::NejbRole
     self.permissions = []
   end
 
-  class DispatchAddress < ::Role
+  class DispatchAddress < ::NejbRole
     self.permissions = []
   end
 

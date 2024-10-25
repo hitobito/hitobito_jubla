@@ -5,10 +5,14 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class Group::NejbBundesleitung < ::Group
-  class GroupAdmin < ::NejbRole
-    self.permissions = [:admin, :layer_and_below_full, :contact_data]
+require "spec_helper"
+
+describe Jubla::Role::NullAlumnusManager do
+  it "has a create-method" do
+    expect(subject.create).to be_truthy
   end
 
-  roles GroupAdmin
+  it "has a destroy-method" do
+    expect(subject.destroy).to be_truthy
+  end
 end

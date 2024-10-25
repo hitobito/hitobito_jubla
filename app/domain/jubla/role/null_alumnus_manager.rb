@@ -5,10 +5,14 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class Group::NejbBundesleitung < ::Group
-  class GroupAdmin < ::NejbRole
-    self.permissions = [:admin, :layer_and_below_full, :contact_data]
-  end
+# Implementation of the NullObject-Pattern
+#
+# Mimics an AlumnusManager, but does nothing. Intended as a temporary drop-in
+# to gradually phase out the previous alumnus-logic
+module Jubla::Role
+  class NullAlumnusManager
+    def create = true
 
-  roles GroupAdmin
+    def destroy = true
+  end
 end

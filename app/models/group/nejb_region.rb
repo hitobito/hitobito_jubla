@@ -9,7 +9,7 @@ class Group::NejbRegion < ::Group
   children Group::RegionEhemaligenverein, Group::NejbSchar
   self.layer = true
 
-  class GroupAdmin < ::Role
+  class GroupAdmin < ::NejbRole
     self.permissions = [:admin, :layer_and_below_full, :contact_data]
   end
 
