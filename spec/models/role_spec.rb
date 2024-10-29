@@ -53,7 +53,7 @@ describe Role do
     end
 
     it 'finishes with bottom most role' do
-      expect(subject.last).to eq(Group::SimpleGroup::DispatchAddress)
+      expect(subject.last).to eq(Group::NejbSimpleGroup::DispatchAddress)
     end
   end
 
