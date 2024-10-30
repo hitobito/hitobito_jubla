@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class Group::RegionEhemaligenverein < ::Group
+class Group::RegionEhemaligenverein < NejbGroup
   ### ROLES
 
   class Leader < ::NejbRole
