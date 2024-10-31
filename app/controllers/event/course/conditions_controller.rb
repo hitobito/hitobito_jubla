@@ -7,7 +7,7 @@ class Event::Course::ConditionsController < SimpleCrudController
   self.nesting = Group
 
   self.permitted_attrs = [:content, :label]
-  self.sort_mappings = {content: "action_text_rich_texts.body"}
+  self.sort_mappings = {content: {joins: [:rich_text_content], order: ["action_text_rich_texts.body"]}}
 
   helper_method :group
 
