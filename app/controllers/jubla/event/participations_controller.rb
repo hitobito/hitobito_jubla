@@ -11,9 +11,14 @@ module Jubla::Event::ParticipationsController
   # when associations are included in participation_filter AR uses
   # the groups table name for the first included association (flocks)
   # and aliases the table name for the second association (states)
-  included do
+  prepended do
     sort_mappings_with_indifferent_access
       .merge!(originating_state: "originating_states_people.name NULLS LAST",
         originating_flock: "groups.name NULLS LAST")
+  end
+
+  def list_entries
+    super
+      .includes(person: [originating_flock: :translations, originating_state: :translations])
   end
 end

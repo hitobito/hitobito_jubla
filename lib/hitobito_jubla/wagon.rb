@@ -98,7 +98,7 @@ module HitobitoJubla
       Event::ApplicationMarketController.include Jubla::Event::ApplicationMarketController
       Event::QualificationsController.include Jubla::Event::QualificationsController
       Event::RegisterController.include Jubla::Event::RegisterController
-      Event::ParticipationsController.include Jubla::Event::ParticipationsController
+      Event::ParticipationsController.prepend Jubla::Event::ParticipationsController
 
       ### decorators
       Event::ParticipationDecorator.include Jubla::Event::ParticipationDecorator
