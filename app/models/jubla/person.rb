@@ -12,7 +12,6 @@ module Jubla::Person
 
     Person::SEARCHABLE_ATTRS << :name_mother << :name_father << :nationality << :profession << :bank_account <<
       :ahv_number_old << :insurance_company << :insurance_number
-    include PgSearchable
   end
 
   module ClassMethods
