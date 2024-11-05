@@ -41,24 +41,24 @@
 
 # Einfache Gruppe für Alumni, aber ohne Alumni-Magic, kann überall im NEJB-Baum angehängt werden.
 class Group::NejbSimpleGroup < NejbGroup
-  class Leader < Role
+  class Leader < NejbRole
     self.permissions = [:group_full]
   end
 
-  class Member < Role
+  class Member < NejbRole
     self.permissions = [:group_read]
   end
 
-  class GroupAdmin < Role
+  class GroupAdmin < NejbRole
   end
 
-  class External < Role
+  class External < NejbRole
     self.permissions = []
     self.visible_from_above = false
     self.kind = :external
   end
 
-  class DispatchAddress < Role
+  class DispatchAddress < NejbRole
   end
 
   roles Leader, Member, GroupAdmin, External, DispatchAddress
