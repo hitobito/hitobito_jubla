@@ -146,7 +146,7 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []
       * Kindergruppe
         * Leitung: [:group_full]
-        * Kind: [ ]
+        * Kind: []
         * Adressverwaltung: [:group_full]
         * Ehemalig: [:group_read]
         * Extern: []
