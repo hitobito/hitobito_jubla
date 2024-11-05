@@ -46,7 +46,7 @@ class Group::ChildGroup < Group
   end
 
   class Child < ::Role
-    self.permissions = [:group_read]
+    self.permissions = [ ]
     self.visible_from_above = false
   end
 
