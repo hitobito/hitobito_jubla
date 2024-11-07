@@ -5,7 +5,7 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-class Group::Root < ::Group
+class Group::Root < Group
   self.layer = true
   self.event_types = []
 

@@ -1,3 +1,8 @@
+#  Copyright (c) 2024, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla.
+
 # == Schema Information
 #
 # Table name: groups
@@ -34,36 +39,27 @@
 #  jubla_property_insurance    :boolean          default(FALSE), not null
 #
 
-#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
-#  hitobito_jubla and licensed under the Affero General Public License version 3
-#  or later. See the COPYING file at the top-level directory or at
-#  https://github.com/hitobito/hitobito_jubla.
-
-# Verbandsleitung
-class Group::OrganizationBoard < JublaGroup
-  class Leader < Jubla::Role::Leader
-    self.permissions = [:group_full, :contact_data]
+# Einfache Gruppe für Alumni, aber ohne Alumni-Magic, kann überall im NEJB-Baum angehängt werden.
+class Group::NejbSimpleGroup < NejbGroup
+  class Leader < NejbRole
+    self.permissions = [:group_full]
   end
 
-  class Treasurer < Jubla::Role::Treasurer
-    self.permissions = [:contact_data, :group_read, :finance]
+  class Member < NejbRole
+    self.permissions = [:group_read]
   end
 
-  class Member < Jubla::Role::Member
-    self.permissions = [:contact_data, :group_read]
+  class GroupAdmin < NejbRole
   end
 
-  class GroupAdmin < Jubla::Role::GroupAdmin
+  class External < NejbRole
+    self.permissions = []
+    self.visible_from_above = false
+    self.kind = :external
   end
 
-  class Alumnus < Jubla::Role::Alumnus
+  class DispatchAddress < NejbRole
   end
 
-  class External < Jubla::Role::External
-  end
-
-  class DispatchAddress < Jubla::Role::DispatchAddress
-  end
-
-  roles Leader, Treasurer, Member, GroupAdmin, Alumnus, External, DispatchAddress
+  roles Leader, Member, GroupAdmin, External, DispatchAddress
 end

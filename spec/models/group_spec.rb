@@ -73,8 +73,8 @@ describe Group do
       expect(subject.first).to eq(Group::Root)
     end
 
-    it "must have simple group as last item" do
-      expect(subject.last).to eq(Group::SimpleGroup)
+    it "must have NEJB simple group as last item" do
+      expect(subject.last).to eq(Group::NejbSimpleGroup)
     end
 
     context "#destroy" do

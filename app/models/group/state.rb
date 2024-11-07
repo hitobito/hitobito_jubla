@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2017, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -40,7 +40,7 @@
 #
 
 # Ebene Kanton
-class Group::State < Group
+class Group::State < JublaGroup
   self.layer = true
   self.default_children = [Group::StateAgency, Group::StateBoard, Group::StateAlumnusGroup]
   self.contact_group_type = Group::StateAgency

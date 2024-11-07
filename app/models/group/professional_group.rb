@@ -42,7 +42,7 @@
 #
 
 # Abstract professional group (Fachgruppe)
-class Group::ProfessionalGroup < Group
+class Group::ProfessionalGroup < JublaGroup
   class Leader < Jubla::Role::Leader
     self.permissions = [:group_full, :contact_data]
   end

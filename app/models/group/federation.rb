@@ -42,7 +42,7 @@
 #
 
 # Ebene Bund
-class Group::Federation < Group
+class Group::Federation < JublaGroup
   self.layer = true
   self.default_children = [Group::FederalBoard, Group::OrganizationBoard,
     Group::FederalAlumnusGroup]

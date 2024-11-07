@@ -31,9 +31,6 @@ module Jubla::Group
 
     has_many :course_conditions, class_name: "::Event::Course::Condition", dependent: :destroy
 
-    # define global children
-    children Group::SimpleGroup
-
     root_types Group::Root, Group::Federation, Group::Nejb
 
     private
