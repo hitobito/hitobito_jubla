@@ -199,8 +199,8 @@ de:
         one: Regionaler Ehemaligenverein
         other: Regionale Ehemaligenvereine
       group/nejb_schar:
-        one: Ehemaligenschar
-        other: Ehemaligenscharen
+        one: Ehemaligenverein (Schar)
+        other: Ehemaligenvereine
 
       group/nejb/group_admin: Adressverwaltung
       group/nejb/dispatch_address: Versandadresse
