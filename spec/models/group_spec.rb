@@ -99,11 +99,11 @@ describe Group do
         group = Group::Region.all.first
         group.children.delete_all
         alumnus_group = Group::RegionalAlumnusGroup.create(name: "test_group", parent_id: group.id)
-        Role.create(group: alumnus_group)
+        Group::RegionalAlumnusGroup::Member.create!(group: alumnus_group, person: Fabricate(:person))
 
-        expect(Role.with_deleted.where.not(group_id: Group.with_deleted.select(:id)).count).to be 0
+        expect(Role.with_inactive.where.not(group_id: Group.with_deleted.select(:id)).count).to be 0
 
-        expect { group.destroy }.not_to change { Role.with_deleted.where.not(group_id: Group.with_deleted.select(:id)).count }
+        expect { group.destroy }.not_to change { Role.with_inactive.where.not(group_id: Group.with_deleted.select(:id)).count }
       end
     end
   end

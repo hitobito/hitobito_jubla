@@ -76,7 +76,7 @@ class MemberCounter
     Person.joins(:roles)
       .where(roles: {group_id: flock.self_and_descendants,
                      type: self.class.counted_roles,
-                     deleted_at: nil})
+                     end_on: [nil, ..Time.zone.today]})
       .distinct
   end
 
