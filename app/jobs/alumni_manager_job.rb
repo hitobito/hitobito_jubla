@@ -17,7 +17,7 @@ class AlumniManagerJob < RecurringJob
 
   def create_missing
     alumni = Person.joins(:roles).merge(Role.alumnus_members).distinct
-    inactive = Role.inactive.where(type: APPLICABLE_ROLE_TYPES)
+    inactive = Role.ended_or_archived.where(type: APPLICABLE_ROLE_TYPES)
     inactive.where.not(person_id: alumni).find_each do |role|
       Jubla::Role::AlumnusManager.new(role).create
     end
