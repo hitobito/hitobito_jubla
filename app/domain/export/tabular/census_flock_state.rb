@@ -4,7 +4,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 module Export::Tabular
-  class CensusFlock < Export::Tabular::Base
+  class CensusFlockState < Export::Tabular::Base
     class Row < Export::Tabular::Row
       def value_for(attr)
         entry.fetch(attr)
@@ -40,37 +40,19 @@ module Export::Tabular
     end
 
     def query_member_counts
-      ::MemberCount.totals(@year, {flock_id: nil})
+      ::MemberCount.totals(@year, {flock_id: ::MemberCount.distinct.pluck(:flock_id)}).group(:flock_id)
     end
 
     def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
-      {state: (flock.parent.parent.type == "Group::State") ? flock.parent.parent.name : flock.parent.name,
-       region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
+      {region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
        name: flock.name,
-       contact_first_name: flock.contact&.first_name,
-       contact_last_name: flock.contact&.last_name,
-       address: flock.address,
-       zip_code: flock.zip_code,
-       town: flock.town,
-       jubla_property_insurance: flock.jubla_property_insurance,
-       jubla_liability_insurance: flock.jubla_liability_insurance,
-       jubla_full_coverage: flock.jubla_full_coverage,
        leader_count: member_count.leader,
        child_count: member_count.child}
     end
 
     def build_attribute_labels # rubocop:disable Metrics/MethodLength
-      {state: "Kanton",
-       region: "Region",
+      {region: "Region",
        name: "Schar",
-       contact_first_name: "Kontakt Vorname",
-       contact_last_name: "Kontakt Nachname",
-       address: human_attribute(:address),
-       zip_code: human_attribute(:zip_code),
-       town: human_attribute(:town),
-       jubla_property_insurance: human_attribute(:jubla_property_insurance),
-       jubla_liability_insurance: human_attribute(:jubla_liability_insurance),
-       jubla_full_coverage: human_attribute(:jubla_full_coverage),
        leader_count: "Leitende",
        child_count: "Kinder"}
     end

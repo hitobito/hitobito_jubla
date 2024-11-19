@@ -4,6 +4,11 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 de:
+  census_evaluation/federation:
+    export_enqueued: "Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen."
+  census_evaluation/state:
+    export_enqueued: "Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen."
+
   event:
     camps:
       nav_left_camps:

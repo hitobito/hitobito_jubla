@@ -72,4 +72,14 @@ describe CensusEvaluation::StateController do
     end
   end
 
+  context "background job" do
+    it "exports csv" do
+      expect do
+        get :index, params: { id: be.id, format: :csv }
+        expect(flash[:notice]).to match(/Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen./)
+        expect(response).to redirect_to(returning: true)
+      end.to change(Delayed::Job, :count).by(1)
+    end
+  end
+
 end

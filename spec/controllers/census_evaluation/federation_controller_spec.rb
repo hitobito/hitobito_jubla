@@ -63,6 +63,17 @@ describe CensusEvaluation::FederationController do
     it 'assigns year' do
       expect(assigns(:year)).to eq(Census.last.year)
     end
+
   end
 
+  context "background job" do
+    it "exports csv" do
+
+      expect do
+        get :index, params: { id: ch.id, format: :csv }
+        expect(flash[:notice]).to match(/Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen./)
+        expect(response).to redirect_to(returning: true)
+      end.to change(Delayed::Job, :count).by(1)
+    end
+  end
 end

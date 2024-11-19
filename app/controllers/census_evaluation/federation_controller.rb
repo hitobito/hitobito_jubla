@@ -4,6 +4,8 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusEvaluation::FederationController < CensusEvaluation::BaseController
+  include AsyncDownload
+
   self.sub_group_type = Group::State
 
   def index
@@ -15,12 +17,22 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
       end
       format.csv do
         authorize!(:create, Census)
-        send_data Export::Tabular::CensusFlock.csv(year), type: :csv
+
+        render_tabular_in_background(:csv, params[:type])
       end
     end
   end
 
   private
+
+  def render_tabular_in_background(format, type = nil, name = :census_flock_export)
+    with_async_download_cookie(format, name) do |filename|
+      Export::CensusFlockExportJob.new(format,
+        current_person.id,
+        year,
+        {type: type, filename: filename}).enqueue!
+    end
+  end
 
   def flock_confirmation_ratios
     @sub_groups.each_with_object({}) do |state, hash|
