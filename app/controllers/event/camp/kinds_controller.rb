@@ -6,12 +6,6 @@
 class Event::Camp::KindsController < SimpleCrudController
   self.permitted_attrs = [:label]
 
-  private
-
-  def list_entries
-    super.list
-  end
-
   class << self
     def model_class
       Event::Camp::Kind
