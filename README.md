@@ -197,8 +197,8 @@ Additional features include member census, camps and course conditions.
         * Neumitglied: []
         * Extern: []
         * Versandadresse: []
-    * Ehemaligenschar
-      * Ehemaligenschar
+    * Ehemaligenverein (Schar)
+      * Ehemaligenverein (Schar)
         * Leitung: [:group_and_below_full, :contact_data]
         * Adressverwaltung: [:group_and_below_full]
         * Kassier*in: [:group_and_below_read]
@@ -214,6 +214,13 @@ Additional features include member census, camps and course conditions.
         * Ehemalig: [:group_read]
         * Extern: []
         * Versandadresse: []
+      * Einfache Gruppe (Ehemalige)
+        * Leitung: [:group_full]
+        * Mitglied Ehemalige: [:group_read]
+        * Adressverwaltung: []
+        * Extern: []
+        * Versandadresse: []
+        * Neumitglied: []
 
 (Output of rake app:hitobito:roles)
 <!-- roles:end -->
