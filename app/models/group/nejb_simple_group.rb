@@ -58,8 +58,12 @@ class Group::NejbSimpleGroup < NejbGroup
     self.kind = :external
   end
 
+  class NewJoiner < NejbRole
+    self.permissions = []
+  end
+
   class DispatchAddress < NejbRole
   end
 
-  roles Leader, Member, GroupAdmin, External, DispatchAddress
+  roles Leader, Member, GroupAdmin, External, DispatchAddress, NewJoiner
 end
