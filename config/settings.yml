@@ -82,5 +82,5 @@ groups:
 
 event:
   participations:
-    delete_answers_after_months: 60
-    delete_additional_information_after_months: 60
+    delete_answers_after_months: 13
+    delete_additional_information_after_months: 13
