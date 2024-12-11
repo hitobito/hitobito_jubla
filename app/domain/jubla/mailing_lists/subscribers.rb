@@ -26,7 +26,7 @@ module Jubla::MailingLists::Subscribers
 
   def excluded_by_contact_preference
     preference_column = "contactable_by_#{layer_type}"
-    return Person.select(:id).none unless Person.column_names.include?(preference_column)
+    return Person.none.select(:id) unless Person.column_names.include?(preference_column)
 
     Person.alumnus_only.where("#{preference_column}": false).select(:id)
   end
