@@ -3,6 +3,7 @@
 ## unreleased
 
 * Filter nach für ausgetretene Personen von "Ehemalige" zu "Austritte" umbenannt (hitobito_jubla#159)
+* Benachrichtigungen an neue Ehemalige werden nur noch auf Scharebene verschickt. (hitobito_jubla#166)
 
 ## Version 2.2
 
