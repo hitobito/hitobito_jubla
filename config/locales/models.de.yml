@@ -375,8 +375,8 @@ de:
               alumnus_below_full: Lesen und Schreiben auf dieser Gruppe und allen darunter liegenden Alumnus Gruppen.
           kind:
             alumnus:
-              one: Ehemalig
-              other: Ehemalige
+              one: Austritt
+              other: Austritte
 
       census:
         year: Jahr
