@@ -72,7 +72,7 @@ module Jubla::Group
   end
 
   def create_alumni_filter
-    people_filters.create!(name: "Ehemalige",
+    people_filters.create!(name: "Austritte",
       group_id: id,
       range: :group,
       filter_chain: alumni_filter_chain)

@@ -140,7 +140,7 @@ describe Group do
     it "creating non alumnus group creats alumnus filter" do
       expect do
         board = Group::FederalBoard.create(name: "board", parent_id: group.id)
-        filter = board.people_filters.find_by(name: "Ehemalige")
+        filter = board.people_filters.find_by(name: "Austritte")
         expect(filter.filter_chain).to be_present
       end.to change { PeopleFilter.count }.by(1)
     end
