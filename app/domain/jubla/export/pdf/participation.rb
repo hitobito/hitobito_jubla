@@ -23,6 +23,7 @@ module Jubla::Export::Pdf
           super
           labeled_attr(person, :originating_flock)
           labeled_attr(person, :originating_state)
+          render_people_managers
         end
 
         def person_attributes
@@ -32,6 +33,18 @@ module Jubla::Export::Pdf
         def address_details
           zip_code, town = super
           [zip_code, [town, person.canton].compact_blank.join(", ")]
+        end
+
+        def render_people_managers
+          return unless person.people_managers.any?
+
+          with_settings(font_size: 7) do
+            move_down_line
+            text PeopleManager.model_name.human(count: person.people_managers.count), style: :bold
+            person.people_managers&.each do |manager|
+              text "#{manager.manager}: #{[manager.email, manager.phone_number&.number].compact_blank.join(", ")}"
+            end
+          end
         end
       end
 
