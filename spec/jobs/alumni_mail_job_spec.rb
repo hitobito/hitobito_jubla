@@ -27,12 +27,15 @@ describe AlumniMailJob do
       expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
 
-    it 'sends email if there are only Alumnus::Member roles left' do
+    it 'sends email if the group is not a flock' do
       group = groups(:city)
       person = Fabricate(Group::RegionalAlumnusGroup::Member.sti_name.to_sym, group: group.alumnus_group).person
 
-      expect(AlumniMailer).to receive(:new_member).with(person).and_call_original
-      expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
+      expect(group).not_to be_a(Group::Flock)
+
+      expect(AlumniMailer).not_to receive(:new_member).with(person).and_call_original
+      expect(AlumniMailer).not_to receive(:new_member_flock).and_call_original
+      expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(0)
     end
 
     it 'does not send flock email if there are other roles in the current flock-layer left' do

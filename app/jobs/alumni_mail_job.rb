@@ -13,12 +13,9 @@ class AlumniMailJob < BaseJob
 
   def perform
     return if no_more_active_roles?
+    return unless group.is_a?(Group::Flock)
 
-    if group.is_a?(Group::Flock)
-      AlumniMailer.new_member_flock(person).deliver_now
-    else
-      AlumniMailer.new_member(person).deliver_now
-    end
+    AlumniMailer.new_member_flock(person).deliver_now
   end
 
   private
