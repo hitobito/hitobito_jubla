@@ -7,10 +7,6 @@
 
 class NejbRole < Role
   module AlumnusFreeRole
-    def skip_alumnus_callback
-      true
-    end
-
     def alumnus_manager
       @alumnus_manager ||= Jubla::Role::NullAlumnusManager.new
     end

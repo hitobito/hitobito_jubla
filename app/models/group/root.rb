@@ -13,10 +13,6 @@ class Group::Root < Group
     self.permissions = [:layer_and_below_full, :admin]
     self.two_factor_authentication_enforced = true
 
-    def skip_alumnus_callback
-      true
-    end
-
     def alumnus_manager
       @alumnus_manager ||= Jubla::Role::NullAlumnusManager.new
     end

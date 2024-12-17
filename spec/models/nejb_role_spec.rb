@@ -14,10 +14,6 @@ describe NejbRole do
     expect(subject).to be_a Jubla::Role
   end
 
-  it "disables the alumnus-callback" do
-    expect(subject.skip_alumnus_callback).to be_truthy
-  end
-
   it "uses the NullAlumnusManager" do
     expect(subject.alumnus_manager).to be_a Jubla::Role::NullAlumnusManager
   end
