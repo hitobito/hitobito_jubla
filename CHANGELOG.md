@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## unreleased
+
+* Filter nach für ausgetretene Personen von "Ehemalige" zu "Austritte" umbenannt (hitobito_jubla#159)
+
 ## Version 2.2
 
 * Unnötige Rechte der Fachgruppenmitglieder entfernt (hitobito_jubla#89)
