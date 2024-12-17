@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2021, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -143,8 +143,10 @@ module Jubla::Role
   end
 
   def alumnus_manager
-    @alumnus_manager ||= Jubla::Role::AlumnusManager.new(
-      self, skip_alumnus_callback: skip_alumnus_callback
-    )
+    @alumnus_manager ||= if %w[Flock ChildGroup FlockAlumnusGroup].include? type.split("::", 3)[1]
+      Jubla::Role::AlumnusManager.new(self, skip_alumnus_callback: skip_alumnus_callback)
+    else
+      Jubla::Role::LightAlumnusManager.new(self)
+    end
   end
 end
