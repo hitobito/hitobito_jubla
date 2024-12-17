@@ -19,6 +19,8 @@ module Export::Tabular
       super(build_items)
     end
 
+    public :list
+
     private
 
     def build_items
