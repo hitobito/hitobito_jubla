@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2021, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2021-2024, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -55,7 +55,7 @@ module Jubla::Role
       person
         .roles
         .joins(:group)
-        .where(group: group, type: group.alumnus_class.name)
+        .where(group: group, type: group.alumnus_class.sti_name)
         .destroy_all
     end
 
