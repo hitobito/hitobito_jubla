@@ -116,4 +116,49 @@ namespace :nejb do
       end
     end
   end
+
+  namespace :other_alumnus_groups do
+    desc "Remove Members of automatically generated Ehemalige-Groups"
+    task remove_members: [:abort_if_deactivated, :prepare, :environment] do
+      group_name = "Ehemalige"
+      group_types = %w[
+        Group::FederalAlumnusGroup
+        Group::StateAlumnusGroup
+        Group::RegionalAlumnusGroup
+      ]
+
+      group_scope = Group.where(name: group_name, type: group_types).without_deleted.without_archived
+
+      role_types = group_types.map { |group_type| "#{group_type}::Member" }
+      role_scope = Role.where(group: group_scope, type: role_types)
+
+      say "Trying to end #{role_scope.count} roles..."
+      next if role_scope.count.zero? # next means "end this rake-task" here...
+
+      @errors = []
+
+      say_with_time "Removing Members from other #{group_name}-groups" do
+        role_scope.in_batches.each_record do |role|
+          result = if role.active_roles_in_layer
+            role.vanilla_destroy
+          else
+            role.destroy
+          end
+
+          if result
+            print "."
+          else
+            print "F"
+            @errors << role
+          end
+        end
+        puts
+      end
+
+      if @errors.present?
+        puts "There were errors while trying to destroy these roles:"
+        puts @errors.map { |role| [role.id, role.person, "(#{role.person_id})", role, role.group_id].join(" ") }
+      end
+    end
+  end
 end
