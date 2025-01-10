@@ -199,9 +199,9 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []
     * Ehemaligenverein (Schar)
       * Ehemaligenverein (Schar)
-        * Leitung: [:group_and_below_full, :contact_data]
-        * Adressverwaltung: [:group_and_below_full]
-        * Kassier*in: [:group_and_below_read]
+        * Leitung: [:layer_and_below_full, :contact_data]
+        * Adressverwaltung: [:layer_and_below_full]
+        * Kassier*in: [:layer_and_below_read]
         * Mitglied Ehemalige: [:group_read]
         * Neumitglied: []
         * Extern: []
