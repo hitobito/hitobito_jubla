@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2025, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -37,6 +37,10 @@ module Jubla::Role
 
     def without_alumnus
       where.not("roles.type ~ ?", "AlumnusGroup::Member|::Alumnus")
+    end
+
+    def without_alumnus_members
+      where.not("roles.type LIKE '%::Alumnus'")
     end
 
     def roles_in_layer(person_id, layer_group_id)

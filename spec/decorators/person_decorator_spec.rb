@@ -1,3 +1,10 @@
+# frozen_string_literal: true
+
+#  Copyright (c) 2018-2025, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla.
+
 require "spec_helper"
 
 describe PersonDecorator do
@@ -17,10 +24,10 @@ describe PersonDecorator do
     expect(person.decorate.inactive_roles_grouped).to be_empty
   end
 
-  it "alumnus group member role is considered as nothing" do
+  it "alumnus group member role is considered active" do
     role.delete
     Fabricate(Group::FlockAlumnusGroup::Member.sti_name, group: alumni, person: person)
-    expect(person.decorate.active_roles_grouped).not_to have_key(alumni)
+    expect(person.decorate.active_roles_grouped).to have_key(alumni)
     expect(person.decorate.inactive_roles_grouped).not_to have_key(alumni)
   end
 
