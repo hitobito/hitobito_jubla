@@ -14,7 +14,7 @@ Additional features include member census, camps and course conditions.
     * Bund
       * Bund
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
         * IT Support: [:impersonation]
@@ -22,7 +22,7 @@ Additional features include member census, camps and course conditions.
         * Mitglied: [:admin, :layer_and_below_full, :contact_data]
         * Präses: [:admin, :layer_and_below_full, :contact_data]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Verbandsleitung
@@ -30,21 +30,21 @@ Additional features include member census, camps and course conditions.
         * Kassier/in: [:contact_data, :group_read, :finance]
         * Mitglied: [:contact_data, :group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Fachgruppe
         * Leitung: [:group_full, :contact_data]
         * Mitglied: [:group_read, :contact_data]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Arbeitsgruppe
         * Leitung: [:group_full, :contact_data]
         * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Ehemalige
@@ -58,13 +58,13 @@ Additional features include member census, camps and course conditions.
       * Kanton
         * Coach: [:contact_data, :group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Arbeitsstelle
         * Leitung: [:layer_and_below_full, :contact_data]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Kantonsleitung
@@ -73,21 +73,21 @@ Additional features include member census, camps and course conditions.
         * Stellenbegleitung: [:layer_and_below_read]
         * Präses: [:group_read, :contact_data]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Fachgruppe
         * Leitung: [:group_full, :contact_data]
         * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Arbeitsgruppe
         * Leitung: [:group_full, :contact_data]
         * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Ehemalige
@@ -101,7 +101,7 @@ Additional features include member census, camps and course conditions.
       * Region
         * Coach: [:contact_data, :group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Regionalleitung
@@ -109,21 +109,21 @@ Additional features include member census, camps and course conditions.
         * Mitglied: [:layer_and_below_read, :contact_data]
         * Präses: [:layer_and_below_read, :contact_data]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Fachgruppe
         * Leitung: [:group_full, :contact_data]
         * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Arbeitsgruppe
         * Leitung: [:group_full, :contact_data]
         * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Ehemalige
@@ -141,14 +141,14 @@ Additional features include member census, camps and course conditions.
         * Kassier/in: [:layer_and_below_read, :contact_data]
         * Leiter/in: [:layer_and_below_read]
         * Adressverwaltung: [:layer_and_below_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Kindergruppe
         * Leitung: [:group_full]
         * Kind: []
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Ehemalige
@@ -199,9 +199,9 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []
     * Ehemaligenverein (Schar)
       * Ehemaligenverein (Schar)
-        * Leitung: [:group_and_below_full, :contact_data]
-        * Adressverwaltung: [:group_and_below_full]
-        * Kassier*in: [:group_and_below_read]
+        * Leitung: [:layer_and_below_full, :contact_data]
+        * Adressverwaltung: [:layer_and_below_full]
+        * Kassier*in: [:layer_and_below_read]
         * Mitglied Ehemalige: [:group_read]
         * Neumitglied: []
         * Extern: []
@@ -211,13 +211,13 @@ Additional features include member census, camps and course conditions.
         * Leitung: [:group_full]
         * Mitglied: [:group_read]
         * Adressverwaltung: [:group_full]
-        * Ehemalig: [:group_read]
+        * Austritt: [:group_read]
         * Extern: []
         * Versandadresse: []
       * Einfache Gruppe (Ehemalige)
         * Leitung: [:group_full]
         * Mitglied Ehemalige: [:group_read]
-        * Adressverwaltung: []
+        * Adressverwaltung: [:group_full]
         * Extern: []
         * Versandadresse: []
         * Neumitglied: []
