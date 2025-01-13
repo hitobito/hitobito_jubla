@@ -11,15 +11,15 @@ class Group::NejbSchar < NejbGroup
   ### ROLES
 
   class Leader < ::NejbRole
-    self.permissions = [:layer_and_below_full, :contact_data]
+    self.permissions = [:layer_full, :contact_data]
   end
 
   class GroupAdmin < ::NejbRole
-    self.permissions = [:layer_and_below_full]
+    self.permissions = [:layer_full]
   end
 
   class Treasurer < ::NejbRole
-    self.permissions = [:layer_and_below_read]
+    self.permissions = [:layer_read]
   end
 
   class NejbMember < ::NejbRole
