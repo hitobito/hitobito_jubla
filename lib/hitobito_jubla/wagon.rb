@@ -79,7 +79,7 @@ module HitobitoJubla
         AlumniManagerJob
       ]
 
-      MailingLists::Subscribers.include Jubla::MailingLists::Subscribers
+      MailingLists::Subscribers.prepend Jubla::MailingLists::Subscribers
       Person::Filter::List.include Jubla::Person::Filter::List
 
       Import::PersonImporter.include Jubla::Import::PersonImporter

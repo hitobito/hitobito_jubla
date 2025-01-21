@@ -8,21 +8,11 @@
 module Jubla::MailingLists::Subscribers
   extend ActiveSupport::Concern
 
-  included do
-    alias_method_chain :excluded_subscriber_ids, :preferences
+  def people_as_configured
+    super.where.not(id: excluded_by_contact_preference.select(:id))
   end
 
   private
-
-  def excluded_subscriber_ids_with_preferences
-    SqlString.new(<<-SQL)
-      (
-        #{excluded_subscriber_ids_without_preferences.to_sql}
-        UNION
-        #{excluded_by_contact_preference.to_sql}
-      )
-    SQL
-  end
 
   def excluded_by_contact_preference
     preference_column = "contactable_by_#{layer_type}"
@@ -33,11 +23,5 @@ module Jubla::MailingLists::Subscribers
 
   def layer_type
     @list.group.layer_group.type.demodulize.underscore
-  end
-
-  SqlString = Struct.new(:sql) do
-    def to_sql
-      sql
-    end
   end
 end
