@@ -114,6 +114,11 @@ module HitobitoJubla
       ### helpers
       EventParticipationsHelper.prepend Jubla::EventParticipationsHelper
 
+      ### wizards
+      Wizards::RegisterNewUserWizard.prepend Jubla::Wizards::RegisterNewUserWizard
+      Wizards::Steps::NewUserForm.prepend Jubla::Wizards::Steps::NewUserForm
+      Wizards::Steps::NewUserForm.support_company = false
+
       # add more active_for urls to main navigation
       admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
       admin[:active_for] << "event_camp_kinds"

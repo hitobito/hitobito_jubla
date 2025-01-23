@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## unreleased
+
+* Selbstregistrierungsformular angepasst und um weitere Felder erweitert (hitobito_jubla#79)
+
 ## Version 2.4
 
 * Filter nach für ausgetretene Personen von "Ehemalige" zu "Austritte" umbenannt (hitobito_jubla#159)
