@@ -4,6 +4,12 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 de:
+  global:
+    phone_placeholder: +41 77 123 45 67
+  activemodel:
+    attributes:
+      wizards/steps/new_user_form:
+        phone_number: Telefon (Privat)
   census_evaluation/federation:
     export_enqueued: "Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen."
   census_evaluation/state:
