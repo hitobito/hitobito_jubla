@@ -8,6 +8,10 @@
 module Jubla::MailingLists::Subscribers
   extend ActiveSupport::Concern
 
+  def subscribed?(person)
+    super && excluded_by_contact_preference.where(id: person.id).empty?
+  end
+
   def people_as_configured
     super.where.not(id: excluded_by_contact_preference.select(:id))
   end
