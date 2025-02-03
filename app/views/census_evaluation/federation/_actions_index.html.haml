@@ -6,5 +6,5 @@
 - if can?(:create, Census.new)
   = action_button('Neue Bestandesmeldungen einfordern', new_census_path, :bullhorn)
   = action_button('Export CSV Versicherungen', params.merge(format: :csv, type: 'versicherung'), :download)
-- if can?(:create, Census.new) || can?(:evaluate_census, @group)
+- if can?(:create, Census.new) || can?(:export_census, @group)
   = action_button('Export CSV Kantone', params.merge(format: :csv, type: 'federation'), :download)
