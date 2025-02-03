@@ -39,7 +39,7 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
       Export::CensusFlockExportJob.new(format,
         current_person.id,
         year,
-        {type: type, filename: filename}).enqueue!
+        {type: type, group_id: group.id, filename: filename}).enqueue!
     end
   end
 
