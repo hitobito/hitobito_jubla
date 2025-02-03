@@ -27,7 +27,9 @@ module Export::Tabular
     end
 
     def query_flocks
-      Group::Flock.includes(:contact).order("groups.name")
+      Group.find(@state_id).layer_group.descendants
+        .where(type: Group::Flock.sti_name)
+        .includes(:contact).order("groups.name")
     end
 
     def query_member_counts
