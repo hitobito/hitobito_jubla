@@ -25,7 +25,7 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
     respond_to do |format|
       format.html { super }
       format.csv do
-        authorize!(:create, Census)
+        authorize!(:export_census, group)
 
         render_tabular_in_background(:csv, "state")
       end

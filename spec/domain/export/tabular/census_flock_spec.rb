@@ -9,7 +9,8 @@ require 'spec_helper'
 
 describe Export::Tabular::CensusFlock do
 
-  let(:census_flock) { Export::Tabular::CensusFlock.new(2012) }
+  let(:census_flock) { Export::Tabular::CensusFlock.new(entries) }
+  let(:entries) { Export::Tabular::CensusFlockList.new(2012).entries }
   describe '.headers' do
     subject { census_flock }
 

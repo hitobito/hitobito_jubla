@@ -16,7 +16,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
         @flocks = flock_confirmation_ratios if evaluation.current_census_year?
       end
       format.csv do
-        authorize!(:create, Census)
+        authorize!(:export_census, group)
 
         render_tabular_in_background(:csv, params[:type])
       end
