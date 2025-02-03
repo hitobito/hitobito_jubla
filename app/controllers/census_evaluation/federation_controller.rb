@@ -25,7 +25,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
 
   private
 
-  def render_tabular_in_background(format, type = nil, name = :census_flock_export)
+  def render_tabular_in_background(format, type = nil, name = :census_federation_export)
     with_async_download_cookie(format, name) do |filename|
       Export::CensusFlockExportJob.new(format,
         current_person.id,
