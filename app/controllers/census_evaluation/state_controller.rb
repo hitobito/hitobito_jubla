@@ -22,13 +22,11 @@ class CensusEvaluation::StateController < CensusEvaluation::BaseController
   end
 
   def index
-    authorize!(:create, Census)
-
     respond_to do |format|
-      format.html do
-        super
-      end
+      format.html { super }
       format.csv do
+        authorize!(:create, Census)
+
         render_tabular_in_background(:csv, "state")
       end
     end
