@@ -9,6 +9,7 @@ module Jubla::GroupAbility
   included do
     on(Group) do
       permission(:any).may(:evaluate_census).if_member
+      permission(:layer_and_below_read).may(:export_census).in_same_layer_or_below
 
       permission(:layer_and_below_full)
         .may(:index_event_course_conditions)

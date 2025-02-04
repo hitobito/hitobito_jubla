@@ -12,11 +12,9 @@ describe CensusEvaluation::FederationController do
   let(:ch)   { groups(:ch) }
   let(:be)   { groups(:be) }
   let(:no)   { groups(:no) }
-  let(:zh)   { Fabricate(Group::State.name, name: 'Zurich', parent: ch) }
+  let!(:zh)  { Fabricate(Group::State.name, name: 'Zurich', parent: ch) }
 
   before do
-    zh # create
-
     sign_in(people(:top_leader))
   end
 
@@ -68,7 +66,6 @@ describe CensusEvaluation::FederationController do
 
   context "background job" do
     it "exports csv" do
-
       expect do
         get :index, params: { id: ch.id, format: :csv }
         expect(flash[:notice]).to match(/Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen./)
