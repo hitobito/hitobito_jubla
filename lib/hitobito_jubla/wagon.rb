@@ -99,6 +99,7 @@ module HitobitoJubla
 
       GroupsController.include Jubla::GroupsController
       EventsController.include Jubla::EventsController
+      Group::PersonAddRequestsController.prepend Jubla::Group::PersonAddRequestsController
       Event::ApplicationMarketController.include Jubla::Event::ApplicationMarketController
       Event::QualificationsController.include Jubla::Event::QualificationsController
       Event::RegisterController.include Jubla::Event::RegisterController

@@ -85,4 +85,10 @@ module Jubla::Group
       role_types: self.class.roles.collect(&:sti_name)
     }}
   end
+
+  def require_person_add_requests
+    true
+  end
+
+  alias_method :require_person_add_requests?, :require_person_add_requests
 end
