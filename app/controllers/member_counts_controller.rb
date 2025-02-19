@@ -31,7 +31,7 @@ class MemberCountsController < ApplicationController
     counts = member_counts.update(
       params[:member_count].keys,
       params[:member_count].values.collect do |attrs|
-        ActionController::Parameters.new(attrs).permit(:leader_f, :leader_m, :child_f, :child_m)
+        ActionController::Parameters.new(attrs.to_unsafe_h).permit(:leader_f, :leader_m, :child_f, :child_m)
       end
     )
     with_errors = counts.select { |c| c.errors.present? }
