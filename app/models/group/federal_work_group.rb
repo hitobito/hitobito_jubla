@@ -58,5 +58,11 @@ class Group::FederalWorkGroup < Group::WorkGroup
   class DispatchAddress < Jubla::Role::DispatchAddress
   end
 
-  roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress
+  class Treasurer < Jubla::Role::Treasurer
+    self.two_factor_authentication_enforced = true
+
+    self.permissions = [:layer_and_below_read, :finance, :contact_data]
+  end
+
+  roles Leader, Member, GroupAdmin, Alumnus, External, DispatchAddress, Treasurer
 end
