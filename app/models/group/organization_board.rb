@@ -46,6 +46,8 @@ class Group::OrganizationBoard < JublaGroup
   end
 
   class Treasurer < Jubla::Role::Treasurer
+    self.two_factor_authentication_enforced = true
+
     self.permissions = [:contact_data, :group_read, :finance]
   end
 
