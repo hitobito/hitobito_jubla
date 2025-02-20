@@ -9,8 +9,11 @@ module Alumni
   EXCLUDED_ROLE_TYPES = [
     Jubla::Role::External,
     Jubla::Role::DispatchAddress,
-    Jubla::Role::Alumnus
+    Jubla::Role::Alumnus,
+    NejbRole
   ].freeze
 
-  APPLICABLE_ROLE_TYPES = (::Role.all_types - EXCLUDED_ROLE_TYPES)
+  APPLICABLE_ROLE_TYPES = ::Role.all_types.reject do |role|
+    Alumni::EXCLUDED_ROLE_TYPES.select { |excluded| role < excluded }.any?
+  end
 end
