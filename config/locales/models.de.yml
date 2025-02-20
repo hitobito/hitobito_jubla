@@ -68,6 +68,10 @@ de:
         one: Präses
         other: Präses
         long: Bundesleitung Präses
+      group/federal_board/treasurer:
+        one: Kassier*in
+        other: Kassier*innen
+        long: Bundesleitung Kassier*in
 
       group/federal_professional_group/leader:
         one: Leitung
@@ -77,6 +81,10 @@ de:
         one: Mitglied
         other: Mitglieder
         long: Bund FG Mitglied
+      group/federal_professional_group/treasurer:
+        one: Kassier*in
+        other: Kassier*innen
+        long: Bund FG Kassier*in
 
       group/federal_work_group/leader:
         one: Leitung
@@ -86,6 +94,10 @@ de:
         one: Mitglied
         other: Mitglieder
         long: Bund AG Mitglied
+      group/work_group/treasurer:
+        one: Kassier*in
+        other: Kassier*innen
+        long: Bund AG Kassier*in
 
       group/state_board/leader:
         one: Leitung
@@ -116,7 +128,7 @@ de:
       group/state_professional_group/member:
         one: Mitglied
         other: Mitglieder
-        long: Kanton FG Mitglied
+        long: Kanton FG Mitglied        
 
       group/state_work_group/leader:
         one: Leitung
@@ -252,7 +264,7 @@ de:
       jubla/role/dispatch_address: Versandadresse
       jubla/role/leader: Leitung
       jubla/role/member: Mitglied
-      jubla/role/treasurer: Kassier/in
+      jubla/role/treasurer: Kassier*in
 
       group/federation/it_support:
         one: IT Support
