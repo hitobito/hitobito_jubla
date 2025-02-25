@@ -14,7 +14,7 @@ module Jubla::Event::ParticipationsController
   prepended do
     sort_mappings_with_indifferent_access
       .merge!(originating_state: "originating_states_people.name",
-        originating_flock: "groups.name")
+        originating_flock: "originating_flocks_people.name")
   end
 
   def list_entries
