@@ -8,8 +8,8 @@ require "spec_helper"
 describe SearchStrategies::PersonSearch do
   before do
     people(:flock_leader).update!(name_mother: "Helen", name_father: "Jack", nationality: "Kumbaja",
-                            profession: "Bänker", bank_account: "Account", ahv_number_old: 7569217076985,
-                            insurance_company: "Axa", insurance_number: 6566)
+                            profession: "Bänker", bank_account: "Account", insurance_company: "Axa", 
+                            insurance_number: 6566)
   end
 
   describe "#search_fulltext" do
@@ -37,11 +37,6 @@ describe SearchStrategies::PersonSearch do
 
     it "finds accessible person by bank account" do
       result = search_class(people(:flock_leader).bank_account).search_fulltext
-      expect(result).to include(people(:flock_leader))
-    end
-
-    it "finds accessible person by ahv number old" do
-      result = search_class(people(:flock_leader).ahv_number_old).search_fulltext
       expect(result).to include(people(:flock_leader))
     end
 

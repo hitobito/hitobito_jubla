@@ -11,8 +11,7 @@ module Jubla::PersonSerializer
       map_properties :nationality, :profession, :name_mother, :name_father
 
       if options[:show_full]
-        map_properties :bank_account, :ahv_number_old,
-          :insurance_company, :insurance_number
+        map_properties :bank_account, :insurance_company, :insurance_number
       end
     end
   end
