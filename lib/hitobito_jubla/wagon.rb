@@ -33,7 +33,7 @@ module HitobitoJubla
 
       TableDisplay.register_column(Event::Participation,
         TableDisplays::ShowFullColumn,
-        [:ahv_number, :j_s_number, :canton]
+        [:j_s_number, :canton]
           .map { |col| "person.#{col}" })
 
       ### abilities
@@ -87,9 +87,8 @@ module HitobitoJubla
       ### controllers
       PeopleController.permitted_attrs += [
         :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
-        :ahv_number, :ahv_number_old, :j_s_number, :insurance_company, :insurance_number,
-        :contactable_by_federation, :contactable_by_state, :contactable_by_region,
-        :contactable_by_flock
+        :j_s_number, :insurance_company, :insurance_number, :contactable_by_federation,
+        :contactable_by_state, :contactable_by_region, :contactable_by_flock
       ]
 
       RolesController.include Jubla::RolesController
