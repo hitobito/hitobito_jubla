@@ -12,6 +12,7 @@ module Jubla::EventsController
     self.permitted_attrs += [:remarks]
 
     before_render_new :default_coach
+    before_render_new :set_application_default_values
 
     before_render_form :application_contacts
     before_render_form :load_conditions
@@ -20,6 +21,12 @@ module Jubla::EventsController
   end
 
   private
+
+  def set_application_default_values
+    [:participations_visible, :requires_approval, :signature, :signature_confirmation, :display_booking_info].each do
+      entry.public_send(:"#{_1}=", true)
+    end
+  end
 
   def default_coach
     if entry.class.attr_used?(:coach_id)

@@ -21,7 +21,8 @@ questions_data = [
     multiple_choices: true },
 
   { question: 'Den schub (Ordner mit fünf schub-Broschüren, digital unter jubla.ch/schub)...',
-    choices: 'hab ich bereits und nehme ihn mit in den Kurs, leihe ich von jmd aus und nehme ihn mit in den Kurs (je neuer die Auflage, desto besser), habe ich nicht/leihe ich nicht aus, bestelle ich hiermit als Ordner (Kosten: CHF 27.-)',
+    choices: 'hab ich bereits und nehme ihn mit in den Kurs, leihe ich von jmd aus und nehme ihn mit in den Kurs (je neuer die Auflage desto besser), habe ich nicht/leihe ich nicht aus, bestelle ich hiermit als Ordner (Kosten: CHF 27.-)',
+    event_type: 'Event::Course',
     disclosure: :required,
     multiple_choices: false },
 
