@@ -23,9 +23,12 @@ module Jubla::EventsController
   private
 
   def set_application_default_values
+    return unless entry.course?
+
     [:participations_visible, :requires_approval, :signature, :signature_confirmation, :display_booking_info].each do
       entry.public_send(:"#{_1}=", true)
     end
+    entry.waiting_list = false
   end
 
   def default_coach
