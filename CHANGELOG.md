@@ -1,6 +1,6 @@
 # Hitobito Jubla Changelog
 
-## unreleased
+## Version 2.5
 
 * Selbstregistrierungsformular angepasst und um weitere Felder erweitert (hitobito_jubla#79)
 
