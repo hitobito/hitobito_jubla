@@ -15,6 +15,9 @@ describe EventsController do
     let(:event) { assigns(:event) }
 
     let(:event_attrs) { { group_ids: [group.id], name: 'foo',
+                          visible_contact_attributes: {
+                            name: "1"
+                          },
                           kind_id: Event::Kind.where(short_name: 'SLK').first.id,
                           dates_attributes: [date], type: 'Event::Course' } }
 
@@ -74,6 +77,9 @@ describe EventsController do
                    dates_attributes: [date],
                    contact_id: contact.id,
                    coach_id: coach.id,
+                   visible_contact_attributes: {
+                     name: "1"
+                   },
                    type: 'Event::Camp' },
                    group_id: group.id
         }
