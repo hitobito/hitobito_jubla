@@ -24,7 +24,7 @@ class CensusMailer < ApplicationMailer
       Settings.email.mass_recipient,
       CONTENT_INVITATION,
       {"due-date" => due_date(census)},
-      bcc: Person.mailing_emails_for(recipients)
+      {bcc: Person.mailing_emails_for(recipients)}
     )
   end
 
