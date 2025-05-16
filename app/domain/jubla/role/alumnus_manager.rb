@@ -38,6 +38,7 @@ module Jubla::Role
     end
 
     def create_alumnus_group_member
+      return if alumnus_group.blank?
       return if alumnus_group_member_exists?
 
       member = group.alumnus_member_class.new(person: person, group: alumnus_group)

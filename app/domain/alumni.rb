@@ -10,6 +10,12 @@ module Alumni
     Jubla::Role::External,
     Jubla::Role::DispatchAddress,
     Jubla::Role::Alumnus,
+    Group::AlumnusGroup::Leader,
+    Group::AlumnusGroup::GroupAdmin,
+    Group::AlumnusGroup::Treasurer,
+    Group::AlumnusGroup::Member,
+    Group::AlumnusGroup::External,
+    Group::AlumnusGroup::DispatchAddress,
     NejbRole
   ].freeze
 
