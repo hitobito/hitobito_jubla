@@ -53,6 +53,8 @@ module Jubla::Export::Pdf
 
     class Confirmation < Export::Pdf::Participation::Confirmation
       def render
+        # Try to keep remarks and signatures together on the same page
+        pdf.start_new_page if cursor < required_height
         super
         render_remarks if event.remarks?
       end
@@ -80,6 +82,16 @@ module Jubla::Export::Pdf
           .flatten
           .select { |v| v.present? }
           .join(", ")
+      end
+
+      def required_height
+        height = 2.5.cm # page margin plus page numbering
+        height += 2 * 10 if event.signature? || signature_confirmation? # read_and_agreed
+        height += 3 * 10 if event.signature?
+        height += 3 * 10 if signature_confirmation?
+        height += 2 * 10 if contact
+        height += 65 if event.remarks?
+        height
       end
     end
 
