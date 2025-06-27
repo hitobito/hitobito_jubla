@@ -7,6 +7,7 @@
 #
 module Alumni
   EXCLUDED_ROLE_TYPES = [
+    Group::Root::Admin,
     Jubla::Role::External,
     Jubla::Role::DispatchAddress,
     Jubla::Role::Alumnus,
