@@ -131,7 +131,7 @@ module Jubla::Role
   end
 
   def alumnus_manager_create
-    alumnus_manager.create if old_enough_to_archive? && alumnus_applicable?
+    alumnus_manager.create if old_enough_to_soft_destroy? && alumnus_applicable?
   end
 
   def alumnus_manager_destroy

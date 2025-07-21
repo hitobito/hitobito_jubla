@@ -16,7 +16,7 @@ class JublaPersonSeeder < PersonSeeder
 
   def person_attributes(role_type)
     created_at = 0.upto(5 * 356).to_a.sample.days.ago
-    super.merge(created_at: created_at) # make roles old_enough_to_archive
+    super.merge(created_at: created_at) # make roles old_enough_to_soft_destroy
   end
 end
 
