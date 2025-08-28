@@ -8,7 +8,7 @@
 require 'spec_helper'
 
 describe Person::EventQueries do
-  let(:person)          { participation1.person }
+  let(:person)          { participation1.participant }
   let(:event1)          { participation1.event }
   let(:event2)          { participation2.event }
   let(:participation1)  { role1.participation }
@@ -22,7 +22,7 @@ describe Person::EventQueries do
     let(:role1) { Fabricate(:event_role, type: Event::Camp::Role::Coach.sti_name )}
     let(:role2) { Fabricate(:event_role, type: Event::Camp::Role::Coach.sti_name )}
 
-    before { role2.person = person }
+    before { role2.participation.update!(participant: person) }
 
     it 'can see event up to one month' do
       event1.dates.first.update!(finish_at: Time.zone.now + 20.days)

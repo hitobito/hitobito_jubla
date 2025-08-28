@@ -14,7 +14,7 @@ describe EventAbility do
   let(:event) { Fabricate(:event, groups: [group]) }
 
   let(:participant) { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:bern)).person }
-  let(:participation) { Fabricate(:event_participation, person: participant, event: event, application: Fabricate(:jubla_event_application)) }
+  let(:participation) { Fabricate(:event_participation, participant: participant, event: event, application: Fabricate(:jubla_event_application)) }
 
 
   subject { Ability.new(user.reload) }
@@ -159,7 +159,7 @@ describe EventAbility do
   context :event_full do
     let(:group) { groups(:be) }
     let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
-    let(:participation) { Fabricate(:event_participation, event: event, person: user) }
+    let(:participation) { Fabricate(:event_participation, event: event, participant: user) }
 
     before { Fabricate(Event::Role::Leader.name.to_sym, participation: participation) }
 
@@ -228,7 +228,7 @@ describe EventAbility do
   context :event_contact_data do
     let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
     let(:event) { Fabricate(:event, groups: [groups(:be)]) }
-    let(:participation) { Fabricate(:event_participation, event: event, person: user) }
+    let(:participation) { Fabricate(:event_participation, event: event, participant: user) }
 
     before { Fabricate(Event::Role::Cook.name.to_sym, participation: participation) }
 
@@ -308,12 +308,13 @@ describe EventAbility do
 
   context :in_same_hierarchy do
     let(:role) { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:bern)) }
-    let(:participation) { Fabricate(:event_participation, person: user, event: event) }
+    let(:participation) { Fabricate(:event_participation, participant: user, event: event) }
 
     context Event::Participation do
       it 'may create his participation' do
-        p           = event.participations.new
-        p.person_id = user.id
+        p = event.participations.new
+        p.participant_id = user.id
+        p.participant_type = Person.sti_name
         is_expected.to be_able_to(:create, p)
       end
 
@@ -332,7 +333,7 @@ describe EventAbility do
   context :in_other_hierarchy do
     let(:role) { Fabricate(Group::Flock::Guide.name.to_sym, group: groups(:innerroden)) }
     let(:event) { Fabricate(:jubla_course, groups: [groups(:be)]) }
-    let(:participation) { Fabricate(:event_participation, person: user, event: event) }
+    let(:participation) { Fabricate(:event_participation, participant: user, event: event) }
 
     context Event::Participation do
       it 'may create his participation' do
@@ -430,7 +431,7 @@ describe EventAbility do
 
     before do
       [ast_event, bulei_event].each do |event|
-        participation = Fabricate(:event_participation, event: event, person: user)
+        participation = Fabricate(:event_participation, event: event, participant: user)
         Fabricate(:event_role, participation: participation, type: 'Event::Role::Leader')
       end
     end
@@ -514,7 +515,7 @@ describe EventAbility do
     end
 
     def create_qualifying_participation(user, event)
-      participation = Fabricate(:event_participation, event: event, person: user)
+      participation = Fabricate(:event_participation, event: event, participant: user)
       Fabricate(:event_role, participation: participation, type: 'Event::Role::Leader')
     end
   end
@@ -565,7 +566,7 @@ describe EventAbility do
       end
 
       def create(event_role_type)
-        participation = Fabricate(:event_participation, person: user, event: event)
+        participation = Fabricate(:event_participation, participant: user, event: event)
         Fabricate(event_role_type.name, participation: participation)
       end
 

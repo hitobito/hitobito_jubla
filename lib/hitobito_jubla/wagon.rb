@@ -34,7 +34,7 @@ module HitobitoJubla
       TableDisplay.register_column(Event::Participation,
         TableDisplays::ShowFullColumn,
         [:j_s_number, :canton]
-          .map { |col| "person.#{col}" })
+          .map { |col| "participant.#{col}" })
 
       ### abilities
       EventAbility.include Jubla::EventAbility
@@ -71,8 +71,8 @@ module HitobitoJubla
 
       Export::Pdf::Participation.include Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
-      Event::ParticipationFilter.load_entries_includes += [
-        person: [:originating_flock, :originating_state]
+      Event::ParticipationFilter.load_participant_includes += [
+        :originating_flock, :originating_state
       ]
 
       JobManager.wagon_jobs += [

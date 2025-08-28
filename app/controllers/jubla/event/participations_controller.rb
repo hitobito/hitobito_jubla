@@ -6,19 +6,21 @@
 module Jubla::Event::ParticipationsController
   extend ActiveSupport::Concern
 
-  # both originating_state and originating_flock reference a group
-  #
-  # when associations are included in participation_filter AR uses
-  # the groups table name for the first included association (flocks)
-  # and aliases the table name for the second association (states)
   prepended do
     sort_mappings_with_indifferent_access
-      .merge!(originating_state: "originating_states_people.name",
-        originating_flock: "originating_flocks_people.name")
+      .merge!(originating_state: {
+        order: "originating_states_people.name AS originating_state_order_statement",
+        order_alias: "originating_state_order_statement"
+      })
+      .merge!(originating_flock: {
+        order: "originating_flocks_people.name AS originating_flock_order_statement",
+        order_alias: "originating_flock_order_statement"
+      })
   end
 
-  def list_entries
+  def entries_scope
     super
-      .includes(person: [originating_flock: :translations, originating_state: :translations])
+      .joins("LEFT JOIN groups originating_flocks_people ON originating_flocks_people.id = people.originating_flock_id LEFT JOIN group_translations translations_originating_flocks ON translations_originating_flocks.group_id = originating_flocks_people.id")
+      .joins("LEFT JOIN groups originating_states_people ON originating_states_people.id = people.originating_state_id LEFT JOIN group_translations translations_originating_states ON translations_originating_states.group_id = originating_states_people.id")
   end
 end
