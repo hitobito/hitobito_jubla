@@ -530,14 +530,14 @@ describe EventAbility do
   end
 
 
-  context 'index_participations_details on event in group ' do
+  context 'index_full_participations on event in group ' do
 
     let(:group) { groups(:be_board) }
     context 'FederalBoard::Member' do
       let(:user) { people(:top_leader) }
 
       it 'is allowed because of :layer_and_below_full' do
-        is_expected.to be_able_to(:index_participations_details, event)
+        is_expected.to be_able_to(:index_full_participations, event)
       end
     end
 
@@ -545,7 +545,7 @@ describe EventAbility do
       let(:role) { Fabricate(Group::StateBoard::Leader.name, group: group) }
 
       it 'is allowed because of :group_full' do
-        is_expected.to be_able_to(:index_participations_details, event)
+        is_expected.to be_able_to(:index_full_participations, event)
       end
     end
 
@@ -555,13 +555,13 @@ describe EventAbility do
       it 'with leader role is allowed' do
         create(Event::Role::Leader)
 
-        is_expected.to be_able_to(:index_participations_details, event)
+        is_expected.to be_able_to(:index_full_participations, event)
       end
 
       it 'with participation role is not allowed' do
         create(Event::Role::Participant,)
 
-        is_expected.not_to be_able_to(:index_participations_details, event)
+        is_expected.not_to be_able_to(:index_full_participations, event)
       end
 
       def create(event_role_type)
