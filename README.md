@@ -138,7 +138,7 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []  --  (Group::RegionalAlumnusGroup::DispatchAddress)
     * Schar
       * Schar
-        * Scharleitung: [:layer_and_below_full, :contact_data, :approve_applications]  --  (Group::Flock::Leader)
+        * Scharleitung: [:layer_and_below_full, :contact_data, :approve_applications, :manual_deletion]  --  (Group::Flock::Leader)
         * Lagerleitung: [:layer_and_below_full, :contact_data]  --  (Group::Flock::CampLeader)
         * Präses: [:layer_and_below_read, :contact_data]  --  (Group::Flock::President)
         * Kassier*in: [:layer_and_below_read, :contact_data]  --  (Group::Flock::Treasurer)

@@ -14,7 +14,7 @@ describe Role do
     it { is_expected.to be_member }
     it { is_expected.to be_visible_from_above }
 
-    its(:permissions) { should == [:layer_and_below_full, :contact_data, :approve_applications] }
+    its(:permissions) { should == [:layer_and_below_full, :contact_data, :approve_applications, :manual_deletion] }
 
     it "may be created for flock" do
       role = Fabricate.build(subject.name.to_sym, group: groups(:bern))
@@ -46,11 +46,11 @@ describe Role do
   describe "#all_types" do
     subject { Role.all_types }
 
-    it 'starts with top most role' do
+    it "starts with top most role" do
       expect(subject.first).to eq(Group::Root::Admin)
     end
 
-    it 'finishes with bottom most role' do
+    it "finishes with bottom most role" do
       expect(subject.last).to eq(Group::NejbSimpleGroup::NewJoiner)
     end
   end
