@@ -24,7 +24,7 @@ describe Jubla::Export::Tabular::People::OriginatingGroups do
 
   context Export::Tabular::People::ParticipationRow do
     let(:row) { Export::Tabular::People::ParticipationRow.new(participation) }
-    let(:participation) { Fabricate(:event_participation, person: person) }
+    let(:participation) { Fabricate(:event_participation, participant: person) }
 
     it 'includes originating flock and state name' do
       expect(row.originating_flock_id).to eq 'Jungwacht Bern'

@@ -96,7 +96,7 @@ describe Bsv::Info do
 
   def create_participation(role, person = nil)
     person ||= Fabricate(:person)
-    participation = Fabricate(:event_participation, event: course, person: person)
+    participation = Fabricate(:event_participation, event: course, participant: person)
     Fabricate(role.to_s.to_sym, participation: participation)
   end
 end

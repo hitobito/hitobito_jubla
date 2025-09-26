@@ -5,20 +5,24 @@
 
 top_leader:
   event: top_course
-  person: top_leader
+  participant: top_leader
+  participant_type: Person
   active: true
 
 top_participant:
   event: top_course
-  person: flock_leader_bern
+  participant: flock_leader_bern
+  participant_type: Person
   active: true
 
 camp_leader:
   event: camp
-  person: flock_leader_bern
+  participant: flock_leader_bern
+  participant_type: Person
   active: true
 
 camp_child:
   event: camp
-  person: child
+  participant: child
+  participant_type: Person
   active: true
