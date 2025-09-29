@@ -24,6 +24,6 @@ module Jubla::PersonReadables
   end
 
   def alumnus_leader_layer_ids
-    @alumnus_leader_layer_ids ||= layer_groups_with_permissions(:alumnus_below_full).collect(&:id)
+    @alumnus_leader_layer_ids ||= layer_group_ids_with_permissions(:alumnus_below_full)
   end
 end

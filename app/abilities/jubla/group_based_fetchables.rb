@@ -18,14 +18,14 @@ module Jubla::GroupBasedFetchables
   private
 
   def visible_alumnus_from_above(condition)
-    alumnus_leader_layer.each do |g|
+    alumnus_leader_layers.each do |g|
       condition.or('groups.lft >= ? AND
                    groups.rgt <= ? AND
                    groups.type IN (?)', g.lft, g.rgt, Group::AlumnusGroup.descendants)
     end
   end
 
-  def alumnus_leader_layer
-    @alumnus_leader_layer ||= layer_groups_with_permissions(:alumnus_below_full)
+  def alumnus_leader_layers
+    @alumnus_leader_layers ||= Group.where(id: layer_group_ids_with_permissions(:alumnus_below_full))
   end
 end
