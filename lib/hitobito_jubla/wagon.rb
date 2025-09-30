@@ -141,6 +141,11 @@ module HitobitoJubla
     initializer "jubla.add_settings" do |_app|
       Settings.add_source!(File.join(paths["config"].existent, "settings.yml"))
       Settings.add_source!(File.join(paths["config"].existent, "settings.local.yml"))
+
+      # We can't directly override the hash in a config file since the hashes are merged
+      settings = Settings.to_hash
+      settings[:application][:languages] = {de: "Deutsch"}
+      Settings.add_source!(settings)
       Settings.reload!
     end
 
