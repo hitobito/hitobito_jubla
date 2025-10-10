@@ -53,6 +53,9 @@ module HitobitoJubla
       PersonSerializer.include Jubla::PersonSerializer
       GroupSerializer.include Jubla::GroupSerializer
 
+      AbilityDsl::UserContext::LAYER_PERMISSIONS << :alumnus_below_full
+      AbilityDsl::UserContext::GROUP_PERMISSIONS << :alumnus_below_full
+
       # domain
       Bsv::Info.include Jubla::Bsv::Info
       Person::EventQueries.include Jubla::Person::EventQueries
