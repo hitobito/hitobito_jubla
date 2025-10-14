@@ -34,8 +34,11 @@ module Export::Tabular
       ::MemberCount.totals(@year, {flock_id: @flock_id})
     end
 
+    # rubocop:todo Metrics/AbcSize
     def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
+      # rubocop:todo Layout/LineLength
       {state: (flock.parent.parent.type == "Group::State") ? flock.parent.parent.name : flock.parent.name,
+       # rubocop:enable Layout/LineLength
        region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
        name: flock.name,
        contact_first_name: flock.contact&.first_name,
@@ -49,6 +52,7 @@ module Export::Tabular
        leader_count: member_count.leader,
        child_count: member_count.child}
     end
+    # rubocop:enable Metrics/AbcSize
 
     def null_member_count
       Struct.new(:leader, :child).new(nil, nil)

@@ -10,7 +10,9 @@ module Jubla::Person
     belongs_to :originating_flock, class_name: "Group"
     belongs_to :originating_state, class_name: "Group"
 
+    # rubocop:todo Layout/LineLength
     Person::SEARCHABLE_ATTRS << :name_mother << :name_father << :nationality << :profession << :bank_account <<
+      # rubocop:enable Layout/LineLength
       :insurance_company << :insurance_number
   end
 

@@ -127,7 +127,8 @@ namespace :nejb do
         Group::RegionalAlumnusGroup
       ]
 
-      group_scope = Group.where(name: group_name, type: group_types).without_deleted.without_archived
+      group_scope = Group.where(name: group_name,
+        type: group_types).without_deleted.without_archived
 
       role_types = group_types.map { |group_type| "#{group_type}::Member" }
       role_scope = Role.where(group: group_scope, type: role_types)
@@ -157,7 +158,9 @@ namespace :nejb do
 
       if @errors.present?
         puts "There were errors while trying to destroy these roles:"
-        puts @errors.map { |role| [role.id, role.person, "(#{role.person_id})", role, role.group_id].join(" ") }
+        puts @errors.map { |role|
+          [role.id, role.person, "(#{role.person_id})", role, role.group_id].join(" ")
+        }
       end
     end
   end

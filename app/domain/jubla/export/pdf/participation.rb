@@ -35,14 +35,15 @@ module Jubla::Export::Pdf
           [zip_code, [town, person.canton].compact_blank.join(", ")]
         end
 
-        def render_people_managers
+        def render_people_managers # rubocop:todo Metrics/AbcSize
           return unless person.people_managers.any?
 
           with_settings(font_size: 7) do
             move_down_line
             text PeopleManager.model_name.human(count: person.people_managers.count), style: :bold
             person.people_managers&.each do |manager|
-              text "#{manager.manager}: #{[manager.email, manager.phone_number&.number].compact_blank.join(", ")}"
+              text "#{manager.manager}: #{[manager.email,
+                manager.phone_number&.number].compact_blank.join(", ")}"
             end
           end
         end
@@ -74,7 +75,7 @@ module Jubla::Export::Pdf
         move_down_line
       end
 
-      def contact_address
+      def contact_address # rubocop:todo Metrics/AbcSize
         [contact.respond_to?(:company_name) && contact.company_name,
           contact.to_s,
           contact.address.present? && contact.address.split("\n"),

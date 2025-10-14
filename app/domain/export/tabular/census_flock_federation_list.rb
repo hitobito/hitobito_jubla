@@ -30,11 +30,14 @@ module Export::Tabular
     end
 
     def query_member_counts
-      ::MemberCount.totals(@year, {flock_id: ::MemberCount.distinct.pluck(:flock_id)}).group(:flock_id)
+      ::MemberCount.totals(@year,
+        {flock_id: ::MemberCount.distinct.pluck(:flock_id)}).group(:flock_id)
     end
 
     def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
+      # rubocop:todo Layout/LineLength
       {state: (flock.parent.parent.type == "Group::State") ? flock.parent.parent.name : flock.parent.name,
+       # rubocop:enable Layout/LineLength
        region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
        name: flock.name,
        leader_count: member_count.leader,

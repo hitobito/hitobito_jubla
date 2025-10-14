@@ -25,13 +25,15 @@ class MemberCountsController < ApplicationController
     redirect_to census_flock_group_path(flock, year: year)
   end
 
-  def update
+  # rubocop:todo Metrics/MethodLength
+  def update # rubocop:todo Metrics/AbcSize # rubocop:todo Metrics/MethodLength
     authorize!(:update_member_counts, flock)
 
     counts = member_counts.update(
       params[:member_count].keys,
       params[:member_count].values.collect do |attrs|
-        ActionController::Parameters.new(attrs.to_unsafe_h).permit(:leader_f, :leader_m, :child_f, :child_m)
+        ActionController::Parameters.new(attrs.to_unsafe_h).permit(:leader_f, :leader_m, :child_f,
+          :child_m)
       end
     )
     with_errors = counts.select { |c| c.errors.present? }
@@ -45,6 +47,7 @@ class MemberCountsController < ApplicationController
       render "edit", status: :unprocessable_entity
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def destroy
     authorize!(:delete_member_counts, flock)
