@@ -112,7 +112,8 @@ class Group::Flock < JublaGroup
 
   # Scharleitung
   class Leader < Jubla::Role::Leader
-    self.permissions = [:layer_and_below_full, :contact_data, :approve_applications, :manual_deletion]
+    self.permissions = [:layer_and_below_full, :contact_data, :approve_applications,
+      :manual_deletion]
   end
 
   # Lagerleitung

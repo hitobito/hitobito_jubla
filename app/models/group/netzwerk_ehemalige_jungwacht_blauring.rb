@@ -44,5 +44,6 @@ class Group::NetzwerkEhemaligeJungwachtBlauring < NejbGroup
     self.permissions = []
   end
 
-  roles Leader, GroupAdmin, Treasurer, ActiveMember, PassiveMember, CollectiveMember, NejbJoiner, External, DispatchAddress
+  roles Leader, GroupAdmin, Treasurer, ActiveMember, PassiveMember, CollectiveMember, NejbJoiner,
+    External, DispatchAddress
 end

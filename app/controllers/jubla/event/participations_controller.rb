@@ -20,7 +20,11 @@ module Jubla::Event::ParticipationsController
 
   def entries_scope
     super
+      # rubocop:todo Layout/LineLength
       .joins("LEFT JOIN groups originating_flocks_people ON originating_flocks_people.id = people.originating_flock_id LEFT JOIN group_translations translations_originating_flocks ON translations_originating_flocks.group_id = originating_flocks_people.id")
+      # rubocop:enable Layout/LineLength
+      # rubocop:todo Layout/LineLength
       .joins("LEFT JOIN groups originating_states_people ON originating_states_people.id = people.originating_state_id LEFT JOIN group_translations translations_originating_states ON translations_originating_states.group_id = originating_states_people.id")
+    # rubocop:enable Layout/LineLength
   end
 end

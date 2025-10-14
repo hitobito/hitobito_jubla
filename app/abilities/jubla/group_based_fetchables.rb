@@ -26,6 +26,8 @@ module Jubla::GroupBasedFetchables
   end
 
   def alumnus_leader_layers
+    # rubocop:todo Layout/LineLength
     @alumnus_leader_layers ||= Group.where(id: layer_group_ids_with_permissions(:alumnus_below_full))
+    # rubocop:enable Layout/LineLength
   end
 end

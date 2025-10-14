@@ -25,7 +25,9 @@ module Jubla::Wizards::Steps::NewUserForm
     validate :assert_valid_phone_number
   end
 
-  def initialize(...)
+  # rubocop:todo Metrics/MethodLength
+  # rubocop:todo Metrics/AbcSize
+  def initialize(...) # rubocop:todo Metrics/CyclomaticComplexity # rubocop:todo Metrics/AbcSize # rubocop:todo Metrics/MethodLength
     super
 
     if current_user
@@ -47,19 +49,24 @@ module Jubla::Wizards::Steps::NewUserForm
       self.country ||= Settings.addresses.imported_countries.to_a.first
     end
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def person_attributes
     attributes.compact.symbolize_keys.except(:phone_number).then do |attrs|
       next attrs if phone_number.blank?
 
-      attrs.merge(phone_numbers_attributes: [{label: PHONE_NUMBER_LABEL, number: phone_number, public: false}.compact])
+      attrs.merge(phone_numbers_attributes: [{label: PHONE_NUMBER_LABEL, number: phone_number,
+                                              public: false}.compact])
     end
   end
 
   private
 
   def assert_valid_phone_number
+    # rubocop:todo Layout/LineLength
     if phone_number.present? && PhoneNumber.new(number: phone_number).tap(&:valid?).errors.key?(:number)
+      # rubocop:enable Layout/LineLength
       errors.add(:phone_number, :invalid)
     end
   end
