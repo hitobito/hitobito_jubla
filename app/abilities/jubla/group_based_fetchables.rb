@@ -19,9 +19,12 @@ module Jubla::GroupBasedFetchables
 
   def visible_alumnus_from_above(condition)
     alumnus_leader_layers.each do |g|
-      condition.or('groups.lft >= ? AND
-                   groups.rgt <= ? AND
-                   groups.type IN (?)', g.lft, g.rgt, Group::AlumnusGroup.descendants)
+      condition.or(
+        "groups.lft >= ? AND groups.rgt <= ? AND groups.type IN (?)",
+        g.lft,
+        g.rgt,
+        Group::AlumnusGroup.descendants.map(&:sti_name)
+      )
     end
   end
 
