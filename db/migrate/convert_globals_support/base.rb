@@ -29,7 +29,7 @@ class RelationMigrator
           ON (related_role_types.relation_id = #{relation_class.name.tableize}.id
           AND related_role_types.relation_type = '#{relation_class.name}')
       SQL
-      .where('related_role_types.role_type = ?', role_type)
+      .where('related_role_types.role_type = ?', role_type.to_s)
   end
 
   private
