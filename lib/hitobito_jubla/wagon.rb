@@ -74,9 +74,6 @@ module HitobitoJubla
 
       Export::Pdf::Participation.include Jubla::Export::Pdf::Participation
       Export::Pdf::Participation.runner = Jubla::Export::Pdf::Participation::Runner
-      Event::ParticipationFilter.load_participant_includes += [
-        :originating_flock, :originating_state
-      ]
 
       JobManager.wagon_jobs += [
         AlumniManagerJob
