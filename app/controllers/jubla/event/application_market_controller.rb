@@ -14,12 +14,19 @@ module Jubla::Event::ApplicationMarketController
   private
 
   def load_participants_with_origins
-    load_participants_without_origins.includes(person: [:originating_flock,
-      :originating_state])
+    load_participants_without_origins
+      .includes(participant: [:originating_flock, :originating_state])
   end
 
+  # NOTE
+  # underlying query is complex, we cannot simply include another relation
+  # on participant, so we use two queries
   def load_applications_with_origins
-    load_applications_without_origins.includes(person: [:originating_flock,
-      :originating_state])
+    applications = Event::Participation
+      .includes(:participant)
+      .where(id: load_applications_without_origins.select(:id))
+
+    Event::Participation::PreloadParticipations.preload(applications)
+    applications
   end
 end
