@@ -14,7 +14,7 @@ module Jubla::Role
 
     attr_accessor :skip_alumnus_callback
 
-    validate :assert_no_active_roles, if: :alumnus_group_member?
+    validate :assert_no_active_roles, if: :alumnus_group_member?, unless: -> { end_on&.past? }
 
     after_save :set_person_origins
     after_destroy :set_person_origins
