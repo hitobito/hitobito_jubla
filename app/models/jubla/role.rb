@@ -99,7 +99,7 @@ module Jubla::Role
   end
 
   def alumnus_group_member?
-    type.to_s.match(/AlumnusGroup::Member$/) && !(end_on&.past?)
+    type.to_s.match(/AlumnusGroup::Member$/) && !end_on&.past?
   end
 
   def alumnus_member?
