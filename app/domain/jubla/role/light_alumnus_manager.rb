@@ -36,6 +36,7 @@ module Jubla::Role
     end
 
     def destroy_alumnus_role
+      return if group.alumnus_class.nil?
       person
         .roles
         .joins(:group)

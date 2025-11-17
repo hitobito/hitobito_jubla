@@ -45,6 +45,8 @@ module Jubla::Group
 
   def alumnus_class
     "#{self.class.name}::Alumnus".constantize
+  rescue NameError
+    nil
   end
 
   def alumnus_member_class

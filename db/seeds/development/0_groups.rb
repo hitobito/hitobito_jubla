@@ -10,18 +10,22 @@ require Rails.root.join('db', 'seeds', 'support', 'group_seeder')
 
 srand(42)
 
+Group::Root.seed_once(:name, name: 'JUBLA', parent_id: nil)
+superstructure = Group::Root.first
+
 seeder = GroupSeeder.new
 
-ch = Group.roots.first
+ch = Group::Federation.first
 unless ch.address.present?
   # avoid callbacks to prevent creating default groups twice
   ch.update_columns(seeder.group_attributes)
+  ch.update_column(:parent_id, superstructure.id)
 
   ch.default_children.each do |child_class|
     child_class.first.update(seeder.group_attributes)
   end
 end
-
+Group::Nejb.seed_once(:name, name: 'Netzwerk Ehemalige Jungwacht Blauring', parent_id: superstructure.id)
 
 Group::FederalWorkGroup.seed(:name, :parent_id,
                              name: 'AG Bundeslager',
@@ -34,7 +38,7 @@ states = Group::State.seed(:name, :parent_id,
                              housenumber: 3,
                              zip_code: '3333',
                              town: 'Bern',
-                             country: 'Svizzera',
+                             country: 'Schweiz',
                              email: 'bern@be.ch',
                              parent_id: ch.id },
 
@@ -44,7 +48,7 @@ states = Group::State.seed(:name, :parent_id,
                              housenumber: 3,
                              zip_code: '8888',
                              town: 'Zürich',
-                             country: 'Svizzera',
+                             country: 'Schweiz',
                              email: 'zuerich@zh.ch',
                              parent_id: ch.id },
 
@@ -54,7 +58,7 @@ states = Group::State.seed(:name, :parent_id,
                              housenumber: 3,
                              zip_code: '9000',
                              town: 'Nordosthausen',
-                             country: 'Svizzera',
+                             country: 'Schweiz',
                              email: 'nordost@nordost.ch',
                              parent_id: ch.id },
 
@@ -64,7 +68,7 @@ states = Group::State.seed(:name, :parent_id,
                              housenumber: 3,
                              zip_code: '4000',
                              town: 'Luzern',
-                             country: 'Svizzera',
+                             country: 'Schweiz',
                              email: 'luzern@lu.ch',
                              parent_id: ch.id },
 
@@ -74,7 +78,7 @@ states = Group::State.seed(:name, :parent_id,
                              housenumber: 3,
                              zip_code: '9500',
                              town: 'Stein',
-                             country: 'Svizzera',
+                             country: 'Schweiz',
                              email: 'stein@jubla.ch',
                              parent_id: ch.id },
 
