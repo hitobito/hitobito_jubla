@@ -34,7 +34,7 @@
 #  jubla_property_insurance    :boolean          default(FALSE), not null
 #
 
-#  Copyright (c) 2012-2024, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2025, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -138,7 +138,8 @@ class Group::Flock < JublaGroup
 
   # Kassier
   class Treasurer < Jubla::Role::Treasurer
-    self.permissions = [:layer_and_below_read, :contact_data]
+    self.two_factor_authentication_enforced = true
+    self.permissions = [:layer_and_below_read, :finance, :contact_data]
   end
 
   # Coach
