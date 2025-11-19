@@ -19,8 +19,8 @@ Additional features include member census, camps and course conditions.
         * Versandadresse: []  --  (Group::Federation::DispatchAddress)
         * IT Support: [:impersonation]  --  (Group::Federation::ItSupport)
       * Bundesleitung
-        * Mitglied: [:admin, :layer_and_below_full, :contact_data]  --  (Group::FederalBoard::Member)
-        * Präses: [:admin, :layer_and_below_full, :contact_data]  --  (Group::FederalBoard::President)
+        * Mitglied: 2FA [:admin, :layer_and_below_full, :contact_data]  --  (Group::FederalBoard::Member)
+        * Präses: 2FA [:admin, :layer_and_below_full, :contact_data]  --  (Group::FederalBoard::President)
         * Adressverwaltung: [:group_full]  --  (Group::FederalBoard::GroupAdmin)
         * Austritt: [:group_read]  --  (Group::FederalBoard::Alumnus)
         * Extern: []  --  (Group::FederalBoard::External)
@@ -141,7 +141,7 @@ Additional features include member census, camps and course conditions.
         * Scharleitung: [:layer_and_below_full, :contact_data, :approve_applications, :manual_deletion]  --  (Group::Flock::Leader)
         * Lagerleitung: [:layer_and_below_full, :contact_data]  --  (Group::Flock::CampLeader)
         * Präses: [:layer_and_below_read, :contact_data]  --  (Group::Flock::President)
-        * Kassier*in: [:layer_and_below_read, :contact_data]  --  (Group::Flock::Treasurer)
+        * Kassier*in: 2FA [:layer_and_below_read, :contact_data, :finance]  --  (Group::Flock::Treasurer)
         * Leiter/in: [:layer_and_below_read]  --  (Group::Flock::Guide)
         * Adressverwaltung: [:layer_and_below_full]  --  (Group::Flock::GroupAdmin)
         * Austritt: [:group_read]  --  (Group::Flock::Alumnus)
@@ -165,9 +165,9 @@ Additional features include member census, camps and course conditions.
       * NEJB
         * Adressverwaltung: [:group_full]  --  (Group::Nejb::GroupAdmin)
         * Versandadresse: []  --  (Group::Nejb::DispatchAddress)
-        * IT Support: [:admin, :impersonation]  --  (Group::Nejb::ITSupport)
+        * IT Support: 2FA [:admin, :impersonation]  --  (Group::Nejb::ITSupport)
       * NEJB Bundesleitung
-        * Adressverwaltung: [:admin, :layer_and_below_full, :contact_data]  --  (Group::NejbBundesleitung::GroupAdmin)
+        * Adressverwaltung: 2FA [:admin, :layer_and_below_full, :contact_data]  --  (Group::NejbBundesleitung::GroupAdmin)
       * Netzwerk Ehemalige Jungwacht Blauring
         * Leitung: [:group_and_below_full, :contact_data]  --  (Group::NetzwerkEhemaligeJungwachtBlauring::Leader)
         * Adressverwaltung: [:group_and_below_full]  --  (Group::NetzwerkEhemaligeJungwachtBlauring::GroupAdmin)
