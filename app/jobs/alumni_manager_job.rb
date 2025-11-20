@@ -25,7 +25,7 @@ class AlumniManagerJob < RecurringJob
 
   def destroy_obsolete
     active = Person.joins(:roles).merge(Role.where(type: APPLICABLE_ROLE_TYPES)).distinct
-    Role.alumnus_members.where(person_id: active).find_each do |role|
+    Role.alumnus_members.without_archived.where(person_id: active).find_each do |role|
       Jubla::Role::AlumnusManager.new(role).destroy
     end
   end
