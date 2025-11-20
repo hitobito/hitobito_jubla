@@ -21,6 +21,6 @@ module Alumni
   ].freeze
 
   APPLICABLE_ROLE_TYPES = ::Role.all_types.reject do |role|
-    Alumni::EXCLUDED_ROLE_TYPES.select { |excluded| role < excluded }.any?
+    Alumni::EXCLUDED_ROLE_TYPES.any? { |excluded| role < excluded }
   end
 end

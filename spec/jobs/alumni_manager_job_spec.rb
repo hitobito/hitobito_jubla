@@ -9,8 +9,8 @@ require "spec_helper"
 
 describe AlumniManagerJob do
   subject(:job) { described_class.new }
-  let(:person) { role.person }
 
+  let(:person) { role.person }
   let(:role) { roles(:top_leader) }
 
   it "noops if role is active" do
@@ -45,5 +45,15 @@ describe AlumniManagerJob do
 
     expect { job.perform }.to change { person.roles.count }.by(-2)
     expect(person.roles.map(&:type)).to match_array ["Group::FederalBoard::Member"]
+  end
+
+  it "does not try to delete archived alumni roles if role becomes active" do
+    role.update_columns(end_on: Date.yesterday)
+    archived_alumnus_role = Fabricate(Group::FederalBoard::Alumnus.sti_name, person: person, group: groups(:federal_board), created_at: 2.years.ago, archived_at: 1.year.ago)
+    role.update_columns(end_on: nil)
+
+    expect { job.perform }.not_to change { person.roles.count }
+
+    expect(archived_alumnus_role.reload).to be_persisted
   end
 end
