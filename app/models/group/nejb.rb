@@ -22,6 +22,7 @@ class Group::Nejb < NejbGroup
   end
 
   class ITSupport < ::NejbRole
+    self.two_factor_authentication_enforced = true
     self.permissions = [:admin, :impersonation]
   end
 
