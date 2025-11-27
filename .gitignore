@@ -27,3 +27,6 @@ rubocop-results.xml
 .rakeTasks
 .tool-versions
 .pry_history
+
+db/schema.rb
+db/schema.rb.diff
