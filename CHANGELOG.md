@@ -1,5 +1,11 @@
 # Hitobito Jubla Changelog
 
+## Version 2.7
+
+* Debitoren/Rechnungen für Schar-Kassier*in aktiviert (hitobito_jubla#237)
+* Kursadmin Seed-Fragen gelöscht (hitobito_jubla#221)
+* 2FA erzungen für Rolle IT-Support/NEJB, Mitglied,Präses/Bundesleitung Adressverwaltung/NEJB Bundesleitung und Kassier*in/Schar (hitobito_jubla#237) 
+
 ## Version 2.5
 
 * Selbstregistrierungsformular angepasst und um weitere Felder erweitert (hitobito_jubla#79)
