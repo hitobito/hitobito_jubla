@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## unreleased
+
+* Die globalen Event Fragen (schub, meisterwerk) wurden entfernt (hitobito_jubla#221)
+
 ## Version 2.5
 
 * Selbstregistrierungsformular angepasst und um weitere Felder erweitert (hitobito_jubla#79)
