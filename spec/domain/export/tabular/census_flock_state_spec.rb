@@ -16,7 +16,7 @@ describe Export::Tabular::CensusFlockState do
     subject { census_flock }
 
     its(:labels) do
-      is_expected.to eq ["Region", "Schar", "Leitende", "Kinder"]
+      is_expected.to eq ["Region", "Art", "Schar", "Leitende", "Kinder"]
     end
   end
 
@@ -27,6 +27,12 @@ describe Export::Tabular::CensusFlockState do
       expect(census_flock.list[0][:name]).to eq "Bern"
       expect(census_flock.list[1][:name]).to eq "Muri"
     end
+
+    it "ignores archived group" do
+      groups(:bern).update(archived_at: 1.day.ago)
+      groups(:thun).update(deleted_at: 1.day.ago)
+      expect(census_flock.list).to have(1).items
+    end
   end
 
   describe "mapped items" do
@@ -36,10 +42,10 @@ describe Export::Tabular::CensusFlockState do
 
     describe "keys and values" do
       its(:keys) do
-        is_expected.to eq [:region, :name, :leader_count, :child_count]
+        is_expected.to eq [:region, :kind, :name, :leader_count, :child_count]
       end
 
-      its(:values) { is_expected.to eq ["Stadt", "Bern", 5, 7] }
+      its(:values) { is_expected.to eq ["Stadt", "Jungwacht", "Bern", 5, 7] }
 
       its(:values) { is_expected.to have(census_flock.labels.size).items }
     end
@@ -47,7 +53,7 @@ describe Export::Tabular::CensusFlockState do
     describe "without member count" do
       before { MemberCount.where(flock_id: flock.id).destroy_all }
 
-      its(:values) { is_expected.to eq ["Stadt", "Bern", nil, nil] }
+      its(:values) { is_expected.to eq ["Stadt", "Jungwacht", "Bern", nil, nil] }
     end
   end
 
@@ -55,8 +61,8 @@ describe Export::Tabular::CensusFlockState do
     subject { Export::Csv::Generator.new(census_flock).call.split("\n") }
 
     its(:first) do
-      is_expected.to match(/Region;Schar;Leitende;Kinder/)
+      is_expected.to match(/Region;Art;Schar;Leitende;Kinder/)
     end
-    its(:second) { is_expected.to eq "Stadt;Bern;5;7" }
+    its(:second) { is_expected.to eq "Stadt;Jungwacht;Bern;5;7" }
   end
 end

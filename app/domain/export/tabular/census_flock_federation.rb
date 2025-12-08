@@ -16,12 +16,15 @@ module Export::Tabular
 
     private
 
-    def build_attribute_labels # rubocop:disable Metrics/MethodLength
-      {state: "Kanton",
-       region: "Region",
-       name: "Schar",
-       leader_count: "Leitende",
-       child_count: "Kinder"}
+    def build_attribute_labels
+      {
+        state: "Kanton",
+        region: "Region",
+        kind: "Art",
+        name: "Schar",
+        leader_count: "Leitende",
+        child_count: "Kinder"
+      }
     end
   end
 end

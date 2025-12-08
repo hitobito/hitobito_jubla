@@ -2,6 +2,7 @@
 
 ## unreleased
 
+* Census Export wurde um Schar Art erweitert, gelöschte und archivierte Scharen werden ignoriert (hitobito_jubla#228)
 * Die globalen Event Fragen (schub, meisterwerk) wurden entfernt (hitobito_jubla#221)
 * Debitoren/Rechnungen für Schar-Kassier*in aktiviert (hitobito_jubla#237)
 * 2FA erzwungen für IT-Support/NEJB, Mitglied,Präses/Bundesleitung Adressverwaltung/NEJB Bundesleitung und Kassier*in/Schar (hitobito_jubla#237)
