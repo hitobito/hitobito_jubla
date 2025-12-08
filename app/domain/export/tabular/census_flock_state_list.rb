@@ -27,7 +27,9 @@ module Export::Tabular
     end
 
     def query_flocks
-      Group.find(@state_id).layer_group.descendants
+      Group.find(@state_id).layer_group
+        .descendants
+        .without_archived_or_deleted
         .where(type: Group::Flock.sti_name)
         .includes(:contact).order("groups.name")
     end
@@ -40,10 +42,13 @@ module Export::Tabular
     end
 
     def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
-      {region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
-       name: flock.name,
-       leader_count: member_count.leader,
-       child_count: member_count.child}
+      {
+        region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
+        kind: flock.kind,
+        name: flock.name,
+        leader_count: member_count.leader,
+        child_count: member_count.child
+      }
     end
 
     def null_member_count

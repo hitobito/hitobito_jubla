@@ -17,19 +17,22 @@ module Export::Tabular
     private
 
     def build_attribute_labels # rubocop:disable Metrics/MethodLength
-      {state: "Kanton",
-       region: "Region",
-       name: "Schar",
-       contact_first_name: "Kontakt Vorname",
-       contact_last_name: "Kontakt Nachname",
-       address: human_attribute(:address),
-       zip_code: human_attribute(:zip_code),
-       town: human_attribute(:town),
-       jubla_property_insurance: human_attribute(:jubla_property_insurance),
-       jubla_liability_insurance: human_attribute(:jubla_liability_insurance),
-       jubla_full_coverage: human_attribute(:jubla_full_coverage),
-       leader_count: "Leitende",
-       child_count: "Kinder"}
+      {
+        state: "Kanton",
+        region: "Region",
+        kind: "Art",
+        name: "Schar",
+        contact_first_name: "Kontakt Vorname",
+        contact_last_name: "Kontakt Nachname",
+        address: human_attribute(:address),
+        zip_code: human_attribute(:zip_code),
+        town: human_attribute(:town),
+        jubla_property_insurance: human_attribute(:jubla_property_insurance),
+        jubla_liability_insurance: human_attribute(:jubla_liability_insurance),
+        jubla_full_coverage: human_attribute(:jubla_full_coverage),
+        leader_count: "Leitende",
+        child_count: "Kinder"
+      }
     end
   end
 end

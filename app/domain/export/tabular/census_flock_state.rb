@@ -19,6 +19,7 @@ module Export::Tabular
     def build_attribute_labels
       {
         region: "Region",
+        kind: "Art",
         name: "Schar",
         leader_count: "Leitende",
         child_count: "Kinder"

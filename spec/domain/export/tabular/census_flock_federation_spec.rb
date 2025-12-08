@@ -5,61 +5,66 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Export::Tabular::CensusFlockFederation do
 
   let(:census_flock) { Export::Tabular::CensusFlockFederation.new(entries) }
   let(:entries) { Export::Tabular::CensusFlockFederationList.new(2012).entries }
-  describe '.headers' do
+  describe ".headers" do
     subject { census_flock }
 
     its(:labels) do
-      should eq ["Kanton", "Region", "Schar", "Leitende", "Kinder"]
+      should eq ["Kanton", "Region", "Art", "Schar", "Leitende", "Kinder"]
     end
   end
 
-  describe 'census flock' do
-
+  describe "census flock" do
     it { expect(census_flock.list).to have(5).items }
 
-    it 'orders by groups.lft and name' do
-      expect(census_flock.list[0][:name]).to eq 'Ausserroden'
-      expect(census_flock.list[1][:name]).to eq 'Bern'
+    it "ignores archived group" do
+      groups(:bern).update(archived_at: 1.day.ago)
+      groups(:thun).update(deleted_at: 1.day.ago)
+      expect(census_flock.list).to have(3).items
+    end
+
+    it "orders by groups.lft and name" do
+      expect(census_flock.list[0][:name]).to eq "Ausserroden"
+      expect(census_flock.list[1][:name]).to eq "Bern"
     end
   end
 
-  describe 'mapped items' do
+  describe "mapped items" do
     let(:flock) { groups(:bern) }
 
     subject { census_flock.list[1] }
 
-    describe 'keys and values' do
+    describe "keys and values" do
 
       its(:keys) do
-        should eq [:state, :region, :name, :leader_count, :child_count]
+        should eq [:state, :region, :kind, :name, :leader_count, :child_count]
       end
 
-      its(:values) { should eq ["Kanton Bern", "Stadt", "Bern", 5, 7] }
+      its(:values) { should eq ["Kanton Bern", "Stadt", "Jungwacht", "Bern", 5, 7] }
 
       its(:values) { should have(census_flock.labels.size).items }
     end
 
-    describe 'without member count' do
+    describe "without member count" do
       before { MemberCount.where(flock_id: flock.id).destroy_all }
 
-      its(:values) { should eq ["Kanton Bern", "Stadt", "Bern", nil, nil] }
+      its(:values) { should eq ["Kanton Bern", "Stadt", "Jungwacht", "Bern", nil, nil] }
     end
   end
 
-  describe 'to_csv' do
+  describe "to_csv" do
 
     subject { Export::Csv::Generator.new(census_flock).call.split("\n") }
 
     its(:first) do
-      should match(/Kanton;Region;Schar;Leitende;Kinder/)
+      should match(/Kanton;Region;Art;Schar;Leitende;Kinder/)
     end
-    its(:second) { should eq 'Nordostschweiz;"";Ausserroden;;' }
+    its(:second) { should eq "Nordostschweiz;\"\";Jungwacht;Ausserroden;;" }
   end
 
 end

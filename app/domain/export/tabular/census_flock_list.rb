@@ -27,7 +27,10 @@ module Export::Tabular
     end
 
     def query_flocks
-      ::Group::Flock.includes(:contact).order("groups.name")
+      ::Group::Flock
+        .without_archived_or_deleted
+        .includes(:contact)
+        .order("groups.name")
     end
 
     def query_member_counts
@@ -40,6 +43,7 @@ module Export::Tabular
       {state: (flock.parent.parent.type == "Group::State") ? flock.parent.parent.name : flock.parent.name,
        # rubocop:enable Layout/LineLength
        region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
+       kind: flock.kind,
        name: flock.name,
        contact_first_name: flock.contact&.first_name,
        contact_last_name: flock.contact&.last_name,

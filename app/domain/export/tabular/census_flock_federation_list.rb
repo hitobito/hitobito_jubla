@@ -26,7 +26,10 @@ module Export::Tabular
     end
 
     def query_flocks
-      ::Group::Flock.includes(:contact).order("groups.name")
+      ::Group::Flock
+        .without_archived_or_deleted
+        .includes(:contact)
+        .order("groups.name")
     end
 
     def query_member_counts
@@ -34,14 +37,16 @@ module Export::Tabular
         {flock_id: ::MemberCount.distinct.pluck(:flock_id)}).group(:flock_id)
     end
 
-    def build_item(flock, member_count) # rubocop:disable Metrics/MethodLength
-      # rubocop:todo Layout/LineLength
-      {state: (flock.parent.parent.type == "Group::State") ? flock.parent.parent.name : flock.parent.name,
-       # rubocop:enable Layout/LineLength
-       region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
-       name: flock.name,
-       leader_count: member_count.leader,
-       child_count: member_count.child}
+    def build_item(flock, member_count)
+      grand_parent = flock.parent.parent
+      {
+        state: (grand_parent.type == "Group::State") ? grand_parent.name : flock.parent.name,
+        region: (flock.parent.type == "Group::Region") ? flock.parent.name : "",
+        kind: flock.kind,
+        name: flock.name,
+        leader_count: member_count.leader,
+        child_count: member_count.child
+      }
     end
 
     def null_member_count
