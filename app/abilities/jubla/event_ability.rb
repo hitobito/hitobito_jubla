@@ -27,6 +27,12 @@ module Jubla::EventAbility
       class_side(:list_all_camps).if_it_support_or_federal_board_member
       class_side(:list_state_camps).if_state_camp_list_role
     end
+
+    alias_method_chain :if_layer_and_below_full_on_root, :superstructure
+  end
+
+  def if_layer_and_below_full_on_root_with_superstructure
+    user_context.permission_layer_ids(:layer_and_below_full).include?(Group::Federation.first.id)
   end
 
   def for_managed_events
