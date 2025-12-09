@@ -19,6 +19,24 @@ describe EventAbility do
 
   subject { Ability.new(user.reload) }
 
+  describe Event::Course do
+    describe "Group::FederalBoard::Member" do
+      let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
+
+      it "may export_list" do
+        expect(subject).to be_able_to(:export_list, Event::Course)
+      end
+    end
+
+    describe "Group::StateAgency::Leader" do
+      let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
+
+      it "may not export_list" do
+        expect(subject).not_to be_able_to(:export_list, Event::Course)
+      end
+    end
+  end
+
   context :layer_and_below_full do
     let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
 
