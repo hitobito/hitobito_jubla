@@ -12,7 +12,7 @@ describe InvoiceAbility do
     Group::FederalBoard, Group::FederalProfessionalGroup, Group::FederalWorkGroup, Group::OrganizationBoard
   ].each do |group_type|
     context group_type do
-      let!(:layer_group) { Group.root }
+      let!(:layer_group) { groups(:ch) }
       let!(:group) { group_type.create!(name: group_type.to_s, parent: layer_group) }
       let(:person) { people(:top_leader) }
       let!(:role) { Fabricate(group_type::Treasurer.sti_name, person: person, group: group) }

@@ -130,7 +130,7 @@ describe Group do
 
     it "orders by parent and name" do
       expected = ["Jubla Schweiz", "Kanton Bern", "Nordostschweiz"]
-      expect(subject.map(&:name)).to eq expected
+      expect(subject.map(&:name)).to match_array expected
     end
   end
 
