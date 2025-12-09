@@ -4,9 +4,17 @@
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
+#
+Group::Root.seed_once(:name, { parent_id: nil, name: "JUBLA"} )
 
-Group::Federation.seed_once(:parent_id,
-  { parent_id: nil,
+Group::Nejb.seed_once(:type,
+  {
+    parent_id: Group.root_id,
+    name: "Netzwerk Ehemalige Jungwacht Blauring",
+  }
+)
+Group::Federation.seed_once(:type,
+  { parent_id: Group.root_id,
     name: 'Jubla Schweiz',
     short_name: 'Schweiz' }
 )
