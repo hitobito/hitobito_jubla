@@ -7,14 +7,10 @@
 #
 Group::Root.seed_once(:name, { parent_id: nil, name: "JUBLA"} )
 
-Group::Nejb.seed_once(:type,
-  {
-    parent_id: Group.root_id,
-    name: "Netzwerk Ehemalige Jungwacht Blauring",
-  }
-)
-Group::Federation.seed_once(:type,
+Group::Nejb.seed_once(:parent_id,
   { parent_id: Group.root_id,
-    name: 'Jubla Schweiz',
-    short_name: 'Schweiz' }
-)
+    name: "Netzwerk Ehemalige Jungwacht Blauring" })
+Group::Federation.seed_once(:parent_id,
+  { parent_id: Group.root_id,
+    name: "Jubla Schweiz",
+    short_name: "Schweiz" })
