@@ -26,6 +26,11 @@ describe EventAbility do
       it "may export_list" do
         expect(subject).to be_able_to(:export_list, Event::Course)
       end
+
+      it "may not export_list if member of deleted federation group" do
+        groups(:ch).update_columns(deleted_at: Time.zone.now)
+        expect(subject).not_to be_able_to(:export_list, Event::Course)
+      end
     end
 
     describe "Group::StateAgency::Leader" do

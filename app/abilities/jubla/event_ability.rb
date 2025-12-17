@@ -32,7 +32,10 @@ module Jubla::EventAbility
   end
 
   def if_layer_and_below_full_on_root_with_superstructure
-    user_context.permission_layer_ids(:layer_and_below_full).include?(Group::Federation.first.id)
+    contains_any?(
+      user_context.permission_layer_ids(:layer_and_below_full),
+      Group::Federation.without_deleted.pluck(:id)
+    )
   end
 
   def for_managed_events
