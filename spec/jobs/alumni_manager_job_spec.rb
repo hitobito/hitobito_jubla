@@ -36,6 +36,16 @@ describe AlumniManagerJob do
     expect { job.perform }.not_to change { person.roles.count }
   end
 
+  it "noops if alumni roles have been created and person has active role in different layer" do
+    role.update_columns(end_on: Date.yesterday)
+
+    Fabricate(Group::StateAgency::Leader.sti_name, group: groups(:be_agency), person: person)
+    Fabricate(Group::FederalAlumnusGroup::Member.sti_name, person: person, group: groups(:ch_ehemalige))
+    Fabricate(Group::FederalBoard::Alumnus.sti_name, person: person, group: groups(:federal_board))
+
+    expect { job.perform }.not_to change { person.reload.roles.pluck(:id) }
+  end
+
   it "deletes alumni roles if role becomes active" do
     role.update_columns(end_on: Date.yesterday)
 
