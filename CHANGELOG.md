@@ -1,6 +1,6 @@
 # Hitobito Jubla Changelog
 
-## unreleased
+## Version 2.8
 
 * Census Export wurde um Schar Art erweitert, gelöschte und archivierte Scharen werden ignoriert (hitobito_jubla#228)
 * Die globalen Event Fragen (schub, meisterwerk) wurden entfernt (hitobito_jubla#221)
