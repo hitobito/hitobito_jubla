@@ -53,9 +53,9 @@ describe Jubla::Person::Filter::List do
     {
       range: 'deep',
       filters: {
-        role: { role_type_ids: roles.collect(&:id).join('-') }
+        role: { role_type_ids: roles.collect(&:type_id).join('-') }
+      }
     }
-  }
-end
+  end
 
 end
