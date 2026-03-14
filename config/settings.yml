@@ -50,11 +50,6 @@ social_account:
     - E-Mail
     - --Pinterest
     - --X (Twitter)
-    - Facebook
-    - Instagram
-    - TikTok
-    - Webseite
-    - Andere
 
 role:
   # If a role last less than this number of days, it is not archived
