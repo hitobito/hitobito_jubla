@@ -48,6 +48,8 @@ phone_number:
 social_account:
   predefined_labels:
     - E-Mail
+    - --Pinterest
+    - --X (Twitter)
     - Facebook
     - Instagram
     - TikTok
