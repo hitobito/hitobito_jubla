@@ -16,6 +16,9 @@ de:
     export_enqueued: "Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen."
 
   event:
+    participation_contact_datas:
+      fields:
+        readonly_hint: "Kann nur im Profil geändert werden."
     camps:
       nav_left_camps:
         all_camps: Alle Lager
