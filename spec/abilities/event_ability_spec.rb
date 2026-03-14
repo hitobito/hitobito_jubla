@@ -248,7 +248,88 @@ describe EventAbility do
 
   end
 
-  context :event_contact_data do
+  context :participations_read do
+    let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
+    let(:event) { Fabricate(:event, groups: [groups(:be)]) }
+    let(:participation) { Fabricate(:event_participation, event: event, participant: user) }
+
+    before { Fabricate(Event::Role::Speaker.name.to_sym, participation: participation) }
+
+    context Event do
+      it 'may show his event' do
+        is_expected.to be_able_to(:show, event)
+      end
+
+      it 'may not create events' do
+        is_expected.not_to be_able_to(:create, groups(:be).events.new.tap { |e| e.groups << group })
+      end
+
+      it 'may not update his event' do
+        is_expected.not_to be_able_to(:update, event)
+      end
+
+      it 'may not destroy his event' do
+        is_expected.not_to be_able_to(:destroy, event)
+      end
+
+      it 'may index people for his event' do
+        is_expected.to be_able_to(:index_participations, event)
+      end
+
+      it 'may show other event' do
+        other = Fabricate(:event, groups: [groups(:be)])
+        is_expected.to be_able_to(:show, other)
+      end
+
+      it 'may not update other event' do
+        other = Fabricate(:event, groups: [groups(:be)])
+        is_expected.not_to be_able_to(:update, other)
+      end
+
+      it 'may not index people for other event' do
+        other = Fabricate(:event, groups: [groups(:be)])
+        is_expected.not_to be_able_to(:index_participations, other)
+      end
+
+    end
+
+    context Event::Participation do
+      it 'may show his participation' do
+        is_expected.to be_able_to(:show, participation)
+      end
+
+      it 'may show other participation' do
+        other = Fabricate(:event_participation, event: event)
+        Fabricate(Event::Role::Participant.name.to_sym, participation: other)
+        is_expected.to be_able_to(:show, other)
+      end
+
+      it 'may not show details of other participation' do
+        other = Fabricate(:event_participation, event: event)
+        Fabricate(Event::Role::Participant.name.to_sym, participation: other)
+        is_expected.not_to be_able_to(:show_details, other)
+      end
+
+      it 'may not show participation in other event' do
+        other = Fabricate(:event_participation, event: Fabricate(:event, groups: [group]))
+        Fabricate(Event::Role::Participant.name.to_sym, participation: other)
+        is_expected.not_to be_able_to(:show, other)
+      end
+
+      it 'may not update his participation' do
+        is_expected.not_to be_able_to(:update, participation)
+      end
+
+      it 'may not update other participation' do
+        other = Fabricate(:event_participation, event: event)
+        Fabricate(Event::Role::Participant.name.to_sym, participation: other)
+        is_expected.not_to be_able_to(:update, other)
+      end
+    end
+
+  end
+
+  context :participations_read_details do
     let(:role) { Fabricate(Group::StateBoard::Member.name.to_sym, group: groups(:be_board)) }
     let(:event) { Fabricate(:event, groups: [groups(:be)]) }
     let(:participation) { Fabricate(:event_participation, event: event, participant: user) }
@@ -304,10 +385,10 @@ describe EventAbility do
         is_expected.to be_able_to(:show, other)
       end
 
-      it 'may not show details of other participation' do
+      it 'may show details of other participation' do
         other = Fabricate(:event_participation, event: event)
         Fabricate(Event::Role::Participant.name.to_sym, participation: other)
-        is_expected.not_to be_able_to(:show_details, other)
+        is_expected.to be_able_to(:show_details, other)
       end
 
       it 'may not show participation in other event' do
