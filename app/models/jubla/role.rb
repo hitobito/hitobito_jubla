@@ -19,11 +19,8 @@ module Jubla::Role
     after_save :set_person_origins
     after_destroy :set_person_origins
 
-    after_create :alumnus_manager_destroy
-    after_destroy :alumnus_manager_create
-
-    after_create :alumnus_manager_create_for_alumnus, if: :alumnus_member?
-    after_destroy :alumnus_manager_destroy_for_alumnus, if: :alumnus_member?
+    after_create { alumnus_manager.after_role_create }
+    after_destroy { alumnus_manager.after_role_destroy }
   end
 
   module ClassMethods
@@ -128,22 +125,6 @@ module Jubla::Role
 
   def set_person_origins
     person.update_columns(GroupOriginator.new(person).to_h) # rubocop:disable Rails/SkipsModelValidations intentionally, because it's called from an after_save hook
-  end
-
-  def alumnus_manager_create
-    alumnus_manager.create if old_enough_to_soft_destroy? && alumnus_applicable?
-  end
-
-  def alumnus_manager_destroy
-    alumnus_manager.destroy unless group.alumnus? || alumnus_member?
-  end
-
-  def alumnus_manager_create_for_alumnus
-    alumnus_manager.create if roles_in_layer.alumnus_members.one?
-  end
-
-  def alumnus_manager_destroy_for_alumnus
-    alumnus_manager.destroy if roles_in_layer.alumnus_members.blank?
   end
 
   def alumnus_manager

@@ -19,10 +19,25 @@ module Jubla::Role
       @person = role.person
     end
 
+    def after_role_create
+      if role.alumnus_member?
+        create_alumnus_role if last_in_group?
+      else
+        destroy_alumnus_role
+      end
+    end
+
+    def after_role_destroy
+      if role.alumnus_member?
+        destroy_alumnus_role
+      else
+        create_alumnus_role if last_in_group?
+      end
+    end
+
     def create
       create_alumnus_role if last_in_group?
     end
-
     def destroy
       destroy_alumnus_role
     end
