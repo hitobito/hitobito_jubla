@@ -6,7 +6,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 
-CustomContent.seed_once(:key,
+CustomContent.seed(:key,
   {
     key: CensusMailer::CONTENT_INVITATION,
     placeholders_optional: 'due-date'

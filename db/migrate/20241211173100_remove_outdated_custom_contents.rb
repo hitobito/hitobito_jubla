@@ -14,7 +14,7 @@ class RemoveOutdatedCustomContents < ActiveRecord::Migration[7.0]
   end
 
   def down
-    CustomContent.seed_once(:key,
+    CustomContent.seed(:key,
       {
         key: "new_member",
         placeholders_required: "recipient-name, recipient-profile-url"
