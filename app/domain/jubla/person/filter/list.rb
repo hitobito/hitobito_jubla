@@ -7,13 +7,13 @@ module Jubla::Person::Filter::List
   extend ActiveSupport::Concern
 
   included do
-    alias_method_chain :accessibles, :excluded
+    alias_method_chain :accessible_scope, :excluded
   end
 
   private
 
-  def accessibles_with_excluded
-    accessibles_without_excluded.where.not(people: {id: excluded_people_ids})
+  def accessible_scope_with_excluded
+    accessible_scope_without_excluded.where.not(people: {id: excluded_people_ids})
   end
 
   def excluded_people_ids

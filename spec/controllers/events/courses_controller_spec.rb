@@ -8,7 +8,7 @@
 require 'spec_helper'
 require 'csv'
 
-describe Event::ListsController do
+describe Events::CoursesController do
 
   before { sign_in(people(:top_leader)) }
   render_views
