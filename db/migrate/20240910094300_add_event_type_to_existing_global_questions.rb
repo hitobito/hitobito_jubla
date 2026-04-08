@@ -6,8 +6,10 @@
 # https://github.com/hitobito/hitobito_jubla.
 
 class AddEventTypeToExistingGlobalQuestions < ActiveRecord::Migration[6.1]
+  # Since the event_questions table changed in core, wa can't run this migration anymore
+  # We keep it for historic reason, if any issues would come up.
   def up
-    Event::Question.global.update_all(event_type: Event::Course.sti_name)
+    # Event::Question.global.update_all(event_type: Event::Course.sti_name)
   end
 
   def down
