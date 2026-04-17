@@ -14,5 +14,9 @@ module Jubla::Role
     def create = true
 
     def destroy = true
+
+    def after_role_create = true
+
+    def after_role_destroy = true
   end
 end
