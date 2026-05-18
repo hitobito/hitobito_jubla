@@ -434,4 +434,4 @@ de:
         cannot_import_alumnus: "%{name} wird nicht als Ehemaligenmitglied hinzugefügt, da er/sie noch eine aktive Rolle hat"
 
   delayed_job:
-    export/censuses_flock_export_job: Bestandesmeldungen-Export
+    export/census_flock_export_job: Bestandesmeldungen-Export
