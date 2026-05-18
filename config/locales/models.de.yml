@@ -128,7 +128,7 @@ de:
       group/state_professional_group/member:
         one: Mitglied
         other: Mitglieder
-        long: Kanton FG Mitglied        
+        long: Kanton FG Mitglied
 
       group/state_work_group/leader:
         one: Leitung
@@ -432,3 +432,6 @@ de:
         must_be_multiple_of: muss ein vielfaches von %{multiple} sein.
         other_roles_exists: Es befinden sich noch andere aktive Rollen in diesem Layer
         cannot_import_alumnus: "%{name} wird nicht als Ehemaligenmitglied hinzugefügt, da er/sie noch eine aktive Rolle hat"
+
+  delayed_job:
+    export/censuses_flock_export_job: Bestandesmeldungen-Export
