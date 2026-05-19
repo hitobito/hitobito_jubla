@@ -47,7 +47,9 @@ describe Event::QualificationsController, type: :controller do
 
       it "should have enabled checkboxes" do
         expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=checkbox]")
+        # rubocop:todo Layout/LineLength
         expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_no_selector("input[type=checkbox][disabled]")
+        # rubocop:enable Layout/LineLength
       end
 
       it "should not have message" do
@@ -68,7 +70,9 @@ describe Event::QualificationsController, type: :controller do
       end
 
       it "should have disabled checkboxes" do
+        # rubocop:todo Layout/LineLength
         expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=checkbox][disabled]")
+        # rubocop:enable Layout/LineLength
       end
     end
   end

@@ -101,7 +101,7 @@ describe MemberCounter do
     end
   end
 
-  def assert_member_counts(born_in, leader_f, leader_m, child_f, child_m)
+  def assert_member_counts(born_in, leader_f, leader_m, child_f, child_m) # rubocop:todo Metrics/AbcSize
     count = MemberCount.where(state_id: groups(:be).id, flock_id: flock.id, year: 2011, born_in: born_in).first
     expect(count.leader_f).to eq(leader_f)
     expect(count.leader_m).to eq(leader_m)

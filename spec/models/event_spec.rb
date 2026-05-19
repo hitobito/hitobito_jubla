@@ -10,12 +10,12 @@ describe Event do
 
   context "#up_to_a_month_ago" do
     it "find event 20 days ago" do
-      event.dates.first.update(finish_at: Time.now - 20.day)
+      event.dates.first.update(finish_at: 20.day.ago)
       expect(::Event.up_to_a_month_ago.count).to eq(1)
     end
 
     it "not find event 40 days ago" do
-      event.dates.first.update(finish_at: Time.now - 40.day)
+      event.dates.first.update(finish_at: 40.day.ago)
       expect(::Event.up_to_a_month_ago.count).to eq(0)
     end
   end

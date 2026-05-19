@@ -34,7 +34,7 @@ describe Event::Course do
     end
 
     context "with opening date in the past" do
-      before { subject.application_opening_at = Date.today - 1 }
+      before { subject.application_opening_at = Time.zone.today - 1 }
 
       it { is_expected.to be_application_possible }
 
@@ -46,19 +46,19 @@ describe Event::Course do
     end
 
     context "with ng date today" do
-      before { subject.application_opening_at = Date.today }
+      before { subject.application_opening_at = Time.zone.today }
 
       it { is_expected.to be_application_possible }
     end
 
     context "with opening date in the future" do
-      before { subject.application_opening_at = Date.today + 1 }
+      before { subject.application_opening_at = Time.zone.today + 1 }
 
       it { is_expected.not_to be_application_possible }
     end
 
     context "with closing date in the past" do
-      before { subject.application_closing_at = Date.today - 1 }
+      before { subject.application_closing_at = Time.zone.today - 1 }
 
       it { is_expected.to be_application_possible } # yep, we do not care about the closing date
     end

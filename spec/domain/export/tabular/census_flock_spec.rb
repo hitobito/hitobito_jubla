@@ -96,7 +96,9 @@ describe Export::Tabular::CensusFlock do
     subject { Export::Csv::Generator.new(census_flock).call.split("\n") }
 
     its(:first) do
+      # rubocop:todo Layout/LineLength
       should match(/Kanton;Region;Art;Schar;Kontakt Vorname;Kontakt Nachname;Adresse;PLZ;Ort;Jubla Sachversicherung;Jubla Haftpflicht;Jubla Vollkasko;Leitende;Kinder/)
+      # rubocop:enable Layout/LineLength
     end
     its(:second) { should eq "Nordostschweiz;\"\";Jungwacht;Ausserroden;;;;;;nein;nein;nein;;" }
   end

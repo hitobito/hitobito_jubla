@@ -8,7 +8,7 @@ require "spec_helper"
 describe EventsController do
   context "event_course" do
     let(:group) { groups(:ch) }
-    let(:date) { {label: "foo", start_at_date: Date.today, finish_at_date: Date.today} }
+    let(:date) { {label: "foo", start_at_date: Time.zone.today, finish_at_date: Time.zone.today} }
     let(:event) { assigns(:event) }
 
     let(:event_attrs) {
@@ -63,7 +63,7 @@ describe EventsController do
 
     context "create with coach" do
       let(:group) { groups(:innerroden) }
-      let(:date) { {label: "foo", start_at_date: Date.today, finish_at_date: Date.today} }
+      let(:date) { {label: "foo", start_at_date: Time.zone.today, finish_at_date: Time.zone.today} }
       let(:contact) { people(:flock_leader) }
       let(:coach) { Person.last }
 
@@ -96,7 +96,7 @@ describe EventsController do
 
     context "#new with default coach" do
       let(:flock) { groups(:innerroden) }
-      let(:date) { {label: "foo", start_at_date: Date.today, finish_at_date: Date.today} }
+      let(:date) { {label: "foo", start_at_date: Time.zone.today, finish_at_date: Time.zone.today} }
       let(:coach) { people(:top_leader) }
 
       it "#new event camp it should set default coach" do

@@ -16,7 +16,9 @@ describe Export::Tabular::Events::BsvList do
     let(:headers) { lines.first.encode("UTF-8").split(";") }
 
     it "exports headers" do
+      # rubocop:todo Layout/LineLength
       expect(headers).to eq ["Vereinbarung-ID-FiVer", "Kurs-ID-FiVer", "Kursnummer", "Datum", "Kursort", "Ausbildungstage",
+        # rubocop:enable Layout/LineLength
         "Teilnehmende (bis 30)", "Kursleitende", "Wohnkantone der TN", "Sprachen", "Kurstage",
         "Teilnehmende Total", "Leitungsteam Total", "Küchenteam", "Referenten"]
     end

@@ -7,7 +7,9 @@
 
 require "spec_helper"
 migration_file_name = Dir[Rails.root.join(
+  # rubocop:todo Layout/LineLength
   "..", "hitobito_jubla", "db", "migrate", "20211109094956_prolong_j_s_qualifications_2021.rb", "hitobito_jubla", "db", "migrate", "20211109094956_prolong_j_s_qualifications_2021.rb"
+  # rubocop:enable Layout/LineLength
 )].first
 require migration_file_name
 

@@ -60,7 +60,7 @@ describe Bsv::Info do
   end
 
   it "#warnings.participant_count is set if any participant has missing birthday" do
-    create_participant(birthday: Date.today)
+    create_participant(birthday: Time.zone.today)
     expect(info.warnings[:participant_count]).to eq(false)
 
     create_participant

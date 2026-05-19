@@ -10,7 +10,7 @@ describe Jubla::Person::Filter::List do
 
   [[Group::FlockAlumnusGroup::Member, :bern_ehemalige],
     [Group::Flock::Alumnus, :bern]].each do |role_type, role_group|
-    context "#{role_type}" do
+    context role_type.to_s do
       %w[ch be city bern].zip(%w[federation state region flock]).each do |group, layer|
         let(:alumnus) { Fabricate(role_type.name, group: groups(role_group), person: person) }
 
