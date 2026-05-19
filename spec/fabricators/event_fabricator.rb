@@ -39,7 +39,7 @@ Fabricator(:jubla_course, from: :course) do
     contact_groups = []
     groups = attrs[:groups]
     groups.each do |g|
-      if type = g.class.contact_group_type
+      if (type = g.class.contact_group_type)
         state_agencies = g.children.without_deleted.where(type: type.sti_name)
         contact_groups.concat(state_agencies)
       end

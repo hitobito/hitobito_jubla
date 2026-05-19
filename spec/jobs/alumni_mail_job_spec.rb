@@ -9,7 +9,7 @@ describe AlumniMailJob do
   describe "#perform" do
     it "sends flock email if there are only Alumnus::Member or ::Alumnus roles left" do
       group = groups(:bern)
-      person = Fabricate(Group::FlockAlumnusGroup::Member.sti_name.to_sym, group: group.alumnus_group).person
+      Fabricate(Group::FlockAlumnusGroup::Member.sti_name.to_sym, group: group.alumnus_group).person
       person = Fabricate(Group::Flock::Alumnus.sti_name.to_sym, group: group).person
 
       expect(AlumniMailer).to receive(:new_member_flock).with(person).and_call_original

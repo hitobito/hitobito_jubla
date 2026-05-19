@@ -45,5 +45,4 @@ describe AlumniManagerJob do
 
     expect { job.perform }.not_to change { person.reload.roles.pluck(:id) }
   end
-
 end

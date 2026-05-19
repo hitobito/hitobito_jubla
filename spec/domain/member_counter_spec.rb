@@ -11,7 +11,7 @@ describe MemberCounter do
   before do
     asterix = groups(:asterix)
     obelix = groups(:obelix)
-    leader = Fabricate(Group::Flock::Leader.name, group: flock,
+    _leader = Fabricate(Group::Flock::Leader.name, group: flock,
       person: Fabricate(:person, gender: "w", birthday: "1985-01-01"))
     guide = Fabricate(Group::Flock::Guide.name, group: flock,
       person: Fabricate(:person, gender: "m", birthday: "1989-01-01"))
