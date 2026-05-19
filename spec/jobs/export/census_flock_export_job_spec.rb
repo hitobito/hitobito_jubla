@@ -6,7 +6,7 @@
 require "spec_helper"
 
 describe Export::CensusFlockExportJob do
-  subject { Export::CensusFlockExportJob.new(format, user.id, 2012, type: '', filename: filename) }
+  subject { Export::CensusFlockExportJob.new(format, user.id, 2012, type: "", filename: filename) }
 
   let(:filename) { AsyncDownloadFile.create_name("flock_export", user.id) }
   let(:file) { AsyncDownloadFile.from_filename(filename, format) }

@@ -8,6 +8,6 @@
 SeedFu.quiet = true
 
 SeedFu.seed [
-  Rails.root.join('db', 'seeds'),
-  HitobitoJubla::Wagon.root.join('db', 'seeds'),
+  Rails.root.join("db", "seeds"),
+  HitobitoJubla::Wagon.root.join("db", "seeds")
 ]

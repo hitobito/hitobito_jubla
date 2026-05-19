@@ -11,7 +11,9 @@ describe PopulationController do
 
   let!(:leader) { Fabricate(Group::Flock::Leader.name.to_sym, group: flock).person }
   let!(:guide) { Fabricate(Group::Flock::Guide.name.to_sym, group: flock).person }
-  let!(:deleted) { Fabricate(Group::Flock::Leader.name.to_sym, group: flock, created_at: 2.years.ago, end_on: 1.year.ago) }
+  let!(:deleted) {
+    Fabricate(Group::Flock::Leader.name.to_sym, group: flock, created_at: 2.years.ago, end_on: 1.year.ago)
+  }
   let!(:group_leader) { Fabricate(Group::ChildGroup::Leader.name.to_sym, group: asterix, person: guide).person }
   let!(:child) { Fabricate(Group::ChildGroup::Child.name.to_sym, group: asterix).person }
 
@@ -22,14 +24,21 @@ describe PopulationController do
 
     describe "groups" do
       subject { assigns(:groups) }
+
       it { is_expected.to eq([flock, groups(:asterix), groups(:obelix), groups(:bern_ehemalige)]) }
     end
 
     describe "people by group" do
       subject { assigns(:people_by_group) }
 
-      it { expect(subject[flock].collect(&:to_s)).to match_array([leader, people(:flock_leader_bern), guide].collect(&:to_s)) }
-      it { expect(subject[groups(:asterix)].collect(&:to_s)).to match_array([group_leader, child, people(:child)].collect(&:to_s)) }
+      it {
+        expect(subject[flock].collect(&:to_s)).to match_array([leader, people(:flock_leader_bern),
+          guide].collect(&:to_s))
+      }
+      it {
+        expect(subject[groups(:asterix)].collect(&:to_s)).to match_array([group_leader, child,
+          people(:child)].collect(&:to_s))
+      }
       it { expect(subject[groups(:obelix)]).to eq([]) }
     end
 

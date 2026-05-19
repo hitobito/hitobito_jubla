@@ -36,7 +36,8 @@ describe Wizards::RegisterNewUserWizard do
       end
 
       it "is invalid if phone number is invalid" do
-        params[:new_user_form] = {first_name: "test", last_name: "test", email: "tester@example.com", phone_number: "1234"}
+        params[:new_user_form] =
+          {first_name: "test", last_name: "test", email: "tester@example.com", phone_number: "1234"}
         expect(wizard).not_to be_valid
         expect(new_user_form.errors).to have(1).item
         expect(new_user_form.errors[:phone_number][0]).to eq "ist nicht gültig"

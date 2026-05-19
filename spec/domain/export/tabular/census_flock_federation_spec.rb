@@ -8,9 +8,9 @@
 require "spec_helper"
 
 describe Export::Tabular::CensusFlockFederation do
-
   let(:census_flock) { Export::Tabular::CensusFlockFederation.new(entries) }
   let(:entries) { Export::Tabular::CensusFlockFederationList.new(2012).entries }
+
   describe ".headers" do
     subject { census_flock }
 
@@ -40,7 +40,6 @@ describe Export::Tabular::CensusFlockFederation do
     subject { census_flock.list[1] }
 
     describe "keys and values" do
-
       its(:keys) do
         should eq [:state, :region, :kind, :name, :leader_count, :child_count]
       end
@@ -58,7 +57,6 @@ describe Export::Tabular::CensusFlockFederation do
   end
 
   describe "to_csv" do
-
     subject { Export::Csv::Generator.new(census_flock).call.split("\n") }
 
     its(:first) do
@@ -66,5 +64,4 @@ describe Export::Tabular::CensusFlockFederation do
     end
     its(:second) { should eq "Nordostschweiz;\"\";Jungwacht;Ausserroden;;" }
   end
-
 end

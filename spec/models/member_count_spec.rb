@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: member_counts
@@ -20,21 +19,19 @@
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe MemberCount do
-
-  let(:be)   { groups(:be) }
-  let(:no)   { groups(:no) }
+  let(:be) { groups(:be) }
+  let(:no) { groups(:no) }
   let(:bern) { groups(:bern) }
   let(:thun) { groups(:thun) }
   let(:innerroden) { groups(:innerroden) }
 
-  describe '.total_by_flocks' do
-
+  describe ".total_by_flocks" do
     subject { MemberCount.total_by_flocks(2012, be).to_a }
 
-    it 'counts totals' do
+    it "counts totals" do
       is_expected.to have(2).items
 
       bern_count = subject.detect { |c| c.flock_id == bern.id }
@@ -45,27 +42,26 @@ describe MemberCount do
     end
   end
 
-  describe '.total_for_flock' do
+  describe ".total_for_flock" do
     subject { MemberCount.total_for_flock(2012, bern) }
 
-    it 'counts totals' do
+    it "counts totals" do
       assert_member_counts(subject, 2, 3, 4, 3)
     end
   end
 
-  describe '.total_for_federation' do
+  describe ".total_for_federation" do
     subject { MemberCount.total_for_federation(2012) }
 
-    it 'counts totals' do
+    it "counts totals" do
       assert_member_counts(subject, 4, 7, 9, 8)
     end
   end
 
-  describe '.total_by_states' do
-
+  describe ".total_by_states" do
     subject { MemberCount.total_by_states(2012).to_a }
 
-    it 'counts totals' do
+    it "counts totals" do
       is_expected.to have(2).items
 
       be_count = subject.detect { |c| c.state_id == be.id }
@@ -76,10 +72,10 @@ describe MemberCount do
     end
   end
 
-  describe '.details_for_flock' do
+  describe ".details_for_flock" do
     subject { MemberCount.details_for_flock(2012, bern).to_a }
 
-    it 'lists all years' do
+    it "lists all years" do
       expect(subject.collect(&:born_in)).to eq([1985, 1988, 1997])
 
       assert_member_counts(subject[0], 1, 3, nil, nil)
@@ -88,10 +84,10 @@ describe MemberCount do
     end
   end
 
-  describe '.details_for_state' do
+  describe ".details_for_state" do
     subject { MemberCount.details_for_state(2012, be).to_a }
 
-    it 'lists all years' do
+    it "lists all years" do
       expect(subject.collect(&:born_in)).to eq([1984, 1985, 1988, 1997, 1999])
 
       assert_member_counts(subject[0], 1, 1, nil, nil) # 1984
@@ -102,10 +98,10 @@ describe MemberCount do
     end
   end
 
-  describe '.details_for_federation' do
+  describe ".details_for_federation" do
     subject { MemberCount.details_for_federation(2012).to_a }
 
-    it 'lists all years' do
+    it "lists all years" do
       expect(subject.collect(&:born_in)).to eq([1984, 1985, 1988, 1997, 1999])
 
       assert_member_counts(subject[0], 2, 3, nil, nil) # 1984
@@ -122,5 +118,4 @@ describe MemberCount do
     expect(count.child_f).to eq(child_f)
     expect(count.child_m).to eq(child_m)
   end
-
 end

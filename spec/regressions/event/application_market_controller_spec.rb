@@ -5,13 +5,13 @@
 
 require "spec_helper"
 
-describe Event::ApplicationMarketController, type: :controller  do
+describe Event::ApplicationMarketController, type: :controller do
   render_views
 
   let(:be) { groups(:be) }
   let(:no) { groups(:no) }
   let(:dom) { Capybara::Node::Simple.new(response.body) }
-  let(:course) { events(:top_course)}
+  let(:course) { events(:top_course) }
   let(:person) { people(:top_leader) }
 
   before do
@@ -23,5 +23,4 @@ describe Event::ApplicationMarketController, type: :controller  do
     get :index, params: {event_id: course.id, group_id: be.id}
     expect(dom).to have_css "h2", text: "Zugeteilte Teilnehmende"
   end
-
 end

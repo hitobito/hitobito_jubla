@@ -1,4 +1,3 @@
-# encoding: utf-8
 # == Schema Information
 #
 # Table name: censuses
@@ -9,23 +8,21 @@
 #  finish_at :date
 #
 
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Census do
-
-  describe '.last' do
+  describe ".last" do
     subject { Census.last }
 
     it { is_expected.to eq(censuses(:two_o_12)) }
   end
 
-  describe '.current' do
+  describe ".current" do
     subject { Census.current }
 
     it { is_expected.to eq(censuses(:two_o_12)) }

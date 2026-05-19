@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -7,15 +5,13 @@
 
 # encoding:  utf-8
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Event::Course::ConditionsController, type: :controller do
-
-
   let(:group) { groups(:ch) }
-  let(:test_entry) { group.course_conditions.create!(label: 'foo', content: 'bar') }
-  let(:test_entry_attrs) { { label: 'some label', content: 'some more content' } }
-  let(:scope_params) {  { group_id: group.id } }
+  let(:test_entry) { group.course_conditions.create!(label: "foo", content: "bar") }
+  let(:test_entry_attrs) { {label: "some label", content: "some more content"} }
+  let(:scope_params) { {group_id: group.id} }
 
   before do
     test_entry
@@ -32,7 +28,5 @@ describe Event::Course::ConditionsController, type: :controller do
     end
   end
 
-
-  include_examples 'crud controller', skip: [%w(update html invalid), %w(destroy html invalid)]
-
+  include_examples "crud controller", skip: [%w[update html invalid], %w[destroy html invalid]]
 end

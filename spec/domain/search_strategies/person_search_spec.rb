@@ -8,8 +8,8 @@ require "spec_helper"
 describe SearchStrategies::PersonSearch do
   before do
     people(:flock_leader).update!(name_mother: "Helen", name_father: "Jack", nationality: "Kumbaja",
-                            profession: "Bänker", bank_account: "Account", insurance_company: "Axa", 
-                            insurance_number: 6566)
+      profession: "Bänker", bank_account: "Account", insurance_company: "Axa",
+      insurance_number: 6566)
   end
 
   describe "#search_fulltext" do

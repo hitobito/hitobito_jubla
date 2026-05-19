@@ -242,7 +242,8 @@ describe Role do
 
       it "still creates alumni member, if person has an alumnus role in same layer" do
         person = Fabricate(Group::OrganizationBoard::Alumnus.sti_name, group: groups(:organization_board)).person
-        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board), created_at: some_time_ago, person: person)
+        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board),
+          created_at: some_time_ago, person: person)
         expect { role.destroy }.to_not change { alumnus_member_count }
       end
 
@@ -320,7 +321,8 @@ describe Role do
 
       it "allows alumnus member in the past if active role in same layer exists" do
         person = Fabricate(Group::FederalBoard::Member.to_s, group: groups(:federal_board)).person
-        role = person.roles.build(type: Group::FederalAlumnusGroup::Member.to_s, group: alumni_group, start_on: 10.days.ago, end_on: 1.day.ago)
+        role = person.roles.build(type: Group::FederalAlumnusGroup::Member.to_s, group: alumni_group,
+          start_on: 10.days.ago, end_on: 1.day.ago)
         expect(role).to be_valid
       end
     end

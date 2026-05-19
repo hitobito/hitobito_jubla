@@ -11,7 +11,7 @@ describe Group::PersonAddRequestsController do
   describe "#POST activate" do
     it "raises" do
       expect do
-        post :activate, params: { group_id: groups(:ch).id }
+        post :activate, params: {group_id: groups(:ch).id}
       end.to raise_error "shall never get called with jubla wagon"
     end
   end
@@ -19,7 +19,7 @@ describe Group::PersonAddRequestsController do
   describe "#DELETE deactivate" do
     it "raises" do
       expect do
-        delete :deactivate, params: { group_id: groups(:ch).id }
+        delete :deactivate, params: {group_id: groups(:ch).id}
       end.to raise_error "shall never get called with jubla wagon"
     end
   end
