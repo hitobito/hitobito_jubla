@@ -21,9 +21,9 @@ module Jubla::Role
         role.update_columns(alumni_processed: true)
         create_alumnus_role if last_in_group?
 
-        return if skip_alumnus_callback?
-
-        create_alumnus_group_member if last_in_layer? && person_old_enough?
+        if !skip_alumnus_callback? && last_in_layer? && person_old_enough?
+          create_alumnus_group_member
+        end
       end
     end
 
