@@ -20,11 +20,10 @@ module Jubla::Role
     end
 
     def create
-      create_alumnus_role if last_in_group?
-    end
-
-    def destroy
-      destroy_alumnus_role
+      Role.transaction do
+        role.update_columns(alumni_processed: true)
+        create_alumnus_role if last_in_group?
+      end
     end
 
     private

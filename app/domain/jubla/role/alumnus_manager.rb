@@ -17,16 +17,14 @@ module Jubla::Role
     end
 
     def create
-      create_alumnus_role if last_in_group?
+      Role.transaction do
+        role.update_columns(alumni_processed: true)
+        create_alumnus_role if last_in_group?
 
-      return if skip_alumnus_callback?
-
-      create_alumnus_group_member if last_in_layer? && person_old_enough?
-    end
-
-    def destroy
-      destroy_alumnus_role
-      destroy_alumnus_group_member
+        if !skip_alumnus_callback? && last_in_layer? && person_old_enough?
+          create_alumnus_group_member
+        end
+      end
     end
 
     private

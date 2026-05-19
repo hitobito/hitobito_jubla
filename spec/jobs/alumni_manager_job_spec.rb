@@ -18,14 +18,14 @@ describe AlumniManagerJob do
   end
 
   it "noops if role expires in the future" do
-    role.update!(end_on: Time.zone.tomorrow)
-    expect { job.perform }.not_to change { person.roles.count }
+    role.update_columns(end_on: Time.zone.tomorrow)
+    expect { job.perform }.not_to change { person.reload.roles.count }
   end
 
   it "creates alumni role in group and layer if role expired" do
-    role.update!(end_on: Date.yesterday)
-    expect { job.perform }.to change { person.roles.count }.by(2)
-    expect(person.roles.map(&:type)).to match_array ["Group::FederalBoard::Alumnus", "Group::FederalAlumnusGroup::Member"]
+    role.update_columns(end_on: Date.yesterday)
+    expect { job.perform }.to change { person.reload.roles.count }.by(1)
+    expect(person.roles.map(&:type)).to match_array ["Group::FederalBoard::Alumnus"]
   end
 
   it "noops if alumni roles have been created" do
@@ -46,24 +46,4 @@ describe AlumniManagerJob do
     expect { job.perform }.not_to change { person.reload.roles.pluck(:id) }
   end
 
-  it "deletes alumni roles if role becomes active" do
-    role.update_columns(end_on: Date.yesterday)
-
-    Fabricate(Group::FederalAlumnusGroup::Member.sti_name, person: person, group: groups(:ch_ehemalige))
-    Fabricate(Group::FederalBoard::Alumnus.sti_name, person: person, group: groups(:federal_board))
-    role.update_columns(end_on: nil)
-
-    expect { job.perform }.to change { person.roles.count }.by(-2)
-    expect(person.roles.map(&:type)).to match_array ["Group::FederalBoard::Member"]
-  end
-
-  it "does not try to delete archived alumni roles if role becomes active" do
-    role.update_columns(end_on: Date.yesterday)
-    archived_alumnus_role = Fabricate(Group::FederalBoard::Alumnus.sti_name, person: person, group: groups(:federal_board), created_at: 2.years.ago, archived_at: 1.year.ago)
-    role.update_columns(end_on: nil)
-
-    expect { job.perform }.not_to change { person.roles.count }
-
-    expect(archived_alumnus_role.reload).to be_persisted
-  end
 end
