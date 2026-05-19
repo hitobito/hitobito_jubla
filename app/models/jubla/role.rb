@@ -19,11 +19,9 @@ module Jubla::Role
     after_save :set_person_origins
     after_destroy :set_person_origins
 
-    after_create :alumnus_manager_destroy
     after_destroy :alumnus_manager_create
 
-    after_create :alumnus_manager_create_for_alumnus, if: :alumnus_member?
-    after_destroy :alumnus_manager_destroy_for_alumnus, if: :alumnus_member?
+    after_update_commit :reset_alumni_processed, if: :alumni_processed?
   end
 
   module ClassMethods
@@ -118,6 +116,14 @@ module Jubla::Role
     roles_in_layer.without_alumnus
   end
 
+  def alumnus_manager
+    @alumnus_manager ||= if %w[Flock ChildGroup FlockAlumnusGroup].include? type.split("::", 3)[1]
+      Jubla::Role::AlumnusManager.new(self, skip_alumnus_callback: skip_alumnus_callback)
+    else
+      Jubla::Role::LightAlumnusManager.new(self)
+    end
+  end
+
   private
 
   def assert_no_active_roles
@@ -130,27 +136,11 @@ module Jubla::Role
     person.update_columns(GroupOriginator.new(person).to_h) # rubocop:disable Rails/SkipsModelValidations intentionally, because it's called from an after_save hook
   end
 
+  def reset_alumni_processed
+    update_columns(alumni_processed: false) unless end_on_was&.past?
+  end
+
   def alumnus_manager_create
     alumnus_manager.create if old_enough_to_soft_destroy? && alumnus_applicable?
-  end
-
-  def alumnus_manager_destroy
-    alumnus_manager.destroy unless group.alumnus? || alumnus_member?
-  end
-
-  def alumnus_manager_create_for_alumnus
-    alumnus_manager.create if roles_in_layer.alumnus_members.one?
-  end
-
-  def alumnus_manager_destroy_for_alumnus
-    alumnus_manager.destroy if roles_in_layer.alumnus_members.blank?
-  end
-
-  def alumnus_manager
-    @alumnus_manager ||= if %w[Flock ChildGroup FlockAlumnusGroup].include? type.split("::", 3)[1]
-      Jubla::Role::AlumnusManager.new(self, skip_alumnus_callback: skip_alumnus_callback)
-    else
-      Jubla::Role::LightAlumnusManager.new(self)
-    end
   end
 end

@@ -11,23 +11,12 @@ class AlumniManagerJob < RecurringJob
   APPLICABLE_ROLE_TYPES = Alumni::APPLICABLE_ROLE_TYPES.map(&:sti_name)
 
   def perform_internal
-    destroy_obsolete
-    create_missing
-  end
+    scope = Role
+      .ended_or_archived
+      .where(type: APPLICABLE_ROLE_TYPES, alumni_processed: false)
 
-  def create_missing
-    alumni = Person.joins(:roles).merge(Role.alumnus_members).distinct
-    inactive = Role.ended_or_archived.where(type: APPLICABLE_ROLE_TYPES)
-    inactive.where.not(person_id: alumni).find_each do |role|
-      Jubla::Role::AlumnusManager.new(role).create
-    end
-  end
-
-  def destroy_obsolete
-    active_roles = Role.where(type: APPLICABLE_ROLE_TYPES).distinct
-    Role.alumnus_members.without_archived.where(person_id: active_roles.pluck(:person_id),
-      group_id: active_roles.pluck(:group_id)).find_each do |role|
-      Jubla::Role::AlumnusManager.new(role).destroy
+    scope.find_each do |role|
+      role.alumnus_manager.create
     end
   end
 

@@ -65,6 +65,40 @@ describe Role do
     end
   end
 
+  context "#update" do
+    let(:role) { roles(:flock_leader) }
+
+    describe "alumni_processed" do
+      before do
+        role.update!(end_on: 1.day.ago, alumni_processed: true)
+      end
+
+      it "changes to false if new end_on is today" do
+        expect do
+          role.update!(end_on: Time.zone.today)
+        end.to change { role.reload.alumni_processed }.from(true).to(false)
+      end
+
+      it "changes to false if new end_on is in the future" do
+        expect do
+          role.update!(end_on: 1.week.from_now)
+        end.to change { role.reload.alumni_processed }.from(true).to(false)
+      end
+
+      it "changes to false if new end_on is blank" do
+        expect do
+          role.update!(end_on: nil)
+        end.to change { role.reload.alumni_processed }.from(true).to(false)
+      end
+
+      it "remains true if end_on changes to past value" do
+        expect do
+          role.update(end_on: 1.week.ago)
+        end.not_to change { role.reload.alumni_processed }
+      end
+    end
+  end
+
   context "alumnus group with AlumnusManager" do
     let(:group) { groups(:bern) }
     let(:alumni_group) { groups(:bern_ehemalige) }
@@ -92,17 +126,6 @@ describe Role do
 
     def alumnus_member_count
       Group::FlockAlumnusGroup::Member.where(group: alumni_group).count
-    end
-
-    context "create" do
-      create_samples.each do |role_type, group, change|
-        it "#{role_type} changes alumni members by #{change}" do
-          role = Fabricate(Group::FlockAlumnusGroup::Member.to_s, group: alumni_group)
-          expect do
-            Fabricate(role_type, person: role.person, group: groups(group))
-          end.to change { alumnus_member_count }.by(change.to_i)
-        end
-      end
     end
 
     context "destroy" do
@@ -133,38 +156,6 @@ describe Role do
         role = Fabricate(Group::Flock::Leader.sti_name, group: groups(:bern), created_at: some_time_ago)
         role.person.update(email: nil)
         expect { role.destroy }.not_to change { Delayed::Job.count }
-      end
-    end
-
-    context "after alumnus creation" do
-      it "create alumni member if new alumni role added" do
-        expect do
-          Fabricate("Group::Flock::Alumnus", group: groups(:bern))
-        end.to change { alumnus_member_count }.by(1)
-      end
-
-      it "only create one alumni member if multiple new alumni roles added in same layer" do
-        expect do
-          role = Fabricate("Group::Flock::Alumnus", group: groups(:bern))
-          Fabricate("Group::Flock::Alumnus", group: groups(:bern), person: role.person)
-        end.to change { alumnus_member_count }.by(1)
-      end
-    end
-
-    context "after alumnus deletion" do
-      it "destroies alumnus membership if last role" do
-        role = Fabricate("Group::Flock::Alumnus", group: groups(:bern))
-        expect do
-          role.destroy
-        end.to change { alumnus_member_count }.by(-1)
-      end
-
-      it "does nothing if there are some alumnus roles left in same layer" do
-        role = Fabricate("Group::Flock::Alumnus", group: groups(:bern))
-        Fabricate("Group::Flock::Alumnus", group: groups(:bern), person: role.person)
-        expect do
-          role.destroy
-        end.to change { alumnus_member_count }.by(0)
       end
     end
 
@@ -338,23 +329,6 @@ describe Role do
   context "alumnus role" do
     let(:role) { Fabricate(role_class.name.to_s, group: groups(:bern), created_at: some_time_ago) }
     let(:role_class) { Group::Flock::Leader }
-
-    context "create" do
-      it "creating active role flags alumnus role as deleted" do
-        role = Fabricate(Group::Flock::Alumnus.name, group: groups(:bern), created_at: some_time_ago)
-        expect do
-          Fabricate(Group::Flock::Leader.name, group: groups(:bern), person: role.person)
-        end.to change { Group::Flock::Alumnus.count }.by(-1)
-        expect(Role.with_inactive.find(role.id)).to be_present
-      end
-
-      it "creating alumnus role does not flag existing alumnus role as deleted" do
-        role = Fabricate(Group::Flock::Alumnus.name, group: groups(:bern), created_at: some_time_ago)
-        expect do
-          Fabricate(Group::Flock::Alumnus.name, group: groups(:bern), person: role.person)
-        end.to change { Group::Flock::Alumnus.count }.by(1)
-      end
-    end
 
     context "destroy" do
       it "recent role is flagged as deleted without creating alumnus role" do
