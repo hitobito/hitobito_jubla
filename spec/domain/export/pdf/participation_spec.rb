@@ -17,14 +17,15 @@ describe Export::Pdf::Participation do
       end
     end
   end
+
   subject(:pdf) { described_class.render(participation) }
 
-    it "renders with all managers" do
-      expect(participation.person.managers).to contain_exactly(*managers)
-      text = PDF::Inspector::Text.analyze(pdf).show_text.join(' ')
-      expect(text).to include(PeopleManager.model_name.human(count: 1))
-      managers.each do |manager|
-        expect(text).to include("#{manager}: #{manager.email}, #{manager.phone_numbers.first.number}")
-      end
+  it "renders with all managers" do
+    expect(participation.person.managers).to contain_exactly(*managers)
+    text = PDF::Inspector::Text.analyze(pdf).show_text.join(" ")
+    expect(text).to include(PeopleManager.model_name.human(count: 1))
+    managers.each do |manager|
+      expect(text).to include("#{manager}: #{manager.email}, #{manager.phone_numbers.first.number}")
     end
+  end
 end

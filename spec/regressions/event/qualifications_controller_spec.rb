@@ -1,18 +1,15 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Event::QualificationsController, type: :controller do
-
   render_views
 
   let(:event) do
-    event = Fabricate(:jubla_course, kind: Event::Kind.where(short_name: 'SLK').first)
+    event = Fabricate(:jubla_course, kind: Event::Kind.where(short_name: "SLK").first)
     event.dates.create!(start_at: 10.days.ago, finish_at: 5.days.ago)
     event
   end
@@ -40,57 +37,64 @@ describe Event::QualificationsController, type: :controller do
     participant_2
   end
 
-  describe 'GET index' do
-
-    context 'in open state' do
-      before { get :index, params: { group_id: group.id, event_id: event.id } }
+  describe "GET index" do
+    context "in open state" do
+      before { get :index, params: {group_id: group.id, event_id: event.id} }
 
       subject { assigns(:participants) }
 
       it { is_expected.to have(2).items }
 
-      it 'should have enabled checkboxes' do
-        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector('input[type=checkbox]')
-        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_no_selector('input[type=checkbox][disabled]')
+      it "should have enabled checkboxes" do
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=checkbox]")
+        # rubocop:todo Layout/LineLength
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_no_selector("input[type=checkbox][disabled]")
+        # rubocop:enable Layout/LineLength
       end
 
-      it 'should not have message' do
-        expect(dom).not_to have_content('können die Qualifikationen nicht mehr bearbeitet werden')
+      it "should not have message" do
+        expect(dom).not_to have_content("können die Qualifikationen nicht mehr bearbeitet werden")
       end
     end
 
-    context 'in closed state' do
-      before { event.update_column(:state, 'closed') }
-      before { get :index, params: { group_id: group.id, event_id: event.id } }
+    context "in closed state" do
+      before { event.update_column(:state, "closed") }
+      before { get :index, params: {group_id: group.id, event_id: event.id} }
 
       subject { assigns(:participants) }
 
       it { is_expected.to have(2).items }
 
-      it 'should have message' do
-        expect(dom).to have_content('können die Qualifikationen nicht mehr bearbeitet werden')
+      it "should have message" do
+        expect(dom).to have_content("können die Qualifikationen nicht mehr bearbeitet werden")
       end
 
-      it 'should have disabled checkboxes' do
-        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector('input[type=checkbox][disabled]')
+      it "should have disabled checkboxes" do
+        # rubocop:todo Layout/LineLength
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=checkbox][disabled]")
+        # rubocop:enable Layout/LineLength
       end
-
     end
   end
 
-  describe 'PUT update' do
-    context 'adding' do
-      context 'in open state' do
-        before { put :update, params: { group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] } }
+  describe "PUT update" do
+    context "adding" do
+      context "in open state" do
+        before {
+          put :update, params: {group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s]}
+        }
 
         subject { obtained_qualifications }
 
         it { is_expected.to have(1).item }
       end
 
-      context 'in closed state' do
-        before { event.update_column(:state, 'closed') }
-        before { put :update, params: { group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s] } }
+      context "in closed state" do
+        before { event.update_column(:state, "closed") }
+
+        before {
+          put :update, params: {group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s]}
+        }
 
         subject { obtained_qualifications }
 
@@ -98,40 +102,38 @@ describe Event::QualificationsController, type: :controller do
       end
     end
 
-    context 'removing' do
+    context "removing" do
       before do
         id = event.kind.event_kind_qualification_kinds.first.qualification_kind_id
         participant_1.person.qualifications.create!(qualification_kind_id: id,
-                                                    qualified_at: event.qualification_date,
-                                                    start_at: event.qualification_date)
+          qualified_at: event.qualification_date,
+          start_at: event.qualification_date)
       end
 
-      context 'in open state' do
-        before { put :update, params: { group_id: group.id, event_id: event.id } }
+      context "in open state" do
+        before { put :update, params: {group_id: group.id, event_id: event.id} }
 
         subject { obtained_qualifications }
 
         it { is_expected.to have(0).item }
       end
 
-      context 'in closed state' do
-        before { event.update_column(:state, 'closed') }
-        before { put :update, params: { group_id: group.id, event_id: event.id, participation_ids: [] } }
+      context "in closed state" do
+        before { event.update_column(:state, "closed") }
+        before { put :update, params: {group_id: group.id, event_id: event.id, participation_ids: []} }
 
         subject { obtained_qualifications }
 
         it { is_expected.to have(1).items }
       end
-
     end
   end
 
   def obtained_qualifications(participation = participant_1)
-    role = participation.roles.any? { |role| role.class.leader? } ? 'leader' : 'participant'
+    role = (participation.roles.any? { |role| role.class.leader? }) ? "leader" : "participant"
     qualification_kinds = participation.event.kind.qualification_kinds(:qualification, role)
     participation.person.qualifications
       .where(qualified_at: participation.event.qualification_date)
       .where(qualification_kind_id: qualification_kinds.map(&:id)).to_a
   end
-
 end

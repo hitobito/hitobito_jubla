@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -32,22 +30,20 @@
 #  participant_count      :integer          default(0)
 #
 
-Fabricator(:camp, from: :event, class_name: :'Event::Camp') do
+Fabricator(:camp, from: :event, class_name: :"Event::Camp") do
   groups { [Group.all_types.detect { |t| t.event_types.include?(Event::Camp) }.first] }
 end
 
 Fabricator(:jubla_course, from: :course) do
   application_contact do |attrs|
-
     contact_groups = []
     groups = attrs[:groups]
     groups.each do |g|
-      if type = g.class.contact_group_type
+      if (type = g.class.contact_group_type)
         state_agencies = g.children.without_deleted.where(type: type.sti_name)
         contact_groups.concat(state_agencies)
       end
     end
     contact_groups.sample
-
   end
 end

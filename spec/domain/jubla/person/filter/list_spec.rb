@@ -1,24 +1,20 @@
-# encoding: utf-8
-
 #  Copyright (c) 2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Jubla::Person::Filter::List do
   let(:person) { Fabricate(:person) }
 
   [[Group::FlockAlumnusGroup::Member, :bern_ehemalige],
-   [Group::Flock::Alumnus, :bern]].each do |role_type, role_group|
-    context "#{role_type}" do
-
-      %w(ch be city bern).zip(%w(federation state region flock)).each do |group, layer|
+    [Group::Flock::Alumnus, :bern]].each do |role_type, role_group|
+    context role_type.to_s do
+      %w[ch be city bern].zip(%w[federation state region flock]).each do |group, layer|
         let(:alumnus) { Fabricate(role_type.name, group: groups(role_group), person: person) }
 
         context "contactable_by_#{layer}" do
-
           it "true includes alumnus role" do
             alumnus.person.update("contactable_by_#{layer}" => true)
             filter = list_filter(group, role_type)
@@ -51,11 +47,10 @@ describe Jubla::Person::Filter::List do
 
   def build_params(roles)
     {
-      range: 'deep',
+      range: "deep",
       filters: {
-        role: { role_type_ids: roles.collect(&:type_id).join('-') }
+        role: {role_type_ids: roles.collect(&:type_id).join("-")}
       }
     }
   end
-
 end

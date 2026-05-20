@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 #  Copyright (c) 2017, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
@@ -20,22 +18,18 @@
 #  anyone_may_post      :boolean          default(FALSE), not null
 #
 
-require 'spec_helper'
+require "spec_helper"
 
 describe MailingList do
-
   let(:person) { Fabricate(:person) }
 
-
   [[Group::FlockAlumnusGroup::Member, :bern_ehemalige],
-   [Group::Flock::Alumnus, :bern]].each do |role_type, role_group|
-    context "#{role_type}" do
-
-      %w(ch be city bern).zip(%w(federation state region flock)).each do |group, layer|
+    [Group::Flock::Alumnus, :bern]].each do |role_type, role_group|
+    context role_type.to_s do
+      %w[ch be city bern].zip(%w[federation state region flock]).each do |group, layer|
         let(:alumnus) { Fabricate(role_type.name, group: groups(role_group), person: person) }
 
         context "contactable_by_#{layer}" do
-
           before do
             @list = Fabricate(:mailing_list, group: groups(group))
             @list.subscriptions.create!(subscriber: person)
@@ -63,58 +57,62 @@ describe MailingList do
     end
   end
 
-  describe 'exclusion by contact-preference' do
-    let(:list)   { Fabricate(:mailing_list, group: layer) }
-    let(:layer)  { groups(:ch) }
-    before :each do
+  describe "exclusion by contact-preference" do
+    let(:list) { Fabricate(:mailing_list, group: layer) }
+    let(:layer) { groups(:ch) }
+
+    before do
       create_subscription(person)
     end
 
-    context 'list on federal level respect federal preference' do
+    context "list on federal level respect federal preference" do
       let(:layer) { groups(:ch) }
+
       before { Fabricate(Group::Federation::Alumnus.name, group: layer, person: person) }
 
-      it 'if not wanted' do
+      it "if not wanted" do
         person.update(contactable_by_federation: false)
 
         expect(list.subscribed?(person)).not_to be_truthy
       end
 
-      it 'if wanted' do
+      it "if wanted" do
         person.update(contactable_by_federation: true)
 
         expect(list.subscribed?(person)).to be_truthy
       end
     end
 
-    context 'list on state level respect state preference' do
+    context "list on state level respect state preference" do
       let(:layer) { groups(:be) }
+
       before { Fabricate(Group::State::Alumnus.name, group: layer, person: person) }
 
-      it 'if not wanted' do
+      it "if not wanted" do
         person.update(contactable_by_state: false)
 
         expect(list.subscribed?(person)).not_to be_truthy
       end
 
-      it 'if wanted' do
+      it "if wanted" do
         person.update(contactable_by_state: true)
 
         expect(list.subscribed?(person)).to be_truthy
       end
     end
 
-    context 'list on region level respect region preference' do
+    context "list on region level respect region preference" do
       let(:layer) { groups(:city) }
-      before {  Fabricate(Group::Region::Alumnus.name, group: layer, person: person) }
 
-      it 'if not wanted' do
+      before { Fabricate(Group::Region::Alumnus.name, group: layer, person: person) }
+
+      it "if not wanted" do
         person.update(contactable_by_region: false)
 
         expect(list.subscribed?(person)).not_to be_truthy
       end
 
-      it 'if wanted' do
+      it "if wanted" do
         person.update(contactable_by_region: true)
 
         expect(list.subscribed?(person)).to be_truthy
@@ -130,5 +128,4 @@ describe MailingList do
     sub.save!
     sub
   end
-
 end

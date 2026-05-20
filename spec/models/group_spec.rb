@@ -103,7 +103,9 @@ describe Group do
 
         expect(Role.with_inactive.where.not(group_id: Group.with_deleted.select(:id)).count).to be 0
 
-        expect { group.destroy }.not_to change { Role.with_inactive.where.not(group_id: Group.with_deleted.select(:id)).count }
+        expect { group.destroy }.not_to change {
+          Role.with_inactive.where.not(group_id: Group.with_deleted.select(:id)).count
+        }
       end
     end
   end

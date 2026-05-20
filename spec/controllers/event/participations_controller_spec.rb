@@ -1,14 +1,11 @@
-# encoding: utf-8
-
 #  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Event::ParticipationsController do
-
   let(:group) { groups(:ch) }
 
   let(:course) do
@@ -27,28 +24,30 @@ describe Event::ParticipationsController do
 
   let(:user) { people(:top_leader) }
 
-  before { sign_in(user); other_course }
+  before {
+    sign_in(user)
+    other_course
+  }
 
-
-  context 'GET index' do
+  context "GET index" do
     before do
       @leader, @advisor, @participant = *create(Event::Role::Leader,
-                                                Event::Course::Role::Advisor,
-                                                course.participant_types.first)
+        Event::Course::Role::Advisor,
+        course.participant_types.first)
     end
 
-    it 'lists participant and leader group by default without advisor' do
-      get :index, params: { group_id: group.id, event_id: course.id }
+    it "lists participant and leader group by default without advisor" do
+      get :index, params: {group_id: group.id, event_id: course.id}
       expect(assigns(:participations)).to eq [@leader, @participant]
     end
 
-    it 'lists only leader_group without advisor' do
-      get :index, params: { group_id: group.id, event_id: course.id, filters: {participant_type: :teamers} }
+    it "lists only leader_group without advisor" do
+      get :index, params: {group_id: group.id, event_id: course.id, filters: {participant_type: :teamers}}
       expect(assigns(:participations)).to eq [@leader]
     end
 
-    it 'lists only participant_group' do
-      get :index, params: { group_id: group.id, event_id: course.id, filters: {participant_type: :participants} }
+    it "lists only participant_group" do
+      get :index, params: {group_id: group.id, event_id: course.id, filters: {participant_type: :participants}}
       expect(assigns(:participations)).to eq [@participant]
     end
 
@@ -67,10 +66,8 @@ describe Event::ParticipationsController do
     def create(*roles)
       roles.map do |role_class|
         role = Fabricate(:event_role, type: role_class.sti_name)
-        Fabricate(:event_participation, event: course, roles: [role], state: 'assigned')
+        Fabricate(:event_participation, event: course, roles: [role], state: "assigned")
       end
     end
   end
-
-
 end
