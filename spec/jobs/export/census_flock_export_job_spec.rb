@@ -6,10 +6,9 @@
 require "spec_helper"
 
 describe Export::CensusFlockExportJob do
-  subject { Export::CensusFlockExportJob.new(format, user.id, 2012, type: "", filename: filename) }
+  subject { Export::CensusFlockExportJob.new(format, user.id, 2012, type: "", filename: "flock_export") }
 
-  let(:filename) { AsyncDownloadFile.create_name("flock_export", user.id) }
-  let(:file) { AsyncDownloadFile.from_filename(filename, format) }
+  let(:file) { subject.user_job_result }
 
   let(:user) { people(:top_leader) }
 
@@ -17,6 +16,7 @@ describe Export::CensusFlockExportJob do
     let(:format) { :csv }
 
     it "and saves it" do
+      subject.enqueue!
       subject.perform
 
       lines = file.read.lines
