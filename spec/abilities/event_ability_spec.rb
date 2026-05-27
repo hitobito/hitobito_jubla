@@ -676,11 +676,13 @@ describe EventAbility do
 
     it "may read participants when coaching" do
       is_expected.to be_able_to(:index_participations, event)
+      is_expected.to be_able_to(:index_full_participations, event)
     end
 
     it "may not read participants when not coaching" do
       event = Fabricate(:camp, coach_id: "")
       is_expected.not_to be_able_to(:index_participations, event)
+      is_expected.not_to be_able_to(:index_full_participations, event)
     end
   end
 end

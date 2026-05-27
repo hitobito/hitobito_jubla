@@ -19,8 +19,6 @@ module Jubla::EventAbility
         .at_least_one_group_not_deleted_and_not_closed_or_admin
 
       permission(:any).may(:update).for_managed_events
-
-      permission(:any).may(:index_full_participations).for_leaded_events
     end
 
     on(Event::Camp) do
