@@ -8,7 +8,7 @@ require "spec_helper"
 describe Export::CensusFlockExportJob do
   subject { Export::CensusFlockExportJob.new(format, user.id, 2012, type: "", filename: "flock_export") }
 
-  let(:file) { subject.user_job_result }
+  let(:file) { subject.job_observation }
 
   let(:user) { people(:top_leader) }
 

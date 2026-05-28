@@ -4,7 +4,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusEvaluation::FederationController < CensusEvaluation::BaseController
-  include UserManageableExportJob
+  include ExportableRedirect
 
   self.sub_group_type = Group::State
 
@@ -30,7 +30,7 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
       current_person.id,
       year,
       {type: type, filename:}).enqueue!
-    respond_to_export_job
+    redirect_after_enqueued_export
   end
 
   def flock_confirmation_ratios
