@@ -6,6 +6,8 @@
 require "spec_helper"
 
 describe Export::CensusFlockExportJob do
+  include JobObservationSpecHelper
+
   subject { Export::CensusFlockExportJob.new(format, user.id, 2012, type: "", filename: "flock_export") }
 
   let(:file) { subject.job_observation }
@@ -19,7 +21,7 @@ describe Export::CensusFlockExportJob do
       subject.enqueue!
       subject.perform
 
-      lines = file.read.lines
+      lines = read_data_from_generated_file(file).lines
       expect(lines.size).to eq(6)
     end
   end
