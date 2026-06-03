@@ -2,6 +2,7 @@
 
 ## Version 2.8
 
+* Ehemaligenverein (Schar) kann direkt unter Kanton (Ehemalige) erstellt werden (hitobito_jubla#110)
 * Census Export wurde um Schar Art erweitert, gelöschte und archivierte Scharen werden ignoriert (hitobito_jubla#228)
 * Die globalen Event Fragen (schub, meisterwerk) wurden entfernt (hitobito_jubla#221)
 * Debitoren/Rechnungen für Schar-Kassier*in aktiviert (hitobito_jubla#237)
