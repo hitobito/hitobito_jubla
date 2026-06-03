@@ -19,6 +19,13 @@ describe Group do
     its(:possible_children) { is_expected.to include(Group::SimpleGroup) }
   end
 
+  describe Group::NejbKanton do
+    subject { Group::NejbKanton }
+
+    it { is_expected.to have(4).possible_children }
+    its(:possible_children) { is_expected.to include(Group::NejbSchar) }
+  end
+
   describe Group::Flock do
     subject { Group::Flock }
 
