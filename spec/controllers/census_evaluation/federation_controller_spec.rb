@@ -63,7 +63,9 @@ describe CensusEvaluation::FederationController do
     it "exports csv" do
       expect do
         get :index, params: {id: ch.id, format: :csv}
-        expect(flash[:notice]).to match(/Export wird im Hintergrund gestartet und nach Fertigstellung heruntergeladen./)
+        expect(flash[:notice]).to match(
+          /Export wird im Hintergrund gestartet und kann nach Fertigstellung auf der Jobübersicht/
+        )
         expect(response).to redirect_to(returning: true)
       end.to change(Delayed::Job, :count).by(1)
     end

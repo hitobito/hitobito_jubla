@@ -4,7 +4,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class CensusEvaluation::FederationController < CensusEvaluation::BaseController
-  include AsyncDownload
+  include ExportableRedirect
 
   self.sub_group_type = Group::State
 
@@ -25,13 +25,12 @@ class CensusEvaluation::FederationController < CensusEvaluation::BaseController
 
   private
 
-  def render_tabular_in_background(format, type = nil, name = :census_federation_export)
-    with_async_download_cookie(format, name) do |filename|
-      Export::CensusFlockExportJob.new(format,
-        current_person.id,
-        year,
-        {type: type, filename: filename}).enqueue!
-    end
+  def render_tabular_in_background(format, type = nil, filename = :census_federation_export)
+    Export::CensusFlockExportJob.new(format,
+      current_person.id,
+      year,
+      {type: type, filename:}).enqueue!
+    redirect_after_enqueued_export
   end
 
   def flock_confirmation_ratios
