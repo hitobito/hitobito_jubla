@@ -138,12 +138,11 @@ module HitobitoJubla
       Sheet::Group.include Jubla::Sheet::Group
     end
 
-    # We can't directly override the languages hash in a config file since the hashes are merged
     config.to_prepare do
       if Rails.env.test?
-        settings = Settings.to_hash
-        settings[:application][:languages] = {de: "Deutsch"}
-        Settings.reload_from_files(settings)
+        Settings.application.languages.delete_field(:en)
+        Settings.application.languages.delete_field(:fr)
+        Settings.application.languages.delete_field(:it)
       end
     end
 
