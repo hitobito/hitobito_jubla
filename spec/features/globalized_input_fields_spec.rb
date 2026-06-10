@@ -21,7 +21,7 @@ describe "Globalized input fields", js: true do
     expect(page).not_to have_content("Zusätzlich ausgefüllte Sprachen")
 
     click_button("Speichern")
-    expect(page).to have_content("Gruppe #{group.name} wurde erfolgreich aktualisiert")
+    expect(page).to have_content("Bund #{group.name} wurde erfolgreich aktualisiert")
     expect(group.reload.privacy_policy_title_translations).to eql({de: "Some privacy policy title"}.stringify_keys)
   end
 end
