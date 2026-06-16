@@ -34,4 +34,18 @@ describe Jubla::Role::AlumnusManager do
         .and not_change { person.reload.roles.select(&:alumnus_member?).count }
     end
   end
+
+  context "with another active role in same layer" do
+    it "changes role#alumni_processed but does not create alumnus group member" do
+      other_role = Fabricate(Group::FlockAlumnusGroup::Leader.sti_name, group: groups(:innerroden_ehemalige), person:)
+      expect(role.group.layer_group).to eq other_role.group.layer_group
+
+      expect do
+        manager.create
+      end.to change { role.reload.alumni_processed }.from(false).to(true)
+        .and not_change {
+               person.reload.roles.where("type LIKE '%::Member'").count
+             }
+    end
+  end
 end

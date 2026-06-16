@@ -18,7 +18,7 @@ module Jubla::Role
 
     def create
       Role.transaction do
-        role.update_columns(alumni_processed: true)
+        Role.unscoped.where(id: role.id).update_all(alumni_processed: true)
         create_alumnus_role if last_in_group?
 
         if !skip_alumnus_callback? && last_in_layer? && person_old_enough?
@@ -39,9 +39,8 @@ module Jubla::Role
       return if alumnus_group.blank?
       return if alumnus_group_member_exists?
 
-      member = group.alumnus_member_class.new(person: person, group: alumnus_group)
-
-      enqueue_mail_job if member.save && person.email.present?
+      group.alumnus_member_class.new(person: person, group: alumnus_group).save!
+      enqueue_mail_job if person.email.present?
     end
 
     def alumnus_group_member_exists?
@@ -79,7 +78,9 @@ module Jubla::Role
     end
 
     def enqueue_mail_job
-      AlumniMailJob.new(alumnus_group.id, role.person.id).enqueue!(run_at: 1.day.from_now)
+      return unless group.layer_group.is_a?(Group::Flock)
+
+      AlumniMailJob.new(group.id, role.person.id).enqueue!(run_at: 1.day.from_now)
     end
 
     def alumnus_member_roles_in_layer

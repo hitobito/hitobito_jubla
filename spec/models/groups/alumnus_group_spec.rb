@@ -99,8 +99,8 @@ describe Group::AlumnusGroup do
 
       it "does not create job if saving new role fails" do
         expect_any_instance_of(AlumniMailJob).not_to receive(:enqueue!).and_call_original
-        allow_any_instance_of(Role).to receive(:save).and_return(false)
-        role.destroy
+        allow_any_instance_of(Role).to receive(:save!).and_raise(ActiveRecord::RecordInvalid)
+        expect { role.destroy }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
