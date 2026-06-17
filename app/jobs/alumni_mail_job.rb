@@ -12,16 +12,20 @@ class AlumniMailJob < BaseJob
   end
 
   def perform
-    return if no_more_active_roles?
-    return unless group.is_a?(Group::Flock)
+    return if active_roles_in_layer?
+    return if not_a_flock_group?
 
     AlumniMailer.new_member_flock(person).deliver_now
   end
 
   private
 
-  def no_more_active_roles?
-    person.roles.without_alumnus.roles_in_layer(person.id, group.layer_group_id).any?
+  def not_a_flock_group?
+    !group.layer_group.is_a?(Group::Flock)
+  end
+
+  def active_roles_in_layer?
+    person.roles.without_alumnus.roles_in_layer(person.id, group.layer_group_id).exists?
   end
 
   def group

@@ -24,7 +24,7 @@ describe AlumniMailJob do
       expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
     end
 
-    it "sends email if the group is not a flock" do
+    it "does not send email if the group is not a flock" do
       group = groups(:city)
       person = Fabricate(Group::RegionalAlumnusGroup::Member.sti_name.to_sym, group: group.alumnus_group).person
 
@@ -54,6 +54,19 @@ describe AlumniMailJob do
 
       expect(AlumniMailer).to receive(:new_member_flock).with(person).and_call_original
       expect { AlumniMailJob.new(group.id, person.id).perform }.to change { ActionMailer::Base.deliveries.size }.by(1)
+    end
+
+    it "sends flock email for subgroup in flock layer" do
+      group = groups(:bern)
+      subgroup = Group::SimpleGroup.create!(parent: group, name: "Subgroup")
+      expect(subgroup.layer_group).to be_a(Group::Flock)
+
+      person = Fabricate(:person)
+
+      expect(AlumniMailer).to receive(:new_member_flock).with(person).and_call_original
+      expect { AlumniMailJob.new(subgroup.id, person.id).perform }.to change {
+        ActionMailer::Base.deliveries.size
+      }.by(1)
     end
   end
 end
