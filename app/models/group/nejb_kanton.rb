@@ -6,7 +6,7 @@
 #  https://github.com/hitobito/hitobito_jubla.
 
 class Group::NejbKanton < NejbGroup
-  children Group::KantonEhemaligenverein, Group::NejbRegion
+  children Group::KantonEhemaligenverein, Group::NejbRegion, Group::NejbSchar
   self.layer = true
 
   class GroupAdmin < ::NejbRole
