@@ -57,8 +57,8 @@ describe Export::Tabular::CensusFlock do
       before { flock.update(street: "bar", housenumber: "23", zip_code: 1234, town: "foo") }
 
       its(:values) do
-        should eq ["Kanton Bern", "Stadt", "Jungwacht", "Bern", nil, nil, "bar 23", 1234, "foo", false, false, false, 5,
-          7]
+        should eq ["Kanton Bern", "Stadt", "Jungwacht", "Bern", nil, nil, "bar 23", "1234", "foo", false, false, false,
+          5, 7]
       end
     end
 
