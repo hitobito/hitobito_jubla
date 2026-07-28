@@ -119,9 +119,12 @@ module HitobitoJubla
       Wizards::Steps::NewUserForm.prepend Jubla::Wizards::Steps::NewUserForm
       Wizards::Steps::NewUserForm.support_company = false
 
-      # add more active_for urls to main navigation
-      admin = NavigationHelper::MAIN.find { |opts| opts[:label] == :admin }
-      admin[:active_for] << "event_camp_kinds"
+      NavigationHelper::ADMIN_GROUPS[:events][:items] << {
+        label: "Lagerarten",
+        path: :event_camp_kinds_path,
+        if: ->(_) { can?(:index, Event::Camp::Kind) }
+      }
+
       i = NavigationHelper::MAIN.index { |opts| opts[:label] == :courses }
       NavigationHelper::MAIN.insert(
         i + 1,
