@@ -119,11 +119,9 @@ module HitobitoJubla
       Wizards::Steps::NewUserForm.prepend Jubla::Wizards::Steps::NewUserForm
       Wizards::Steps::NewUserForm.support_company = false
 
-      NavigationHelper::ADMIN_GROUPS[:events][:items] << {
-        label: "Lagerarten",
-        path: :event_camp_kinds_path,
-        if: ->(_) { can?(:index, Event::Camp::Kind) }
-      }
+      NavigationHelper::ADMIN_GROUPS[:events][:items] += [
+        NavigationHelper::Item.new(model: Event::Camp::Kind, path: :event_camp_kinds_path)
+      ]
 
       i = NavigationHelper::MAIN.index { |opts| opts[:label] == :courses }
       NavigationHelper::MAIN.insert(
