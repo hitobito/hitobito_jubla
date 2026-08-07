@@ -48,12 +48,8 @@ phone_number:
 social_account:
   predefined_labels:
     - E-Mail
-    - Facebook
-    - MSN
-    - Skype
-    - Twitter
-    - Webseite
-    - Andere
+    - --Pinterest
+    - --X (Twitter)
 
 role:
   # If a role last less than this number of days, it is not archived
