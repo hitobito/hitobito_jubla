@@ -12,7 +12,8 @@ describe Export::Pdf::Participation do
   let!(:managers) do
     2.times.map do
       Fabricate(:person).tap do |manager|
-        manager.phone_numbers.create(number: "+41 44 123 45 57", label: "Privat")
+        manager.phone_numbers.create(number: "+41 44 123 45 57",
+          category: contact_account_categories(:phone_number_person_landline))
         participation.person.managers << manager
       end
     end
