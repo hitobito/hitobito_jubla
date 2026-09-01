@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -624,6 +624,50 @@ describe EventAbility do
 
     it "cannot create new event" do
       is_expected.not_to be_able_to(:create, group.events.new.tap { |e| e.groups << group })
+    end
+  end
+
+  context "event" do
+    context "Group::FederalBoard::Member (admin)" do
+      let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
+      let(:template) { Fabricate(:event, groups: [groups(:ch)], template: true) }
+
+      it "may create a template" do
+        is_expected.to be_able_to(:create, Event.new(template: true, groups: [groups(:ch)]))
+      end
+
+      it "may update a template" do
+        is_expected.to be_able_to(:update, template)
+      end
+
+      it "may destroy a template" do
+        is_expected.to be_able_to(:destroy, template)
+      end
+    end
+
+    context "Group::StateAgency::Leader (not admin)" do
+      let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
+      let(:template) { Fabricate(:event, groups: [groups(:be)], template: true) }
+
+      it "may not create a template even though event permission alone would allow it" do
+        is_expected.not_to be_able_to(:create, Event.new(template: true, groups: [groups(:be)]))
+      end
+
+      it "may not update a template" do
+        is_expected.not_to be_able_to(:update, template)
+      end
+
+      it "may not destroy a template" do
+        is_expected.not_to be_able_to(:destroy, template)
+      end
+
+      it "may still create, update and destroy a normal (non-template) event" do
+        normal_event = Fabricate(:event, groups: [groups(:be)])
+
+        is_expected.to be_able_to(:create, Event.new(groups: [groups(:be)]))
+        is_expected.to be_able_to(:update, normal_event)
+        is_expected.to be_able_to(:destroy, normal_event)
+      end
     end
   end
 
