@@ -44,7 +44,8 @@ module Jubla::Wizards::Steps::NewUserForm
       self.zip_code ||= current_user.zip_code
       self.town ||= current_user.town
       self.country ||= current_user.country
-      self.phone_number ||= current_user.phone_numbers.find_by(label: PHONE_NUMBER_LABEL)&.number
+      self.phone_number ||= current_user.phone_numbers
+        .find_by(category_id: self.class.phone_number_category_id)&.number
     else
       self.country ||= Settings.addresses.imported_countries.to_a.first
     end
@@ -56,8 +57,21 @@ module Jubla::Wizards::Steps::NewUserForm
     attributes.compact.symbolize_keys.except(:phone_number).then do |attrs|
       next attrs if phone_number.blank?
 
-      attrs.merge(phone_numbers_attributes: [{label: PHONE_NUMBER_LABEL, number: phone_number,
-                                              public: false}.compact])
+      attrs.merge(phone_numbers_attributes: [{
+        label: PHONE_NUMBER_LABEL,
+        category_id: self.class.phone_number_category_id,
+        number: phone_number,
+        public: false
+      }.compact])
+    end
+  end
+
+  class_methods do
+    # Categories are immutable reference data once seeded, so memoizing avoids
+    # re-querying on every wizard step render.
+    def phone_number_category_id
+      @phone_number_category_id ||=
+        ContactAccountCategory.for("PhoneNumber", "Person").where(key: "landline").pick(:id)
     end
   end
 

@@ -35,26 +35,6 @@ email:
 
 root_email: jubla@puzzle.ch
 
-phone_number:
-  predefined_labels:
-    - Privat
-    - Mobil
-    - Arbeit
-    - Vater
-    - Mutter
-    - Fax
-    - Andere
-
-social_account:
-  predefined_labels:
-    - E-Mail
-    - Facebook
-    - MSN
-    - Skype
-    - Twitter
-    - Webseite
-    - Andere
-
 role:
   # If a role last less than this number of days, it is not archived
   minimum_days_to_archive: 7
