@@ -16,6 +16,9 @@ de:
     export_enqueued: "Export wird im Hintergrund gestartet und kann nach Fertigstellung auf der Jobübersicht heruntergeladen werden: %{overview_link}"
 
   event:
+    participation_contact_datas:
+      fields:
+        readonly_hint: "Kann nur im Profil geändert werden."
     camps:
       nav_left_camps:
         all_camps: Alle Lager
