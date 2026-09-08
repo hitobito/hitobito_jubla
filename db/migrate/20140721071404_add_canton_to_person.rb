@@ -7,7 +7,7 @@
 
 class AddCantonToPerson < ActiveRecord::Migration[4.2]
   def change
-    add_column(:people, :canton, :string)
+    add_column(:people, :canton, :string) unless column_exists?(:people, :canton)
     Person.reset_column_information
   end
 end
