@@ -8,6 +8,7 @@ zeus.json
 
 # ignore Gemfile.lock for wagons
 Gemfile.lock
+Gemfile.local*
 
 .sass-cache
 .project
