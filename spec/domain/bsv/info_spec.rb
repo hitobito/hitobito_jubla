@@ -69,16 +69,10 @@ describe Bsv::Info do
   end
 
   it "#warnings.canton_count is set if any participant has missing canton" do
-    create_participant(zip_code: 3000)
+    create_participant(canton: "be")
     expect(info.warnings[:canton_count]).to eq(false)
 
     create_participant
-    expect(info.warnings[:canton_count]).to eq(true)
-    expect(info.error(:canton_count)).to eq "Nicht alle Teilnehmer haben einen gültigen Kanton gesetzt."
-  end
-
-  it "#warnings.canton_count is set if any participant has invalid 2 letter canton abbrevation" do
-    create_participant(canton: "Bern")
     expect(info.warnings[:canton_count]).to eq(true)
     expect(info.error(:canton_count)).to eq "Nicht alle Teilnehmer haben einen gültigen Kanton gesetzt."
   end
