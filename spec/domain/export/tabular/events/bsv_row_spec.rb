@@ -115,11 +115,6 @@ describe Export::Tabular::Events::BsvRow do
         expect(info.canton_count).to eq 1
       end
 
-      it "ignores case when counting" do
-        create_participant_with_person_attrs(canton: "AG", birthday: birthday)
-        expect(info.canton_count).to eq 1
-      end
-
       it "ignores cantons on people outside of aged 17 to 30 group" do
         create_participant_with_person_attrs(canton: "ag", birthday: "31.12.1981")
         expect(info.canton_count).to eq 0

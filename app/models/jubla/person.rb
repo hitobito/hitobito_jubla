@@ -28,8 +28,4 @@ module Jubla::Person
   def alumnus_only?
     self.class.alumnus_only.where(id: id).exists?
   end
-
-  def canton
-    self[:canton].presence || super
-  end
 end

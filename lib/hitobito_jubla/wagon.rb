@@ -86,7 +86,7 @@ module HitobitoJubla
 
       ### controllers
       PeopleController.permitted_attrs += [
-        :name_mother, :name_father, :nationality, :profession, :canton, :bank_account,
+        :name_mother, :name_father, :nationality, :profession, :bank_account,
         :j_s_number, :insurance_company, :insurance_number, :contactable_by_federation,
         :contactable_by_state, :contactable_by_region, :contactable_by_flock
       ]

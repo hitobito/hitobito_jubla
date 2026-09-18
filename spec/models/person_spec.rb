@@ -46,11 +46,6 @@ describe Person do
     end
   end
 
-  it "maps canton via location if zip_code is present" do
-    expect(Person.new(zip_code: 3000).canton).to eq "be"
-    expect(Person.new(zip_code: 3000, canton: "zh").canton).to eq("zh")
-  end
-
   context "alumnus_only" do
     it "does not find person without roles" do
       expect(Person.alumnus_only).not_to include(person)
