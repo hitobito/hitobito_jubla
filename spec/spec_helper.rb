@@ -15,6 +15,14 @@ Dir[HitobitoJubla::Wagon.root.join("spec/support/**/*.rb")].sort.each { |f| requ
 RSpec.configure do |config|
   config.fixture_paths = [File.expand_path("../fixtures", __FILE__)]
 
+  config.seeds << {
+    paths: [
+      Rails.root.join("db", "seeds"),
+      HitobitoJubla::Wagon.root.join("db", "seeds")
+    ]
+    # for the jubla tests we need more than the custom_content seeds, so we set no filter
+  }
+
   config.before do
     Rails.application.default_url_options[:locale] = nil
   end
