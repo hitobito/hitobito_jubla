@@ -1,0 +1,10 @@
+#  Copyright (c) 2026, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla
+
+<% Role.all_types.each_with_index do |type, index| %>
+role_type_<%= index %>:
+  name: <%= type %>
+  order_weight: <%= index + 1 %>
+<% end %>
