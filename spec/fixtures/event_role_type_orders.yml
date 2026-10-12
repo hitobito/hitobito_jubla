@@ -1,0 +1,14 @@
+#  Copyright (c) 2026, Jungwacht Blauring Schweiz. This file is part of
+#  hitobito_jubla and licensed under the Affero General Public License version 3
+#  or later. See the COPYING file at the top-level directory or at
+#  https://github.com/hitobito/hitobito_jubla
+
+<% fixture_index = 0 %>
+<% Event.all_types.each do |event_type| %>
+<%   event_type.role_types.each_with_index do |role_type, index| %>
+<%     fixture_index += 1 %>
+event_role_type_<%= fixture_index %>:
+  name: <%= role_type %>
+  order_weight: <%= index + 1 %>
+<%   end %>
+<% end %>
