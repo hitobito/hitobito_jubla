@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -138,6 +138,25 @@ describe GroupAbility do
 
     it "may reactivate group" do
       is_expected.to be_able_to(:reactivate, group)
+    end
+  end
+
+  describe :index_event_templates do
+    context "Group::FederalBoard::Member (admin)" do
+      let(:role) { Fabricate(Group::FederalBoard::Member.name.to_sym, group: groups(:federal_board)) }
+
+      it "may index event templates on a layer group" do
+        is_expected.to be_able_to(:index_event_templates, groups(:ch))
+      end
+    end
+
+    context "Group::StateAgency::Leader (not admin)" do
+      let(:role) { Fabricate(Group::StateAgency::Leader.name.to_sym, group: groups(:be_agency)) }
+
+      it "may not index event templates, even though ordinary layer permission " \
+        "alone would allow it" do
+        is_expected.not_to be_able_to(:index_event_templates, groups(:be))
+      end
     end
   end
 end
