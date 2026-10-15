@@ -1,0 +1,14 @@
+-#  Copyright (c) 2026, Jungwacht Blauring Schweiz. This file is part of
+-#  hitobito_jubla and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_jubla.
+
+-# copied from [hitobito_core]/app/views/event/qualifications/_comment_field.html.haml
+- errors = participation.errors[:qualification_comment]
+= text_field_tag("qualifications[#{participation.id}][qualification_comment]",
+                 participation.qualification_comment,
+                 disabled: !event.qualification_possible?,
+                 class: "form-control form-control-sm #{'is-invalid' if errors.present?}",
+                 'aria-label': t('event.qualifications.index.comment'))
+- if errors.present?
+  .invalid-feedback.d-block= errors.to_sentence
