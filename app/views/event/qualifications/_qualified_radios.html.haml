@@ -1,0 +1,14 @@
+-#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
+-#  hitobito_jubla and licensed under the Affero General Public License version 3
+-#  or later. See the COPYING file at the top-level directory or at
+-#  https://github.com/hitobito/hitobito_jubla.
+
+-# copied from [hitobito_core]/app/views/event/qualifications/_qualified_radios.html.haml
+- name = "qualifications[#{participation.id}][qualified]"
+- {true => :qualified, false => :not_qualified, nil => :not_assessed}.each do |value, label|
+  %td.center.col-fit.p-0
+    %label.d-block.m-0.p-2
+      = radio_button_tag(name, value.to_s, participation.qualified == value,
+                         disabled: !event.qualification_possible?,
+                         class: 'form-check-input m-0 align-middle',
+                         'aria-label': t("event.qualifications.index.#{label}"))
