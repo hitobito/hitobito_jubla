@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -45,11 +45,16 @@ describe Event::QualificationsController, type: :controller do
 
       it { is_expected.to have(2).items }
 
-      it "should have enabled checkboxes" do
-        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=checkbox]")
+      it "should have enabled radio buttons" do
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=radio]")
         # rubocop:todo Layout/LineLength
-        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_no_selector("input[type=checkbox][disabled]")
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_no_selector("input[type=radio][disabled]")
         # rubocop:enable Layout/LineLength
+      end
+
+      it "should have enabled comment field" do
+        field = dom.find("#event_participation_#{participant_1.id}").find("input[type=text]")
+        expect(field[:disabled]).to be_nil
       end
 
       it "should not have message" do
@@ -69,9 +74,14 @@ describe Event::QualificationsController, type: :controller do
         expect(dom).to have_content("können die Qualifikationen nicht mehr bearbeitet werden")
       end
 
-      it "should have disabled checkboxes" do
+      it "should have disabled comment field" do
+        field = dom.find("#event_participation_#{participant_1.id}").find("input[type=text]")
+        expect(field[:disabled]).to be_present
+      end
+
+      it "should have disabled radio buttons" do
         # rubocop:todo Layout/LineLength
-        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=checkbox][disabled]")
+        expect(dom.find("#event_participation_#{participant_1.id} td:first")).to have_selector("input[type=radio][disabled]")
         # rubocop:enable Layout/LineLength
       end
     end
@@ -81,7 +91,7 @@ describe Event::QualificationsController, type: :controller do
     context "adding" do
       context "in open state" do
         before {
-          put :update, params: {group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s]}
+          put :update, params: {group_id: group.id, event_id: event.id, qualifications: qualified_params}
         }
 
         subject { obtained_qualifications }
@@ -93,7 +103,7 @@ describe Event::QualificationsController, type: :controller do
         before { event.update_column(:state, "closed") }
 
         before {
-          put :update, params: {group_id: group.id, event_id: event.id, participation_ids: [participant_1.id.to_s]}
+          put :update, params: {group_id: group.id, event_id: event.id, qualifications: qualified_params}
         }
 
         subject { obtained_qualifications }
@@ -111,7 +121,9 @@ describe Event::QualificationsController, type: :controller do
       end
 
       context "in open state" do
-        before { put :update, params: {group_id: group.id, event_id: event.id} }
+        before do
+          put :update, params: {group_id: group.id, event_id: event.id, qualifications: not_assessed_params}
+        end
 
         subject { obtained_qualifications }
 
@@ -120,13 +132,21 @@ describe Event::QualificationsController, type: :controller do
 
       context "in closed state" do
         before { event.update_column(:state, "closed") }
-        before { put :update, params: {group_id: group.id, event_id: event.id, participation_ids: []} }
+        before { put :update, params: {group_id: group.id, event_id: event.id, qualifications: not_assessed_params} }
 
         subject { obtained_qualifications }
 
         it { is_expected.to have(1).items }
       end
     end
+  end
+
+  def qualified_params
+    {participant_1.id.to_s => {qualified: "true"}}
+  end
+
+  def not_assessed_params
+    {participant_1.id.to_s => {qualified: ""}}
   end
 
   def obtained_qualifications(participation = participant_1)
