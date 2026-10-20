@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito.
@@ -75,14 +75,14 @@ module Jubla::Export::Pdf
         move_down_line
       end
 
-      def contact_address # rubocop:todo Metrics/AbcSize
-        [contact.respond_to?(:company_name) && contact.company_name,
-          contact.to_s,
-          contact.address.present? && contact.address.split("\n"),
-          "#{contact.zip_code} #{contact.town}".strip]
-          .flatten
-          .select { |v| v.present? }
-          .join(", ")
+      def contact_name_lines
+        return [] unless contact_attribute_visible?(:name)
+
+        [contact.try(:company_name), contact.to_s]
+      end
+
+      def contact_attribute_visible?(attr)
+        contact.is_a?(Group) || super
       end
 
       def required_height
@@ -91,7 +91,7 @@ module Jubla::Export::Pdf
         height += 2 * line_height if read_and_agreed?
         height += 3 * line_height if event.signature?
         height += 3 * line_height if signature_confirmation?
-        height += 2 * line_height if contact
+        height += 2 * line_height if contact_text.present?
         height += 6.5 * line_height if event.remarks?
         height
       end
