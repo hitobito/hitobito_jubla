@@ -42,8 +42,4 @@ module Jubla::GroupAbility
           r.is_a?(Group::FederalBoard::Member)
       end
   end
-
-  def if_admin
-    user_context.admin
-  end
 end
