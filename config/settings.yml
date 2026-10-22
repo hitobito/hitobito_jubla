@@ -35,10 +35,6 @@ email:
 
 root_email: jubla@puzzle.ch
 
-role:
-  # If a role last less than this number of days, it is not archived
-  minimum_days_to_archive: 7
-
 census:
   default_finish_month: 10
   default_finish_day: 31
