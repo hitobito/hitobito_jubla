@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#  Copyright (c) 2025, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2025-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -86,6 +86,18 @@ describe Wizards::RegisterNewUserWizard do
         expect(number.label).to eq "Privat"
         expect(number.number).to eq "+41 78 123 45 67"
         expect(number.public).to eq false
+      end
+
+      it "creates person when adult consent is required and given" do
+        group.update!(self_registration_require_adult_consent: true)
+        params[:new_user_form] = {
+          first_name: "test",
+          last_name: "dummy",
+          email: "test@example.com",
+          adult_consent: true
+        }
+        expect(wizard).to be_valid
+        expect { wizard.save! }.to change { Person.count }.by(1)
       end
     end
   end
