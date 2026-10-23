@@ -1,4 +1,4 @@
-#  Copyright (c) 2025, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2025-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -54,7 +54,7 @@ module Jubla::Wizards::Steps::NewUserForm
   # rubocop:enable Metrics/MethodLength
 
   def person_attributes
-    attributes.compact.symbolize_keys.except(:phone_number).then do |attrs|
+    attributes.compact.symbolize_keys.except(:phone_number, :adult_consent).then do |attrs|
       next attrs if phone_number.blank?
 
       attrs.merge(phone_numbers_attributes: [{
