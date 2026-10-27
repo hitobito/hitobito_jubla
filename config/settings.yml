@@ -47,6 +47,8 @@ people:
 
 alumni_administrations:
   min_age_for_alumni_member: 15
+  # Roles destroyed within this number of days after their creation do not create alumni
+  minimum_days_for_alumnus: 7
 
 groups:
   statistics:

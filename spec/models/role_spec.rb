@@ -6,6 +6,8 @@
 require "spec_helper"
 
 describe Role do
+  let(:some_time_ago) { Time.zone.now - Settings.alumni_administrations.minimum_days_for_alumnus.days - 1.day }
+
   describe Group::Flock::Leader do
     subject { Group::Flock::Leader }
 
@@ -131,7 +133,7 @@ describe Role do
 
       destroy_samples.each do |role_type, group, change|
         it "#{role_type} changes alumni members by #{change.to_i * -1}, enqueues job" do
-          role = Fabricate(role_type, group: groups(group))
+          role = Fabricate(role_type, group: groups(group), created_at: some_time_ago)
           expect do
             expect { role.destroy }.to change { Delayed::Job.count }.by(change.to_i * -1)
           end.to change { alumnus_member_count }.by(change.to_i * -1)
@@ -140,18 +142,18 @@ describe Role do
 
       it "still creates alumni member, if person has an alumnus role in same layer" do
         person = Fabricate(Group::Flock::Alumnus.sti_name, group: groups(:bern)).person
-        role = Fabricate(Group::Flock::Leader.sti_name, group: groups(:bern), person: person)
+        role = Fabricate(Group::Flock::Leader.sti_name, group: groups(:bern), created_at: some_time_ago, person: person)
         expect { role.destroy }.to change { alumnus_member_count }.by(1)
       end
 
       it "does not creates alumni member, if person is too young" do
-        role = Fabricate(Group::ChildGroup::Child.sti_name, group: groups(:asterix))
+        role = Fabricate(Group::ChildGroup::Child.sti_name, group: groups(:asterix), created_at: some_time_ago)
         role.person.update(birthday: too_young.years.ago)
         expect { role.destroy }.not_to change { alumnus_member_count }
       end
 
       it "does not not enqueue mail job when no email is set" do
-        role = Fabricate(Group::Flock::Leader.sti_name, group: groups(:bern))
+        role = Fabricate(Group::Flock::Leader.sti_name, group: groups(:bern), created_at: some_time_ago)
         role.person.update(email: nil)
         expect { role.destroy }.not_to change { Delayed::Job.count }
       end
@@ -231,7 +233,7 @@ describe Role do
 
       destroy_samples.each do |role_type, group, change|
         it "#{role_type} changes alumni members by #{change.to_i * -1}, enqueues job" do
-          role = Fabricate(role_type, group: groups(group))
+          role = Fabricate(role_type, group: groups(group), created_at: some_time_ago)
           expect do
             expect { role.destroy }.to change { Delayed::Job.count }.by(change.to_i * -1)
           end.to change { alumnus_member_count }.by(change.to_i * -1)
@@ -240,20 +242,27 @@ describe Role do
 
       it "still creates alumni member, if person has an alumnus role in same layer" do
         person = Fabricate(Group::OrganizationBoard::Alumnus.sti_name, group: groups(:organization_board)).person
-        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board), person: person)
+        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board),
+          created_at: some_time_ago, person: person)
         expect { role.destroy }.to_not change { alumnus_member_count }
       end
 
       it "does not creates alumni member, if person is too young" do
-        role = Fabricate(Group::ChildGroup::Child.sti_name, group: groups(:asterix))
+        role = Fabricate(Group::ChildGroup::Child.sti_name, group: groups(:asterix), created_at: some_time_ago)
         role.person.update(birthday: too_young.years.ago)
         expect { role.destroy }.not_to change { alumnus_member_count }
       end
 
       it "does not not enqueue mail job when no email is set" do
-        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board))
+        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board), created_at: some_time_ago)
         role.person.update(email: nil)
         expect { role.destroy }.not_to change { Delayed::Job.count }
+      end
+
+      it "does not create alumnus role for recently created role" do
+        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board))
+        expect { role.destroy }.not_to change { Group::FederalBoard::Alumnus.count }
+        expect(Role.ended.find(role.id)).to be_alumni_processed
       end
     end
 
@@ -326,7 +335,7 @@ describe Role do
   end
 
   context "alumnus role" do
-    let(:role) { Fabricate(role_class.name.to_s, group: groups(:bern)) }
+    let(:role) { Fabricate(role_class.name.to_s, group: groups(:bern), created_at: some_time_ago) }
     let(:role_class) { Group::Flock::Leader }
 
     context "destroy" do
@@ -334,6 +343,29 @@ describe Role do
         role.update(start_on: Date.current)
         expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
         expect(Role.with_inactive.where(id: role.id)).not_to be_exists
+      end
+
+      context "recent role" do
+        before { role.update(created_at: 1.minute.ago) }
+
+        it "is flagged as deleted without creating alumnus role" do
+          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+          expect(Role.ended.find(role.id)).to be_present
+        end
+
+        it "does not create alumni member and does not enqueue mail job" do
+          expect do
+            expect { role.destroy }.not_to change { Delayed::Job.count }
+          end.not_to change { Group::FlockAlumnusGroup::Member.count }
+        end
+
+        it "is marked as processed and ignored by AlumniManagerJob" do
+          role.destroy
+          expect(Role.ended.find(role.id)).to be_alumni_processed
+
+          expect { AlumniManagerJob.new.perform_internal }
+            .not_to change { Group::Flock::Alumnus.count }
+        end
       end
 
       it "older role is flagged as deleted without creating alumnus role when another active role exists" do

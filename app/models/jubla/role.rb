@@ -141,6 +141,17 @@ module Jubla::Role
   end
 
   def alumnus_manager_create
-    alumnus_manager.create if !destroyed? && alumnus_applicable?
+    return if destroyed? || !alumnus_applicable?
+    return mark_alumni_processed unless old_enough_for_alumnus?
+
+    alumnus_manager.create
+  end
+
+  def old_enough_for_alumnus?
+    created_at < Settings.alumni_administrations.minimum_days_for_alumnus.days.ago
+  end
+
+  def mark_alumni_processed
+    Role.unscoped.where(id: id).update_all(alumni_processed: true)
   end
 end
