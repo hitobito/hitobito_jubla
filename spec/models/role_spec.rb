@@ -6,7 +6,7 @@
 require "spec_helper"
 
 describe Role do
-  let(:some_time_ago) { Time.zone.now - Settings.role.minimum_days_to_archive.days - 1.day }
+  let(:some_time_ago) { Time.zone.now - Settings.alumni_administrations.minimum_days_for_alumnus.days - 1.day }
 
   describe Group::Flock::Leader do
     subject { Group::Flock::Leader }
@@ -258,6 +258,12 @@ describe Role do
         role.person.update(email: nil)
         expect { role.destroy }.not_to change { Delayed::Job.count }
       end
+
+      it "does not create alumnus role for recently created role" do
+        role = Fabricate(Group::FederalBoard::Member.sti_name, group: groups(:federal_board))
+        expect { role.destroy }.not_to change { Group::FederalBoard::Alumnus.count }
+        expect(Role.ended.find(role.id)).to be_alumni_processed
+      end
     end
 
     context "after alumnus creation" do
@@ -333,10 +339,33 @@ describe Role do
     let(:role_class) { Group::Flock::Leader }
 
     context "destroy" do
-      it "recent role is flagged as deleted without creating alumnus role" do
-        role.update(created_at: 1.minute.ago)
+      it "role starting today is deleted without creating alumnus role" do
+        role.update(start_on: Date.current)
         expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
         expect(Role.with_inactive.where(id: role.id)).not_to be_exists
+      end
+
+      context "recent role" do
+        before { role.update(created_at: 1.minute.ago) }
+
+        it "is flagged as deleted without creating alumnus role" do
+          expect { role.destroy }.not_to change { Group::Flock::Alumnus.count }
+          expect(Role.ended.find(role.id)).to be_present
+        end
+
+        it "does not create alumni member and does not enqueue mail job" do
+          expect do
+            expect { role.destroy }.not_to change { Delayed::Job.count }
+          end.not_to change { Group::FlockAlumnusGroup::Member.count }
+        end
+
+        it "is marked as processed and ignored by AlumniManagerJob" do
+          role.destroy
+          expect(Role.ended.find(role.id)).to be_alumni_processed
+
+          expect { AlumniManagerJob.new.perform_internal }
+            .not_to change { Group::Flock::Alumnus.count }
+        end
       end
 
       it "older role is flagged as deleted without creating alumnus role when another active role exists" do

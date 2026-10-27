@@ -31,7 +31,7 @@ describe Group::AlumnusGroup do
   end
 
   context "alumnus group moving" do
-    let(:created_at) { Time.zone.now - Settings.role.minimum_days_to_archive.days - 1.day }
+    let(:created_at) { Time.zone.now - Settings.alumni_administrations.minimum_days_for_alumnus.days - 1.day }
     let!(:role) do
       Fabricate(Group::Flock::Leader.to_s,
         group: groups(:bern),

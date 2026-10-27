@@ -29,5 +29,19 @@ describe RolesController do
       expect(role.employment_percent).to eq(50)
       expect(role.honorary).to be_truthy
     end
+
+    context "changing type of recently created role" do
+      let(:role) { Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern)) }
+      let(:user) { Fabricate(Group::Flock::Leader.name.to_sym, group: groups(:bern)).person }
+
+      it "does not create alumnus role" do
+        expect do
+          put :update, params: {group_id: group.id, id: role.id, role: {type: Group::Flock::CampLeader.sti_name}}
+        end.not_to change { Group::Flock::Alumnus.count }
+
+        expect(Role.ended.find(role.id)).to be_present
+        expect(role.person.roles.map(&:type)).to eq [Group::Flock::CampLeader.sti_name]
+      end
+    end
   end
 end
