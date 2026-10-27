@@ -31,8 +31,11 @@ describe Group::AlumnusGroup do
   end
 
   context "alumnus group moving" do
+    let(:created_at) { Time.zone.now - Settings.alumni_administrations.minimum_days_for_alumnus.days - 1.day }
     let!(:role) do
-      Fabricate(Group::Flock::Leader.to_s, group: groups(:bern))
+      Fabricate(Group::Flock::Leader.to_s,
+        group: groups(:bern),
+        created_at: created_at)
     end
 
     context "single role" do
@@ -61,27 +64,35 @@ describe Group::AlumnusGroup do
       end
 
       it "moves child to alumnus group if old enough" do
-        role = Fabricate(Group::ChildGroup::Child.name.to_s, group: groups(:asterix))
+        role = Fabricate(Group::ChildGroup::Child.name.to_s,
+          group: groups(:asterix),
+          created_at: created_at)
 
         expect { role.destroy }.to change(Group::FlockAlumnusGroup::Member, :count).by(1)
       end
 
       it "unless child not old enough" do
         allow_any_instance_of(Person).to receive(:years).and_return(14)
-        role = Fabricate(Group::ChildGroup::Child.name.to_s, group: groups(:asterix))
+        role = Fabricate(Group::ChildGroup::Child.name.to_s,
+          group: groups(:asterix),
+          created_at: created_at)
 
         expect { role.destroy }.not_to change(Group::FlockAlumnusGroup::Member, :count)
       end
 
       it "unless child has no birthday" do
         allow_any_instance_of(Person).to receive(:years)
-        role = Fabricate(Group::ChildGroup::Child.name.to_s, group: groups(:asterix))
+        role = Fabricate(Group::ChildGroup::Child.name.to_s,
+          group: groups(:asterix),
+          created_at: created_at)
 
         expect { role.destroy }.not_to change(Group::FlockAlumnusGroup::Member, :count)
       end
 
       it "unless alumnus group" do
-        role = Fabricate(Group::FlockAlumnusGroup::Leader.name.to_s, group: groups(:bern_ehemalige))
+        role = Fabricate(Group::FlockAlumnusGroup::Leader.name.to_s,
+          group: groups(:bern_ehemalige),
+          created_at: created_at)
 
         expect { role.destroy }.to change(Group::FlockAlumnusGroup::Leader, :count).by(-1)
       end
