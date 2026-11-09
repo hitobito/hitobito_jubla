@@ -72,7 +72,7 @@ describe Wizards::RegisterNewUserWizard do
         expect(person.email).to eq "test@example.com"
       end
 
-      it "sets non-public phone number with correct label" do
+      it "sets non-public phone number with landline category" do
         params[:new_user_form] = {
           first_name: "test",
           last_name: "dummy",
@@ -83,7 +83,8 @@ describe Wizards::RegisterNewUserWizard do
         wizard.save!
         expect(person.phone_numbers).to have(1).item
         number = person.phone_numbers.first
-        expect(number.label).to eq "Privat"
+        expect(number.category).to eq contact_account_categories(:phone_number_person_landline)
+        expect(number.label).to be_nil
         expect(number.number).to eq "+41 78 123 45 67"
         expect(number.public).to eq false
       end
