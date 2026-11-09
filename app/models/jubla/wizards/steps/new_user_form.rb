@@ -5,7 +5,6 @@
 
 module Jubla::Wizards::Steps::NewUserForm
   extend ActiveSupport::Concern
-  PHONE_NUMBER_LABEL = "Privat"
 
   prepended do
     attribute :address_care_of, :string
@@ -58,7 +57,6 @@ module Jubla::Wizards::Steps::NewUserForm
       next attrs if phone_number.blank?
 
       attrs.merge(phone_numbers_attributes: [{
-        label: PHONE_NUMBER_LABEL,
         category_id: self.class.phone_number_category_id,
         number: phone_number,
         public: false
