@@ -1,5 +1,9 @@
 # Hitobito Jubla Changelog
 
+## unreleased
+
+* Die Anlassrollen Coach (Lager) und Kurscoach (Kurs) werden korrekt benannt, LKB heisst neu Kurscoach (hitobito_jubla#272)
+
 ## Version 2.8
 
 * Ehemaligenverein (Schar) kann direkt unter Kanton (Ehemalige) erstellt werden (hitobito_jubla#110)

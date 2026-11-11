@@ -1,4 +1,4 @@
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -24,6 +24,16 @@ describe Event::Course do
     it { is_expected.to include(Event::Course::Role::Participant) }
     it { is_expected.to include(Event::Course::Role::Advisor) }
     it { is_expected.not_to include(Event::Role::Participant) }
+  end
+
+  describe "advisor labels" do
+    it "names the advisor role Kurscoach" do
+      expect(Event::Course::Role::Advisor.new.to_s).to eq "Kurscoach"
+    end
+
+    it "names the advisor attribute Kurscoach" do
+      expect(Event::Course.human_attribute_name(:advisor_id)).to eq "Kurscoach"
+    end
   end
 
   context "#application_possible?" do

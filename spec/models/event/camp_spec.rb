@@ -41,7 +41,7 @@
 #  remarks                     :text(65535)
 #
 
-#  Copyright (c) 2012-2013, Jungwacht Blauring Schweiz. This file is part of
+#  Copyright (c) 2012-2026, Jungwacht Blauring Schweiz. This file is part of
 #  hitobito_jubla and licensed under the Affero General Public License version 3
 #  or later. See the COPYING file at the top-level directory or at
 #  https://github.com/hitobito/hitobito_jubla.
@@ -60,6 +60,10 @@ describe Event::Camp do
     it { is_expected.to include(Event::Role::Speaker) }
     it { is_expected.to include(Event::Role::Participant) }
     it { is_expected.to include(Event::Camp::Role::Coach) }
+  end
+
+  it "the role Event::Camp::Role::Coach is named" do
+    expect(Event::Camp::Role::Coach.new.to_s).to eq "Coach"
   end
 
   context ".kind_class" do
