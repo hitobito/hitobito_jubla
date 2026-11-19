@@ -61,5 +61,5 @@ groups:
 event:
   participations:
     manual_sensitive_option: false
-    delete_answers_after_months: 13
-    delete_additional_information_after_months: 13
+    delete_answers_after_months: P13M
+    delete_additional_information_after_months: P13M
