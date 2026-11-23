@@ -12,4 +12,25 @@ class NejbRole < Role
     end
   end
   include AlumnusFreeRole
+
+  # Common roles not attached to a specific group. They must be defined here,
+  # otherwise NejbRole::External etc. resolve to the Jubla::Role classes via Role's ancestors.
+
+  # Extern
+  class External < NejbRole
+    self.permissions = []
+    self.basic_permissions_only = true
+  end
+
+  # Versandadresse
+  class DispatchAddress < NejbRole
+    self.permissions = []
+    self.basic_permissions_only = true
+  end
+
+  # Neumitglied
+  class Joiner < NejbRole
+    self.permissions = []
+    self.basic_permissions_only = true
+  end
 end

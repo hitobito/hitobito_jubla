@@ -17,9 +17,7 @@ class Group::Nejb < NejbGroup
     self.permissions = [:group_full]
   end
 
-  class DispatchAddress < ::NejbRole
-    self.permissions = []
-    self.basic_permissions_only = true
+  class DispatchAddress < ::NejbRole::DispatchAddress
   end
 
   class ITSupport < ::NejbRole
