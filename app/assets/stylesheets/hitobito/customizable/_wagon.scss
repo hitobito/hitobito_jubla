@@ -128,12 +128,10 @@ legend {
 
 .btn {
   background-color: $btn-bg;
-  color: $green;
 
   &:hover,
   &:focus,
   &:active {
-    color: darken($green, 10%);
     text-shadow: none;
     background-position: 0 -15px;
     border: 1px solid $btn-border;
@@ -149,20 +147,12 @@ legend {
     [class*=" icon-"] {
       background-image: url("../../../images/glyphicons-halflings-green.png");
     }
-
-    .caret {
-      border-top-color: $green;
-    }
   }
 
   .icon,
   [class^="icon-"],
   [class*=" icon-"] {
     background-image: url("../../../images/glyphicons-halflings-green-hover.png");
-  }
-
-  .caret {
-    border-top-color: $green;
   }
 }
 
@@ -172,10 +162,6 @@ legend {
 
 .btn-primary {
   background-color: $btn-primary-bg;
-}
-
-.btn-group.open .btn.dropdown-toggle {
-  color: darken($green, 10%);
 }
 
 select,

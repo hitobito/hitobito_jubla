@@ -2,6 +2,7 @@
 
 ## unreleased
 
+* Buttons haben blaue statt grüne Schrift
 * Die Anlassrollen Coach (Lager) und Kurscoach (Kurs) werden korrekt benannt, LKB heisst neu Kurscoach (hitobito_jubla#272)
 
 ## Version 2.8
