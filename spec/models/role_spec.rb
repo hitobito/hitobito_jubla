@@ -399,6 +399,22 @@ describe Role do
     end
   end
 
+  context "basic_permissions_only" do
+    basic_role_types, other_role_types = Role.all_types.partition { |type| type.permissions.empty? }
+
+    basic_role_types.each do |role_class|
+      it "is set for #{role_class}" do
+        expect(role_class.basic_permissions_only).to eq true
+      end
+    end
+
+    other_role_types.each do |role_class|
+      it "is not set for #{role_class}" do
+        expect(role_class.basic_permissions_only).to eq false
+      end
+    end
+  end
+
   context "nextcloud" do
     [
       Jubla::Role::GroupAdmin,

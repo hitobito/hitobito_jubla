@@ -58,6 +58,7 @@ module Jubla::Role
 
   # Versandadresse. Intended to be used with mailing lists
   class DispatchAddress < ::Role
+    self.basic_permissions_only = true
   end
 
   # Extern
@@ -65,6 +66,7 @@ module Jubla::Role
     self.permissions = []
     self.visible_from_above = false
     self.kind = :external
+    self.basic_permissions_only = true
   end
 
   # Ehemalige

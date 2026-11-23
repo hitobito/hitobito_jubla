@@ -57,13 +57,16 @@ class Group::NejbSimpleGroup < NejbGroup
     self.permissions = []
     self.visible_from_above = false
     self.kind = :external
+    self.basic_permissions_only = true
   end
 
   class NewJoiner < NejbRole
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class DispatchAddress < NejbRole
+    self.basic_permissions_only = true
   end
 
   roles Leader, Member, GroupAdmin, External, DispatchAddress, NewJoiner

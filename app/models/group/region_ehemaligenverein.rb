@@ -26,14 +26,17 @@ class Group::RegionEhemaligenverein < NejbGroup
 
   class NejbJoiner < ::NejbRole
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class External < ::NejbRole
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   class DispatchAddress < ::NejbRole
     self.permissions = []
+    self.basic_permissions_only = true
   end
 
   roles Leader, GroupAdmin, Treasurer, NejbMember, NejbJoiner, External, DispatchAddress
