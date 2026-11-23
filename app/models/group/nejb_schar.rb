@@ -26,16 +26,13 @@ class Group::NejbSchar < NejbGroup
     self.permissions = [:group_read]
   end
 
-  class NejbJoiner < ::NejbRole
-    self.permissions = []
+  class NejbJoiner < ::NejbRole::Joiner
   end
 
-  class External < ::NejbRole
-    self.permissions = []
+  class External < ::NejbRole::External
   end
 
-  class DispatchAddress < ::NejbRole
-    self.permissions = []
+  class DispatchAddress < ::NejbRole::DispatchAddress
   end
 
   roles Leader, GroupAdmin, Treasurer, NejbMember, NejbJoiner, External, DispatchAddress

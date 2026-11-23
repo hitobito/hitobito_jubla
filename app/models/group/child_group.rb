@@ -48,6 +48,7 @@ class Group::ChildGroup < JublaGroup
   class Child < ::Role
     self.permissions = []
     self.visible_from_above = false
+    self.basic_permissions_only = true
   end
 
   class GroupAdmin < Jubla::Role::GroupAdmin

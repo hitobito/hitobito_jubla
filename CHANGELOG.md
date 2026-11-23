@@ -3,6 +3,7 @@
 ## unreleased
 
 * Die Anlassrollen Coach (Lager) und Kurscoach (Kurs) werden korrekt benannt, LKB heisst neu Kurscoach (hitobito_jubla#272)
+* Personen, die nur Rollen ohne Berechtigungen haben (Extern, Versandadresse, Kind, Neumitglied), sehen eine reduzierte Ansicht mit ihrem eigenen Profil, ohne Navigation und Suche (hitobito_jubla#290)
 
 ## Version 2.8
 
